@@ -170,6 +170,22 @@ One layer, loaded **last** on every page, scoped to phones (max 640px) and table
 4. New site-only styles go in `assets/site.css` with the `rv-` prefix. Genuinely reusable pieces go in `rds.css` plus this doc.
 5. Run `python3 scripts/check.py` (links and anchors) before opening a PR.
 
+## Sketchbook layer (`sketch.css`, `sketch.js`)
+
+Makes the whole site feel drawn instead of printed. Load `assets/rds/sketch.css` last (after `mobile.css`) and `assets/rds/sketch.js` with `defer` on every page. It is cosmetic only: remove it and nothing breaks. This supersedes the "no shadows" line above for the two pencil patterns below.
+
+- **Hand lettering**: `--rv-hand` (Architects Daughter) now sets eyebrows, tags, nav links, buttons, chips, row meta and empty states. Headlines stay Newsreader, prose stays serif, figure captions and numbers stay mono (evidence).
+- **Wobbly borders**: `--rv-r-lg/md/sm` are uneven radii; cards, figures, infoboxes, callouts and inputs use them with a 1.5px ink border (`--rv-stroke`). Reuse the variables, never a plain radius, on new boxed things.
+- **Pencil offset**: `--rv-pencil` (2px 3px, no blur) under buttons and linked cards; lifts on hover, presses flat on active. The only shadow allowed.
+- **Hand-drawn rules**: `--rv-rule`, `-soft`, `-ink`, `-brick` are tiled squiggle backgrounds that replace 1px borders on rows, steps, facts, pull quotes, sources and `rds-rule`.
+- **Paper**: a fixed grain overlay (`.rds-page::before`) plus wavy torn edges on `rds-band-sunk` and the footer.
+- **Washi tape**: automatic on `rv-compare`, infoboxes, `rv-fig` and non-plain callouts.
+- **Pencil filter**: `sketch.js` injects `#rv-pencil` / `#rv-pencil-soft` (SVG displacement) and adds `rv-pencil` to drawings in figures, cards and infoboxes. Drawings that animate (`data-rds-draw`) get it 2.4s after they scroll in, because filtering a large SVG every frame is slow. Put `class="rv-pencil"` on any new SVG drawing.
+- **Marker highlight**: `rds-mark` is now a tilted brick-tint block that wipes in.
+- **Focus**: dashed brick marker ring on every focusable element.
+- **Ornaments**: `rv-divider` (vine with three leaves), `rv-sun` (slow-turning sun doodle), `rv-hero__flip` (hand note with arrow), `rv-404` (404 layout with a signpost drawing), `rds-empty` (magnifier doodle).
+- **Reduced motion**: sun, hover tilts and the highlight wipe are switched off.
+
 ## Known issues
 
 - The Topanga study body is still inline-styled with hex values (only its head uses `rv-` classes), so token changes do not reach most of it.

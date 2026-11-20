@@ -1,0 +1,134 @@
+/* Redrawn Design System: sketchbook layer.
+   Loaded after rds.css (and article/notes/studies css). Pure CSS plus a tiny script (sketch.js) that adds the pencil filter.
+   Everything here is cosmetic: remove this file and the site still works, it just looks printed instead of drawn.
+   Patterns: wobbly borders (--rv-r-*), pencil offset (--rv-pencil), hand-drawn rules, washi tape, paper grain,
+   wavy band edges, hand lettering for UI labels. Documented in DESIGN.md "Sketchbook layer". */
+:root{
+  --rv-r-lg:22px 9px 24px 10px/10px 24px 9px 22px;
+  --rv-r-md:10px 5px 12px 6px/6px 12px 5px 10px;
+  --rv-r-sm:5px 3px 6px 3px/3px 6px 3px 5px;
+  --rv-pencil:2px 3px 0 0 var(--ink);
+  --rv-pencil-lift:3px 5px 0 0 var(--ink);
+  --rv-hand:var(--font-hand,"Architects Daughter",Hanken Grotesk,sans-serif);
+  --rv-stroke:1.5px;
+  --rv-grain:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22220%22 height=%22220%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.85%22 numOctaves=%222%22 seed=%227%22/%3E%3CfeColorMatrix values=%220 0 0 0 .25  0 0 0 0 .2  0 0 0 0 .12  0 0 0 .22 0%22/%3E%3C/filter%3E%3Crect width=%22220%22 height=%22220%22 filter=%22url(%23n)%22 opacity=%22.5%22/%3E%3C/svg%3E");
+  --rv-rule:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%2210%22 viewBox=%220 0 240 10%22%3E%3Cpath d=%22M0 5.4C14 4.2 22 6.3 38 5.2S62 4.1 80 5.5 104 6.4 122 5 148 4.2 166 5.4 196 6.2 214 4.9 232 5.3 240 5.4%22 fill=%22none%22 stroke=%22%238a8170%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3C/svg%3E");
+  --rv-rule-soft:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%2210%22 viewBox=%220 0 240 10%22%3E%3Cpath d=%22M0 5.4C14 4.2 22 6.3 38 5.2S62 4.1 80 5.5 104 6.4 122 5 148 4.2 166 5.4 196 6.2 214 4.9 232 5.3 240 5.4%22 fill=%22none%22 stroke=%22%23d9d0bd%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3C/svg%3E");
+  --rv-rule-ink:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%2210%22 viewBox=%220 0 240 10%22%3E%3Cpath d=%22M0 5.4C14 4.2 22 6.3 38 5.2S62 4.1 80 5.5 104 6.4 122 5 148 4.2 166 5.4 196 6.2 214 4.9 232 5.3 240 5.4%22 fill=%22none%22 stroke=%22%231f1d1a%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3C/svg%3E");
+  --rv-rule-brick:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%2210%22 viewBox=%220 0 240 10%22%3E%3Cpath d=%22M0 5.4C14 4.2 22 6.3 38 5.2S62 4.1 80 5.5 104 6.4 122 5 148 4.2 166 5.4 196 6.2 214 4.9 232 5.3 240 5.4%22 fill=%22none%22 stroke=%22%239c3d24%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3C/svg%3E");
+}
+
+/* ---------- paper ---------- */
+.rds-page::before{content:"";position:fixed;inset:0;z-index:900;pointer-events:none;background-image:var(--rv-grain);background-size:220px 220px}
+.rds-band-sunk{position:relative}
+.rds-band-sunk::before,.rds-band-sunk::after,.rds-footer::before{content:"";position:absolute;left:0;right:0;height:28px;background-repeat:repeat-x;background-size:600px 28px;pointer-events:none}
+.rds-band-sunk::before{top:-27px;background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%2228%22 viewBox=%220 0 600 28%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 28V14C30 8 52 17 90 12S150 5 190 13 250 20 300 12 360 4 410 12 470 19 520 11 570 7 600 13V28Z%22 fill=%22%23ece5d6%22/%3E%3Cpath d=%22M0 14C30 8 52 17 90 12S150 5 190 13 250 20 300 12 360 4 410 12 470 19 520 11 570 7 600 13%22 fill=%22none%22 stroke=%22%238a8170%22 stroke-width=%221.3%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3C/svg%3E")}
+.rds-band-sunk::after{bottom:-1px;background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%2228%22 viewBox=%220 0 600 28%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 28V14C30 8 52 17 90 12S150 5 190 13 250 20 300 12 360 4 410 12 470 19 520 11 570 7 600 13V28Z%22 fill=%22%23f6f1e7%22/%3E%3Cpath d=%22M0 14C30 8 52 17 90 12S150 5 190 13 250 20 300 12 360 4 410 12 470 19 520 11 570 7 600 13%22 fill=%22none%22 stroke=%22%238a8170%22 stroke-width=%221.3%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3C/svg%3E")}
+.rds-footer{position:relative;margin-top:28px}
+.rds-footer::before{top:-27px;background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%2228%22 viewBox=%220 0 600 28%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 28V14C30 8 52 17 90 12S150 5 190 13 250 20 300 12 360 4 410 12 470 19 520 11 570 7 600 13V28Z%22 fill=%22%231f1d1a%22/%3E%3C/svg%3E")}
+
+/* ---------- hand lettering (UI only; prose stays serif, evidence stays mono) ---------- */
+.rds-eyebrow{font:400 17px/20px var(--rv-hand);letter-spacing:.02em;text-transform:none;color:var(--ink-muted);display:flex;align-items:center;gap:var(--space-2)}
+.rds-eyebrow::before{content:"";flex:none;width:26px;height:8px;background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%2210%22 viewBox=%220 0 240 10%22%3E%3Cpath d=%22M0 5.4C14 4.2 22 6.3 38 5.2S62 4.1 80 5.5 104 6.4 122 5 148 4.2 166 5.4 196 6.2 214 4.9 232 5.3 240 5.4%22 fill=%22none%22 stroke=%22%239c3d24%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3C/svg%3E") 0 50%/26px 8px no-repeat}
+.rds-tag{font:400 15px/18px var(--rv-hand);letter-spacing:.03em;text-transform:none}
+.rds-nav__links a,.rds-nav__search{font-family:var(--rv-hand);font-size:17px}
+.rds-nav__links a{background-image:var(--rv-rule-brick);background-size:0 8px;background-position:0 100%;background-repeat:no-repeat}
+.rds-nav__links a:hover,.rds-nav__links a[aria-current=page]{background-size:100% 8px}
+.rds-row__meta,.rds-btn,.rds-chip,.rv-seg button{font-family:var(--rv-hand)}
+.rds-btn{font-size:17px;letter-spacing:.01em}
+.rds-row__meta{font-size:15px}
+
+/* ---------- wobbly borders ---------- */
+.rds-card,.rv-feature,.rds-figure__art,.rv-compare__stage,.rv-about__art,.rds-infobox,.rv-infobox,.rds-search,.rds-card__media{border-radius:var(--rv-r-lg)}
+.rds-callout,.rds-input,.rv-seg,.rds-contents,.rds-hero__art{border-radius:var(--rv-r-md)}
+.rds-tag--solid,.rds-notes li:target,.rv-sources li:target{border-radius:var(--rv-r-sm)}
+.rds-card,.rv-feature,.rv-compare__stage,.rds-infobox,.rv-infobox,.rds-figure__art,.rv-fig .rds-figure__art{border:var(--rv-stroke) solid var(--ink)}
+.rds-input,.rv-seg{border-width:var(--rv-stroke);border-color:var(--ink)}
+.rv-seg button+button{border-left:var(--rv-stroke) solid var(--ink)}
+.rds-chip{border-width:var(--rv-stroke);border-radius:255px 18px 225px 18px/18px 225px 18px 255px}
+.rds-callout{border:var(--rv-stroke) solid var(--ink)}
+.rds-callout--plain{background:var(--paper-raised);border-style:dashed}
+.rds-callout--moss{border-color:var(--moss)}
+
+/* ---------- buttons: marker outline + pencil offset ---------- */
+.rds-btn{border-width:var(--rv-stroke);border-color:var(--ink);border-radius:var(--rv-r-md);box-shadow:var(--rv-pencil);transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background-color var(--dur-fast) ease,color var(--dur-fast) ease}
+.rds-btn:hover{transform:translate(-1px,-2px) rotate(-.6deg);box-shadow:var(--rv-pencil-lift)}
+.rds-btn:active{transform:translate(2px,3px);box-shadow:0 0 0 0 var(--ink)}
+.rds-btn--ghost{box-shadow:none;background:transparent}
+.rds-btn--ghost:hover{box-shadow:var(--rv-pencil);background:var(--paper-raised)}
+.rds-btn--sm{box-shadow:1px 2px 0 0 var(--ink)}
+.rds-band-ink .rds-btn{box-shadow:2px 3px 0 0 var(--brick)}
+.rds-btn .rds-arrow{display:inline-block;transition:transform var(--dur-fast) var(--ease-out)}
+.rds-btn:hover .rds-arrow{transform:translateX(4px) rotate(-8deg)}
+.rv-seg button[aria-pressed="true"]{background:var(--brick);color:var(--on-brick)}
+
+/* ---------- focus: a dashed marker ring, not a browser outline ---------- */
+:where(a,button,input,summary,[tabindex]):focus-visible{outline:2px dashed var(--brick);outline-offset:4px;border-radius:var(--rv-r-sm)}
+.rds-input:focus,.rds-input:focus-visible{outline:2px dashed var(--brick);outline-offset:3px;border-color:var(--ink);box-shadow:var(--rv-pencil)}
+
+/* ---------- cards and rows ---------- */
+a.rds-card,.rv-feature{box-shadow:var(--rv-pencil)}
+a.rds-card:hover,.rv-feature:hover{transform:translate(-1px,-3px) rotate(-.35deg);box-shadow:var(--rv-pencil-lift);border-color:var(--ink)}
+.rv-feature{transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
+.rds-row,.rds-rows .rds-row{border-top:0;padding-top:calc(var(--space-6) + 6px);background:var(--rv-rule) 0 0/240px 10px repeat-x}
+a.rds-row:hover{background-image:var(--rv-rule-brick)}
+.rds-rows{border-bottom:0}
+.rds-rows::after{content:"";display:block;height:10px;background:var(--rv-rule) 0 0/240px 10px repeat-x}
+.rds-rule{border:0;height:10px;background:var(--rv-rule-soft) 0 0/240px 10px repeat-x}
+.rv-step{border-top:0;background:var(--rv-rule-ink) 0 0/240px 10px repeat-x;padding-top:calc(var(--space-6) + 6px)}
+.rv-step__n{font-family:var(--rv-hand);font-size:72px}
+.rv-facts{border-top:0;background:var(--rv-rule) 0 0/240px 10px repeat-x;padding-top:calc(var(--space-4) + 6px)}
+.rv-pull{border-top:0;background:var(--rv-rule-ink) 0 0/240px 10px repeat-x;padding-top:calc(var(--space-6) + 6px)}
+.rv-sources{border-top:0;background:var(--rv-rule-ink) 0 0/240px 10px repeat-x;padding-top:calc(var(--space-8) + 6px)}
+#notes.rds-section{border-top:0!important}
+.rds-notes li{border-top:0;background:var(--rv-rule-soft) 0 0/240px 10px repeat-x}
+.rds-seealso h2,.rds-notes-head{border-bottom:0;background:var(--rv-rule) 0 100%/240px 10px repeat-x;padding-bottom:var(--space-3)}
+.rds-mark{background-image:none;position:relative;isolation:isolate}
+.rds-mark::after{content:"";position:absolute;left:-2%;right:-2%;bottom:.04em;height:.5em;z-index:-1;border-radius:var(--rv-r-sm);background:var(--brick-tint);transform:rotate(-.8deg) scaleX(0);transform-origin:left;transition:transform var(--dur-slow) var(--ease-out)}
+.rds-mark.is-in::after,.is-in .rds-mark::after,html:not(.rds-js) .rds-mark::after{transform:rotate(-.8deg) scaleX(1)}
+
+/* ---------- washi tape on figures, infoboxes and callouts ---------- */
+.rv-compare,.rds-infobox,.rv-infobox,.rds-callout,.rv-fig,.rds-figure{position:relative}
+.rv-compare::before,.rds-infobox::before,.rv-infobox::before,.rv-fig::before,.rds-callout:not(.rds-callout--plain)::before{content:"";position:absolute;z-index:2;width:84px;height:24px;top:-12px;left:22px;background:var(--brick-tint);opacity:.92;transform:rotate(-3deg);border-left:2px dotted rgba(138,129,112,.55);border-right:2px dotted rgba(138,129,112,.55);pointer-events:none}
+.rv-compare::after{content:"";position:absolute;z-index:2;width:72px;height:24px;top:-10px;right:26px;background:var(--moss-tint);opacity:.92;transform:rotate(4deg);border-left:2px dotted rgba(138,129,112,.55);border-right:2px dotted rgba(138,129,112,.55);pointer-events:none}
+.rds-infobox,.rv-infobox{overflow:visible}
+.rds-infobox>*:first-child,.rv-infobox>*:first-child{border-top-left-radius:22px 10px;border-top-right-radius:9px 24px}
+.rds-callout{overflow:visible}
+.rv-fig::before{left:50%;margin-left:-42px;transform:rotate(1.5deg);background:var(--moss-tint)}
+.rds-callout--moss::before{background:var(--moss-tint)!important}
+
+/* ---------- drawings: pencil filter (added by sketch.js) and paper behind them ---------- */
+.rv-pencil{filter:url(#rv-pencil)}
+.rv-pencil-soft{filter:url(#rv-pencil-soft)}
+
+/* ---------- hand notes ---------- */
+.rds-note{font-size:19px;line-height:22px}
+.rv-hero__flip{position:absolute;right:6px;bottom:-54px;display:flex;align-items:flex-end;gap:6px;color:var(--brick);font:400 19px/20px var(--rv-hand);transform:rotate(-3deg);pointer-events:none}
+.rv-hero__flip svg{width:44px;height:40px;flex:none}
+.rv-sun{position:absolute;z-index:3;top:-34px;right:-14px;width:84px;height:84px;pointer-events:none;transform-origin:50% 50%}
+.rv-sun{animation:rv-sun-spin 40s linear infinite}
+@keyframes rv-sun-spin{to{transform:rotate(360deg)}}
+@media (max-width:640px){.rv-hero__flip{display:none}.rv-sun{width:60px;height:60px;top:-26px;right:-4px}}
+
+/* ---------- divider ornament: a vine with three leaves ---------- */
+.rv-divider{height:22px;margin:var(--space-12) auto;width:200px;background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%2222%22 viewBox=%220 0 200 22%22%3E%3Cpath d=%22M2 12C20 4 34 19 54 11S88 3 104 12 140 19 160 10 186 6 198 11%22 fill=%22none%22 stroke=%22%232f4a3a%22 stroke-width=%221.5%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M54 11c-2-7 3-9 7-9 1 6-2 9-7 9ZM104 12c2 6 8 8 11 6-1-6-5-8-11-6ZM160 10c-3-7 2-9 7-8 0 6-3 9-7 8Z%22 fill=%22%23dfe6d8%22 stroke=%22%232f4a3a%22 stroke-width=%221.2%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E") center/200px 22px no-repeat}
+
+/* ---------- empty states ---------- */
+.rds-empty{text-align:center;font:400 20px/28px var(--rv-hand);color:var(--ink-muted)}
+.rds-empty.is-on{display:block}
+.rds-empty::before{content:"";display:block;width:120px;height:96px;margin:0 auto var(--space-3);background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%2296%22 viewBox=%220 0 120 96%22%3E%3Cg fill=%22none%22 stroke=%22%231f1d1a%22 stroke-width=%222.2%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M44 14C26 12 11 25 12 43c1 17 15 28 30 27 16-1 28-13 27-29-1-15-12-26-25-27Z%22/%3E%3Cpath d=%22M63 64C72 73 80 80 90 88%22/%3E%3Cpath d=%22M33 34c4-6 11-8 17-5%22 stroke=%22%239c3d24%22/%3E%3Cpath d=%22M96 20c6-3 11 0 12 5M88 8l3 8M108 38l7-2%22 stroke=%22%2335506b%22 stroke-width=%221.8%22/%3E%3C/g%3E%3Cpath d=%22M36 52c4 4 11 4 16 0%22 fill=%22none%22 stroke=%22%238a8170%22 stroke-width=%221.8%22 stroke-linecap=%22round%22/%3E%3C/svg%3E") center/contain no-repeat}
+
+/* ---------- 404 ---------- */
+.rv-404{display:grid;gap:var(--space-12);align-items:center}
+@media (min-width:860px){.rv-404{grid-template-columns:1.1fr .9fr}}
+.rv-404__art{position:relative;max-width:480px;width:100%;margin-inline:auto}
+.rv-404__art svg{display:block;width:100%;height:auto}
+.rv-404__art .rds-note{position:absolute}
+
+/* ---------- motion safety ---------- */
+@media (prefers-reduced-motion:reduce){
+  .rv-sun{animation:none}
+  .rds-btn,.rds-btn:hover,.rds-btn:active,a.rds-card:hover,.rv-feature:hover{transform:none}
+  .rds-mark::after{transition:none}
+}
+@media print{.rds-page::before{display:none}.rds-band-sunk::before,.rds-band-sunk::after,.rds-footer::before{display:none}.rv-compare::before,.rv-compare::after,.rds-infobox::before,.rv-infobox::before,.rv-sun{display:none}}
