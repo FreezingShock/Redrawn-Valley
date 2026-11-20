@@ -108,6 +108,17 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 @media (max-width:959px){.rv-collage{width:110%;right:-30%;top:auto;bottom:-6%;opacity:.55}}
 .rv-pencil-shapes :is(line,path,rect,circle,polyline,ellipse,polygon){filter:url(#rv-pencil-line)}
 
+/* ---------- essay figures: hatched fills, marker outlines, dotted grid ---------- */
+.rv-svg .f-moss-tint{fill:url(#rv-h-moss)} .rv-svg .f-brick-tint{fill:url(#rv-h-brick)} .rv-svg .f-sunk{fill:url(#rv-h-sunk)}
+.rv-svg .f-slate{fill:url(#rv-h-slate)} .rv-svg .f-brick{fill:url(#rv-h-brickd)} .rv-svg .f-moss{fill:url(#rv-h-mossd)}
+.rv-svg :is(rect,circle,polygon)[class*="f-"]:not(.f-sky):not(.f-paper){stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round}
+.rv-svg .f-paper{stroke-width:1.6}
+.rv-svg .ghost{stroke:var(--line-strong);stroke-dasharray:1 7;stroke-linecap:round;stroke-width:1.4}
+.rv-svg .ln,.rv-svg .s-brick,.rv-svg .s-moss,.rv-svg .s-slate{stroke-width:2.4}
+.rv-svg .hair{stroke-dasharray:2 5;stroke-linecap:round}
+.rv-svg text{font-size:13px;paint-order:stroke;stroke:var(--paper-raised);stroke-width:4px;stroke-linejoin:round}
+.rv-svg .t-hand,.rv-svg .t-hand-moss{font-size:19px}
+
 /* ---------- hand notes ---------- */
 .rds-note{font-size:19px;line-height:22px}
 .rv-hero__flip{position:absolute;right:6px;bottom:-54px;display:flex;align-items:flex-end;gap:6px;color:var(--brick);font:400 19px/20px var(--rv-hand);transform:rotate(-3deg);pointer-events:none}
