@@ -1,5 +1,7 @@
 # Redrawn Valley
 
+Seeing the valley anew.
+
 Small places in the San Fernando Valley, studied and redrawn. A static site: no build step, no dependencies.
 
 ## Run it
