@@ -109,6 +109,18 @@ Every page uses one script for the header, footer, breadcrumbs and search, so th
 ## Notes (long-form essays)
 
 `notes/index.html` (index: feature, topic filter, rows) and `notes/<slug>/index.html` (essays). Styles are in `assets/rds/notes.css` (`rv-` prefix), script in `assets/rds/notes.js` (reading-progress line, topic filter). Essay anatomy: `rv-ehead` (back link + topic tag, `rds-display` headline, `rds-lead` dek, mono `rv-byline` with date, reading time, source count) → `rds-toc` contents rail → `rv-body` of numbered sections (`rv-num` + h2; prose at 68ch, figures `rv-fig rv-wide` break out to 60rem) → `rv-pull` pull quotes → `rds-callout--plain` "What I could not verify" → `rv-sources` numbered list. Footnotes are `<sup class="rv-fn"><a href="#nN">` linking to `<li id="nN">` with a back-arrow. Inline SVG figures use the `.rv-svg` classes (`ln`, `f-*`, `s-*`, `t-*`) so drawings stay in palette. Each essay ends with two related notes as `rds-rows`.
+## Icons and the logo mark (`assets/rds/icons/`)
+
+Hand-drawn SVG set, gallery at `icons/index.html`. Files: `icons.svg` (sprite, `<symbol id="i-NAME">`, 24px grid; `i-logo` is 32px), `icons.css` (the `rds-icon` component, `rds-logo`, gallery styles), `logo.svg`, `favicon.svg`, `apple-touch-icon.png`, `names.json`. The drawings live as plain point lists in `scripts/build_icons.py`, which roughens them (seeded, stable) into wobbly paths and rewrites the sprite and the gallery. Edit the script, run `python3 scripts/build_icons.py`, commit the output. Never hand-edit `icons.svg`.
+
+- **Use**: `<svg class="rds-icon" aria-hidden="true"><use href="PATH/assets/rds/icons/icons.svg#i-tree"/></svg>`. Decorative; the text next to it carries the meaning. External sprite references need HTTP, so icons do not show when a page is opened from disk.
+- **Colors**: linework is `currentColor`; one accent stroke uses `--icon-accent` (brick by default); a pale tint is laid slightly off the line with `--icon-tint`. Modifiers: `rds-icon--moss` (trees, proposals), `--slate` (water), `--ink`, `--quiet` (no accent), `--on-ink`.
+- **Sizes**: `rds-icon` 1.5em, `--sm`, `--lg` (2rem), `--xl` (3rem). Line is 1.6px at 24px.
+- **Set**: navigation (home, guide, studies, notes, search, menu, close), interface (arrows, chevrons, plus, minus, contents, footnote, external, info, warning, check, hash, quote) and topics (heat, tree, shade, pavement, water, river, soil, sidewalk, bioswale, permeable, leaf, thermometer, pin, ruler, building).
+- **Drawing a new one**: three to six strokes, one accent stroke on the meaningful part, round caps, never solid-ink fills. If it needs more, it is an illustration.
+- **Logo mark** `rds-logo` (`#i-logo`): two ridgelines forming a valley, ink for the old line and brick for the redrawn one, a moss tree and a low sun. The shared shell puts it left of the Newsreader wordmark in the header (and phone top bar) and in the footer; `favicon.svg` is the same mark on a paper tile. `site-shell.js` adds the favicon and icon stylesheet to any page that lacks them.
+- **Where icons appear**: phone tab bar (brick accent on the current tab only), header search, topic icon at the start of each field guide, notes and studies index row (`rds-row__icon`, with `--moss` / `--slate` variants).
+
 ## Studies
 
 Files: `assets/studies.css` (all rules for study pages), `assets/studies.js` (page behavior), `studies/index.html` (the index), `studies/_template/index.html` (copy this).

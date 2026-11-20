@@ -1,0 +1,46 @@
+{
+ "nav": [
+  "close",
+  "guide",
+  "home",
+  "menu",
+  "notes",
+  "search",
+  "studies"
+ ],
+ "ui": [
+  "arrow-down",
+  "arrow-left",
+  "arrow-right",
+  "arrow-up",
+  "check",
+  "chevron-down",
+  "chevron-right",
+  "contents",
+  "external",
+  "footnote",
+  "hash",
+  "info",
+  "minus",
+  "plus",
+  "quote",
+  "warning"
+ ],
+ "topic": [
+  "bioswale",
+  "building",
+  "heat",
+  "leaf",
+  "pavement",
+  "permeable",
+  "pin",
+  "river",
+  "ruler",
+  "shade",
+  "sidewalk",
+  "soil",
+  "thermometer",
+  "tree",
+  "water"
+ ]
+}
