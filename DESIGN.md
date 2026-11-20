@@ -2,7 +2,7 @@
 
 The design system behind Redrawn Valley. Warm paper, ink, brick and moss; a serif for ideas, a sans for interface, mono for evidence. Plain CSS and a small plain script, no build step, no dependencies. **Read this before changing any page.** If a component exists here, use it; if you need a new one, add it to the system (`assets/rds/rds.css`) and document it here, not as a one-off.
 
-Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle).
+Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search).
 
 ## Character
 
@@ -73,13 +73,34 @@ Headlines are sentences that state the finding ("Soil, not trees, is the hard pa
 - **Footer** `rds-footer` (ink band, brand, link columns, base disclaimer line).
 - **Site-only (`site.css`, `rv-` prefix)**: `rv-compare` + `rv-seg` (Today/Proposed segmented toggle), `rv-feature` (featured study card), `rv-facts` (3 big serif numbers), `rv-steps`/`rv-step` (numbered method, first number brick), `rv-note`, `rv-about`, `rv-planned` (dimmed placeholder rows).
 
+## Shared shell, breadcrumbs and search (`assets/site-shell.js`)
+
+Every page except the standalone study uses one script for the header, footer, breadcrumbs and search, so the nav changes in one place. Add placeholders and load the script (path relative to the page; `../` per folder level):
+
+```html
+<header class="rds-nav" data-rds-nav data-rv-shell="nav"></header>
+<main id="main">
+  <div class="rds-container"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
+  ...
+</main>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
+<script src="../assets/rds/rds.js"></script>
+<script src="../assets/site-shell.js"></script>
+```
+
+- **Nav** `rds-nav` + search button `rds-nav__search` (shortcut `/` or Ctrl/Cmd+K) and, under 640px, a `rds-nav__menu` toggle that opens the links as a panel. Items live in the `NAV` array in `site-shell.js`. `rds-skip` is the skip link; give `<main>` `id="main"`.
+- **Breadcrumbs** `rds-crumbs`: Home / section / page, built from the URL and the search index (the last crumb is the page `<h1>`). Hidden on the home page.
+- **Search** `rds-search` dialog (`<dialog>`, keyboard: arrows, Enter, Esc). Reads `assets/search-index.json`. Open it from anything with `data-rv-search-open`; an inline `<form data-rv-search-form>` with an input opens it prefilled (home and 404 use `rv-search`). Ranking: title > headings > description > body text; every word must match; headings with an `id` also appear as their own result.
+- **Index** `python3 scripts/build_index.py` crawls every `*.html` (skips `404.html` and `<meta name="robots" content="noindex">`) and writes `assets/search-index.json`, `sitemap.xml` and `robots.txt`. Give pages a `<title>` (`Page | Redrawn Valley`), a `<meta name="description">`, and ids on `h2`/`h3` so headings are searchable and deep-linkable. Mark chrome you do not want indexed with `data-rv-noindex`.
+- **404** `404.html` uses root-absolute paths (`/assets/...`) because Vercel serves it at any depth.
+
 ## Motion hooks (`rds.js`, add as attributes)
 
 `data-rds-reveal[=fade|scale|left]` fade-up on enter · `data-rds-stagger` on a parent staggers children · `data-rds-split` on a headline makes words rise in · `data-rds-draw` on an `<svg>` draws `.rds-stroke` paths then pops `.rds-fill` shapes · `data-rds-nav` · `data-rds-parallax="0.15"` · `data-rds-toc` on a nav of `#links`. Style the `--i` custom property inline to order items (`style="--i:2"`). Without JS everything is visible. `window.RDSMotion.init(scope)` re-scans dynamically added content.
 
 ## Page patterns
 
-**Home** (`index.html`): sticky nav → hero (display-xl split headline, lead, two buttons, before/after figure) → Studies (sunk band; featured `rv-feature` + planned rows) → Method (4 numbered steps) → Notes (eyebrow/headline left, serif prose right with one `rds-mark`) → About (art + sechead + contact rows) → ink footer.
+**Home** (`index.html`): sticky nav → hero (display-xl split headline, lead, two buttons, search form, before/after figure) → Browse (three rows: Studies, Field guide, Notes) → Studies (sunk band; featured `rv-feature` + planned rows) → Method (4 numbered steps) → Notes (eyebrow/headline left, serif prose right with one `rds-mark`) → About (art + sechead + contact rows) → ink footer.
 
 **Study** (`studies/<slug>/index.html`): a self-contained long-form page. It inlines the system's styles (hex values + its own `.rds-view/.rds-w/.rds-draw` reveal classes and `data-rds-root`) because it was exported as one file; keep it standalone and don't mix it with the shared stylesheet unless you migrate the whole page. Structure: sticky top bar with part tabs (Site / Evidence / Design / Delivery / Sources) → left contents rail with count "01 / 13" → header (case-study label, split headline with one `rds-mark`, lead, two-column fact table: Site, Type, Focus, Status, By, Date) → sticky scroll-driven figure with step text beside it (`data-scrolly`, `data-step`) → "What is real / What is estimated" callout → four parts each with a bordered "Part N of 4" bar and numbered sections (`secNN`): Site, Problem, Evidence, Precedents, Proposal ("seven moves, added one at a time"), Before/after, Soil, Planting, Drawings, Phasing, Measuring, Limits → numbered Sources list. Claims carry superscript mono citations `[n]` that link to `#sN`. Concept-sketch disclaimers appear on every drawing.
 
