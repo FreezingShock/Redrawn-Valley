@@ -23,7 +23,7 @@
 /* --- table of contents rail: ticks, the current one thick with its label pinned; hover opens the rest. No background. --- */
 .kt{position:sticky;top:0;height:0;z-index:15}
 .kt nav{position:absolute;left:8px;top:76px;display:flex;flex-direction:column;padding:8px 16px 12px 10px;background:none}
-.kt .cnt{font-family:'IBM Plex Mono', ui-monospace, monospace;font-size:11px;line-height:16px;color:#726b5e;margin-bottom:6px;white-space:nowrap}
+.kt .cnt{font-family:'IBM Plex Mono', ui-monospace, monospace;font-size:11px;line-height:16px;color:#655e51;margin-bottom:6px;white-space:nowrap}
 .kt .cnt b{color:#1f1d1a;font-weight:500}
 .kt a{display:flex;align-items:center;gap:10px;height:8px;text-decoration:none;color:#5c564c;transition:height .3s cubic-bezier(.16,1,.3,1),margin-top .3s cubic-bezier(.16,1,.3,1)}
 .kt a[data-g]{margin-top:5px}

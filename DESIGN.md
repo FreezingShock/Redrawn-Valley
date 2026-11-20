@@ -19,7 +19,7 @@ Drafting-table calm. Looks like a printed site study: paper background, hairline
 | Strong rule / input border | `--line-strong` | `#8a8170` |
 | Text | `--ink` | `#1f1d1a` |
 | Muted text | `--ink-muted` | `#5c564c` |
-| Faint text (captions, meta) | `--ink-faint` | `#726b5e` |
+| Faint text (captions, meta) | `--ink-faint` | `#655e51` |
 | Text on ink band | `--on-ink` / `--on-ink-muted` | `#f6f1e7` / `#b8b0a0` |
 | Brick (primary accent, actions, current state) | `--brick` / `--brick-deep` / `--brick-tint` / `--on-brick` | `#9c3d24` / `#7d2f1a` / `#f0d9cc` / `#fbf8f1` |
 | Moss (secondary accent, links, "good/green" ideas) | `--moss` / `--moss-deep` / `--moss-tint` / `--on-moss` | `#2f4a3a` / `#213529` / `#dfe6d8` / `#f6f1e7` |
@@ -219,6 +219,8 @@ Seeded generative art in the recipe of the reference contact sheets (kept in the
 - **No JS**: the container stays empty and hides (`.rds-art:empty`). The three index banners keep their pre-rendered SVG as a fallback.
 - **API**: `RDSArt.render(el, {kind, seed, topic})`, `RDSArt.reroll(el)`, `RDSArt.motifs`, `RDSArt.palette`.
 - **Adding a motif**: add a function `M.name = function (w, h, rnd, ctx)` in `motifs.js` returning `{svg, uses, pale?, shift?}`. Draw in local coordinates; use `var(--token)` for every colour; put `m-drift` or `m-sway` on groups that should move; add its transitions to the Motifs block in `rds.css`. Then add it to a topic's list.
+- **Pattern sheet**: `/patterns/` shows every motif, the palette and a seed lab (seed, topic, layout, reroll, pause). Check new motifs there first.
+- **Pencil filter**: `sketch.js` skips anything inside `.rds-art`; the filter breaks blended and oversized shapes.
 - The old pre-rendered banners (`scripts/tiles_art.py`) remain as the fallback on the three index pages.
 
 ## Known issues
