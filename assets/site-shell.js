@@ -28,14 +28,24 @@
   }
 
   /* ---------- header ---------- */
-  var SEARCH_ICON = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg>';
+  /* icons: hand-drawn sprite (assets/rds/icons/icons.svg). width/height attributes stop a flash of oversized icons before icons.css loads. */
+  var SPRITE = new URL('assets/rds/icons/icons.svg', siteRoot).href;
+  function icon(name, cls, size) { return '<svg class="rds-icon' + (cls ? ' ' + cls : '') + '" width="' + (size || 24) + '" height="' + (size || 24) + '" aria-hidden="true" focusable="false"><use href="' + SPRITE + '#i-' + name + '"/></svg>'; }
+  function logoMark(size) { return '<svg class="rds-logo" width="' + (size || 34) + '" height="' + (size || 34) + '" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><use href="' + SPRITE + '#i-logo"/></svg>'; }
+  var SEARCH_ICON = icon('search', 'rds-icon--sm', 18);
+  if (!doc.querySelector('link[href$="rds/icons/icons.css"]')) { var l = doc.createElement('link'); l.rel = 'stylesheet'; l.href = new URL('assets/rds/icons/icons.css', siteRoot).href; doc.head.appendChild(l); }
+  if (!doc.querySelector('link[rel~="icon"]')) {
+    [['icon', 'assets/rds/icons/favicon.svg', 'image/svg+xml'], ['apple-touch-icon', 'assets/rds/icons/apple-touch-icon.png']].forEach(function (a) {
+      var k = doc.createElement('link'); k.rel = a[0]; k.href = new URL(a[1], siteRoot).href; if (a[2]) k.type = a[2]; doc.head.appendChild(k);
+    });
+  }
   function header(el) {
     var links = NAV.map(function (n) {
       var on = n[1].split('#')[0] !== 'index.html' && n[1] === section + '/';
       return '<li><a href="' + esc(href(n[1])) + '"' + (on ? ' aria-current="page"' : '') + '>' + n[0] + '</a></li>';
     }).join('');
     el.innerHTML = '<a class="rds-skip" href="#main">Skip to content</a>' +
-      '<a class="rds-nav__brand" href="' + esc(href('')) + '">Redrawn Valley</a>' +
+      '<a class="rds-nav__brand" href="' + esc(href('')) + '">' + logoMark() + '<span>Redrawn Valley</span></a>' +
       '<ul class="rds-nav__links" id="rv-menu">' + links + '</ul>' +
       '<button class="rds-nav__search" type="button" data-rv-search-open aria-label="Search the site">' + SEARCH_ICON + '<span>Search</span><kbd>/</kbd></button>' +
       '<button class="rds-nav__menu" type="button" aria-expanded="false" aria-controls="rv-menu">Menu</button>';
@@ -46,18 +56,18 @@
   /* ---------- bottom tab bar (phones only; mobile.css hides it above 640px) ---------- */
   function tabbar() {
     if (doc.querySelector('.rv-tabbar')) return;
-    var ic = function (d) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>'; };
+    var ic = function (n) { return icon(n, '', 24); };
     var T = [
-      ['Home', '', '', ic('<path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4v-5H9v5H5a1 1 0 0 1-1-1z"/>')],
-      ['Guide', 'guide/', 'guide', ic('<path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v15H6.5A1.5 1.5 0 0 0 5 20.5zM5 20.5V5.5M9 8h6"/>')],
-      ['Studies', 'studies/', 'studies', ic('<path d="M3.5 7 9 4.5l6 2.5 5.5-2.5v13L15 20l-6-2.5-5.5 2.5zM9 4.5v13M15 7v13"/>')],
-      ['Notes', 'notes/', 'notes', ic('<path d="M5 19.5 6 15 16.5 4.5a1.8 1.8 0 0 1 2.5 0l.5.5a1.8 1.8 0 0 1 0 2.5L9 18zM14.5 6.5l3 3"/>')]
+      ['Home', '', '', ic('home')],
+      ['Guide', 'guide/', 'guide', ic('guide')],
+      ['Studies', 'studies/', 'studies', ic('studies')],
+      ['Notes', 'notes/', 'notes', ic('notes')]
     ];
     var nav = doc.createElement('nav'); nav.className = 'rv-tabbar'; nav.setAttribute('aria-label', 'Main');
     nav.innerHTML = T.map(function (t) {
       var on = t[2] ? section === t[2] : rel === '';
       return '<a href="' + esc(href(t[1])) + '"' + (on ? ' aria-current="page"' : '') + '>' + t[3] + '<span>' + t[0] + '</span></a>';
-    }).join('') + '<button type="button" data-rv-search-open>' + ic('<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/>') + '<span>Search</span></button>';
+    }).join('') + '<button type="button" data-rv-search-open>' + ic('search') + '<span>Search</span></button>';
     doc.body.appendChild(nav);
   }
 
@@ -66,7 +76,7 @@
     var site = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['About', 'index.html#about']]
       .map(function (n) { return '<li><a href="' + esc(href(n[1])) + '">' + n[0] + '</a></li>'; }).join('');
     el.innerHTML = '<div class="rds-footer__grid">' +
-      '<div><p class="rds-footer__brand">Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
+      '<div><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
       '<div><h4>Site</h4><ul>' + site + '</ul></div>' +
       '<div><h4>Studies</h4><ul data-rv-footer-studies><li><a href="' + esc(href('studies/')) + '">All studies</a></li></ul></div>' +
       '<div><h4>Find things</h4><ul><li><a href="#" data-rv-search-open>Search the site</a></li><li><a href="' + esc(new URL('sitemap.xml', siteRoot).href) + '">Sitemap</a></li></ul></div>' +
