@@ -207,7 +207,7 @@ Makes the whole site feel drawn instead of printed. Load `assets/rds/skin.css` l
 
 ## Motifs (`assets/rds/motifs.js`, styles in `rds.css`)
 
-Seeded generative art in the recipe of the reference contact sheets (kept in the project Library, never in the repo): flat tiles, each one thing, on one saturated or pale field; grid-filled circles and squares; overlapping translucent circles; drafting tools (compass, protractor, set square, scale ruler); contour rings; halftone; plan symbols (tree canopies, flow line, scale bar, north arrow); bars on ink; crossing lines on dotted paper; a big sprite icon. Everything is drawn in code, original, in our tokens plus the five art accents.
+Seeded generative art in the recipe of the reference contact sheets (kept in the project Library, never in the repo): flat tiles, each one thing, on one saturated or pale field; grid-filled circles and squares; overlapping translucent circles; drafting tools (compass, protractor, set square, scale ruler); contour rings; halftone; plan symbols (tree canopies, flow line, scale bar, north arrow); bars on ink; crossing lines on dotted paper; a big sprite icon; pill process diagram (SITE, MEASURE, PLAN); section with ground hatch, tree and scale figure; ledger page with a circled entry; crosshatch tone. Everything is drawn in code, original, in our tokens plus the five art accents.
 
 ```html
 <div class="rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="guide/tree-canopy" data-topic="shade trees" aria-hidden="true"></div>

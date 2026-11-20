@@ -28,19 +28,19 @@
   var VAR = { moss: '--moss', slate: '--slate', brick: '--brick', ochre: '--ochre', sky: '--sky', rose: '--rose', kelly: '--kelly', peri: '--peri', sand: '--paper-sunk', sage: '--moss-tint', blush: '--brick-tint', raised: '--paper-raised', ink: '--ink', paper: '--paper' };
   function v(name) { return 'var(' + VAR[name] + ')'; }
   var TOPICS = [
-    { re: /shade|tree|canopy|leaf|riparian/, fields: ['moss', 'kelly', 'sky', 'ochre'], motifs: ['plan', 'gridDisc', 'overlap', 'icon', 'contours'], icons: ['tree', 'leaf', 'shade'] },
+    { re: /shade|tree|canopy|leaf|riparian/, fields: ['moss', 'kelly', 'sky', 'ochre'], motifs: ['plan', 'section', 'gridDisc', 'overlap', 'icon', 'contours'], icons: ['tree', 'leaf', 'shade'] },
     { re: /water|river|swale|rain|storm|permeable|impervious|bio/, fields: ['slate', 'sky', 'peri', 'moss'], motifs: ['contours', 'split', 'lines', 'protractor', 'gridDisc', 'icon'], icons: ['water', 'river', 'bioswale', 'permeable'] },
     { re: /heat|pavement|cool|asphalt|temperature/, fields: ['brick', 'rose', 'ochre', 'peri'], motifs: ['halftone', 'gridSquares', 'ruler', 'setsquare', 'icon', 'bars'], icons: ['heat', 'thermometer', 'pavement', 'sidewalk'] },
-    { re: /soil|ground|volume/, fields: ['ochre', 'moss', 'brick', 'kelly'], motifs: ['bars', 'gridSquares', 'contours', 'icon', 'setsquare'], icons: ['soil', 'leaf', 'tree'] },
-    { re: /equity|people|walk|quarter|sidewalk|corner|promise/, fields: ['rose', 'peri', 'sky', 'ochre'], motifs: ['overlap', 'split', 'lines', 'plan', 'icon'], icons: ['sidewalk', 'pin', 'building', 'shade'] },
-    { re: /valley|place|study|topanga|site/, fields: SAT, motifs: ['plan', 'contours', 'compass', 'gridDisc', 'icon'], icons: ['pin', 'building', 'tree'] }
+    { re: /soil|ground|volume/, fields: ['ochre', 'moss', 'brick', 'kelly'], motifs: ['bars', 'section', 'gridSquares', 'contours', 'icon', 'setsquare', 'hatch'], icons: ['soil', 'leaf', 'tree'] },
+    { re: /equity|people|walk|quarter|sidewalk|corner|promise/, fields: ['rose', 'peri', 'sky', 'ochre'], motifs: ['overlap', 'split', 'lines', 'plan', 'pills', 'ledger', 'icon'], icons: ['sidewalk', 'pin', 'building', 'shade'] },
+    { re: /valley|place|study|topanga|site/, fields: SAT, motifs: ['plan', 'section', 'contours', 'compass', 'gridDisc', 'icon', 'pills'], icons: ['pin', 'building', 'tree'] }
   ];
   function profile(topic) {
     for (var i = 0; i < TOPICS.length; i++) if (TOPICS[i].re.test(topic)) return TOPICS[i];
-    return { fields: SAT, motifs: ['gridDisc', 'gridSquares', 'overlap', 'split', 'compass', 'protractor', 'setsquare', 'ruler', 'contours', 'halftone', 'plan', 'bars', 'lines', 'icon'], icons: ['tree', 'water', 'heat', 'soil', 'pin', 'building', 'ruler'] };
+    return { fields: SAT, motifs: ['gridDisc', 'gridSquares', 'overlap', 'split', 'compass', 'protractor', 'setsquare', 'ruler', 'contours', 'halftone', 'plan', 'bars', 'lines', 'icon', 'pills', 'section', 'ledger', 'hatch'], icons: ['tree', 'water', 'heat', 'soil', 'pin', 'building', 'ruler'] };
   }
   var TOOLS = ['compass', 'protractor', 'setsquare', 'ruler'];
-  var PAPER_KINDS = { compass: 1, protractor: 1, setsquare: 1, ruler: 0, plan: 1, lines: 1, halftone: 1, overlap: 1 };
+  var PAPER_KINDS = { compass: 1, protractor: 1, setsquare: 1, ruler: 0, plan: 1, lines: 1, halftone: 1, overlap: 1, pills: 1, section: 1, ledger: 1, hatch: 1 };
 
   /* ---------- helpers ---------- */
   function grid(id, size) { return '<pattern id="' + id + '" width="' + size + '" height="' + size + '" patternUnits="userSpaceOnUse"><path d="M' + size + ' 0H0V' + size + '" fill="none" stroke="var(--ink)" stroke-opacity=".5" stroke-width="1"/></pattern>'; }
@@ -146,6 +146,48 @@
     var names = c.icons, a = rnd.pick(names), b = rnd.pick(names.filter(function (n) { return n !== a; }).concat([a])), sz = Math.min(w, h) * .52;
     function u(n, cls) { return '<svg class="m-ico ' + cls + '" x="' + f(w / 2 - sz / 2) + '" y="' + f(h / 2 - sz / 2) + '" width="' + f(sz) + '" height="' + f(sz) + '" viewBox="0 0 24 24" style="color:var(--ink);--icon-accent:var(--paper);--icon-tint:rgba(246,241,231,.4);overflow:visible" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="' + SPRITE + '#i-' + n + '"/></svg>'; }
     return { svg: u(a, 'm-ico-a') + u(b, 'm-ico-b'), uses: [], shift: function (el) { el.classList.toggle('is-alt'); } };
+  };
+
+  /* Pill diagram: rounded labels joined by hairline arrows, 2 to 3 pale fills (process figure). */
+  M.pills = function (w, h, rnd, c) {
+    var words = rnd.shuffle(['SITE', 'MEASURE', 'PLAN', 'SECTION', 'SHADE', 'SOIL', 'WATER', 'COUNT']).slice(0, 3), n = 3, pw = Math.min(w * .26, 110), ph = Math.min(h * .2, 34), cols = rnd.shuffle(['sage', 'blush', 'sand', 'raised']), s = '<g class="m-drift m-slow">';
+    var xs = [w * .1, w * .38, w * .66], ys = [h * .2, h * .52, h * .22];
+    ys = rnd() < .5 ? ys : [ys[1], ys[0], ys[1]];
+    for (var i = 0; i < n; i++) {
+      var x = Math.min(xs[i], w - pw - 8), y = ys[i];
+      if (i) { var px = Math.min(xs[i - 1], w - pw - 8) + pw, py = ys[i - 1] + ph / 2; s += '<path d="M' + f(px) + ' ' + f(py) + 'C' + f(px + 20) + ' ' + f(py) + ' ' + f(x - 20) + ' ' + f(y + ph / 2) + ' ' + f(x - 3) + ' ' + f(y + ph / 2) + '" fill="none" stroke="var(--ink)" stroke-width="1.1"/><path d="M' + f(x - 8) + ' ' + f(y + ph / 2 - 4) + 'L' + f(x - 2) + ' ' + f(y + ph / 2) + 'L' + f(x - 8) + ' ' + f(y + ph / 2 + 4) + '" fill="none" stroke="var(--ink)" stroke-width="1.1"/>'; }
+      s += '<rect class="m-pill" x="' + f(x) + '" y="' + f(y) + '" width="' + f(pw) + '" height="' + f(ph) + '" rx="' + f(ph / 2) + '" style="fill:var(' + VAR[cols[i]] + ');--i:' + i + '" stroke="var(--ink)" stroke-width="1.1"/><text x="' + f(x + pw / 2) + '" y="' + f(y + ph / 2 + 3.5) + '" text-anchor="middle" font-family="var(--font-mono)" font-size="10" letter-spacing=".08em" fill="var(--ink)">' + words[i] + '</text>';
+    }
+    return { svg: s + '</g>', uses: [], pale: true };
+  };
+  /* Section: ground line, hatched soil, tree and a scale figure, with a brick dimension string. */
+  M.section = function (w, h, rnd, c) {
+    var gy = h * rnd.range(.58, .68), tx = w * rnd.range(.3, .6), th = h * rnd.range(.3, .42), s = '<path d="M0 ' + f(gy) + 'H' + f(w) + '" stroke="var(--ink)" stroke-width="2.4"/>', hs = '';
+    for (var x = -h; x < w; x += 9) hs += 'M' + f(x) + ' ' + f(h) + 'L' + f(x + (h - gy)) + ' ' + f(gy);
+    var cid = c.id();
+    s += '<defs><clipPath id="' + cid + '"><rect x="0" y="' + f(gy) + '" width="' + f(w) + '" height="' + f(h - gy) + '"/></clipPath></defs><path d="' + hs + '" stroke="var(--ink)" stroke-opacity=".5" stroke-width="1" fill="none" clip-path="url(#' + cid + ')"/>';
+    s += '<g class="m-sway m-slow" style="transform-origin:' + f(tx) + 'px ' + f(gy) + 'px"><line x1="' + f(tx) + '" y1="' + f(gy) + '" x2="' + f(tx) + '" y2="' + f(gy - th * .6) + '" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><ellipse cx="' + f(tx) + '" cy="' + f(gy - th * .8) + '" rx="' + f(th * .42) + '" ry="' + f(th * .36) + '" fill="var(--moss-tint)" stroke="var(--moss)" stroke-width="1.8"/></g>';
+    var fx = tx + th * .75, fh = th * .55;
+    s += '<g stroke="var(--ink)" stroke-width="1.6" fill="none" stroke-linecap="round"><circle cx="' + f(fx) + '" cy="' + f(gy - fh) + '" r="3"/><path d="M' + f(fx) + ' ' + f(gy - fh + 3) + 'V' + f(gy - fh * .38) + 'M' + f(fx - 5) + ' ' + f(gy - fh * .75) + 'H' + f(fx + 5) + 'M' + f(fx) + ' ' + f(gy - fh * .38) + 'L' + f(fx - 4) + ' ' + f(gy) + 'M' + f(fx) + ' ' + f(gy - fh * .38) + 'L' + f(fx + 4) + ' ' + f(gy) + '"/></g>';
+    var dx = tx - th * .6;
+    s += '<path d="M' + f(dx) + ' ' + f(gy - th * 1.16) + 'V' + f(gy) + 'M' + f(dx - 4) + ' ' + f(gy - th * 1.16) + 'h8M' + f(dx - 4) + ' ' + f(gy) + 'h8" stroke="var(--brick)" stroke-width="1.3" fill="none"/>';
+    return { svg: s, uses: [], pale: true };
+  };
+  /* Ledger: ruled paper with column lines, mono tick figures and one circled brick entry. */
+  M.ledger = function (w, h, rnd, c) {
+    var s = '<g class="m-drift m-slow" stroke="var(--ink)" fill="none">', rows = Math.floor(h / 16), cx = w * .18, i;
+    for (i = 1; i < rows; i++) s += '<path d="M0 ' + i * 16 + 'H' + w + '" stroke-opacity=".28" stroke-width="1"/>';
+    s += '<path d="M' + f(cx) + ' 0V' + h + 'M' + f(cx + 3) + ' 0V' + h + 'M' + f(w * .72) + ' 0V' + h + '" stroke-opacity=".6" stroke-width="1"/></g><g font-family="var(--font-mono)" font-size="10" fill="var(--ink)" fill-opacity=".8">';
+    for (i = 1; i < rows; i++) if (rnd() < .7) s += '<text x="' + f(cx + 10) + '" y="' + (i * 16 - 4) + '">' + rnd.int(10, 99) + '.' + rnd.int(0, 9) + '</text><text x="' + f(w * .72 + 8) + '" y="' + (i * 16 - 4) + '">' + rnd.int(1, 99) + '</text>';
+    var k = rnd.int(2, Math.max(2, rows - 2));
+    s += '</g><ellipse class="m-arc" cx="' + f(w * .5) + '" cy="' + (k * 16 - 8) + '" rx="' + f(w * .22) + '" ry="9" fill="none" stroke="var(--brick)" stroke-width="1.6"/>';
+    return { svg: s, uses: [], pale: true };
+  };
+  /* Crosshatch: loose parallel pen strokes, two angles, stronger toward one corner (marker tone). */
+  M.hatch = function (w, h, rnd, c) {
+    var a = rnd.range(30, 60), step = rnd.range(7, 10), d = '', d2 = '', diag = Math.hypot(w, h), cx = w / 2, cy = h / 2, k, cid = c.id(), cw = w * rnd.range(.45, .65), ch = h * rnd.range(.45, .65), right = rnd() < .5, bottom = rnd() < .5;
+    for (k = -diag / 2; k < diag / 2; k += step) { d += 'M' + f(cx - diag) + ' ' + f(cy + k + rnd.range(-1.2, 1.2)) + 'l' + f(diag * 2) + ' 0'; d2 += 'M' + f(cx - diag) + ' ' + f(cy + k) + 'l' + f(diag * 2) + ' 0'; }
+    return { svg: '<defs><clipPath id="' + cid + '"><rect x="' + f(right ? w - cw : 0) + '" y="' + f(bottom ? h - ch : 0) + '" width="' + f(cw) + '" height="' + f(ch) + '"/></clipPath></defs><g class="m-drift m-slow"><path d="' + d + '" transform="rotate(' + f(a) + ' ' + f(cx) + ' ' + f(cy) + ')" stroke="var(--ink)" stroke-width="1" stroke-opacity=".6" fill="none"/><g clip-path="url(#' + cid + ')"><path d="' + d2 + '" transform="rotate(' + f(a + 80) + ' ' + f(cx) + ' ' + f(cy) + ')" stroke="var(--ink)" stroke-width="1" stroke-opacity=".6" fill="none"/></g></g>', uses: [], pale: true };
   };
 
   /* ---------- layouts ---------- */
