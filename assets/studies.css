@@ -1,0 +1,62 @@
+/* Studies: shared rules for long-form study pages (studies/<slug>/index.html) and the studies index.
+   Tokens and components come from assets/rds/. Prefix rv- for new site-only pieces; the legacy
+   rds-view / rds-w / rds-draw / kt* / kstep names below belong to the study page script (assets/studies.js). */
+:where(.rv-study) a{color:var(--moss)}
+:where(.rv-study) a:hover{color:var(--moss-deep)}
+.rv-study{margin:0}
+/* the study keeps its own mark timing: drawn on load, redrawn when its headline enters */
+.rv-study .rds-mark{background-size:100% .32em;transition:background-size .9s cubic-bezier(.16,1,.3,1) .6s}
+.rds-view,.rds-w>span{transition:opacity .72s cubic-bezier(.16,1,.3,1),transform .72s cubic-bezier(.16,1,.3,1)}
+.rds-w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.34em;margin-bottom:-.34em}
+.rds-w>span{display:inline-block}
+.rds-draw .s{stroke-dasharray:1400;stroke-dashoffset:0;transition:stroke-dashoffset 2.2s cubic-bezier(.65,0,.35,1),opacity .3s ease}
+.rds-draw .f{transform-box:fill-box;transform-origin:center;transition:opacity .72s ease .8s,transform .72s cubic-bezier(.16,1,.3,1) .8s}
+[data-rds-js] .rds-view:not([data-in]){opacity:0;transform:translateY(24px)}
+[data-rds-js] .rds-split:not([data-in]) .rds-w>span{transform:translateY(115%)}
+[data-rds-js] .rds-split:not([data-in]) .rds-mark,[data-rds-js] .rds-view:not([data-in]) .rds-mark{background-size:0 .32em}
+[data-rds-js] .rds-draw:not([data-in]) .s{stroke-dashoffset:1400;opacity:0}
+[data-rds-js] .rds-draw:not([data-in]) .f{opacity:0;transform:scale(.8)}
+.rds-u{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .32s cubic-bezier(.16,1,.3,1)}
+.rds-u:hover{background-size:100% 1px}
+.rv-study a:focus-visible,.rv-study button:focus-visible,.rv-study input:focus-visible{outline:2px solid #1f1d1a;outline-offset:3px}
+
+/* --- table of contents rail: ticks, the current one thick with its label pinned; hover opens the rest. No background. --- */
+.kt{position:sticky;top:0;height:0;z-index:15}
+.kt nav{position:absolute;left:8px;top:76px;display:flex;flex-direction:column;padding:8px 16px 12px 10px;background:none}
+.kt .cnt{font-family:'IBM Plex Mono', ui-monospace, monospace;font-size:11px;line-height:16px;color:#726b5e;margin-bottom:6px;white-space:nowrap}
+.kt .cnt b{color:#1f1d1a;font-weight:500}
+.kt a{display:flex;align-items:center;gap:10px;height:8px;text-decoration:none;color:#5c564c;transition:height .3s cubic-bezier(.16,1,.3,1),margin-top .3s cubic-bezier(.16,1,.3,1)}
+.kt a[data-g]{margin-top:5px}
+.kt nav:hover a,.kt nav:focus-within a{height:20px}
+.kt nav:hover a[data-g],.kt nav:focus-within a[data-g]{margin-top:10px}
+.kt a i{display:block;flex:none;width:12px;height:2px;border-radius:1px;background:#8a8170;transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background-color .2s ease}
+.kt a span{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;line-height:18px;text-shadow:0 0 3px #f6f1e7,0 0 8px #f6f1e7,0 0 14px #f6f1e7;transition:max-width .35s cubic-bezier(.16,1,.3,1),opacity .2s ease}
+.kt nav:hover a span,.kt nav:focus-within a span{max-width:240px;opacity:1}
+.kt a:hover{color:#9c3d24}
+.kt a:hover i{width:22px;background:#9c3d24}
+.kt a[aria-current="true"]{color:#1f1d1a;height:18px}
+.kt nav:hover a[aria-current="true"],.kt nav:focus-within a[aria-current="true"]{height:20px}
+.kt a[aria-current="true"] i{width:24px;height:4px;border-radius:2px;background:#9c3d24}
+.kt a[aria-current="true"] span{font-weight:600;max-width:240px;opacity:1}
+@media (max-width:1479px){.kt nav:not(:hover):not(:focus-within) a[aria-current="true"] span{max-width:0;opacity:0}}
+@media (max-width:1240px){.kt{display:none}}
+/* --- part tabs in the top bar --- */
+.ktabs a{background:linear-gradient(currentColor,currentColor) 0 100%/0 2px no-repeat;transition:background-size .32s cubic-bezier(.16,1,.3,1)}
+.ktabs a:hover,.ktabs a[aria-current="true"]{background-size:100% 2px}
+/* --- click tabs --- */
+.ktab{appearance:none;border:0;background:none;padding:10px 0;margin:0;font:500 15px/1 'Hanken Grotesk',system-ui,sans-serif;color:#5c564c;cursor:pointer;border-bottom:3px solid rgba(0,0,0,0);transition:color .16s ease,border-color .16s ease}
+.ktab:hover{color:#1f1d1a}
+.ktab[aria-selected="true"]{color:#1f1d1a;border-bottom-color:#1f1d1a}
+/* --- scroll stages --- */
+.lyr{opacity:0;transition:opacity .7s ease}
+.heat,.exo{transition:opacity .7s ease}
+[data-st="1"] .l1,[data-st="2"] .l1,[data-st="2"] .l2,[data-st="3"] .l1,[data-st="3"] .l2,[data-st="3"] .l3,[data-st="4"] .l1,[data-st="4"] .l2,[data-st="4"] .l3,[data-st="4"] .l4,[data-st="5"] .l1,[data-st="5"] .l2,[data-st="5"] .l3,[data-st="5"] .l4,[data-st="5"] .l5,[data-st="6"] .l1,[data-st="6"] .l2,[data-st="6"] .l3,[data-st="6"] .l4,[data-st="6"] .l5,[data-st="6"] .l6{opacity:1}
+[data-st="0"] .heat{opacity:1}[data-st="1"] .heat{opacity:0.8}[data-st="2"] .heat{opacity:0.55}[data-st="3"] .heat{opacity:0.4}[data-st="4"] .heat{opacity:0.3}[data-st="5"] .heat{opacity:0.2}[data-st="6"] .heat{opacity:0.12}
+[data-st="1"] .exo,[data-st="2"] .exo,[data-st="3"] .exo,[data-st="4"] .exo,[data-st="5"] .exo,[data-st="6"] .exo{opacity:0}
+.pv{position:absolute;inset:0;transition:opacity .8s ease}
+[data-st="0"] .pv1{opacity:0}
+[data-st="1"] .pv0{opacity:0}
+.kstep{opacity:.38;transition:opacity .3s ease}
+.kstep[data-on]{opacity:1}
+.kstage b{font-weight:500;color:#1f1d1a}
+@media (prefers-reduced-motion:reduce){.rds-view,.rds-w>span,.rds-draw .s,.rds-draw .f,}
