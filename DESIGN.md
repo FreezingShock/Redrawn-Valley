@@ -115,10 +115,10 @@ Hand-drawn SVG set, gallery at `icons/index.html`. Files: `icons.svg` (sprite, `
 
 - **Use**: `<svg class="rds-icon" aria-hidden="true"><use href="PATH/assets/rds/icons/icons.svg#i-tree"/></svg>`. Decorative; the text next to it carries the meaning. External sprite references need HTTP, so icons do not show when a page is opened from disk.
 - **Colors**: linework is `currentColor`; one accent stroke uses `--icon-accent` (brick by default); a pale tint is laid slightly off the line with `--icon-tint`. Modifiers: `rds-icon--moss` (trees, proposals), `--slate` (water), `--ink`, `--quiet` (no accent), `--on-ink`.
-- **Sizes**: `rds-icon` 1.5em, `--sm`, `--lg` (2rem), `--xl` (3rem). Line is 1.6px at 24px.
+- **Sizes**: `rds-icon` 1.5em, `--sm`, `--lg` (2rem), `--xl` (3rem). Line is about 1.9px at 24px.
 - **Set**: navigation (home, guide, studies, notes, search, menu, close), interface (arrows, chevrons, plus, minus, contents, footnote, external, info, warning, check, hash, quote) and topics (heat, tree, shade, pavement, water, river, soil, sidewalk, bioswale, permeable, leaf, thermometer, pin, ruler, building).
-- **Drawing a new one**: three to six strokes, one accent stroke on the meaningful part, round caps, never solid-ink fills. If it needs more, it is an illustration.
-- **Logo mark** `rds-logo` (`#i-logo`): two ridgelines forming a valley, ink for the old line and brick for the redrawn one, a moss tree and a low sun. The shared shell puts it left of the Newsreader wordmark in the header (and phone top bar) and in the footer; `favicon.svg` is the same mark on a paper tile. `site-shell.js` adds the favicon and icon stylesheet to any page that lacks them.
+- **Drawing a new one**: two or three strokes, one accent stroke on the meaningful part, round caps, never solid-ink fills. If it needs more, it is an illustration.
+- **Logo mark** `rds-logo` (`#i-logo`): two ridgelines forming a valley, ink for the old line, brick for the redrawn one beneath it, and a low brick sun: three strokes so it holds at 16px. The shared shell puts it left of the Newsreader wordmark in the header (and phone top bar) and in the footer; `favicon.svg` is the same mark on a paper tile. `site-shell.js` adds the favicon and icon stylesheet to any page that lacks them.
 - **Where icons appear**: phone tab bar (brick accent on the current tab only), header search, topic icon at the start of each field guide, notes and studies index row (`rds-row__icon`, with `--moss` / `--slate` variants).
 
 ## Studies
