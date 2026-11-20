@@ -43,6 +43,24 @@
     btn.addEventListener('click', function () { var o = ul.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Close' : 'Menu'; });
   }
 
+  /* ---------- bottom tab bar (phones only; mobile.css hides it above 640px) ---------- */
+  function tabbar() {
+    if (doc.querySelector('.rv-tabbar')) return;
+    var ic = function (d) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>'; };
+    var T = [
+      ['Home', '', '', ic('<path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4v-5H9v5H5a1 1 0 0 1-1-1z"/>')],
+      ['Guide', 'guide/', 'guide', ic('<path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v15H6.5A1.5 1.5 0 0 0 5 20.5zM5 20.5V5.5M9 8h6"/>')],
+      ['Studies', 'studies/', 'studies', ic('<path d="M3.5 7 9 4.5l6 2.5 5.5-2.5v13L15 20l-6-2.5-5.5 2.5zM9 4.5v13M15 7v13"/>')],
+      ['Notes', 'notes/', 'notes', ic('<path d="M5 19.5 6 15 16.5 4.5a1.8 1.8 0 0 1 2.5 0l.5.5a1.8 1.8 0 0 1 0 2.5L9 18zM14.5 6.5l3 3"/>')]
+    ];
+    var nav = doc.createElement('nav'); nav.className = 'rv-tabbar'; nav.setAttribute('aria-label', 'Main');
+    nav.innerHTML = T.map(function (t) {
+      var on = t[2] ? section === t[2] : rel === '';
+      return '<a href="' + esc(href(t[1])) + '"' + (on ? ' aria-current="page"' : '') + '>' + t[3] + '<span>' + t[0] + '</span></a>';
+    }).join('') + '<button type="button" data-rv-search-open>' + ic('<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/>') + '<span>Search</span></button>';
+    doc.body.appendChild(nav);
+  }
+
   /* ---------- footer ---------- */
   function footer(el) {
     var site = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['About', 'index.html#about']]
@@ -86,7 +104,7 @@
     dlg = doc.createElement('dialog'); dlg.className = 'rds-search'; dlg.setAttribute('aria-label', 'Search the site');
     dlg.innerHTML = '<form class="rds-search__bar" role="search" method="dialog">' + SEARCH_ICON +
       '<input type="search" class="rds-search__input" placeholder="Search studies, guide, notes" autocomplete="off" spellcheck="false" aria-label="Search" role="combobox" aria-expanded="true" aria-controls="rv-results" aria-autocomplete="list">' +
-      '<button type="button" class="rds-search__close" aria-label="Close search">Esc</button></form>' +
+      '<button type="button" class="rds-search__close" aria-label="Close search"><span class="rv-k-desk">Esc</span><span class="rv-k-mob">Cancel</span></button></form>' +
       '<ul class="rds-search__list" id="rv-results" role="listbox"></ul><p class="rds-search__status rds-mono" aria-live="polite"></p>';
     doc.body.appendChild(dlg);
     input = dlg.querySelector('input'); list = dlg.querySelector('ul'); status = dlg.querySelector('.rds-search__status');
@@ -174,6 +192,7 @@
     all('[data-rv-shell="nav"]').forEach(header);
     all('[data-rv-shell="footer"]').forEach(footer);
     all('[data-rv-crumbs]').forEach(crumbs);
+    tabbar();
     doc.addEventListener('click', function (e) {
       var b = e.target.closest && e.target.closest('[data-rv-search-open]'); if (!b) return;
       e.preventDefault(); open(b.getAttribute('data-rv-search-open') || '');
