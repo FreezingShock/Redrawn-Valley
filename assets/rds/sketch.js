@@ -15,13 +15,17 @@
     '<filter id="rv-pencil-soft" x="-2%" y="-2%" width="104%" height="104%" color-interpolation-filters="sRGB">' +
     '<feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="9" result="n"/>' +
     '<feDisplacementMap in="SourceGraphic" in2="n" scale="1.8" xChannelSelector="R" yChannelSelector="G"/></filter>' +
+    '<filter id="rv-pencil-line" filterUnits="userSpaceOnUse" x="-200" y="-200" width="4000" height="4000" color-interpolation-filters="sRGB">' +
+    '<feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="5" result="n"/>' +
+    '<feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>' +
     '</defs>';
   function ready(fn) { doc.readyState === 'loading' ? doc.addEventListener('DOMContentLoaded', fn) : fn(); }
   ready(function () {
     doc.body.appendChild(host);
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches;
-    var sel = '.rv-compare svg,.rv-feature__art svg,.rv-about__art svg,.rds-figure__art svg,.rds-infobox__art svg,.rv-infobox svg,.rv-svg,.rds-card__media svg';
+    var sel = '.rv-compare svg,.rv-feature__art svg,.rv-about__art svg,.rds-figure__art svg:not(.rv-svg),.rds-infobox__art svg,.rv-infobox svg,.rds-card__media svg';
     var list = Array.prototype.slice.call(doc.querySelectorAll(sel));
+    Array.prototype.slice.call(doc.querySelectorAll('svg.rv-svg')).forEach(function (s) { s.classList.add('rv-pencil-shapes'); });
     list.forEach(function (svg) {
       if (svg.getAttribute('aria-hidden') === 'true' && svg.closest('button,a.rds-btn')) return;
       var animated = svg.hasAttribute('data-rds-draw');
