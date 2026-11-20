@@ -26,7 +26,11 @@ index.html                         front page
 studies/topanga-willows/index.html study 01 (self-contained page)
 notes/index.html                   notes index; notes/<slug>/index.html are the essays
 assets/rds/tokens.css             Redrawn Design System design tokens (colors, spacing, radii, fonts)
-assets/rds/rds.css               Redrawn Design System components
+assets/rds/rds.css               Redrawn Design System components (and the icon component)
+assets/rds/motifs.js              seeded generative art (banners, strips, cards); see DESIGN.md > Motifs
+assets/rds/patterns.js           controls for the pattern sheet
+patterns/index.html              pattern sheet: every motif, palette, seed lab
+assets/rds/skin.css              responsive layer + sketchbook layer; loaded last on every page
 assets/rds/notes.css, notes.js    styles and script for the Notes section
 studies/index.html                 studies index
 studies/_template/index.html       copy to start a new study (see DESIGN.md > Studies)
@@ -37,6 +41,7 @@ guide/index.html                   Field guide index (search, topic filter)
 guide/<slug>/index.html            Field guide entries (11)
 assets/rds/article.css, article.js Redrawn Design System article components
 assets/rds/rds.js                Redrawn Design System motion: reveals, drawings, nav, contents rail
+assets/rds/icons/                  hand-drawn icon sprite, logo and favicon (scripts/build_icons.py); gallery at icons/index.html
 assets/site.css                    rules specific to this site
 assets/site.js                     before/after toggle on the front page
 assets/studies.css, studies.js     study pages: article layout, infobox, page behavior

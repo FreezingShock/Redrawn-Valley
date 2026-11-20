@@ -28,14 +28,23 @@
   }
 
   /* ---------- header ---------- */
-  var SEARCH_ICON = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/></svg>';
+  /* icons: hand-drawn sprite (assets/rds/icons/icons.svg). width/height attributes stop a flash of oversized icons before rds.css loads. */
+  var SPRITE = new URL('assets/rds/icons/icons.svg', siteRoot).href;
+  function icon(name, cls, size) { return '<svg class="rds-icon' + (cls ? ' ' + cls : '') + '" width="' + (size || 24) + '" height="' + (size || 24) + '" aria-hidden="true" focusable="false"><use href="' + SPRITE + '#i-' + name + '"/></svg>'; }
+  function logoMark(size) { return '<svg class="rds-logo" width="' + (size || 34) + '" height="' + (size || 34) + '" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><use href="' + SPRITE + '#i-logo"/></svg>'; }
+  var SEARCH_ICON = icon('search', 'rds-icon--sm', 18);
+  if (!doc.querySelector('link[rel~="icon"]')) {
+    [['icon', 'assets/rds/icons/favicon.svg', 'image/svg+xml'], ['apple-touch-icon', 'assets/rds/icons/apple-touch-icon.png']].forEach(function (a) {
+      var k = doc.createElement('link'); k.rel = a[0]; k.href = new URL(a[1], siteRoot).href; if (a[2]) k.type = a[2]; doc.head.appendChild(k);
+    });
+  }
   function header(el) {
     var links = NAV.map(function (n) {
       var on = n[1].split('#')[0] !== 'index.html' && n[1] === section + '/';
       return '<li><a href="' + esc(href(n[1])) + '"' + (on ? ' aria-current="page"' : '') + '>' + n[0] + '</a></li>';
     }).join('');
     el.innerHTML = '<a class="rds-skip" href="#main">Skip to content</a>' +
-      '<a class="rds-nav__brand" href="' + esc(href('')) + '">Redrawn Valley</a>' +
+      '<a class="rds-nav__brand" href="' + esc(href('')) + '">' + logoMark() + '<span>Redrawn Valley</span></a>' +
       '<ul class="rds-nav__links" id="rv-menu">' + links + '</ul>' +
       '<button class="rds-nav__search" type="button" data-rv-search-open aria-label="Search the site">' + SEARCH_ICON + '<span>Search</span><kbd>/</kbd></button>' +
       '<button class="rds-nav__menu" type="button" aria-expanded="false" aria-controls="rv-menu">Menu</button>';
@@ -43,15 +52,34 @@
     btn.addEventListener('click', function () { var o = ul.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Close' : 'Menu'; });
   }
 
+  /* ---------- bottom tab bar (phones only; skin.css hides it above 640px) ---------- */
+  function tabbar() {
+    if (doc.querySelector('.rv-tabbar')) return;
+    var ic = function (n) { return icon(n, '', 24); };
+    var T = [
+      ['Home', '', '', ic('home')],
+      ['Guide', 'guide/', 'guide', ic('guide')],
+      ['Studies', 'studies/', 'studies', ic('studies')],
+      ['Notes', 'notes/', 'notes', ic('notes')]
+    ];
+    var nav = doc.createElement('nav'); nav.className = 'rv-tabbar'; nav.setAttribute('aria-label', 'Main');
+    nav.innerHTML = T.map(function (t) {
+      var on = t[2] ? section === t[2] : rel === '';
+      return '<a href="' + esc(href(t[1])) + '"' + (on ? ' aria-current="page"' : '') + '>' + t[3] + '<span>' + t[0] + '</span></a>';
+    }).join('') + '<button type="button" data-rv-search-open>' + ic('search') + '<span>Search</span></button>';
+    doc.body.appendChild(nav);
+  }
+
   /* ---------- footer ---------- */
   function footer(el) {
     var site = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['About', 'index.html#about']]
       .map(function (n) { return '<li><a href="' + esc(href(n[1])) + '">' + n[0] + '</a></li>'; }).join('');
     el.innerHTML = '<div class="rds-footer__grid">' +
-      '<div><p class="rds-footer__brand">Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
+      '<div><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
       '<div><h4>Site</h4><ul>' + site + '</ul></div>' +
       '<div><h4>Studies</h4><ul data-rv-footer-studies><li><a href="' + esc(href('studies/')) + '">All studies</a></li></ul></div>' +
       '<div><h4>Find things</h4><ul><li><a href="#" data-rv-search-open>Search the site</a></li><li><a href="' + esc(new URL('sitemap.xml', siteRoot).href) + '">Sitemap</a></li></ul></div>' +
+      '<div><h4>Design</h4><ul><li><a href="' + esc(new URL('patterns/', siteRoot).href) + '">Pattern sheet</a></li><li><a href="' + esc(new URL('icons/', siteRoot).href) + '">Icon set</a></li></ul></div>' +
       '</div><div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>';
     loadIndex().then(function (d) {
       var ul = el.querySelector('[data-rv-footer-studies]'), s = d.pages.filter(function (p) { return p.s === 'studies' && p.u.split('/').length > 2; });
@@ -86,7 +114,7 @@
     dlg = doc.createElement('dialog'); dlg.className = 'rds-search'; dlg.setAttribute('aria-label', 'Search the site');
     dlg.innerHTML = '<form class="rds-search__bar" role="search" method="dialog">' + SEARCH_ICON +
       '<input type="search" class="rds-search__input" placeholder="Search studies, guide, notes" autocomplete="off" spellcheck="false" aria-label="Search" role="combobox" aria-expanded="true" aria-controls="rv-results" aria-autocomplete="list">' +
-      '<button type="button" class="rds-search__close" aria-label="Close search">Esc</button></form>' +
+      '<button type="button" class="rds-search__close" aria-label="Close search"><span class="rv-k-desk">Esc</span><span class="rv-k-mob">Cancel</span></button></form>' +
       '<ul class="rds-search__list" id="rv-results" role="listbox"></ul><p class="rds-search__status rds-mono" aria-live="polite"></p>';
     doc.body.appendChild(dlg);
     input = dlg.querySelector('input'); list = dlg.querySelector('ul'); status = dlg.querySelector('.rds-search__status');
@@ -174,6 +202,7 @@
     all('[data-rv-shell="nav"]').forEach(header);
     all('[data-rv-shell="footer"]').forEach(footer);
     all('[data-rv-crumbs]').forEach(crumbs);
+    tabbar();
     doc.addEventListener('click', function (e) {
       var b = e.target.closest && e.target.closest('[data-rv-search-open]'); if (!b) return;
       e.preventDefault(); open(b.getAttribute('data-rv-search-open') || '');

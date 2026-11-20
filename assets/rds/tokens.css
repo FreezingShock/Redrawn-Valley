@@ -7,7 +7,7 @@
   --line-strong: #8a8170;
   --ink: #1f1d1a;
   --ink-muted: #5c564c;
-  --ink-faint: #726b5e;
+  --ink-faint: #655e51;
   --on-ink: #f6f1e7;
   --on-ink-muted: #b8b0a0;
   --brick: #9c3d24;
@@ -20,6 +20,12 @@
   --on-moss: #f6f1e7;
   --rust: #8c1c2e;
   --slate: #35506b;
+  /* art accents: decorative fields for the motif system only (assets/rds/motifs.js). Never for text or UI state. */
+  --sky: #7ba3c0;
+  --ochre: #be9661;
+  --rose: #b17c83;
+  --kelly: #4f9b60;
+  --peri: #7c849f;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
