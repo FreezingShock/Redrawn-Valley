@@ -1,2 +1,41 @@
-# Redrawn-Valley
-Seeing the valley anew
+# Redrawn Valley
+
+Small places in the San Fernando Valley, studied and redrawn. A static site: no build step, no dependencies.
+
+## Run it
+
+Open `index.html` in a browser. Or serve the folder:
+
+```
+python3 -m http.server 8000
+```
+
+## Branches and deploys
+
+- `main` is production (Vercel). `integration` is where work lands first (Vercel preview). PRs target `integration` and auto-merge once `scripts/check.py` passes; add the `hold` label to stop one. Promote with Actions > "Promote integration to main", then merge that PR by hand.
+- Vercel: framework preset **Other**, no build command, no output directory.
+
+Design rules live in `DESIGN.md` (the Redrawn Design System). Agent rules live in `CLAUDE.md`.
+
+## Structure
+
+```
+index.html                         front page
+studies/topanga-willows/index.html study 01 (self-contained page)
+assets/rds/tokens.css             Redrawn Design System design tokens (colors, spacing, radii, fonts)
+assets/rds/rds.css               Redrawn Design System components
+assets/rds/rds.js                Redrawn Design System motion: reveals, drawings, nav, contents rail
+assets/site.css                    rules specific to this site
+assets/site.js                     before/after toggle on the front page
+scripts/check.py                   link and anchor check (run in CI)
+DESIGN.md, CLAUDE.md               design system write-up, working rules
+```
+
+## To fill in
+
+Search the project for square brackets: `[Last name]`, `[YOUR EMAIL]`, `[YOUR GITHUB]`, `[DATE]`, `[NEXT SITE ...]`.
+
+## Next
+
+- A studies index and a reusable study template.
+- Notes (the blog): an index page and a post template.

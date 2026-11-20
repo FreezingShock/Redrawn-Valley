@@ -1,0 +1,25 @@
+name: Promote integration to main
+
+# Manual: Actions tab > "Promote integration to main" > Run workflow.
+# Opens (or reuses) a PR from integration to main. You review and merge it by hand; that merge is the production deploy.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Open the promotion PR
+        run: |
+          existing=$(gh pr list --repo "$REPO" --base main --head integration --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then echo "PR #$existing already open"; exit 0; fi
+          gh pr create --repo "$REPO" --base main --head integration \
+            --title "Promote integration to main" \
+            --body "Periodic promotion. Check the integration preview on Vercel, then merge."

@@ -1,0 +1,41 @@
+/* Redrawn Design System tokens. Generated from the Redrawn Design System; edit there, not here. */
+:root{
+  --paper: #f6f1e7;
+  --paper-raised: #fbf8f1;
+  --paper-sunk: #ece5d6;
+  --line: #d9d0bd;
+  --line-strong: #8a8170;
+  --ink: #1f1d1a;
+  --ink-muted: #5c564c;
+  --ink-faint: #726b5e;
+  --on-ink: #f6f1e7;
+  --on-ink-muted: #b8b0a0;
+  --brick: #9c3d24;
+  --brick-deep: #7d2f1a;
+  --brick-tint: #f0d9cc;
+  --on-brick: #fbf8f1;
+  --moss: #2f4a3a;
+  --moss-deep: #213529;
+  --moss-tint: #dfe6d8;
+  --on-moss: #f6f1e7;
+  --rust: #8c1c2e;
+  --slate: #35506b;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --font-serif: Newsreader, Georgia, serif;
+  --font-sans: Hanken Grotesk, system-ui, sans-serif;
+  --font-mono: IBM Plex Mono, ui-monospace, monospace;
+  --font-hand: Architects Daughter, Hanken Grotesk, sans-serif;
+}
