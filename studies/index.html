@@ -15,19 +15,11 @@
 </head>
 <body class="rds-page">
 
-<header class="rds-nav" data-rds-nav>
-<a class="rds-nav__brand" href="../index.html">Redrawn Valley</a>
-<ul class="rds-nav__links">
-<li><a href="index.html" aria-current="page">Studies</a></li>
-<li><a href="../index.html#method">Method</a></li>
-<li><a href="../index.html#notes">Notes</a></li>
-<li><a href="../index.html#about">About</a></li>
-</ul>
-<a class="rds-btn rds-btn--ghost rds-btn--sm" href="topanga-willows/index.html">First study</a>
-</header>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav"></header>
 
-<main id="top">
-<div class="rv-article-head" style="padding-top:clamp(96px,10vw,144px)">
+<main id="main">
+<div class="rds-container" style="padding-top:var(--space-4)"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
+<div class="rv-article-head" style="padding-top:clamp(32px,5vw,64px)">
 <div class="rv-article-head__main">
 <p class="rds-eyebrow" data-rds-reveal="fade">Studies &middot; Index</p>
 <h1 class="rds-display-xl" data-rds-split>One study is done, and two sites are waiting</h1>
@@ -142,15 +134,9 @@
 </section>
 </main>
 
-<footer class="rds-footer">
-<div class="rds-footer__grid">
-<div><p class="rds-footer__brand">Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>
-<div><h4>Site</h4><ul><li><a href="index.html">Studies</a></li><li><a href="../index.html#method">Method</a></li><li><a href="../index.html#notes">Notes</a></li><li><a href="../index.html#about">About</a></li></ul></div>
-<div><h4>Studies</h4><ul><li><a href="topanga-willows/index.html">01 Topanga Willows</a></li></ul></div>
-</div>
-<div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>
-</footer>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
 
 <script src="../assets/rds/rds.js"></script>
+<script src="../assets/site-shell.js"></script>
 </body>
 </html>

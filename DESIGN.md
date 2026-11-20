@@ -75,7 +75,7 @@ Headlines are sentences that state the finding ("Soil, not trees, is the hard pa
 
 ## Shared shell, breadcrumbs and search (`assets/site-shell.js`)
 
-Every page except the standalone study uses one script for the header, footer, breadcrumbs and search, so the nav changes in one place. Add placeholders and load the script (path relative to the page; `../` per folder level):
+Every page uses one script for the header, footer, breadcrumbs and search, so the nav changes in one place. Add placeholders and load the script (path relative to the page; `../` per folder level):
 
 ```html
 <header class="rds-nav" data-rds-nav data-rv-shell="nav"></header>
@@ -121,7 +121,7 @@ Components (prefix `rv-`, tokens only):
 **Adding a study**
 1. Copy `studies/_template/index.html` to `studies/<slug>/index.html` (same depth, so paths stay valid). Delete the noindex meta and the instruction comment.
 2. Replace every `[BRACKETED CAPS]` placeholder; fill every infobox row. Keep the real/estimated callout, Measuring, Limits and Sources. Headlines state findings; every number is cited; no invented sources.
-3. Add it to `studies/index.html` (table row, topic rows), the home page Studies section and the home footer.
+3. Add it to `studies/index.html` (table row, topic rows), and the home page Studies section. The footer and search pick it up once `python3 scripts/build_index.py` has run.
 4. Run `python3 scripts/check.py`, then view at 375px and 1280px.
 
 ## Using this when adding pages
