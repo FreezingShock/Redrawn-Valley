@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://redrawn-valley.vercel.app/sitemap.xml
+Sitemap: https://redrawnvalley.vercel.app/sitemap.xml
