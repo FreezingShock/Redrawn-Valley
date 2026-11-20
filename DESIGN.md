@@ -95,6 +95,5 @@ Headlines are sentences that state the finding ("Soil, not trees, is the hard pa
 
 ## Known issues
 
-- The `rds-mark` highlighter SVG data URI contains Python-style `+0.0j` fragments in its path data (in `rds.css` and the study page). Browsers tolerate it; clean it up when touching that rule.
 - The study page does not use the shared stylesheet (see Page patterns), so token changes do not reach it.
 - Home and study still contain placeholders: `[Last name]`, `[YOUR EMAIL]`, `[YOUR GITHUB]`, `[DATE]`, `[NEXT SITE ...]`.
