@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pattern sheet | Redrawn Valley</title>
+<meta name="description" content="Every motif the site draws with: grid-filled shapes, overlapping circles, drafting tools, contours, halftone and plan symbols. Reroll a seed and watch the tiles shift.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Architects+Daughter&display=swap">
+<link rel="stylesheet" href="../assets/rds/tokens.css">
+<link rel="stylesheet" href="../assets/rds/rds.css">
+<link rel="stylesheet" href="../assets/rds/skin.css">
+<style>
+.rv-pats{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--space-8) var(--space-6);margin-top:var(--space-8)}
+.rv-pat h3{font:500 22px/1.3 var(--rds-serif);margin:var(--space-3) 0 var(--space-1)}
+.rv-pat p{margin:0 0 var(--space-2);color:var(--ink-muted);font-size:15px;line-height:24px}
+.rv-pat code,.rv-sw code{font:400 13px/20px var(--rds-mono);color:var(--ink-faint)}
+.rv-pat .rv-tiles{margin:0}
+.rv-lab{display:grid;gap:var(--space-4);margin-bottom:var(--space-6)}
+.rv-lab__row{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:end}
+.rv-lab__row label{display:flex;flex-direction:column;gap:6px;font:600 13px/16px var(--rds-sans)}
+.rv-lab select,.rv-lab input{height:44px;padding:0 14px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--paper-raised);color:var(--ink);font:400 16px/1 var(--rds-sans)}
+.rv-lab input{min-width:min(260px,100%)}
+.rv-sw{list-style:none;margin:var(--space-8) 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--space-4)}
+.rv-sw li{display:grid;gap:2px}
+.rv-sw span{display:block;height:64px;border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--radius-md);margin-bottom:var(--space-2)}
+.rv-rules{max-width:62ch;margin:var(--space-6) 0 0;padding-left:var(--space-6);display:grid;gap:var(--space-2)}
+</style>
+</head>
+<body class="rds-page">
+
+<header class="rds-nav" data-rds-nav data-rv-shell="nav"></header>
+
+<main id="main">
+<section class="rds-section" style="padding-bottom:var(--space-8)">
+<div class="rds-container">
+<nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav>
+<div class="rds-sechead">
+<p class="rds-eyebrow">Design system · Patterns</p>
+<h1 class="rds-display">Every page gets its own <span class="rds-mark">drawing</span></h1>
+<p class="rds-lead">The banners across this site are generated from a seed, so each page and each note keeps the same composition every time. Pick a seed, reroll, and watch a tile change its colour, shape or icon every few seconds.</p>
+</div>
+<form class="rv-lab" data-lab onsubmit="return false">
+<div class="rv-lab__row">
+<label>Seed<input type="text" value="my-first-study" data-seed autocomplete="off" spellcheck="false"></label>
+<label>Topic<select data-topic><option value="">Any</option><option value="shade trees">Shade and trees</option><option value="water river rain">Water and rain</option><option value="heat pavement">Heat and pavement</option><option value="soil">Soil</option><option value="equity walk">People and walking</option><option value="valley study">Valley and sites</option></select></label>
+<label>Layout<select data-kind><option value="banner">Banner</option><option value="card">Card</option><option value="square">Square</option><option value="strip">Strip</option></select></label>
+<button class="rds-btn rds-btn--ink" type="button" data-reroll>Reroll</button>
+<button class="rds-btn rds-btn--ghost" type="button" data-pause aria-pressed="false">Pause drift</button>
+</div>
+<p class="rds-small" style="margin:0;color:var(--ink-muted)" data-status aria-live="polite"></p>
+</form>
+<div class="rv-tiles rds-art" data-lab-art data-rds-art="banner" data-seed="my-first-study" aria-hidden="true"></div>
+</div>
+</section>
+
+<section class="rds-section rds-band-sunk" id="motifs" style="padding-top:var(--space-12)">
+<div class="rds-container">
+<div class="rds-sechead">
+<p class="rds-eyebrow">The set</p>
+<h2 class="rds-display" style="font-size:clamp(30px,4vw,40px)">Fourteen motifs, each one thing</h2>
+<p class="rds-lead">Borrowed from the pattern, not the pictures: flat tiles on a single field, grids on the shape and never on the field, drafting tools as objects, and constant line weight. Every one is drawn in code in our palette.</p>
+</div>
+<div class="rv-pats"><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="gridDisc" data-seed="sheet-gridDisc" aria-hidden="true"></div><h3>Grid-filled disc</h3><p>A flat disc with a fine graph-paper grid on the shape only, sometimes with a smaller second disc. Drift: morphs into a rounded square.</p><code>gridDisc</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="gridSquares" data-seed="sheet-gridSquares" aria-hidden="true"></div><h3>Grid-filled square</h3><p>A large grid-filled square with a flat inset block. Drift: the inset grows.</p><code>gridSquares</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="overlap" data-seed="sheet-overlap" aria-hidden="true"></div><h3>Overlapping circles</h3><p>Three translucent circles that darken where they cross. Drift: the outer two spread apart.</p><code>overlap</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="split" data-seed="sheet-split" aria-hidden="true"></div><h3>Split discs</h3><p>Two half discs pulled apart, each with its own grid.</p><code>split</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="compass" data-seed="sheet-compass" aria-hidden="true"></div><h3>Compass</h3><p>A drafting compass with the circle it would draw. Sways slowly.</p><code>compass</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="protractor" data-seed="sheet-protractor" aria-hidden="true"></div><h3>Protractor</h3><p>Half disc with ticks every 2 degrees and one brick line as the measured angle. Drift: the needle swings.</p><code>protractor</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="setsquare" data-seed="sheet-setsquare" aria-hidden="true"></div><h3>Set square</h3><p>A right triangle with a cutout and tick marks on the base.</p><code>setsquare</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="ruler" data-seed="sheet-ruler" aria-hidden="true"></div><h3>Scale ruler</h3><p>A tilted ruler with mono numerals; sways slowly.</p><code>ruler</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="contours" data-seed="sheet-contours" aria-hidden="true"></div><h3>Contours</h3><p>Nested wobbly rings, every fifth heavier; the same idea as the topo lines in the HABS plans.</p><code>contours</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="halftone" data-seed="sheet-halftone" aria-hidden="true"></div><h3>Halftone</h3><p>A staggered dot field whose dots shrink to one side.</p><code>halftone</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="plan" data-seed="sheet-plan" aria-hidden="true"></div><h3>Plan symbols</h3><p>Tree canopies with centre dots, a dashed slate flow line, a scale bar and a north arrow in a double-ruled sheet.</p><code>plan</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="bars" data-seed="sheet-bars" aria-hidden="true"></div><h3>Bars on ink</h3><p>Flat bars in the art colours on an ink field. Drift: bars rescale.</p><code>bars</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="lines" data-seed="sheet-lines" aria-hidden="true"></div><h3>Crossing lines</h3><p>Two columns of dots joined by coloured lines on dotted paper.</p><code>lines</code></div><div class="rv-pat"><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="icon" data-seed="sheet-icon" aria-hidden="true"></div><h3>Big icon</h3><p>A site icon from the sprite at tile scale. Drift: crossfades to a second icon.</p><code>icon</code></div></div>
+</div>
+</section>
+
+<section class="rds-section" id="palette">
+<div class="rds-container">
+<div class="rds-sechead">
+<p class="rds-eyebrow">Palette</p>
+<h2 class="rds-display" style="font-size:clamp(30px,4vw,40px)">Two to four colours, plus ink and paper</h2>
+<p class="rds-lead">The art accents are for decoration only. They never carry text or meaning; brick, moss and slate keep their jobs in the interface.</p>
+</div>
+<ul class="rv-sw"><li><span style="background:var(--paper)"></span><b>paper</b><code>#f6f1e7</code></li><li><span style="background:var(--paper-sunk)"></span><b>paper-sunk</b><code>#ece5d6</code></li><li><span style="background:var(--ink)"></span><b>ink</b><code>#1f1d1a</code></li><li><span style="background:var(--brick)"></span><b>brick</b><code>#9c3d24</code></li><li><span style="background:var(--moss)"></span><b>moss</b><code>#2f4a3a</code></li><li><span style="background:var(--slate)"></span><b>slate</b><code>#35506b</code></li><li><span style="background:var(--sky)"></span><b>sky</b><code>#7ba3c0</code></li><li><span style="background:var(--ochre)"></span><b>ochre</b><code>#be9661</code></li><li><span style="background:var(--rose)"></span><b>rose</b><code>#b17c83</code></li><li><span style="background:var(--kelly)"></span><b>kelly</b><code>#4f9b60</code></li><li><span style="background:var(--peri)"></span><b>peri</b><code>#7c849f</code></li></ul>
+<ul class="rv-rules">
+<li>One saturated or pale field per tile; a field colour is not reused inside one banner when it can be avoided.</li>
+<li>The grid sits on the shape, not the field. Line weight stays the same within one drawing.</li>
+<li>Motion is slow and rare: one tile shifts every five to ten seconds, only while the art is on screen. With reduced motion set, nothing moves.</li>
+<li>Same seed, same drawing. Use the page slug as the seed.</li>
+</ul>
+</div>
+</section>
+</main>
+
+<footer class="rds-footer" data-rv-shell="footer"></footer>
+<script src="../assets/rds/rds.js"></script>
+<script src="../assets/rds/motifs.js" defer></script>
+<script src="../assets/rds/mobile.js"></script>
+<script src="../assets/rds/patterns.js" defer></script>
+<script src="../assets/site-shell.js"></script>
+<script src="../assets/rds/sketch.js" defer></script>
+</body>
+</html>

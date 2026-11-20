@@ -27,6 +27,9 @@ studies/topanga-willows/index.html study 01 (self-contained page)
 notes/index.html                   notes index; notes/<slug>/index.html are the essays
 assets/rds/tokens.css             Redrawn Design System design tokens (colors, spacing, radii, fonts)
 assets/rds/rds.css               Redrawn Design System components (and the icon component)
+assets/rds/motifs.js              seeded generative art (banners, strips, cards); see DESIGN.md > Motifs
+assets/rds/patterns.js           controls for the pattern sheet
+patterns/index.html              pattern sheet: every motif, palette, seed lab
 assets/rds/skin.css              responsive layer + sketchbook layer; loaded last on every page
 assets/rds/notes.css, notes.js    styles and script for the Notes section
 studies/index.html                 studies index

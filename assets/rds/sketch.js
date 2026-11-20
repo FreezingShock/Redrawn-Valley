@@ -33,6 +33,7 @@
     var list = Array.prototype.slice.call(doc.querySelectorAll(sel));
     Array.prototype.slice.call(doc.querySelectorAll('svg.rv-svg')).forEach(function (s) { s.classList.add('rv-pencil-shapes'); });
     list.forEach(function (svg) {
+      if (svg.closest('.rds-art')) return; /* generated art keeps clean edges: the pencil filter breaks blended and oversized shapes */
       if (svg.getAttribute('aria-hidden') === 'true' && svg.closest('button,a.rds-btn')) return;
       var animated = svg.hasAttribute('data-rds-draw');
       var cls = svg.closest('.rds-infobox__art,.rv-infobox') ? 'rv-pencil-soft' : 'rv-pencil';

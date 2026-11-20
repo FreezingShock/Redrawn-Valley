@@ -166,15 +166,15 @@
   var STRIP_MOTIFS = ['gridDisc', 'gridSquares', 'halftone', 'lines', 'contours', 'overlap', 'split', 'bars'];
 
   /* ---------- compose ---------- */
-  function build(kind, seed, topic) {
-    var rnd = Rng(seed + '|' + kind), pr = profile(topic || ''), W = SIZES[kind][0], H = SIZES[kind][1], id = 'a' + (++uid), rects = layout(kind, W, H, rnd), n = rects.length, k = 0;
-    var motifs = [], pool = (kind === 'strip' ? STRIP_MOTIFS : pr.motifs).slice(), all = Object.keys(M);
-    for (var i = 0; i < n; i++) {
+  function build(kind, seed, topic, only) {
+    var rnd = Rng(seed + '|' + kind), pr = profile(topic || ''), W = SIZES[kind][0], H = SIZES[kind][1], id = 'a' + (++uid), rects = only ? [{ x: 0, y: 0, w: W, h: H }] : layout(kind, W, H, rnd), n = rects.length, k = 0;
+    var motifs = only ? [only] : [], pool = (kind === 'strip' ? STRIP_MOTIFS : pr.motifs).slice(), all = Object.keys(M);
+    for (var i = 0; i < n && !only; i++) {
       var m, guard = 0;
       do { m = rnd() < .75 || kind === 'strip' ? rnd.pick(pool) : rnd.pick(all); } while ((motifs.indexOf(m) >= 0 || (kind === 'strip' && i && motifs[i - 1] === m)) && guard++ < 30);
       motifs.push(m);
     }
-    if (kind !== 'strip' && !motifs.some(function (m) { return TOOLS.indexOf(m) >= 0; }) && rnd() < .7) motifs[rnd.int(0, n - 1)] = rnd.pick(TOOLS);
+    if (!only && kind !== 'strip' && !motifs.some(function (m) { return TOOLS.indexOf(m) >= 0; }) && rnd() < .7) motifs[rnd.int(0, n - 1)] = rnd.pick(TOOLS);
     var fields = rnd.shuffle(pr.fields), prev = null, tiles = [], svg = '', taken = [];
     rects.forEach(function (rc, i) {
       var m = motifs[i], paper = PAPER_KINDS[m] !== undefined && PAPER_KINDS[m] === 1 || m === 'contours' && rnd() < .5 || m === 'halftone', field, ink = m === 'bars';
@@ -205,7 +205,7 @@
     if (!opts.kind && mob && narrow.matches) kind = mob;
     if (!SIZES[kind]) kind = 'banner';
     var seed = opts.seed || el.getAttribute('data-seed') || slugOf(), topic = opts.topic != null ? opts.topic : (el.getAttribute('data-topic') || seed);
-    var b = build(kind, seed, topic);
+    var b = build(kind, seed, topic, opts.only || el.getAttribute('data-motif'));
     el.innerHTML = b.html;
     el.classList.add('rds-art', 'rds-art--' + kind);
     el.setAttribute('aria-hidden', 'true');
@@ -234,7 +234,7 @@
     }
   }
   function tick() {
-    if (reduceMQ.matches || doc.hidden) return;
+    if (reduceMQ.matches || doc.hidden || doc.documentElement.classList.contains('rv-art-paused')) return;
     var now = Date.now();
     arts.forEach(function (el) { var a = el.__art; if (!a || !a.live || !el.isConnected || now < a.next) return; shiftTile(el); a.next = now + 5500 + a.rnd() * 4500; });
   }
@@ -246,6 +246,6 @@
   function slugOf() { var m = location.pathname.replace(/index\.html$/, '').split('/').filter(Boolean); return m.join('/') || 'home'; }
   function init() {
     if (!doc.querySelector('.rds-art--strip') && !doc.querySelector('[data-no-footstrip]')) { var ft = doc.querySelector('.rds-footer,[data-rv-shell="footer"]'); if (ft) { var s = doc.createElement('div'); s.className = 'rds-art rds-art--strip rv-footstrip'; s.setAttribute('data-rds-art', 'strip'); s.setAttribute('data-seed', 'foot:' + slugOf()); ft.parentNode.insertBefore(s, ft); } } [].slice.call(doc.querySelectorAll('[data-rds-art]')).forEach(function (el) { render(el); }); }
-  window.RDSArt = { render: render, reroll: reroll, build: build, motifs: Object.keys(M), palette: SAT };
+  window.RDSArt = { renderMotif: function (el, name, seed, kind) { return render(el, { kind: kind || 'card', seed: seed || name, topic: '', only: name }); }, render: render, reroll: reroll, build: build, motifs: Object.keys(M), palette: SAT };
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
 })();

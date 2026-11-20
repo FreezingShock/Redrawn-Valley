@@ -365,3 +365,5 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
   .rds-art.is-live .m-arc,.rds-art.is-live .m-flow{animation:m-dash 60s linear infinite}
 }
 @media (prefers-reduced-motion:reduce){.m-field,.m-shape,.m-inset,.m-ov,.m-bar,.m-ico,.m-needle{transition:none}}
+.rv-art-paused .rds-art{--paused:1}
+.rv-art-paused .rds-art *{animation-play-state:paused!important}
