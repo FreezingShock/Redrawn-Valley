@@ -154,7 +154,7 @@
     if (kind === 'banner') {
       var presets = [[.38, .34, .28], [.5, .25, .25], [.3, .4, .3], [.25, .5, .25], [.62, .38], [.45, .3, .25], [.34, .33, .33]]; cuts = rnd.pick(presets); x = 0;
       cuts.forEach(function (c) { r.push({ x: f(x), y: 0, w: f(c * W), h: H }); x += c * W; });
-    } else if (kind === 'strip') {
+    } else if (/^strip/.test(kind)) {
       x = 0; while (x < W) { var ww = Math.min(rnd.range(70, 190), W - x); if (W - x - ww < 50) ww = W - x; r.push({ x: f(x), y: 0, w: f(ww), h: H }); x += ww; }
     } else if (kind === 'card') {
       var s = rnd.range(.5, .62); r.push({ x: 0, y: 0, w: f(W * s), h: H });
@@ -162,19 +162,19 @@
     } else { var a = rnd.range(.4, .6), b = rnd.range(.4, .6); r = [{ x: 0, y: 0, w: f(W * a), h: f(H * b) }, { x: f(W * a), y: 0, w: f(W * (1 - a)), h: f(H * b) }, { x: 0, y: f(H * b), w: f(W * (1 - a)), h: f(H * (1 - b)) }, { x: f(W * (1 - a)), y: f(H * b), w: f(W * a), h: f(H * (1 - b)) }]; }
     return r;
   }
-  var SIZES = { banner: [1120, 220], strip: [1120, 56], card: [600, 375], square: [400, 400] };
+  var SIZES = { banner: [1120, 220], strip: [1120, 56], stripm: [560, 56], card: [600, 375], square: [400, 400] };
   var STRIP_MOTIFS = ['gridDisc', 'gridSquares', 'halftone', 'lines', 'contours', 'overlap', 'split', 'bars'];
 
   /* ---------- compose ---------- */
   function build(kind, seed, topic, only) {
     var rnd = Rng(seed + '|' + kind), pr = profile(topic || ''), W = SIZES[kind][0], H = SIZES[kind][1], id = 'a' + (++uid), rects = only ? [{ x: 0, y: 0, w: W, h: H }] : layout(kind, W, H, rnd), n = rects.length, k = 0;
-    var motifs = only ? [only] : [], pool = (kind === 'strip' ? STRIP_MOTIFS : pr.motifs).slice(), all = Object.keys(M);
+    var motifs = only ? [only] : [], pool = (/^strip/.test(kind) ? STRIP_MOTIFS : pr.motifs).slice(), all = Object.keys(M);
     for (var i = 0; i < n && !only; i++) {
       var m, guard = 0;
-      do { m = rnd() < .75 || kind === 'strip' ? rnd.pick(pool) : rnd.pick(all); } while ((motifs.indexOf(m) >= 0 || (kind === 'strip' && i && motifs[i - 1] === m)) && guard++ < 30);
+      do { m = rnd() < .75 || /^strip/.test(kind) ? rnd.pick(pool) : rnd.pick(all); } while ((motifs.indexOf(m) >= 0 || (/^strip/.test(kind) && i && motifs[i - 1] === m)) && guard++ < 30);
       motifs.push(m);
     }
-    if (!only && kind !== 'strip' && !motifs.some(function (m) { return TOOLS.indexOf(m) >= 0; }) && rnd() < .7) motifs[rnd.int(0, n - 1)] = rnd.pick(TOOLS);
+    if (!only && !/^strip/.test(kind) && !motifs.some(function (m) { return TOOLS.indexOf(m) >= 0; }) && rnd() < .7) motifs[rnd.int(0, n - 1)] = rnd.pick(TOOLS);
     var fields = rnd.shuffle(pr.fields), prev = null, tiles = [], svg = '', taken = [];
     rects.forEach(function (rc, i) {
       var m = motifs[i], paper = PAPER_KINDS[m] !== undefined && PAPER_KINDS[m] === 1 || m === 'contours' && rnd() < .5 || m === 'halftone', field, ink = m === 'bars';
@@ -245,7 +245,7 @@
   if (narrow.addEventListener) narrow.addEventListener('change', function () { arts.forEach(function (el) { if (el.isConnected && el.getAttribute('data-art-mobile')) render(el, { seed: el.__art.seed, topic: el.__art.topic, kind: narrow.matches ? el.getAttribute('data-art-mobile') : el.getAttribute('data-rds-art') }); }); });
   function slugOf() { var m = location.pathname.replace(/index\.html$/, '').split('/').filter(Boolean); return m.join('/') || 'home'; }
   function init() {
-    if (!doc.querySelector('.rds-art--strip') && !doc.querySelector('[data-no-footstrip]')) { var ft = doc.querySelector('.rds-footer,[data-rv-shell="footer"]'); if (ft) { var s = doc.createElement('div'); s.className = 'rds-art rds-art--strip rv-footstrip'; s.setAttribute('data-rds-art', 'strip'); s.setAttribute('data-seed', 'foot:' + slugOf()); ft.parentNode.insertBefore(s, ft); } } [].slice.call(doc.querySelectorAll('[data-rds-art]')).forEach(function (el) { render(el); }); }
+    if (!doc.querySelector('.rds-art--strip') && !doc.querySelector('[data-no-footstrip]')) { var ft = doc.querySelector('.rds-footer,[data-rv-shell="footer"]'); if (ft) { var s = doc.createElement('div'); s.className = 'rds-art rds-art--strip rv-footstrip'; s.setAttribute('data-rds-art', 'strip'); s.setAttribute('data-art-mobile', 'stripm'); s.setAttribute('data-seed', 'foot:' + slugOf()); ft.parentNode.insertBefore(s, ft); } } [].slice.call(doc.querySelectorAll('[data-rds-art]')).forEach(function (el) { render(el); }); }
   window.RDSArt = { renderMotif: function (el, name, seed, kind) { return render(el, { kind: kind || 'card', seed: seed || name, topic: '', only: name }); }, render: render, reroll: reroll, build: build, motifs: Object.keys(M), palette: SAT };
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
 })();
