@@ -118,7 +118,7 @@
 .rv-study .ts-116,.rv-study.ts-116{display:grid;grid-template-columns:minmax(0, 3fr) minmax(0, 2fr) minmax(0, 5fr);gap:6px 24px;align-items:baseline;padding-block:20px;border-top:0;background:var(--rv-rule-ink) repeat-x 0 0/240px 10px;padding-top:28px;transition-delay:240ms}
 .rv-study .ts-117,.rv-study.ts-117{margin:0 0 20px;max-width:64ch;margin-top:32px}
 .rv-study .ts-118,.rv-study.ts-118{max-width:760px}
-.rv-study .ts-119,.rv-study.ts-119{border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-lg);background:#1e3a5f;overflow:hidden;padding:0px}
+.rv-study .ts-119,.rv-study.ts-119{border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-lg);background:var(--blueprint);overflow:hidden;padding:0px}
 .rv-study .ts-120,.rv-study.ts-120{background:var(--ink);color:var(--paper)}
 .rv-study .ts-121,.rv-study.ts-121{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#b8b0a0;transition-delay:0ms}
 .rv-study .ts-122,.rv-study.ts-122{font-family:Newsreader, Georgia, serif;font-weight:400;font-size:clamp(34px, 4.4vw, 56px);line-height:1.05;letter-spacing:-.02em;margin:0;max-width:18ch}
@@ -164,3 +164,76 @@
   .rv-study .ts-131{grid-template-columns:minmax(0,1fr)}
   .rv-study .ts-134{width:calc(100% - 2*var(--rv-gutter))}
 }
+
+/* Topanga drawings: line, fill and type classes (tokens only; geometry lives in the SVG) */
+.ts-fig{display:block;width:100%;height:auto}
+.ts-fig--bp{background:var(--blueprint)}
+.fbp{fill:var(--draft-line)}
+.fbr{fill:var(--brick)}
+.fln{fill:var(--line)}
+.fmo{fill:var(--moss)}
+.fmt{fill:var(--moss-tint)}
+.fn{fill:none}
+.fpc{fill:var(--pencil)}
+.frs{fill:var(--paper-raised)}
+.fsl{fill:var(--slate)}
+.kbp{stroke:var(--draft-line)}
+.kbr{stroke:var(--brick)}
+.kmo{stroke:var(--moss)}
+.kpc{stroke:var(--pencil)}
+.krs{stroke:var(--paper-raised)}
+.ksl{stroke:var(--slate)}
+.lr{stroke-linecap:round;stroke-linejoin:round}
+.o1{opacity:1}
+.op13{opacity:.13}
+.op3{opacity:0.3}
+.op35{opacity:0.35}
+.op4{opacity:0.4}
+.op45{opacity:0.45}
+.op5{opacity:0.5}
+.op55{opacity:0.55}
+.op6{opacity:0.6}
+.op7{opacity:0.7}
+.op72{opacity:0.72}
+.op75{opacity:0.75}
+.op8{opacity:0.8}
+.op85{opacity:0.85}
+.op9{opacity:0.9}
+.op95{opacity:0.95}
+.tx{font-family:'Architects Daughter','Hanken Grotesk',sans-serif;letter-spacing:.03em}
+.w0_7{stroke-width:0.7}
+.w0_7160000000000002{stroke-width:0.7160000000000002}
+.w0_8{stroke-width:0.8}
+.w0_9{stroke-width:0.9}
+.w0_9000000000000001{stroke-width:0.9000000000000001}
+.w0_9800000000000002{stroke-width:0.9800000000000002}
+.w1{stroke-width:1}
+.w1_1{stroke-width:1.1}
+.w1_2{stroke-width:1.2}
+.w1_24{stroke-width:1.24}
+.w1_3{stroke-width:1.3}
+.w1_3760000000000006{stroke-width:1.3760000000000006}
+.w1_4{stroke-width:1.4}
+.w1_4000000000000001{stroke-width:1.4000000000000001}
+.w1_4160000000000001{stroke-width:1.4160000000000001}
+.w1_5{stroke-width:1.5}
+.w1_5000000000000002{stroke-width:1.5000000000000002}
+.w1_6{stroke-width:1.6}
+.w1_6800000000000002{stroke-width:1.6800000000000002}
+.w1_7{stroke-width:1.7}
+.w1_8{stroke-width:1.8}
+.w1_9{stroke-width:1.9}
+.w2{stroke-width:2}
+.w2_0360000000000005{stroke-width:2.0360000000000005}
+.w2_0760000000000005{stroke-width:2.0760000000000005}
+.w2_1{stroke-width:2.1}
+.w2_2{stroke-width:2.2}
+.w2_736{stroke-width:2.736}
+.w_5{stroke-width:.5}
+.z10{font-size:10px}
+.z11{font-size:11px}
+.z12{font-size:12px}
+.z13{font-size:13px}
+.z14{font-size:14px}
+.z15{font-size:15px}
+.z9{font-size:9px}
