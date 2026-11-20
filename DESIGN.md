@@ -2,7 +2,7 @@
 
 The design system behind Redrawn Valley. Warm paper, ink, brick and moss; a serif for ideas, a sans for interface, mono for evidence. Plain CSS and a small plain script, no build step, no dependencies. **Read this before changing any page.** If a component exists here, use it; if you need a new one, add it to the system (`assets/rds/rds.css`) and document it here, not as a one-off.
 
-Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle).
+Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle).
 
 ## Character
 
@@ -84,6 +84,25 @@ Headlines are sentences that state the finding ("Soil, not trees, is the hard pa
 **Study** (`studies/<slug>/index.html`): a self-contained long-form page. It inlines the system's styles (hex values + its own `.rds-view/.rds-w/.rds-draw` reveal classes and `data-rds-root`) because it was exported as one file; keep it standalone and don't mix it with the shared stylesheet unless you migrate the whole page. Structure: sticky top bar with part tabs (Site / Evidence / Design / Delivery / Sources) → left contents rail with count "01 / 13" → header (case-study label, split headline with one `rds-mark`, lead, two-column fact table: Site, Type, Focus, Status, By, Date) → sticky scroll-driven figure with step text beside it (`data-scrolly`, `data-step`) → "What is real / What is estimated" callout → four parts each with a bordered "Part N of 4" bar and numbered sections (`secNN`): Site, Problem, Evidence, Precedents, Proposal ("seven moves, added one at a time"), Before/after, Soil, Planting, Drawings, Phasing, Measuring, Limits → numbered Sources list. Claims carry superscript mono citations `[n]` that link to `#sN`. Concept-sketch disclaimers appear on every drawing.
 
 **Content rules**: cite every number; mark estimates as estimates; end every study with what is unknown and what would be measured before/after; say "concept study, not commissioned"; no invented quotes or sources.
+
+## Article components (`article.css`, `article.js`)
+
+For long-form reading pages, used by the Field Guide (`guide/`). Load `assets/rds/article.css` after `rds.css`, and `assets/rds/article.js` at the end of the page (`data-rds-article` on `<main>`). Without JS everything is readable.
+
+- **Layout**: `rds-article` > `rds-article__wrap` (46rem, 60rem at ≥900px) > `rds-article__head` (`rds-tag`, `rds-article__title`, `__tagline`, `__meta` mono line), then `rds-hatnote` (italic "part of / for X see Y" line) and `rds-article__body`.
+- **Body**: serif 19/31, first paragraph 21/33; `h2` are auto-numbered (`01`, `02`) in brick mono with a hover `#` anchor (`rds-anchor`). Don't put another `h2` inside the infobox.
+- **Infobox** `rds-infobox`: floats right (19rem) at ≥900px, full width above the body below that. Parts: `__title` (moss header, a `<p>`), `__art` (small inline SVG, moss tint), `__cap`, a `<dl>` of `<div><dt/><dd/></div>` rows, `__foot`.
+- **Contents box** `rds-contents` (`<details open>` with a numbered `<ol>`; current heading gets `aria-current`).
+- **Cross-reference** `rds-xref`: moss link with dotted underline for links to other entries.
+- **Footnotes**: marker `<sup class="rds-fn" id="cite-KEY-N"><a href="#note-KEY">[n]</a></sup>`; list `rds-notes` of `<li id="note-KEY">` with citation, URL, `rds-back` return links (`↩`) and `rds-kind` (what type of source). Hover or focus a marker for a popover; the targeted note highlights. Number notes in order of first use, infobox first.
+- **See also** `rds-seealso` (title link plus one-line reason), **Topics** `rds-categories` (pills), **Pager** `rds-pager` (prev/next entry).
+- **Index**: `rds-guidebar`, `rds-search`, `rds-chips` > `rds-chip[aria-pressed]`, `rds-letter` (A–Z markers), entries as `rds-row` with `data-title`, `data-text`, `data-topic`; `data-rds-guide` on the rows wrapper, `data-rds-search`, `data-rds-topic`, `data-rds-count`, `data-rds-empty` hooks. Press `/` to focus the search.
+- **Content rules (Field Guide)**: every number gets a note; each entry ends its text with "What I do not know" as a `rds-callout--plain`; my own arithmetic or judgment is labeled as such; Wikipedia only for basic geography and flagged; never invent sources.
+- Print styles hide nav, footer and pager and print note URLs.
+
+## Page patterns: Field Guide
+
+`guide/index.html` (sechead, search + topic chips, A–Z rows in a sunk band, "how to read it" band) and `guide/<slug>/index.html` (crumbs, head, hatnote, infobox + contents, numbered sections, see also, notes, topics, pager). New entry: copy an existing entry, add it to the index list, the footer list if wanted, and cross-link from related entries.
 
 ## Using this when adding pages
 

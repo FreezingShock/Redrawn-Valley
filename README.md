@@ -26,6 +26,9 @@ index.html                         front page
 studies/topanga-willows/index.html study 01 (self-contained page)
 assets/rds/tokens.css             Redrawn Design System design tokens (colors, spacing, radii, fonts)
 assets/rds/rds.css               Redrawn Design System components
+guide/index.html                   Field guide index (search, topic filter)
+guide/<slug>/index.html            Field guide entries (11)
+assets/rds/article.css, article.js Redrawn Design System article components
 assets/rds/rds.js                Redrawn Design System motion: reveals, drawings, nav, contents rail
 assets/site.css                    rules specific to this site
 assets/site.js                     before/after toggle on the front page
