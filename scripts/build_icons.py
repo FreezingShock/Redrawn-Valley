@@ -9,7 +9,7 @@ roughens them (seeded, so output is stable) into wobbly hand-drawn paths and wri
   assets/rds/icons/names.json   list of icon names and groups (the gallery page reads it)
 Stroke kinds: 'p' polyline with sharp corners, 'c' smooth curve through points, 'z' closed polyline,
 'zc' closed smooth curve, 'o' circle (cx, cy, r). Add t=1 to also lay a tinted, slightly misregistered fill under it.
-Layers: ink strokes use currentColor; accent strokes use --icon-accent; tints use --icon-tint (see icons.css).
+Layers: ink strokes use currentColor; accent strokes use --icon-accent; tints use --icon-tint (see rds.css).
 """
 import json, math, pathlib, random
 
