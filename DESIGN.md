@@ -2,7 +2,7 @@
 
 The design system behind Redrawn Valley. Warm paper, ink, brick and moss; a serif for ideas, a sans for interface, mono for evidence. Plain CSS and a small plain script, no build step, no dependencies. **Read this before changing any page.** If a component exists here, use it; if you need a new one, add it to the system (`assets/rds/rds.css`) and document it here, not as a one-off.
 
-Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle).
+Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/studies.css` + `assets/studies.js` (study pages and the studies index).
 
 ## Character
 
@@ -81,9 +81,27 @@ Headlines are sentences that state the finding ("Soil, not trees, is the hard pa
 
 **Home** (`index.html`): sticky nav → hero (display-xl split headline, lead, two buttons, before/after figure) → Studies (sunk band; featured `rv-feature` + planned rows) → Method (4 numbered steps) → Notes (eyebrow/headline left, serif prose right with one `rds-mark`) → About (art + sechead + contact rows) → ink footer.
 
-**Study** (`studies/<slug>/index.html`): a self-contained long-form page. It inlines the system's styles (hex values + its own `.rds-view/.rds-w/.rds-draw` reveal classes and `data-rds-root`) because it was exported as one file; keep it standalone and don't mix it with the shared stylesheet unless you migrate the whole page. Structure: sticky top bar with part tabs (Site / Evidence / Design / Delivery / Sources) → left contents rail with count "01 / 13" → header (case-study label, split headline with one `rds-mark`, lead, two-column fact table: Site, Type, Focus, Status, By, Date) → sticky scroll-driven figure with step text beside it (`data-scrolly`, `data-step`) → "What is real / What is estimated" callout → four parts each with a bordered "Part N of 4" bar and numbered sections (`secNN`): Site, Problem, Evidence, Precedents, Proposal ("seven moves, added one at a time"), Before/after, Soil, Planting, Drawings, Phasing, Measuring, Limits → numbered Sources list. Claims carry superscript mono citations `[n]` that link to `#sN`. Concept-sketch disclaimers appear on every drawing.
+**Study** (`studies/<slug>/index.html`): a long-form article page. It links `assets/rds/tokens.css`, `assets/rds/rds.css` and `assets/studies.css`, and runs `assets/studies.js` (reveals, contents rail, part tabs, scroll-driven figure). Most markup is still inline-styled with hex values; new studies should use the `rv-` classes below instead. Structure: sticky top bar with part tabs (Site / Evidence / Design / Delivery / Sources) → left contents rail with count "01 / 13" → header (case-study label, split headline with one `rds-mark`, lead, two-column fact table: Site, Type, Focus, Status, By, Date) → sticky scroll-driven figure with step text beside it (`data-scrolly`, `data-step`) → "What is real / What is estimated" callout → four parts each with a bordered "Part N of 4" bar and numbered sections (`secNN`): Site, Problem, Evidence, Precedents, Proposal ("seven moves, added one at a time"), Before/after, Soil, Planting, Drawings, Phasing, Measuring, Limits → numbered Sources list. Claims carry superscript mono citations `[n]` that link to `#sN`. Concept-sketch disclaimers appear on every drawing.
 
 **Content rules**: cite every number; mark estimates as estimates; end every study with what is unknown and what would be measured before/after; say "concept study, not commissioned"; no invented quotes or sources.
+
+## Studies
+
+Files: `assets/studies.css` (all rules for study pages), `assets/studies.js` (page behavior), `studies/index.html` (the index), `studies/_template/index.html` (copy this).
+
+Components (prefix `rv-`, tokens only):
+- **Article head** `rv-article-head` > `__main` (eyebrow, `rds-display-xl` headline with one `rds-mark`, lead) + `rv-infobox`. Two columns at 1000px and up, stacked below.
+- **Infobox** `rv-infobox` (`__head` with `__kicker` + `__title`, `__list` of `<div><dt><dd>` rows, `__tags`, `__foot`): the encyclopedic at-a-glance panel. Rows for a study: Location, Site type, Focus, Methods (list), Status, By, Date, Field guide. Cite numbers with `<sup><a href="#sN">[N]</a></sup>`.
+- **Guide term** `rv-term`: a pill. Use `<span class="rv-term" data-term="slug">` until the field guide entry exists, then `<a class="rv-term" href="../../guide/...#slug">`.
+- **Table** `rv-table` (index): real table over 760px, labelled stacked lines below (give each `<td>` a `data-label`).
+- **Sections** `rv-part` > `rv-part__bar` (Part N of 4) and `rv-sec` > `rv-sec__head` (eyebrow, h2 headline, summary) + `rv-sec__body` (64ch). Citations `rv-cite`; source list `rv-sources` with `<li id="sN">`; page bar `rv-study-bar`.
+- Legacy study-script hooks (keep as is): `rds-view` (reveal), `rds-split`/`rds-w` (headline words), `rds-draw` with `.s`/`.f`, `kt` rail, `kstep`/`data-scrolly`, `data-toc`.
+
+**Adding a study**
+1. Copy `studies/_template/index.html` to `studies/<slug>/index.html` (same depth, so paths stay valid). Delete the noindex meta and the instruction comment.
+2. Replace every `[BRACKETED CAPS]` placeholder; fill every infobox row. Keep the real/estimated callout, Measuring, Limits and Sources. Headlines state findings; every number is cited; no invented sources.
+3. Add it to `studies/index.html` (table row, topic rows), the home page Studies section and the home footer.
+4. Run `python3 scripts/check.py`, then view at 375px and 1280px.
 
 ## Using this when adding pages
 
@@ -95,5 +113,6 @@ Headlines are sentences that state the finding ("Soil, not trees, is the hard pa
 
 ## Known issues
 
-- The study page does not use the shared stylesheet (see Page patterns), so token changes do not reach it.
+- The Topanga study body is still inline-styled with hex values (only its head uses `rv-` classes), so token changes do not reach most of it.
+- Infobox field-guide terms are plain `rv-term` spans until `/guide/` entries exist.
 - Home and study still contain placeholders: `[Last name]`, `[YOUR EMAIL]`, `[YOUR GITHUB]`, `[DATE]`, `[NEXT SITE ...]`.

@@ -23,12 +23,15 @@ Design rules live in `DESIGN.md` (the Redrawn Design System). Agent rules live i
 
 ```
 index.html                         front page
-studies/topanga-willows/index.html study 01 (self-contained page)
+studies/index.html                 studies index
+studies/_template/index.html       copy to start a new study (see DESIGN.md > Studies)
+studies/topanga-willows/index.html study 01
 assets/rds/tokens.css             Redrawn Design System design tokens (colors, spacing, radii, fonts)
 assets/rds/rds.css               Redrawn Design System components
 assets/rds/rds.js                Redrawn Design System motion: reveals, drawings, nav, contents rail
 assets/site.css                    rules specific to this site
 assets/site.js                     before/after toggle on the front page
+assets/studies.css, studies.js     study pages: article layout, infobox, page behavior
 scripts/check.py                   link and anchor check (run in CI)
 DESIGN.md, CLAUDE.md               design system write-up, working rules
 ```
@@ -39,5 +42,4 @@ Search the project for square brackets: `[Last name]`, `[YOUR EMAIL]`, `[YOUR GI
 
 ## Next
 
-- A studies index and a reusable study template.
 - Notes (the blog): an index page and a post template.
