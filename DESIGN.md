@@ -2,7 +2,7 @@
 
 The design system behind Redrawn Valley. Warm paper, ink, brick and moss; a serif for ideas, a sans for interface, mono for evidence. Plain CSS and a small plain script, no build step, no dependencies. **Read this before changing any page.** If a component exists here, use it; if you need a new one, add it to the system (`assets/rds/rds.css`) and document it here, not as a one-off.
 
-Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index).
+Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index).
 
 ## Character
 
@@ -123,6 +123,25 @@ Components (prefix `rv-`, tokens only):
 2. Replace every `[BRACKETED CAPS]` placeholder; fill every infobox row. Keep the real/estimated callout, Measuring, Limits and Sources. Headlines state findings; every number is cited; no invented sources.
 3. Add it to `studies/index.html` (table row, topic rows), and the home page Studies section. The footer and search pick it up once `python3 scripts/build_index.py` has run.
 4. Run `python3 scripts/check.py`, then view at 375px and 1280px.
+
+## Article components (`article.css`, `article.js`)
+
+For long-form reading pages, used by the Field Guide (`guide/`). Load `assets/rds/article.css` after `rds.css`, and `assets/rds/article.js` at the end of the page (`data-rds-article` on `<main>`). Without JS everything is readable.
+
+- **Layout**: `rds-article` > `rds-article__wrap` (46rem, 60rem at ≥900px) > `rds-article__head` (`rds-tag`, `rds-article__title`, `__tagline`, `__meta` mono line), then `rds-hatnote` (italic "part of / for X see Y" line) and `rds-article__body`.
+- **Body**: serif 19/31, first paragraph 21/33; `h2` are auto-numbered (`01`, `02`) in brick mono with a hover `#` anchor (`rds-anchor`). Don't put another `h2` inside the infobox.
+- **Infobox** `rds-infobox`: floats right (19rem) at ≥900px, full width above the body below that. Parts: `__title` (moss header, a `<p>`), `__art` (small inline SVG, moss tint), `__cap`, a `<dl>` of `<div><dt/><dd/></div>` rows, `__foot`.
+- **Contents box** `rds-contents` (`<details open>` with a numbered `<ol>`; current heading gets `aria-current`).
+- **Cross-reference** `rds-xref`: moss link with dotted underline for links to other entries.
+- **Footnotes**: marker `<sup class="rds-fn" id="cite-KEY-N"><a href="#note-KEY">[n]</a></sup>`; list `rds-notes` of `<li id="note-KEY">` with citation, URL, `rds-back` return links (`↩`) and `rds-kind` (what type of source). Hover or focus a marker for a popover; the targeted note highlights. Number notes in order of first use, infobox first.
+- **See also** `rds-seealso` (title link plus one-line reason), **Topics** `rds-categories` (pills), **Pager** `rds-pager` (prev/next entry).
+- **Index**: `rds-guidebar`, `rds-guide-search`, `rds-chips` > `rds-chip[aria-pressed]`, `rds-letter` (A–Z markers), entries as `rds-row` with `data-title`, `data-text`, `data-topic`; `data-rds-guide` on the rows wrapper, `data-rds-search`, `data-rds-topic`, `data-rds-count`, `data-rds-empty` hooks. Pages use the shared shell (header, footer, `rds-crumbs`, site search) from `site-shell.js`.
+- **Content rules (Field Guide)**: every number gets a note; each entry ends its text with "What I do not know" as a `rds-callout--plain`; my own arithmetic or judgment is labeled as such; Wikipedia only for basic geography and flagged; never invent sources.
+- Print styles hide nav, footer and pager and print note URLs.
+
+## Page patterns: Field Guide
+
+`guide/index.html` (sechead, search + topic chips, A–Z rows in a sunk band, "how to read it" band) and `guide/<slug>/index.html` (crumbs, head, hatnote, infobox + contents, numbered sections, see also, notes, topics, pager). New entry: copy an existing entry, add it to the index list, the footer list if wanted, and cross-link from related entries.
 
 ## Using this when adding pages
 
