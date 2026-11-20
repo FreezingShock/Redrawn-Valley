@@ -3,6 +3,7 @@
   var form = document.querySelector('[data-lab]'), art = document.querySelector('[data-lab-art]');
   if (!form || !art) return;
   var seed = form.querySelector('[data-seed]'), topic = form.querySelector('[data-topic]'), kind = form.querySelector('[data-kind]'), status = form.querySelector('[data-status]'), pause = form.querySelector('[data-pause]');
+  if (window.matchMedia && matchMedia('(max-width: 640px)').matches) kind.value = 'card';
   var q = new URLSearchParams(location.search); if (q.get('seed')) seed.value = q.get('seed');
   function draw(s) {
     if (!window.RDSArt) return;

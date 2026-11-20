@@ -336,6 +336,7 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .rds-art>svg{display:block;width:100%;height:100%}
 .rds-art--banner{aspect-ratio:1120/220}
 .rds-art--strip{aspect-ratio:1120/56}
+.rds-art--stripm{aspect-ratio:10/1}
 .rds-art--card{aspect-ratio:8/5}
 .rds-art--square{aspect-ratio:1}
 .m-field{transition:fill 1.4s var(--ease-in-out)}

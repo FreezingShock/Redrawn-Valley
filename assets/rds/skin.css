@@ -92,7 +92,7 @@
 @media (max-width:640px){
   html{scroll-padding-top:calc(var(--rv-bar) + 12px)}
   [id]{scroll-margin-top:calc(var(--rv-bar) + 16px)}
-  body.rds-page,body.rv-study{padding-bottom:calc(var(--rv-tab) + var(--rv-safe))}
+  body.rds-page,body.rv-study{padding-bottom:0}
   body.rds-lock{overflow:hidden}
 
   /* gutters: 20px everywhere (inline styles in the study page included) */
@@ -162,13 +162,16 @@
   /* rows: tappable list items with a chevron, 56px+ */
   .rds-row{position:relative;padding-block:var(--space-4);padding-right:var(--space-6);gap:var(--space-1)}
   a.rds-row::after{content:"";position:absolute;right:2px;top:50%;width:8px;height:8px;border-top:1.5px solid var(--ink-faint);border-right:1.5px solid var(--ink-faint);transform:translateY(-50%) rotate(45deg)}
+  .rv-404 .rds-row__meta{display:none}
   .rds-row__title{font-size:20px}
+  .rds-row__title:has(>.rds-icon){display:flex;align-items:flex-start;gap:var(--space-3)}
+  .rds-row__title>.rds-icon{margin-top:.1em}
   .rds-row__meta{white-space:normal}
   .rds-row__text{font-size:15px;line-height:23px}
   .rds-card__body{padding:var(--space-4)}
 
   /* ---- footer: brand on top, two link columns, 44px links ---- */
-  .rds-footer{padding-block:var(--space-12) var(--space-6)}
+  .rds-footer{padding-block:var(--space-12) calc(var(--space-6) + var(--rv-tab) + var(--rv-safe))}
   .rds-footer__grid{grid-template-columns:1fr 1fr;gap:var(--space-8) var(--space-4)}
   .rds-footer__grid>div:first-child{grid-column:1/-1}
   .rds-footer ul{gap:0}
@@ -217,6 +220,8 @@
   .rv-fig .rds-figure__art{border-radius:var(--radius-md);overflow-x:auto;-webkit-overflow-scrolling:touch}
   .rv-fig .rv-svg{min-width:560px}
   .rv-fig figcaption{font-size:12px;line-height:18px}
+  .rv-fig .rv-svg{min-width:560px}
+  .rv-fig:has(.rv-svg) figcaption::before{content:"Swipe the figure sideways to see all of it.";display:block;margin-bottom:var(--space-1);color:var(--brick);font-family:var(--rv-hand);font-size:15px}
   .rv-sources li{padding-block:var(--space-3)}
 
   /* ---- studies index table + study page ---- */
@@ -459,6 +464,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-tiles.rds-art--card{aspect-ratio:8/5}
 .rv-tiles.rds-art--square{aspect-ratio:1}
 .rv-tiles.rds-art--strip{aspect-ratio:1120/56}
+.rv-tiles.rds-art--stripm{aspect-ratio:10/1}
 
 /* ---------- home: three ways in, as art cards ---------- */
 .rv-ways{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
