@@ -314,7 +314,7 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .rv-gal-logo{display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .rv-gal-logo>div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-4);padding:var(--space-8) var(--space-4);border-radius:var(--radius-lg);border:1px solid var(--line);background:var(--paper-raised);min-height:200px}
 .rv-gal-logo .rds-logo{width:96px;height:96px;stroke-width:1.9}
-.rv-gal-logo__ink{background:var(--ink)!important;color:var(--on-ink)}
+.rv-gal-logo>.rv-gal-logo__ink{background:var(--ink);color:var(--on-ink)}
 .rv-gal-logo__ink .rds-logo{--icon-accent:#d98a6c;--icon-moss:#a9c3b0;--icon-tint:transparent;color:var(--on-ink)}
 .rv-gal-logo .rv-gal-word{font:500 22px/1 var(--rds-serif)}
 .rv-gal-sizes{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--space-6)}
@@ -365,5 +365,4 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
   .rds-art.is-live .m-arc,.rds-art.is-live .m-flow{animation:m-dash 60s linear infinite}
 }
 @media (prefers-reduced-motion:reduce){.m-field,.m-shape,.m-inset,.m-ov,.m-bar,.m-ico,.m-needle{transition:none}}
-.rv-art-paused .rds-art{--paused:1}
-.rv-art-paused .rds-art *{animation-play-state:paused!important}
+.rv-art-paused .rds-art.is-live :is(.m-drift,.m-sway,.m-arc,.m-flow){animation-play-state:paused}

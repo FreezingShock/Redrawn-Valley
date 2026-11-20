@@ -17,7 +17,7 @@
   a.rds-row:active,a.rds-card:active,a.rv-feature:active{background:var(--paper-sunk)}
   .rds-btn:hover{transform:none}.rds-btn:active{transform:scale(.98)}
   a.rds-card:hover .rds-card__media>*{transform:none}
-  .rds-fn-pop{display:none!important}
+  .rds-fn-pop{display:none}
   /* footnote markers: tiny glyph, generous hit area */
   .rds-fn a,sup.rv-fn a,sup a[href^="#"]{position:relative}
   .rds-fn a::after,sup.rv-fn a::after,sup a[href^="#"]::after{content:"";position:absolute;inset:-12px -9px}
@@ -96,7 +96,7 @@
   body.rds-lock{overflow:hidden}
 
   /* gutters: 20px everywhere (inline styles in the study page included) */
-  .rds-container,.rds-article__wrap,.rv-article-head,.rv-part,.rv-sec,[style*="100% - 48px"]{width:calc(100% - 2*var(--rv-gutter))!important}
+  .rds-container,.rds-article__wrap,.rv-article-head,.rv-part,.rv-sec{width:calc(100% - 2*var(--rv-gutter))}
   .rds-footer{padding-inline:var(--rv-gutter)}
   .rds-section{padding-block:var(--space-12)}
   .rds-sechead{margin-bottom:var(--space-8);gap:var(--space-3)}
@@ -116,11 +116,11 @@
   .rds-fn,.rv-fn{font-size:.7em}
 
   /* ---- top bar: slim, solid, hides on scroll down, search as a 44px icon ---- */
-  .rds-nav{height:var(--rv-bar)!important;padding-inline:var(--rv-gutter);gap:0;background:var(--paper)!important;border-bottom-color:var(--line)!important;transition:transform var(--dur-base) var(--ease-out)}
+  .rds-nav,.rds-nav.is-scrolled{height:var(--rv-bar);padding-inline:var(--rv-gutter);gap:0;background:var(--paper);border-bottom-color:var(--line);transition:transform var(--dur-base) var(--ease-out)}
   .rds-nav.is-hidden{transform:translateY(-100%)}
   .rds-nav__brand{font-size:21px}
-  .rds-nav__menu,.rds-nav__links,.rds-nav__links.is-open{display:none!important}
-  .rds-nav__search{width:44px;height:44px;margin:0 -10px 0 auto!important;border:0;background:none;color:var(--ink)}
+  .rds-nav .rds-nav__menu,.rds-nav .rds-nav__links,.rds-nav .rds-nav__links.is-open{display:none}
+  .rds-nav .rds-nav__search{width:44px;height:44px;margin:0 -10px 0 auto;border:0;background:none;color:var(--ink)}
   .rds-nav__search svg{width:20px;height:20px}
   .rds-nav>.rds-btn{height:44px}
 
@@ -229,9 +229,7 @@
   .rv-sec__head p{font-size:18px;line-height:28px}
   .rv-article-head{padding-block:var(--space-6) var(--space-8);gap:var(--space-6)}
   .rv-article-head__main{gap:var(--space-4)}
-  .rv-article-head__main>p{font-size:18px!important;line-height:28px!important}
-  .rv-study h1[style]{font-size:clamp(34px,9.6vw,42px)!important}
-  .rv-study h2[style]{font-size:clamp(28px,8vw,34px)!important}
+  .rv-article-head .rv-article-head__main>p{font-size:18px;line-height:28px}
   .rv-infobox__head{display:flex;flex-direction:column}
   .rv-infobox__list>div{grid-template-columns:86px minmax(0,1fr)}
   .rv-sources li{grid-template-columns:36px minmax(0,1fr)}
@@ -239,31 +237,25 @@
 
   /* study part-tab bar: ONE 48px row. Back arrow, then Site / Evidence / Design / Delivery / Sources scroll sideways. */
   .rv-study header#top{position:sticky;top:0;z-index:20}
-  .rv-study header#top nav.ktabs{flex-wrap:nowrap!important;gap:0!important;min-height:48px!important;padding-block:0!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;width:100%!important;margin:0!important;padding-inline:var(--rv-gutter)!important;scroll-padding-inline:var(--rv-gutter)}
+  .rv-study header#top nav.ktabs{flex-wrap:nowrap;gap:0;min-height:48px;padding-block:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;width:100%;margin:0;padding-inline:var(--rv-gutter);scroll-padding-inline:var(--rv-gutter)}
   .rv-study header#top nav.ktabs::-webkit-scrollbar{display:none}
-  .rv-study header#top nav.ktabs>a{flex:none;display:inline-flex;align-items:center;min-height:48px;padding:0 var(--space-3)!important;margin:0!important;position:relative;white-space:nowrap}
+  .rv-study header#top nav.ktabs>a{flex:none;display:inline-flex;align-items:center;min-height:48px;padding:0 var(--space-3);margin:0;position:relative;white-space:nowrap}
   /* brand becomes the first, quiet item; back link keeps its arrow */
   .rv-study header#top nav.ktabs>a:first-child{display:none}
-  .rv-study header#top nav.ktabs>a:nth-child(2){padding-left:0!important;padding-right:var(--space-4)!important;font-size:15px!important;color:var(--ink)!important}
+  .rv-study header#top nav.ktabs>a:nth-child(2){padding-left:0;padding-right:var(--space-4);font-size:15px;color:var(--ink)}
   .rv-study header#top nav.ktabs>a:nth-child(n+3)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:3px;background:var(--brick);transform:scaleX(0);transition:transform var(--dur-base) var(--ease-out)}
-  .rv-study header#top nav.ktabs>a[aria-current=true]{color:var(--brick)!important}
+  .rv-study header#top nav.ktabs>a[aria-current=true]{color:var(--brick)}
   .rv-study header#top nav.ktabs>a[aria-current=true]::after{transform:none}
   .rv-study header#top nav.ktabs>a:last-child{display:none} /* the in-bar Search link: the tab bar already has Search */
   .ktabs a,.ktabs a:hover,.ktabs a[aria-current="true"]{background-size:0 0}
-  .rv-study .rds-container[style*=padding-top]{padding-top:0!important}
 
   /* scroll-driven figure: pinned just under the tab bar, steps flow beneath it */
-  .rv-study [data-scrolly]{gap:var(--space-4)!important;display:block!important}
-  .rv-study [data-scrolly]>figure{position:sticky!important;top:48px!important;z-index:5;margin:0 calc(-1*var(--rv-gutter))!important;padding:var(--space-2) var(--rv-gutter) var(--space-2);background:var(--paper);border-bottom:1px solid var(--line)}
-  .rv-study [data-scrolly]>figure figcaption{margin-top:var(--space-2)!important;font-size:12px!important;line-height:18px!important}
-  .rv-study [data-scrolly] .kstep{min-height:0!important;padding-block:var(--space-6) var(--space-12)!important}
-  .rv-study [data-scrolly] .kstep h3{font-size:24px!important}
+  .rv-study [data-scrolly]{gap:var(--space-4);display:block}
+  .rv-study [data-scrolly]>figure{position:sticky;top:48px;z-index:5;margin:0 calc(-1*var(--rv-gutter));padding:var(--space-2) var(--rv-gutter) var(--space-2);background:var(--paper);border-bottom:1px solid var(--line)}
+  .rv-study [data-scrolly]>figure figcaption{margin-top:var(--space-2);font-size:12px;line-height:18px}
+  .rv-study [data-scrolly] .kstep{min-height:0;padding-block:var(--space-6) var(--space-12)}
+  .rv-study [data-scrolly] .kstep h3{font-size:24px}
   /* inline-grid stat blocks and callouts breathe less */
-  .rv-study .rds-view[style*="padding: 28px"]{padding:var(--space-4)!important}
-  .rv-study [style*="padding-block: clamp(64px"]{padding-block:var(--space-12)!important}
-  .rv-study [style*="minmax(280px"],.rv-study [style*="minmax(240px"]{grid-template-columns:minmax(0,1fr)!important}
-  .rv-study [style*="44px minmax(0, 2fr)"]{grid-template-columns:36px minmax(0,1fr)!important;gap:var(--space-1) var(--space-3)!important}
-  .rv-study [style*="44px minmax(0, 2fr)"]>p{grid-column:2}
   .rv-study svg{max-width:100%}
   /* wide drawings pan sideways with a hint instead of shrinking labels */
   .rv-study figure:not([data-scrolly]>figure) svg[viewBox]{min-width:0}
@@ -291,7 +283,7 @@
   .rv-sheet[open]{animation:none}
   .rv-jump,.rds-nav,.rv-more::after{transition:none}
 }
-@media print{.rv-tabbar,.rv-jump,.rv-sheet,.rv-more{display:none!important}}
+@media print{.rv-tabbar,.rv-jump,.rv-sheet,.rv-more{display:none}}
 
 
 /* ########## PART 2: sketchbook ########## */
@@ -372,7 +364,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-facts{border-top:0;background:var(--rv-rule) 0 0/240px 10px repeat-x;padding-top:calc(var(--space-4) + 6px)}
 .rv-pull{border-top:0;background:var(--rv-rule-ink) 0 0/240px 10px repeat-x;padding-top:calc(var(--space-6) + 6px)}
 .rv-sources{border-top:0;background:var(--rv-rule-ink) 0 0/240px 10px repeat-x;padding-top:calc(var(--space-8) + 6px)}
-#notes.rds-section{border-top:0!important}
+#notes.rds-section{border-top:0}
 .rds-notes li{border-top:0;background:var(--rv-rule-soft) 0 0/240px 10px repeat-x}
 .rds-seealso h2,.rds-notes-head{border-bottom:0;background:var(--rv-rule) 0 100%/240px 10px repeat-x;padding-bottom:var(--space-3)}
 .rds-mark{background-image:none;position:relative;isolation:isolate}
@@ -387,7 +379,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rds-infobox>*:first-child,.rv-infobox>*:first-child{border-top-left-radius:22px 10px;border-top-right-radius:9px 24px}
 .rds-callout{overflow:visible}
 .rv-fig::before{left:50%;margin-left:-42px;transform:rotate(1.5deg);background:var(--moss-tint)}
-.rds-callout--moss::before{background:var(--moss-tint)!important}
+.rds-callout.rds-callout--moss::before{background:var(--moss-tint)}
 
 /* ---------- drawings: pencil filter (added by sketch.js) and paper behind them ---------- */
 .rv-pencil{filter:url(#rv-pencil)}
@@ -444,20 +436,12 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 }
 @media print{.rds-page::before{display:none}.rds-band-sunk::before,.rds-band-sunk::after,.rds-footer::before{display:none}.rv-compare::before,.rv-compare::after,.rds-infobox::before,.rv-infobox::before,.rv-sun{display:none}}
 
-/* ---------- Topanga study (legacy inline-styled page): sketchbook overrides by attribute ---------- */
-.rv-study [style*="border-radius: 16px"]{border-radius:var(--rv-r-lg)!important}
-.rv-study [style*="border-radius: 8px"]{border-radius:var(--rv-r-md)!important}
-.rv-study [style*="border: 1px solid #d9d0bd"]{border:var(--rv-stroke) solid var(--ink)!important}
-.rv-study [style*="border: 1.5px dashed"]{border-color:var(--ink)!important}
-.rv-study [style*="border-top: 1px solid #8a8170"],.rv-study [style*="border-top: 1px solid #1f1d1a"]{border-top:0!important;background-image:var(--rv-rule-ink);background-repeat:repeat-x;background-position:0 0;background-size:240px 10px;padding-top:28px!important}
-.rv-study [style*="border-top: 1px solid #d9d0bd"]{border-top:0!important;background-image:var(--rv-rule-soft);background-repeat:repeat-x;background-position:0 0;background-size:240px 10px}
-.rv-study [style*="border-bottom: 2px solid #1f1d1a"]{border-bottom:0!important;background-image:var(--rv-rule-ink);background-repeat:repeat-x;background-position:0 100%;background-size:240px 10px;padding-bottom:24px!important}
-.rv-study [style*="border-bottom: 1px solid #8a8170"]{border-bottom:0!important;background-image:var(--rv-rule);background-repeat:repeat-x;background-position:0 100%;background-size:240px 10px}
-.rv-study [style*="Part "],.rv-study .kstep>div:first-child{font-family:var(--rv-hand)!important;font-size:17px!important}
-.rv-study [data-scrolly]>figure>div{border:var(--rv-stroke) solid var(--ink)!important;box-shadow:var(--rv-pencil)}
+/* ---------- Topanga study: structural rules (its colours, rules and frames are baked into studies/topanga-willows/study.css) ---------- */
+.rv-study [data-scrolly]>figure>div{border:var(--rv-stroke) solid var(--ink);box-shadow:var(--rv-pencil)}
 .rv-study [data-scrolly]>figure{position:sticky}
-.rv-study section>.rds-view[style*="background: #f0d9cc"]{border:var(--rv-stroke) solid var(--ink);position:relative}
-.rv-study section>.rds-view[style*="background: #f0d9cc"]::before{content:"";position:absolute;width:84px;height:24px;top:-12px;left:28px;background:var(--moss-tint);transform:rotate(-3deg);border-left:2px dotted rgba(138,129,112,.55);border-right:2px dotted rgba(138,129,112,.55)}
+.rv-study .kstep>div:first-child{font-family:var(--rv-hand);font-size:17px}
+.rv-study .ts-taped{border:var(--rv-stroke) solid var(--ink);position:relative}
+.rv-study .ts-taped::before{content:"";position:absolute;width:84px;height:24px;top:-12px;left:28px;background:var(--moss-tint);transform:rotate(-3deg);border-left:2px dotted rgba(138,129,112,.55);border-right:2px dotted rgba(138,129,112,.55)}
 .rv-study .ktab{font-family:var(--rv-hand);font-size:17px}
 .rv-study .kt{font-family:var(--rv-hand)}
 

@@ -198,7 +198,7 @@ Makes the whole site feel drawn instead of printed. Load `assets/rds/skin.css` l
 - **Hero collage** `rv-collage`: contour lines (moss), drafting grid, halftone dots (brick), compass and scale bar behind the home figure. Reuse it as the art for new section heads: one tinted field, single-weight ink on top.
 - **Generated art** `scripts/sketchlib.py` (tiny hand-drawn SVG helper: wobbly lines, offset tint, hatching, trees, sun, rain) and `scripts/guide_art.py` regenerate every Field Guide infobox drawing (300x150, one tinted field, single-weight ink line, hand labels). Add a new entry's art there, then run `python3 scripts/guide_art.py`.
 - **Essay figures** (`.rv-svg`): flat tints become hatched fills (patterns `#rv-h-*` injected by `sketch.js`), shapes get a 1.6px ink outline, gridlines are dotted, labels get a paper halo so they stay legible over hatching.
-- **Topanga study**: its inline styles are overridden by attribute selectors at the end of `skin.css` (rules, frames, callout tape). New studies should use the `rv-` components instead.
+- **Study pages** (`studies/<slug>/`): their former inline styles now live in a co-located `study.css` (classes `ts-N`, tokenised, with the sketchbook rules and the phone rules baked in), linked after `studies.css` and before `skin.css`. The attribute-selector overrides and nearly all `!important` are gone from `skin.css`. Structural study rules (tab bar, scroll figure) stay in `skin.css`. New studies should compose `rv-`/`rds-` components; `studies/_template` shows the pattern.
 - **Tile banner** `rv-tiles` (`scripts/tiles_art.py`): three flat tinted tiles side by side, each mixing a drafting object (compass, ruler, scale bar), a plan or section fragment and a texture (grid, halftone, contour). Used under the headline of the guide, notes and studies indexes. Borrowed from the collage recipe in the reference library; the art itself is original.
 - **Marker highlight**: `rds-mark` is now a tilted brick-tint block that wipes in.
 - **Focus**: dashed brick marker ring on every focusable element.
@@ -225,6 +225,6 @@ Seeded generative art in the recipe of the reference contact sheets (kept in the
 
 ## Known issues
 
-- The Topanga study body is still inline-styled with hex values (only its head uses `rv-` classes), so token changes do not reach most of it.
+- The Topanga study's text and layout styles are now in `study.css` using tokens, so token changes reach them. Its SVG drawings still carry inline `style` attributes and hex colours (they are redrawn separately).
 - Infobox field-guide terms link to `guide/<slug>/index.html` when an entry exists; terms without one (e.g. right-of-way) stay plain `rv-term` spans.
 - Home and study still contain placeholders: `[Last name]`, `[YOUR EMAIL]`, `[YOUR GITHUB]`, `[DATE]`, `[NEXT SITE ...]`.
