@@ -193,6 +193,8 @@ Makes the whole site feel drawn instead of printed. Load `assets/rds/sketch.css`
 - **Paper**: a fixed grain overlay (`.rds-page::before`) plus wavy torn edges on `rds-band-sunk` and the footer.
 - **Washi tape**: automatic on `rv-compare`, infoboxes, `rv-fig` and non-plain callouts.
 - **Pencil filter**: `sketch.js` injects `#rv-pencil` / `#rv-pencil-soft` (SVG displacement) and adds `rv-pencil` to drawings in figures, cards and infoboxes. Drawings that animate (`data-rds-draw`) get it 2.4s after they scroll in, because filtering a large SVG every frame is slow. Put `class="rv-pencil"` on any new SVG drawing.
+- **Chart figures** (`svg.rv-svg`) get `rv-pencil-shapes` instead: only lines and shapes wobble (`#rv-pencil-line`), text stays crisp so numbers stay readable.
+- **Hero collage** `rv-collage`: contour lines (moss), drafting grid, halftone dots (brick), compass and scale bar behind the home figure. Reuse it as the art for new section heads: one tinted field, single-weight ink on top.
 - **Marker highlight**: `rds-mark` is now a tilted brick-tint block that wipes in.
 - **Focus**: dashed brick marker ring on every focusable element.
 - **Ornaments**: `rv-divider` (vine with three leaves), `rv-sun` (slow-turning sun doodle), `rv-hero__flip` (hand note with arrow), `rv-404` (404 layout with a signpost drawing), `rds-empty` (magnifier doodle).
