@@ -25,6 +25,7 @@ Drafting-table calm. Looks like a printed site study: paper background, hairline
 | Moss (secondary accent, links, "good/green" ideas) | `--moss` / `--moss-deep` / `--moss-tint` / `--on-moss` | `#2f4a3a` / `#213529` / `#dfe6d8` / `#f6f1e7` |
 | Error | `--rust` | `#8c1c2e` |
 | Water / info (drawings) | `--slate` | `#35506b` |
+| Art accents (decorative fields only, never text or state) | `--sky` / `--ochre` / `--rose` / `--kelly` / `--peri` | `#7ba3c0` / `#be9661` / `#b17c83` / `#4f9b60` / `#7c849f` |
 
 Rules: brick = do something / look here; moss = links, trees, proposed changes; slate = water and stormwater in drawings; rust only for form errors. Tints are for backgrounds of art, callouts and media, never for text. Page rhythm alternates `paper` and `rds-band-sunk` sections; `rds-band-ink` for a dark closing band or the footer. Never use pure black or white, and never hardcode a hex when a token exists. (SVG drawings in the study also use `#e8eef5` for glass/sky and `#4a4743` for linework; reuse those for drawings.)
 
@@ -203,6 +204,22 @@ Makes the whole site feel drawn instead of printed. Load `assets/rds/skin.css` l
 - **Focus**: dashed brick marker ring on every focusable element.
 - **Ornaments**: `rv-divider` (vine with three leaves), `rv-sun` (slow-turning sun doodle), `rv-hero__flip` (hand note with arrow), `rv-404` (404 layout with a signpost drawing), `rds-empty` (magnifier doodle).
 - **Reduced motion**: sun, hover tilts and the highlight wipe are switched off.
+
+## Motifs (`assets/rds/motifs.js`, styles in `rds.css`)
+
+Seeded generative art in the recipe of the reference contact sheets (kept in the project Library, never in the repo): flat tiles, each one thing, on one saturated or pale field; grid-filled circles and squares; overlapping translucent circles; drafting tools (compass, protractor, set square, scale ruler); contour rings; halftone; plan symbols (tree canopies, flow line, scale bar, north arrow); bars on ink; crossing lines on dotted paper; a big sprite icon. Everything is drawn in code, original, in our tokens plus the five art accents.
+
+```html
+<div class="rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="guide/tree-canopy" data-topic="shade trees" aria-hidden="true"></div>
+```
+- **Kinds**: `banner` (1120x220, 2 to 3 tiles), `strip` (1120x56, a row of small tiles; a strip is added above the footer on every page automatically), `card` (8:5), `square`. `data-art-mobile="card"` swaps to the card layout at 640px and below so a banner does not shrink to a sliver. Add class `rv-tiles` to get the ink frame and pencil shadow used on page banners.
+- **Seed**: same `data-seed` gives the same drawing, so every guide entry and note has its own composition. Use the page slug. `data-topic` biases palette and motifs (shade and trees lean moss and canopy plans; water and rain lean slate, contours and flow; heat and pavement lean brick, halftone and rulers; soil leans ochre and bars). Pages without a topic use the full set.
+- **Rules from the references**: 2 to 4 flat colours plus ink and paper per image; a field colour is never reused within one banner when avoidable; the grid sits on the shape, not the field; ink line weight is constant per drawing; no text on a randomised fill (the only text is mono labels on the ruler and plan, which are decorative).
+- **Live drift**: only while the art is at least 10% on screen, the tab is visible and `prefers-reduced-motion` is not set. Every 5 to 10 seconds one tile shifts: its field colour crossfades (1.4s), a disc morphs to a rounded square, an inset square grows, overlapping circles spread, the protractor needle swings, a big icon crossfades to another, bars rescale. Shapes also drift a few pixels and the compass and ruler sway. Under reduced motion the art is static.
+- **No JS**: the container stays empty and hides (`.rds-art:empty`). The three index banners keep their pre-rendered SVG as a fallback.
+- **API**: `RDSArt.render(el, {kind, seed, topic})`, `RDSArt.reroll(el)`, `RDSArt.motifs`, `RDSArt.palette`.
+- **Adding a motif**: add a function `M.name = function (w, h, rnd, ctx)` in `motifs.js` returning `{svg, uses, pale?, shift?}`. Draw in local coordinates; use `var(--token)` for every colour; put `m-drift` or `m-sway` on groups that should move; add its transitions to the Motifs block in `rds.css`. Then add it to a topic's list.
+- The old pre-rendered banners (`scripts/tiles_art.py`) remain as the fallback on the three index pages.
 
 ## Known issues
 
