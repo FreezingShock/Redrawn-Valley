@@ -29,7 +29,7 @@
   ready(function () {
     doc.body.appendChild(host);
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches;
-    var sel = '.rv-compare svg,.rv-feature__art svg,.rv-about__art svg,.rds-figure__art svg:not(.rv-svg),.rds-infobox__art svg,.rv-infobox svg,.rds-card__media svg';
+    var sel = '.rv-tiles svg,.rv-compare svg,.rv-feature__art svg,.rv-about__art svg,.rds-figure__art svg:not(.rv-svg),.rds-infobox__art svg,.rv-infobox svg,.rds-card__media svg';
     var list = Array.prototype.slice.call(doc.querySelectorAll(sel));
     Array.prototype.slice.call(doc.querySelectorAll('svg.rv-svg')).forEach(function (s) { s.classList.add('rv-pencil-shapes'); });
     list.forEach(function (svg) {
