@@ -42,3 +42,6 @@ html{scroll-behavior:smooth}
 .rv-planned{opacity:.75}
 .rds-mark{background-position:0 108%;background-size:0 .46em}
 .rds-mark.is-in,.is-in .rds-mark,html:not(.rds-js) .rds-mark{background-size:100% .46em}
+.rv-search{display:grid;gap:var(--space-2);width:100%;max-width:440px;margin-top:var(--space-2)}
+.rv-search__row{display:flex;gap:var(--space-2)}
+.rv-search__row .rds-input{flex:1;min-width:0}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A shade tree is a soil problem first | Redrawn Valley Notes</title>
+<title>A shade tree is a soil problem first | Notes | Redrawn Valley</title>
 <meta name="description" content="Everyone agrees the Valley needs more trees. Almost nobody draws the hole they have to grow in. The arithmetic is simple, and it changes what a street can hold.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,17 +14,11 @@
 </head>
 <body class="rds-page">
 <div class="rv-progress" data-rv-progress aria-hidden="true"><i></i></div>
-<header class="rds-nav" data-rds-nav>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav">
 <a class="rds-nav__brand" href="../../index.html">Redrawn Valley</a>
-<ul class="rds-nav__links">
-<li><a href="../../index.html#studies">Studies</a></li>
-<li><a href="../../index.html#method">Method</a></li>
-<li><a href="../../notes/index.html" aria-current="page">Notes</a></li>
-<li><a href="../../index.html#about">About</a></li>
-</ul>
-<a class="rds-btn rds-btn--ghost rds-btn--sm" href="../../studies/topanga-willows/index.html">First study</a>
 </header>
-<main>
+<main id="main">
+<div class="rds-container"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
 <aside class="rds-toc" data-rds-toc aria-label="Contents"><nav><div class="rds-toc__count"><b data-rds-toc-count>01</b> / 05</div><a href="#rule"><i></i><span>The rule of thumb everyone repeats</span></a><a href="#canopy"><i></i><span>A second way to get the same number</span></a><a href="#well"><i></i><span>The tree well next to it</span></a><a href="#check"><i></i><span>How I would check a real strip</span></a><a href="#civil"><i></i><span>What that does to a plan</span></a></nav></aside>
 <article>
 <header class="rv-ehead"><div class="rds-container"><div class="rv-ehead__inner">
@@ -41,7 +35,7 @@
 </section>
 <section id="canopy" aria-labelledby="canopy-h">
 <h2 id="canopy-h"><span class="rv-num">02</span>A second way to get the same number</h2>
-<p>The American Society of Landscape Architects offers a different route: trees need about 1.5 to 2 cubic feet of loam soil per square foot of the area under their mature canopy.<sup class="rv-fn" id="ref3"><a href="#n3" aria-label="Source 3">3</a></sup> That makes the volume depend on how big the tree gets, which is more honest than one number for every species.</p>
+<p>The American Society of Landscape Architects offers a different route: trees need about 1.5 to 2 cubic feet of loam soil per square foot of the area under their mature <a class="rds-link rds-link--quiet" href="../../guide/tree-canopy/index.html">canopy</a>.<sup class="rv-fn" id="ref3"><a href="#n3" aria-label="Source 3">3</a></sup> That makes the volume depend on how big the tree gets, which is more honest than one number for every species.</p>
 <p>Try it with a tree that has a 30-foot crown. I picked 30 feet as an example, it is not a measured tree. A circle 30 feet across has an area of about 707 square feet (&pi; &times; 15&sup2;). At 1.5 to 2 cubic feet per square foot, that is roughly 1,060 to 1,410 cubic feet of soil. That lands right around the 1,000-to-1,059 figures above, which is the reason I trust the order of magnitude even though I do not trust any single rule to the last foot.</p>
 <blockquote class="rv-pull"><p>A tree is a bet on how much soil it can reach.</p><cite>Nathan, this note</cite></blockquote>
 <p>The academic version of the idea goes back at least to 1991, when Lindsey and Bassuk published a method for specifying soil volumes to meet the water needs of mature street trees and trees in containers.<sup class="rv-fn" id="ref4"><a href="#n4" aria-label="Source 4">4</a></sup> I have read its title and abstract page, not the full paper, so I am citing it for the existence of the approach, not for its numbers.</p>
@@ -49,7 +43,7 @@
 <section id="well" aria-labelledby="well-h">
 <h2 id="well-h"><span class="rv-num">03</span>The tree well next to it</h2>
 <p>Now compare that with the hole most sidewalk trees are given. I do not have a measured sample, so I use an assumption and label it: a small tree well of 4 by 4 feet, dug 3 feet deep. That is 48 cubic feet. Against a 1,000-cubic-foot target it is about one twenty-first, and against the 1,059 figure about one twenty-second. Those ratios are my arithmetic on my assumed well.</p>
-<figure class="rds-figure rv-fig rv-wide" data-rds-reveal><div class="rds-figure__art rds-figure__art--moss"><svg class="rv-svg" viewBox="0 0 800 380" role="img" aria-labelledby="t d"><title id="t">Plan view: a tree well inside the soil volume a large tree is often said to need</title><desc id="d">A small square tree well sits at the center of a much larger square of soil, which sits inside a dashed circle for a thirty foot crown.</desc>
+<figure class="rds-figure rv-fig rv-wide" data-rds-reveal><div class="rds-figure__art rds-figure__art--moss"><svg class="rv-svg" viewBox="0 0 800 380" role="img" aria-label="A small square tree well sits at the center of a much larger square of soil, which sits inside a dashed circle for a thirty foot crown.">
 <rect width="800" height="380" class="f-moss-tint" opacity="0"/>
 <circle cx="470" cy="190" r="150" class="s-moss dash"/>
 <rect x="378.5" y="98.5" width="183" height="183" class="f-moss-tint s-moss"/>
@@ -80,7 +74,7 @@
 <h2 id="civil-h"><span class="rv-num">05</span>What that does to a plan</h2>
 <p>This is the part I find most interesting as someone heading toward civil engineering. The tree is the easy line on the drawing. The hard parts are underneath:</p>
 <ul>
-<li><b>Utilities.</b> Water, sewer, gas and electric lines already occupy the ground. Before drawing any soil volume I would need a locate and as-built drawings, not an assumption that the ground is empty.</li>
+<li><b>Utilities.</b> Water, sewer, gas and electric lines already occupy the ground. Before drawing any <a class="rds-link rds-link--quiet" href="../../guide/soil-volume/index.html">soil volume</a> I would need a locate and as-built drawings, not an assumption that the ground is empty.</li>
 <li><b>Sharing.</b> The 706-cubic-foot shared figure suggests one way out: a continuous soil trench under a row of trees, instead of separate pits. That is my reading of the shared-volume entry, and I have not seen it detailed for Los Angeles.</li>
 <li><b>Paving on top.</b> If the soil is under a walk or lot, the paving has to carry loads over it, which is a structural design question, and the reason systems like soil cells exist. I have not engineered that and am not claiming a solution.</li>
 <li><b>Width on the surface.</b> The tree and its tree guard cannot narrow the walkway below the accessible minimum. The next note covers that rule.</li>
@@ -106,16 +100,9 @@
 </div>
 <p class="rds-small" style="margin-top:var(--space-6)"><a class="rds-link" href="../index.html">All notes <span class="rds-arrow">&rarr;</span></a></p></div></section>
 </main>
-<footer class="rds-footer">
-<div class="rds-footer__grid">
-<div><p class="rds-footer__brand">Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>
-<div><h4>Site</h4><ul><li><a href="../../index.html#studies">Studies</a></li><li><a href="../../index.html#method">Method</a></li><li><a href="../../notes/index.html">Notes</a></li><li><a href="../../index.html#about">About</a></li></ul></div>
-<div><h4>Notes</h4><ul><li><a href="../../notes/hottest-corner/index.html">One reading, one place</a></li><li><a href="../../notes/shade-beats-paint/index.html">Cool pavement vs trees</a></li><li><a href="../../notes/soil-volume/index.html">Counting cubic feet</a></li><li><a href="../../notes/sidewalk-promise/index.html">Willits and PROWAG</a></li><li><a href="../../notes/quarter-mile/index.html">Distance versus comfort</a></li></ul></div>
-<div><h4>Studies</h4><ul><li><a href="../../studies/topanga-willows/index.html">01 Topanga Willows</a></li></ul></div>
-</div>
-<div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>
-</footer>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
 <script src="../../assets/rds/rds.js"></script>
 <script src="../../assets/rds/notes.js"></script>
+<script src="../../assets/site-shell.js"></script>
 </body>
 </html>

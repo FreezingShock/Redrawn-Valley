@@ -14,18 +14,12 @@
 </head>
 <body class="rds-page">
 
-<header class="rds-nav" data-rds-nav>
-<a class="rds-nav__brand" href="#top">Redrawn Valley</a>
-<ul class="rds-nav__links">
-<li><a href="#studies">Studies</a></li>
-<li><a href="#method">Method</a></li>
-<li><a href="#notes">Notes</a></li>
-<li><a href="#about">About</a></li>
-</ul>
-<a class="rds-btn rds-btn--ghost rds-btn--sm" href="studies/topanga-willows/index.html">First study</a>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav">
+<a class="rds-nav__brand" href="index.html">Redrawn Valley</a>
+<noscript><a class="rds-btn rds-btn--ghost rds-btn--sm" href="studies/">Studies</a></noscript>
 </header>
 
-<main id="top">
+<main id="main">
 <div class="rds-container">
 <section class="rv-hero">
 <div class="rv-hero__copy">
@@ -36,6 +30,10 @@
 <a class="rds-btn" href="studies/topanga-willows/index.html">Read the first study <span class="rds-arrow">&rarr;</span></a>
 <a class="rds-btn rds-btn--ghost" href="#method">How a study works</a>
 </div>
+<form class="rv-search" role="search" data-rv-search-form data-rds-reveal style="--i:8">
+<label class="rds-eyebrow" for="home-q">Or look something up</label>
+<div class="rv-search__row"><input class="rds-input" id="home-q" type="search" name="q" placeholder="shade, parking, trees, soil" autocomplete="off"><button class="rds-btn rds-btn--ink" type="submit">Search</button></div>
+</form>
 </div>
 <figure class="rv-compare" data-rv-compare data-view="proposed" data-rds-reveal="scale" style="--i:2">
 <div class="rv-compare__stage">
@@ -52,6 +50,21 @@
 </figure>
 </section>
 </div>
+
+<section class="rds-section" id="browse">
+<div class="rds-container">
+<div class="rds-sechead">
+<p class="rds-eyebrow" data-rds-reveal="fade">Browse</p>
+<h2 class="rds-display" data-rds-reveal>Three ways into the site</h2>
+<p class="rds-lead" data-rds-reveal style="--i:1">Start with a finished study, look up a term in the field guide, or read what each project taught me.</p>
+</div>
+<div class="rds-rows" data-rds-stagger>
+<a class="rds-row" href="studies/"><h3 class="rds-row__title">Studies</h3><p class="rds-row__text">Full write-ups of one place each: the site, the evidence, a drawn proposal and its limits.</p><span class="rds-row__meta">All studies &rarr;</span></a>
+<a class="rds-row" href="guide/"><h3 class="rds-row__title">Field guide</h3><p class="rds-row__text">Short reference articles on shade, trees, pavement, stormwater and the rules behind them, with sources.</p><span class="rds-row__meta">Open the guide &rarr;</span></a>
+<a class="rds-row" href="notes/"><h3 class="rds-row__title">Notes</h3><p class="rds-row__text">Essays on what went wrong, what changed my mind and what I would measure next.</p><span class="rds-row__meta">Read the notes &rarr;</span></a>
+</div>
+</div>
+</section>
 
 <section class="rds-section rds-band-sunk" id="studies">
 <div class="rds-container">
@@ -108,6 +121,7 @@
 <p>The first plan I had for Topanga Willows was wrong. It showed the building at the back of the lot with parking in front, because that is what a strip center usually looks like.</p>
 <p>The aerial photo says otherwise. The building sits right on the sidewalk and all the parking is behind it. That one fact changed the whole argument: the storefronts face west into the afternoon sun, and the building only shades the first row of cars.</p>
 <blockquote>Draw what is there before you draw what you want. <span class="rds-mark">The site had the answer.</span></blockquote>
+<p><a class="rds-link" href="notes/">More notes <span class="rds-arrow">&rarr;</span></a></p>
 </article>
 </div>
 </section>
@@ -130,16 +144,13 @@
 </section>
 </main>
 
-<footer class="rds-footer">
-<div class="rds-footer__grid">
-<div><p class="rds-footer__brand">Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>
-<div><h4>Site</h4><ul><li><a href="#studies">Studies</a></li><li><a href="#method">Method</a></li><li><a href="#notes">Notes</a></li><li><a href="#about">About</a></li></ul></div>
-<div><h4>Studies</h4><ul><li><a href="studies/topanga-willows/index.html">01 Topanga Willows</a></li></ul></div>
-</div>
+<footer class="rds-footer" data-rv-shell="footer">
+<div class="rds-footer__grid"><div><p class="rds-footer__brand">Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div><div><h4>Site</h4><ul><li><a href="studies/">Studies</a></li><li><a href="guide/">Field guide</a></li><li><a href="notes/">Notes</a></li></ul></div></div>
 <div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>
 </footer>
 
 <script src="assets/rds/rds.js"></script>
 <script src="assets/site.js"></script>
+<script src="assets/site-shell.js"></script>
 </body>
 </html>
