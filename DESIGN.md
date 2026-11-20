@@ -2,7 +2,7 @@
 
 The design system behind Redrawn Valley. Warm paper, ink, brick and moss; a serif for ideas, a sans for interface, mono for evidence. Plain CSS and a small plain script, no build step, no dependencies. **Read this before changing any page.** If a component exists here, use it; if you need a new one, add it to the system (`assets/rds/rds.css`) and document it here, not as a one-off.
 
-Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index).
+Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index), `assets/rds/mobile.css` + `mobile.js` (the mobile layer).
 
 ## Character
 
@@ -145,6 +145,22 @@ For long-form reading pages, used by the Field Guide (`guide/`). Load `assets/rd
 ## Page patterns: Field Guide
 
 `guide/index.html` (sechead, search + topic chips, A–Z rows in a sunk band, "how to read it" band) and `guide/<slug>/index.html` (crumbs, head, hatnote, infobox + contents, numbered sections, see also, notes, topics, pager). New entry: copy an existing entry, add it to the index list, the footer list if wanted, and cross-link from related entries.
+
+## Mobile (`assets/rds/mobile.css`, `mobile.js`)
+
+One layer, loaded **last** on every page, scoped to phones (max 640px) and tablets (max 899px) so desktop is untouched. Add `<link rel="stylesheet" href="…/assets/rds/mobile.css">` after the page's other stylesheets and `<script src="…/assets/rds/mobile.js">` before `site-shell.js`. The tab bar comes from `site-shell.js`. Tested at 360, 390, 430 and 820px; no horizontal page scroll.
+
+- **Gutter** 20px (18px under 375px) via `--rv-gutter`; it overrides the 48px container maths, inline-styled study sections included. Prose 18/29 serif (lead paragraph 20/31), headlines clamp down (`rds-display-xl` 36–44px).
+- **Top bar** `rds-nav`: 52px, solid paper, brand left, 44px search icon right. It slides away when you scroll down and returns on scroll up (`.is-hidden`). The Menu button and link list are hidden on phones; navigation is the tab bar.
+- **Tab bar** `rv-tabbar`: fixed bottom, five 56px targets (Home, Guide, Studies, Notes, Search), current section in brick with a top tick, safe-area aware. The page gets matching bottom padding. This is the only persistent bottom bar.
+- **Contents pill + sheet** `rv-jump`, `rv-sheet`: on articles, essays and studies a floating pill ("03 / 07 Heading ⌃") appears after the first section and opens a bottom sheet listing every section (current one in brick). It replaces the desktop contents rail. Source list: `.rds-contents`, else `.rds-toc`, else the study's `.kt` rail. It hides near the footer.
+- **Footnotes by tap** `rv-note-read`: tapping a `[n]` marker (or any `sup a` pointing at an `<li>`) opens the note in the sheet with a "Jump to the list" button instead of leaving the line. Markers get a 44px invisible hit area; the hover popover is off on touch.
+- **Collapsible infobox** `.is-collapsible` + `rv-more`: under 900px the infobox shows its title and first three facts, hides the sketch and the rest behind "Show all N facts" / "Show sketch and all facts". `rds-contents` starts closed with a 52px summary.
+- **Study tab bar**: a single 48px row. "← All studies", then Site / Evidence / Design / Delivery / Sources scroll sideways; the current part is underlined and scrolled into view. The scroll-driven figure pins right under it.
+- **Search** `rds-search`: full-screen sheet, 48px input, 56px result rows, "Cancel" instead of Esc.
+- **Lists and controls**: rows get a chevron and a pressed state; buttons are 48px, hero buttons stack full width; chips and breadcrumbs scroll sideways on one line instead of wrapping; footer links are 44px rows; wide essay figures pan sideways (min 560px) instead of shrinking their labels.
+- **Touch, not hover** (`@media (hover:none)`): no hover shifts, a `:active` background instead, no tap highlight.
+- **Rule**: new components must work with a thumb: 44px minimum targets, nothing that only appears on hover, no second sticky bar at the top. Check every new page at 360 and 430px.
 
 ## Using this when adding pages
 
