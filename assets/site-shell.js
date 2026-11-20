@@ -28,12 +28,11 @@
   }
 
   /* ---------- header ---------- */
-  /* icons: hand-drawn sprite (assets/rds/icons/icons.svg). width/height attributes stop a flash of oversized icons before icons.css loads. */
+  /* icons: hand-drawn sprite (assets/rds/icons/icons.svg). width/height attributes stop a flash of oversized icons before rds.css loads. */
   var SPRITE = new URL('assets/rds/icons/icons.svg', siteRoot).href;
   function icon(name, cls, size) { return '<svg class="rds-icon' + (cls ? ' ' + cls : '') + '" width="' + (size || 24) + '" height="' + (size || 24) + '" aria-hidden="true" focusable="false"><use href="' + SPRITE + '#i-' + name + '"/></svg>'; }
   function logoMark(size) { return '<svg class="rds-logo" width="' + (size || 34) + '" height="' + (size || 34) + '" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><use href="' + SPRITE + '#i-logo"/></svg>'; }
   var SEARCH_ICON = icon('search', 'rds-icon--sm', 18);
-  if (!doc.querySelector('link[href$="rds/icons/icons.css"]')) { var l = doc.createElement('link'); l.rel = 'stylesheet'; l.href = new URL('assets/rds/icons/icons.css', siteRoot).href; doc.head.appendChild(l); }
   if (!doc.querySelector('link[rel~="icon"]')) {
     [['icon', 'assets/rds/icons/favicon.svg', 'image/svg+xml'], ['apple-touch-icon', 'assets/rds/icons/apple-touch-icon.png']].forEach(function (a) {
       var k = doc.createElement('link'); k.rel = a[0]; k.href = new URL(a[1], siteRoot).href; if (a[2]) k.type = a[2]; doc.head.appendChild(k);
@@ -53,7 +52,7 @@
     btn.addEventListener('click', function () { var o = ul.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Close' : 'Menu'; });
   }
 
-  /* ---------- bottom tab bar (phones only; mobile.css hides it above 640px) ---------- */
+  /* ---------- bottom tab bar (phones only; skin.css hides it above 640px) ---------- */
   function tabbar() {
     if (doc.querySelector('.rv-tabbar')) return;
     var ic = function (n) { return icon(n, '', 24); };

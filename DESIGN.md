@@ -2,7 +2,7 @@
 
 The design system behind Redrawn Valley. Warm paper, ink, brick and moss; a serif for ideas, a sans for interface, mono for evidence. Plain CSS and a small plain script, no build step, no dependencies. **Read this before changing any page.** If a component exists here, use it; if you need a new one, add it to the system (`assets/rds/rds.css`) and document it here, not as a one-off.
 
-Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index), `assets/rds/mobile.css` + `mobile.js` (the mobile layer).
+Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index), `assets/rds/skin.css` (responsive layer then sketchbook layer, always last) with `mobile.js` and `sketch.js`.
 
 ## Character
 
@@ -111,7 +111,7 @@ Every page uses one script for the header, footer, breadcrumbs and search, so th
 `notes/index.html` (index: feature, topic filter, rows) and `notes/<slug>/index.html` (essays). Styles are in `assets/rds/notes.css` (`rv-` prefix), script in `assets/rds/notes.js` (reading-progress line, topic filter). Essay anatomy: `rv-ehead` (back link + topic tag, `rds-display` headline, `rds-lead` dek, mono `rv-byline` with date, reading time, source count) → `rds-toc` contents rail → `rv-body` of numbered sections (`rv-num` + h2; prose at 68ch, figures `rv-fig rv-wide` break out to 60rem) → `rv-pull` pull quotes → `rds-callout--plain` "What I could not verify" → `rv-sources` numbered list. Footnotes are `<sup class="rv-fn"><a href="#nN">` linking to `<li id="nN">` with a back-arrow. Inline SVG figures use the `.rv-svg` classes (`ln`, `f-*`, `s-*`, `t-*`) so drawings stay in palette. Each essay ends with two related notes as `rds-rows`.
 ## Icons and the logo mark (`assets/rds/icons/`)
 
-Hand-drawn SVG set, gallery at `icons/index.html`. Files: `icons.svg` (sprite, `<symbol id="i-NAME">`, 24px grid; `i-logo` is 32px), `icons.css` (the `rds-icon` component, `rds-logo`, gallery styles), `logo.svg`, `favicon.svg`, `apple-touch-icon.png`, `names.json`. The drawings live as plain point lists in `scripts/build_icons.py`, which roughens them (seeded, stable) into wobbly paths and rewrites the sprite and the gallery. Edit the script, run `python3 scripts/build_icons.py`, commit the output. Never hand-edit `icons.svg`.
+Hand-drawn SVG set, gallery at `icons/index.html`. Files: `icons.svg` (sprite, `<symbol id="i-NAME">`, 24px grid; `i-logo` is 32px), the `rds-icon` component, `rds-logo` and gallery styles live in `rds.css`, `logo.svg`, `favicon.svg`, `apple-touch-icon.png`, `names.json`. The drawings live as plain point lists in `scripts/build_icons.py`, which roughens them (seeded, stable) into wobbly paths and rewrites the sprite and the gallery. Edit the script, run `python3 scripts/build_icons.py`, commit the output. Never hand-edit `icons.svg`.
 
 - **Use**: `<svg class="rds-icon" aria-hidden="true"><use href="PATH/assets/rds/icons/icons.svg#i-tree"/></svg>`. Decorative; the text next to it carries the meaning. External sprite references need HTTP, so icons do not show when a page is opened from disk.
 - **Colors**: linework is `currentColor`; one accent stroke uses `--icon-accent` (brick by default); a pale tint is laid slightly off the line with `--icon-tint`. Modifiers: `rds-icon--moss` (trees, proposals), `--slate` (water), `--ink`, `--quiet` (no accent), `--on-ink`.
@@ -158,9 +158,9 @@ For long-form reading pages, used by the Field Guide (`guide/`). Load `assets/rd
 
 `guide/index.html` (sechead, search + topic chips, A–Z rows in a sunk band, "how to read it" band) and `guide/<slug>/index.html` (crumbs, head, hatnote, infobox + contents, numbered sections, see also, notes, topics, pager). New entry: copy an existing entry, add it to the index list, the footer list if wanted, and cross-link from related entries.
 
-## Mobile (`assets/rds/mobile.css`, `mobile.js`)
+## Mobile (Part 1 of `assets/rds/skin.css`, `mobile.js`)
 
-One layer, loaded **last** on every page, scoped to phones (max 640px) and tablets (max 899px) so desktop is untouched. Add `<link rel="stylesheet" href="…/assets/rds/mobile.css">` after the page's other stylesheets and `<script src="…/assets/rds/mobile.js">` before `site-shell.js`. The tab bar comes from `site-shell.js`. Tested at 360, 390, 430 and 820px; no horizontal page scroll.
+One layer, loaded **last** on every page, scoped to phones (max 640px) and tablets (max 899px) so desktop is untouched. The layer ships inside `skin.css` (the one stylesheet loaded after the page's others); keep that link last and `<script src="…/assets/rds/mobile.js">` before `site-shell.js`. The tab bar comes from `site-shell.js`. Tested at 360, 390, 430 and 820px; no horizontal page scroll.
 
 - **Gutter** 20px (18px under 375px) via `--rv-gutter`; it overrides the 48px container maths, inline-styled study sections included. Prose 18/29 serif (lead paragraph 20/31), headlines clamp down (`rds-display-xl` 36–44px).
 - **Top bar** `rds-nav`: 52px, solid paper, brand left, 44px search icon right. It slides away when you scroll down and returns on scroll up (`.is-hidden`). The Menu button and link list are hidden on phones; navigation is the tab bar.
@@ -182,9 +182,9 @@ One layer, loaded **last** on every page, scoped to phones (max 640px) and table
 4. New site-only styles go in `assets/site.css` with the `rv-` prefix. Genuinely reusable pieces go in `rds.css` plus this doc.
 5. Run `python3 scripts/check.py` (links and anchors) before opening a PR.
 
-## Sketchbook layer (`sketch.css`, `sketch.js`)
+## Sketchbook layer (Part 2 of `skin.css`, `sketch.js`)
 
-Makes the whole site feel drawn instead of printed. Load `assets/rds/sketch.css` last (after `mobile.css`) and `assets/rds/sketch.js` with `defer` on every page. It is cosmetic only: remove it and nothing breaks. This supersedes the "no shadows" line above for the two pencil patterns below.
+Makes the whole site feel drawn instead of printed. Load `assets/rds/skin.css` last and `assets/rds/sketch.js` with `defer` on every page. It is cosmetic only: remove it and nothing breaks. This supersedes the "no shadows" line above for the two pencil patterns below.
 
 - **Hand lettering**: `--rv-hand` (Architects Daughter) now sets eyebrows, tags, nav links, buttons, chips, row meta and empty states. Headlines stay Newsreader, prose stays serif, figure captions and numbers stay mono (evidence).
 - **Wobbly borders**: `--rv-r-lg/md/sm` are uneven radii; cards, figures, infoboxes, callouts and inputs use them with a 1.5px ink border (`--rv-stroke`). Reuse the variables, never a plain radius, on new boxed things.
@@ -197,7 +197,7 @@ Makes the whole site feel drawn instead of printed. Load `assets/rds/sketch.css`
 - **Hero collage** `rv-collage`: contour lines (moss), drafting grid, halftone dots (brick), compass and scale bar behind the home figure. Reuse it as the art for new section heads: one tinted field, single-weight ink on top.
 - **Generated art** `scripts/sketchlib.py` (tiny hand-drawn SVG helper: wobbly lines, offset tint, hatching, trees, sun, rain) and `scripts/guide_art.py` regenerate every Field Guide infobox drawing (300x150, one tinted field, single-weight ink line, hand labels). Add a new entry's art there, then run `python3 scripts/guide_art.py`.
 - **Essay figures** (`.rv-svg`): flat tints become hatched fills (patterns `#rv-h-*` injected by `sketch.js`), shapes get a 1.6px ink outline, gridlines are dotted, labels get a paper halo so they stay legible over hatching.
-- **Topanga study**: its inline styles are overridden by attribute selectors at the end of `sketch.css` (rules, frames, callout tape). New studies should use the `rv-` components instead.
+- **Topanga study**: its inline styles are overridden by attribute selectors at the end of `skin.css` (rules, frames, callout tape). New studies should use the `rv-` components instead.
 - **Tile banner** `rv-tiles` (`scripts/tiles_art.py`): three flat tinted tiles side by side, each mixing a drafting object (compass, ruler, scale bar), a plan or section fragment and a texture (grid, halftone, contour). Used under the headline of the guide, notes and studies indexes. Borrowed from the collage recipe in the reference library; the art itself is original.
 - **Marker highlight**: `rds-mark` is now a tilted brick-tint block that wipes in.
 - **Focus**: dashed brick marker ring on every focusable element.
