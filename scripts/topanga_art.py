@@ -116,6 +116,7 @@ class Pen:
             c += gap
         self.out.append('<path class="%s" d="%s"/>' % (cls, d))
     def tree(self, x, y, r, code=None, cls_fill='df-t', cls_line='dk dk-m', draw=False):
+        self.out.append('<g class="tg">')
         n = 9; lump = []
         for i in range(n):
             a = 2 * math.pi * i / n; rr = r * (1 + self.J(.09)); lump.append((x + rr * math.cos(a), y + rr * math.sin(a)))
@@ -128,6 +129,7 @@ class Pen:
         self.out.append('<circle class="df-dot" cx="%.1f" cy="%.1f" r="1.8"/>' % (x, y))
         for _ in range(2):
             a = self.r.uniform(0, 6.28); self.line(x, y, x + r * .5 * math.cos(a), y + r * .5 * math.sin(a), cls_line + ' dk-f', j=.3)
+        self.out.append('</g>')
 
 
 def bay_edges():

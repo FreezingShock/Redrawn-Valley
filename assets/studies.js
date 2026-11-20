@@ -47,6 +47,8 @@ for (var s = 0; s < scs.length; s++) {
 var steps = scs[s].querySelectorAll('[data-step]'), a = 0;
 for (var k = 0; k < steps.length; k++) { var n = +steps[k].getAttribute('data-step'); if (!page || steps[k].getBoundingClientRect().top < window.innerHeight * 0.62) a = Math.max(a, n); }
 if (scs[s].getAttribute('data-st') !== String(a)) scs[s].setAttribute('data-st', a);
+var lyr = scs[s].querySelectorAll('.lyr');
+for (var q = 0; q < lyr.length; q++) { var ln = +(/\bl(\d+)\b/.exec(lyr[q].getAttribute('class')) || [0, 0])[1]; lyr[q].classList.toggle('is-on', ln <= a); }
 for (var m = 0; m < steps.length; m++) { if (!page || +steps[m].getAttribute('data-step') === a) steps[m].setAttribute('data-on', ''); else steps[m].removeAttribute('data-on'); }
 var lab2 = scs[s].querySelector('[data-stage-name]'), cur = scs[s].querySelector('[data-step="' + a + '"]');
 if (lab2 && cur) { var tx = cur.getAttribute('data-label') || ''; if (lab2.textContent !== tx) lab2.textContent = tx; }

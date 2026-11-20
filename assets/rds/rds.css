@@ -370,3 +370,19 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 }
 @media (prefers-reduced-motion:reduce){.m-field,.m-shape,.m-inset,.m-ov,.m-bar,.m-pill,.m-ico,.m-needle{transition:none}}
 .rv-art-paused .rds-art.is-live :is(.m-drift,.m-sway,.m-arc,.m-flow){animation-play-state:paused}
+
+/* Scroll effects (assets/rds/scrollfx.js). Scoped to .fx-on, which the script adds only when motion is allowed. */
+@property --ld{syntax:'<number>';inherits:true;initial-value:1}
+.fx-progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:31;pointer-events:none}
+.fx-progress i{display:block;height:100%;background:var(--brick);transform:scaleX(0);transform-origin:0 50%;will-change:transform}
+.fx-on .dw{stroke-dasharray:1 2;stroke-dashoffset:calc(1 - clamp(0, min(var(--draw,1), var(--ld,1)) * 1.5 - var(--o,0), 1))}
+.fx-on :is(.df-t,.df-sand,.df-awn,.df-glass,.df-w,.df-cool,.df-p){fill-opacity:clamp(0, calc((min(var(--draw,1), var(--ld,1)) - .4) * 2), 1)}
+.fx-on .dt{fill-opacity:clamp(0, calc((var(--draw,1) - .55) * 3), 1)}
+.fx-on .lyr{--ld:0;transition:opacity .7s ease,--ld 1.3s cubic-bezier(.3,.7,.2,1)}
+.fx-on .lyr.is-on{--ld:1}
+.fx-on .lyr .tg{transform-box:fill-box;transform-origin:50% 55%;transition:scale .9s var(--ease-out) .25s}
+.fx-on .lyr:not(.is-on) .tg{scale:.35}
+.fx-on .m-par{translate:0 calc(var(--py,0) * var(--k,0) * 1px)}
+.fx-on .fx-rise{opacity:0;translate:0 18px;transition:opacity .7s ease,translate .8s var(--ease-out)}
+.fx-on .fx-rise.is-in{opacity:1;translate:none}
+@media print{.fx-on .fx-rise{opacity:1;translate:none}.fx-progress{display:none}}

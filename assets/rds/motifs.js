@@ -233,7 +233,7 @@
       var out = M[m](rc.w, rc.h, rnd, ctx), gid = id + 'g' + i;
       var bg = '<rect class="m-field" width="' + rc.w + '" height="' + rc.h + '" style="fill:' + v(field) + '"/>';
       if (paper || out.dots) bg += '<defs>' + paperGrid(gid, 14) + '</defs><rect width="' + rc.w + '" height="' + rc.h + '" fill="url(#' + gid + ')"/>';
-      svg += '<svg class="m-tile m-' + m + '" data-motif="' + m + '" data-field="' + field + '" x="' + rc.x + '" y="' + rc.y + '" width="' + rc.w + '" height="' + rc.h + '" viewBox="0 0 ' + rc.w + ' ' + rc.h + '" style="--field:' + v(field) + '">' + bg + out.svg + '</svg>';
+      svg += '<svg class="m-tile m-' + m + '" data-motif="' + m + '" data-field="' + field + '" x="' + rc.x + '" y="' + rc.y + '" width="' + rc.w + '" height="' + rc.h + '" viewBox="0 0 ' + rc.w + ' ' + rc.h + '" style="--field:' + v(field) + '">' + bg + '<g class="m-par" style="--k:' + f(Rng(seed + '|par|' + i)() * 20 - 10) + '">' + out.svg + '</g></svg>';
       tiles.push({ motif: m, field: field, uses: out.uses || [], shift: !!out.shift, pale: paper || !!out.pale, ink: ink });
     });
     return { html: '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid slice" focusable="false" role="presentation">' + svg + '</svg>', tiles: tiles, W: W, H: H, rnd: rnd };

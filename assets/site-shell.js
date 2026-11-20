@@ -13,6 +13,9 @@
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function all(sel, el) { return Array.prototype.slice.call((el || doc).querySelectorAll(sel)); }
 
+  /* scroll effects: progress bar, drawing figures, counters, parallax art (off under prefers-reduced-motion) */
+  if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href; fx.defer = true; doc.head.appendChild(fx); }
+
   var NAV = [['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['About', 'index.html#about']];
   var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', about: 'About' };
   var sitePath = new URL(siteRoot).pathname;
