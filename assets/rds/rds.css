@@ -342,7 +342,7 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .m-field{transition:fill 1.4s var(--ease-in-out)}
 .m-shape{transition:rx 1.1s var(--ease-out),ry 1.1s var(--ease-out)}
 .m-tile.is-sq .m-shape{rx:7px;ry:7px}
-.m-inset,.m-ov,.m-bar,.m-ico,.m-needle{transition:transform 1.2s var(--ease-out),opacity 1s ease}
+.m-inset,.m-ov,.m-bar,.m-pill,.m-ico,.m-needle{transition:transform 1.2s var(--ease-out),opacity 1s ease}
 .m-inset{transform-box:fill-box;transform-origin:100% 100%}
 .m-tile.is-flip .m-inset{transform:scale(1.7)}
 .m-tile.is-spread .m-ov0{transform:translateX(-16px)}
@@ -350,6 +350,9 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .m-needle{transform:rotate(var(--n,0deg))}
 .m-tile.is-turn .m-needle{transform:rotate(calc(var(--n,0deg) * -.7 + 24deg))}
 .m-bar{transform-box:fill-box;transform-origin:50% 100%}
+.m-pill{transform-box:fill-box;transform-origin:50% 50%}
+.m-tile.is-nudge .m-pill:nth-of-type(odd){transform:translateX(5px)}
+.m-tile.is-nudge .m-pill:nth-of-type(even){transform:translateX(-5px)}
 .m-tile.is-nudge .m-bar:nth-child(odd){transform:scaleY(1.22)}
 .m-tile.is-nudge .m-bar:nth-child(even){transform:scaleY(.74)}
 .m-ico-b{opacity:0}
@@ -365,5 +368,5 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
   .rds-art.is-live .m-sway{animation:m-sway 12s var(--ease-in-out) infinite alternate}
   .rds-art.is-live .m-arc,.rds-art.is-live .m-flow{animation:m-dash 60s linear infinite}
 }
-@media (prefers-reduced-motion:reduce){.m-field,.m-shape,.m-inset,.m-ov,.m-bar,.m-ico,.m-needle{transition:none}}
+@media (prefers-reduced-motion:reduce){.m-field,.m-shape,.m-inset,.m-ov,.m-bar,.m-pill,.m-ico,.m-needle{transition:none}}
 .rv-art-paused .rds-art.is-live :is(.m-drift,.m-sway,.m-arc,.m-flow){animation-play-state:paused}
