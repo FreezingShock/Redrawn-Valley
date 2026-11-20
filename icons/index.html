@@ -24,7 +24,7 @@
 <div class="rds-sechead">
 <p class="rds-eyebrow">Design system · Icons</p>
 <h1 class="rds-display">Every icon is drawn <span class="rds-mark">by hand</span>, then kept in one file</h1>
-<p class="rds-lead">A sketchbook-style set: wobbly ink lines, one brick accent stroke, and a pale tint printed slightly off the line, like a marker that missed. Click any icon to copy its markup.</p>
+<p class="rds-lead">A sketchbook-style set kept deliberately simple: two or three wobbly strokes, one brick accent, and on topic icons a pale tint printed slightly off the line, like a marker that missed. Click any icon to copy its markup.</p>
 </div>
 </div>
 </section>
@@ -33,8 +33,8 @@
 <div class="rds-container">
 <div class="rds-sechead">
 <p class="rds-eyebrow">The mark</p>
-<h2 class="rds-display" style="font-size:clamp(30px,4vw,40px)">Two ridgelines and a valley between them</h2>
-<p class="rds-lead">The ink line is the valley as it was drawn; the brick line over it is the same ridge, redrawn. A small tree stands on the slope and the sun sits low in the gap. It sits left of the Newsreader wordmark in the header, in the footer and as the favicon.</p>
+<h2 class="rds-display" style="font-size:clamp(30px,4vw,40px)">Two ridgelines, one redrawn</h2>
+<p class="rds-lead">The ink line is the valley as it was drawn; the brick line under it is the same ridge, redrawn, and a small sun sits in the gap. Three strokes, so it still reads at 16px. It sits left of the Newsreader wordmark in the header, in the footer and as the favicon.</p>
 </div>
 <div class="rv-gal-logo">
 <div><svg class="rds-logo" viewBox="0 0 32 32" aria-hidden="true"><use href="../assets/rds/icons/icons.svg#i-logo"/></svg><span class="rv-gal-word">Redrawn Valley</span></div>
@@ -85,9 +85,9 @@
 <div class="rds-prose">
 <p>Icons are not exported from a drawing app. Each one is a short list of points in <code>scripts/build_icons.py</code>, on a 24px grid. The script roughens the points the same way every time, so the set stays consistent and a diff shows exactly what changed.</p>
 <ul>
-<li>Keep it to three to six strokes. If a drawing needs more, it is an illustration, not an icon.</li>
+<li>Keep it to two or three strokes. If a drawing needs more, it is an illustration, not an icon. Check it at 16px before you commit it.</li>
 <li>One accent stroke per icon, for the part that carries the meaning (the door, the sprout, the rain).</li>
-<li>Round caps and joins, 1.6px line at 24px. Never fill a shape with solid ink; the tint is the only fill.</li>
+<li>Round caps and joins, about 1.9px line at 24px. Never fill a shape with solid ink; the tint is the only fill.</li>
 <li>Run <code>python3 scripts/build_icons.py</code> and commit the regenerated <code>icons.svg</code>, <code>logo.svg</code>, <code>favicon.svg</code> and this page.</li>
 </ul>
 <p>Icons need the sprite file, so they appear when the site is served over HTTP (<code>python3 -m http.server</code>) or on Vercel. They do not load when a page is opened straight from disk, because browsers block external SVG references there. Every icon is decorative and carries <code>aria-hidden</code>; the text beside it names the action.</p>

@@ -33,15 +33,12 @@ def arrow(deg):
 ICONS = {
  # --- navigation
  'nav': {
-  'home': [P((3.5, 11.8), (12, 4.6), (20.5, 11.8)), P((5.6, 10.2), (5.6, 19.6), (18.4, 19.6), (18.4, 10.2)),
-           Z((10, 19.6), (10, 14.4), (14, 14.4), (14, 19.6), accent=True, t=True)],
-  'guide': [P((5, 18), (5, 5), (18.6, 5), (18.6, 19.6), (6.6, 19.6)), C((5, 18), (5.5, 19.2), (6.6, 19.6)),
-            P((8.6, 5), (8.6, 19.6)), P((11.4, 9), (15.6, 9), accent=True), P((11.4, 12.4), (15, 12.4), accent=True)],
-  'studies': [Z((3.5, 7), (9, 5), (15, 7.6), (20.5, 5.4), (20.5, 17), (15, 19.6), (9, 17), (3.5, 19)),
-              P((9, 5), (9, 17), accent=True), P((15, 7.6), (15, 19.6), accent=True)],
-  'notes': [Z((5, 19.6), (5.8, 15.4), (16, 5.2), (18.9, 8.1), (8.6, 18.4), t=True),
-            P((14, 7.2), (16.9, 10.1), accent=True), P((5.8, 15.4), (8.6, 18.4))],
-  'search': [O(10.4, 10.4, 6.1), P((15, 15), (20.2, 20.2)), P((8, 8.6), (9.4, 7.5), accent=True)],
+  'home': [P((3.8, 11.4), (12, 4.6), (20.2, 11.4)), P((6.2, 10), (6.2, 19.6), (17.8, 19.6), (17.8, 10)),
+           P((10.4, 19.6), (10.4, 14.6), (13.6, 14.6), (13.6, 19.6), accent=True)],
+  'guide': [Z((5.6, 4.6), (18.4, 4.6), (18.4, 19.6), (5.6, 19.6)), P((9.4, 4.6), (9.4, 19.6), accent=True)],
+  'studies': [Z((3.6, 6.6), (9, 4.6), (15, 7), (20.4, 5), (20.4, 17.4), (15, 19.4), (9, 17), (3.6, 19)), P((9, 4.8), (9, 17), accent=True)],
+  'notes': [Z((5, 19.6), (5.8, 15.4), (16, 5.2), (18.9, 8.1), (8.6, 18.4)), P((13.8, 7.4), (16.7, 10.3), accent=True)],
+  'search': [O(10.4, 10.4, 6.1), P((15, 15), (20.2, 20.2), accent=True)],
   'menu': [P((4, 7), (20, 7)), P((4, 12.2), (20, 12)), P((4, 17), (14.5, 17), accent=True)],
   'close': [P((6, 6), (18, 18)), P((18, 6), (6, 18), accent=True)],
  },
@@ -50,53 +47,34 @@ ICONS = {
   'arrow-right': arrow(0), 'arrow-down': arrow(90), 'arrow-left': arrow(180), 'arrow-up': arrow(270),
   'chevron-down': [P((6, 9.5), (12, 15.6), (18, 9.5))],
   'chevron-right': [P((9.5, 6), (15.6, 12), (9.5, 18))],
-  'plus': [P((12, 5), (12, 19)), P((5, 12), (19, 12), accent=True)],
+  'plus': [P((12, 5), (12, 19)), P((5, 12), (19, 12))],
   'minus': [P((5, 12), (19, 12))],
-  'contents': [P((9.5, 7), (20, 7)), P((9.5, 12), (20, 12)), P((9.5, 17), (20, 17)),
-               P((4.2, 6.8), (4.9, 7.3), accent=True), P((4.2, 11.8), (4.9, 12.3), accent=True), P((4.2, 16.8), (4.9, 17.3), accent=True)],
-  'footnote': [P((12, 3.6), (12, 11.6)), P((8.2, 5.7), (15.8, 9.5), accent=True), P((15.8, 5.7), (8.2, 9.5), accent=True),
-               P((4.5, 15.6), (19.5, 15.6)), P((4.5, 19.6), (13.5, 19.6))],
-  'external': [P((10.5, 5.6), (5.2, 5.6), (5.2, 18.8), (18.4, 18.8), (18.4, 13.5)),
-               P((13.5, 4.6), (19.6, 4.6), (19.6, 10.6)), P((19, 5.2), (10.8, 13.4), accent=True)],
-  'info': [O(12, 12, 8.6, t=True), P((12, 11), (12, 16.4)), dot(12, 7.7, accent=True)],
-  'warning': [Z((12, 4), (21, 19.6), (3, 19.6), t=True), P((12, 9.8), (12, 14.4)), dot(12, 16.9, accent=True)],
-  'check': [P((4.8, 12.6), (9.8, 17.6), (19.2, 6.6))],
-  'hash': [P((9.6, 4.6), (8, 19.4)), P((16.2, 4.6), (14.6, 19.4)), P((4.8, 9.4), (19.8, 9.4), accent=True), P((4.2, 14.8), (19.2, 14.8), accent=True)],
+  'contents': [P((9.5, 7), (20, 7)), P((9.5, 12), (20, 12)), P((9.5, 17), (20, 17)), P((4.2, 7), (4.7, 7.3), accent=True), P((4.2, 12), (4.7, 12.3), accent=True), P((4.2, 17), (4.7, 17.3), accent=True)],
+  'footnote': [P((12, 4), (12, 13), accent=True), P((8, 6.3), (16, 10.7), accent=True), P((16, 6.3), (8, 10.7), accent=True), P((5, 18), (19, 18))],
+  'external': [P((10.5, 5.6), (5.2, 5.6), (5.2, 18.8), (18.4, 18.8), (18.4, 13.5)), P((13.5, 4.6), (19.6, 4.6), (19.6, 10.6), accent=True), P((19, 5.2), (10.8, 13.4), accent=True)],
+  'info': [O(12, 12, 8.6), P((12, 11), (12, 16.4)), dot(12, 7.7, accent=True)],
+  'warning': [Z((12, 4), (21, 19.6), (3, 19.6)), P((12, 10), (12, 14.4)), dot(12, 16.9, accent=True)],
+  'check': [P((4.8, 12.6), (9.8, 17.6), (19.2, 6.6), accent=True)],
+  'hash': [P((9.6, 4.6), (8, 19.4)), P((16.2, 4.6), (14.6, 19.4)), P((4.8, 9.4), (19.8, 9.4)), P((4.2, 14.8), (19.2, 14.8))],
   'quote': [Z((4.5, 7), (10.5, 7), (10.5, 13), (7, 13), (7, 17.5), (4.5, 17.5)), Z((13.5, 7), (19.5, 7), (19.5, 13), (16, 13), (16, 17.5), (13.5, 17.5), accent=True)],
  },
- # --- topics (field guide entries, studies)
+ # --- topics (field guide entries, studies, notes)
  'topic': {
-  'heat': [O(12, 12, 3.9, accent=True, t=True)] + [P(*rot([(12, 3.6), (12, 6.4)], d)) for d in range(0, 360, 45)],
-  'tree': [ZC((12, 3.6), (17.2, 5.6), (19.6, 10.2), (17.4, 14.6), (12.6, 15.8), (7, 14.6), (4.5, 10.2), (6.8, 5.6), t=True),
-           P((12, 15.8), (12, 20.6)), P((12, 18), (14.8, 14.8), accent=True), P((8, 20.6), (16.2, 20.6), accent=True)],
-  'shade': [Z((4, 12), (6, 7.4), (12, 5), (18, 7.4), (20, 12), (16, 13.4), (12, 12), (8, 13.4), t=True),
-            P((12, 12), (12, 20.4)), P((14.6, 20.4), (20.6, 20.4), accent=True), P((4, 20.4), (10, 20.4), accent=True)],
-  'pavement': [Z((3, 11), (12, 6.4), (21, 11), (12, 15.6), t=True), P((3, 11), (3, 14.2), (12, 18.8), (21, 14.2), (21, 11)),
-               P((12, 15.6), (12, 18.8)), P((9, 10.2), (11.6, 12), (10.4, 13.4), accent=True)],
-  'water': [ZC((12, 3.8), (16, 9.2), (17.9, 13.8), (16.4, 17.6), (12, 19.8), (7.6, 17.6), (6.1, 13.8), (8, 9.2), t=True),
-            P((9.2, 14.6), (9.8, 16.6), accent=True)],
-  'river': [C((3, 7.6), (6, 6.2), (9, 7.8), (12, 9.2), (15, 7.8), (18, 6.2), (21, 7.6)),
-            C((3, 12.6), (6, 11.2), (9, 12.8), (12, 14.2), (15, 12.8), (18, 11.2), (21, 12.6), accent=True),
-            C((3, 17.6), (6, 16.2), (9, 17.8), (12, 19.2), (15, 17.8), (18, 16.2), (21, 17.6))],
-  'soil': [P((3.5, 8.6), (3.5, 20.4), (20.5, 20.4), (20.5, 8.6)), P((3.5, 8.6), (20.5, 8.6)),
-           C((3.5, 14), (8, 12.8), (13, 14.4), (20.5, 13.2), accent=True),
-           P((12, 8.6), (12, 3.8)), C((12, 5.6), (13.4, 3.8), (16, 3.8), accent=True), C((12, 6.4), (10.2, 4.8), (8.2, 4.8), accent=True),
-           P((7, 17.6), (7.4, 17.9)), P((13, 17.2), (13.4, 17.5)), P((17, 18), (17.4, 18.3))],
-  'sidewalk': [P((9, 3.8), (3.8, 20.4)), P((15, 3.8), (20.2, 20.4)), P((7.7, 8.2), (16.3, 8.2), accent=True),
-               P((6.3, 13), (17.7, 13), accent=True), P((4.9, 17.6), (19.1, 17.6), accent=True), P((12, 3.8), (12, 7.4))],
-  'bioswale': [C((3, 7.6), (5.8, 14.8), (12, 18.2), (18.2, 14.8), (21, 7.6)),
-               P((8.4, 13.6), (7.8, 8.6)), P((7.9, 11), (9.9, 9.4), accent=True),
-               P((12, 16.4), (12, 10)), P((12, 12.4), (14.2, 10.4), accent=True), P((16, 13.6), (16.6, 9)), P((16.4, 11), (14.6, 9.6), accent=True),
-               C((7, 20.4), (10, 19.4), (14, 21), (17, 20.2))],
-  'permeable': [Z((3.6, 4.6), (10.6, 4.6), (10.6, 10), (3.6, 10), t=True), Z((13.4, 4.6), (20.4, 4.6), (20.4, 10), (13.4, 10), t=True),
-                P((12, 11.8), (12, 19.8), accent=True), P((10.4, 18), (12, 19.8), (13.6, 18), accent=True), P((7, 14), (7, 16.4)), P((17, 14), (17, 16.4))],
-  'leaf': [ZC((5, 19), (4.6, 12), (8.6, 6.6), (15, 4.4), (19.4, 4.6), (19, 10.6), (15.6, 16.4), (10, 18.8), t=True),
-           P((5, 19), (14, 10), accent=True)],
-  'thermometer': [P((10, 14), (10, 5.8), (14, 5.8), (14, 14)), O(12, 17.2, 3.6, t=True), P((12, 8.4), (12, 15), accent=True), P((16.4, 7.4), (18.6, 7.4)), P((16.4, 10.4), (18, 10.4))],
-  'pin': [ZC((12, 21), (6.6, 13.6), (6.2, 9.2), (9, 5), (12, 4), (15, 5), (17.8, 9.2), (17.4, 13.6), t=True), O(12, 10, 2.5, accent=True)],
-  'ruler': [Z((3, 15), (15, 3), (21, 9), (9, 21)), P((6.6, 11.6), (8.8, 13.8), accent=True), P((9.4, 8.8), (11.6, 11), accent=True), P((12.2, 6), (14.4, 8.2), accent=True)],
-  'building': [Z((6, 20.4), (6, 4.8), (14.4, 4.8), (14.4, 20.4), t=True), P((14.4, 10.6), (19, 10.6), (19, 20.4)), P((3.6, 20.4), (21, 20.4)),
-               P((9, 8.6), (11.4, 8.6), accent=True), P((9, 12.2), (11.4, 12.2), accent=True), P((9, 15.8), (11.4, 15.8), accent=True)],
+  'heat': [O(12, 12, 3.8, accent=True, t=True)] + [P(*rot([(12, 3.8), (12, 6.2)], d)) for d in range(0, 360, 45)],
+  'tree': [ZC((12, 3.6), (17.2, 5.6), (19.6, 10.2), (17.4, 14.6), (12.6, 15.8), (7, 14.6), (4.5, 10.2), (6.8, 5.6), t=True), P((12, 15.8), (12, 20.6), accent=True)],
+  'shade': [Z((4, 12), (7, 7), (12, 5), (17, 7), (20, 12), t=True), P((12, 12), (12, 20.4)), P((14.6, 20.4), (20.6, 20.4), accent=True)],
+  'pavement': [Z((3, 11), (12, 6.4), (21, 11), (12, 15.6), t=True), P((3, 11), (3, 14.4), (12, 19), (21, 14.4), (21, 11))],
+  'water': [ZC((12, 3.8), (16, 9.2), (17.9, 13.8), (16.4, 17.6), (12, 19.8), (7.6, 17.6), (6.1, 13.8), (8, 9.2), t=True), P((9.2, 14.6), (9.8, 16.6), accent=True)],
+  'river': [C((3, 9), (6, 7.4), (9, 9), (12, 10.6), (15, 9), (18, 7.4), (21, 9)), C((3, 15), (6, 13.4), (9, 15), (12, 16.6), (15, 15), (18, 13.4), (21, 15), accent=True)],
+  'soil': [Z((3.6, 13.4), (20.4, 13.4), (20.4, 20.4), (3.6, 20.4), t=True), P((12, 13.4), (12, 6.4), accent=True), C((12, 9), (14.2, 6.2), (17, 6.2), accent=True), C((12, 10.4), (10, 8), (7.4, 8), accent=True)],
+  'sidewalk': [P((9, 3.8), (3.8, 20.4)), P((15, 3.8), (20.2, 20.4)), P((6.9, 10), (17.1, 10), accent=True), P((5.3, 16), (18.7, 16), accent=True)],
+  'bioswale': [C((3, 10), (5.8, 16.4), (12, 19), (18.2, 16.4), (21, 10)), P((8.4, 14.6), (8.4, 8), accent=True), P((15.6, 14.6), (15.6, 8), accent=True), P((12, 15.6), (12, 5.6), accent=True)],
+  'permeable': [Z((3.6, 4.6), (10.6, 4.6), (10.6, 10), (3.6, 10), t=True), Z((13.4, 4.6), (20.4, 4.6), (20.4, 10), (13.4, 10), t=True), P((12, 12.6), (12, 19.6), accent=True), P((10.2, 17.8), (12, 19.8), (13.8, 17.8), accent=True)],
+  'leaf': [ZC((5, 19), (4.6, 12), (8.6, 6.6), (15, 4.4), (19.4, 4.6), (19, 10.6), (15.6, 16.4), (10, 18.8), t=True), P((5, 19), (14, 10), accent=True)],
+  'thermometer': [P((10, 14), (10, 5.8), (14, 5.8), (14, 14)), O(12, 17.2, 3.6, t=True), P((12, 8.6), (12, 15), accent=True)],
+  'pin': [ZC((12, 21), (6.6, 13.6), (6.2, 9.2), (9, 5), (12, 4), (15, 5), (17.8, 9.2), (17.4, 13.6), t=True), O(12, 10, 2.4, accent=True)],
+  'ruler': [Z((3, 15), (15, 3), (21, 9), (9, 21)), P((7.2, 11.6), (8.8, 13.2), (10, 8.6), (11.6, 10.2), accent=True)],
+  'building': [Z((6, 20.4), (6, 4.8), (14.4, 4.8), (14.4, 20.4), t=True), P((14.4, 11), (19, 11), (19, 20.4)), P((9, 9), (11.4, 9), accent=True), P((9, 13.4), (11.4, 13.4), accent=True)],
  },
 }
 
@@ -105,7 +83,7 @@ def jit(rng, v, amp): return v + rng.uniform(-amp, amp)
 
 def fmt(x): return ('%.2f' % x).rstrip('0').rstrip('.')
 
-def roughen(stroke, rng, amp=.28):
+def roughen(stroke, rng, amp=.22):
     k, pts = stroke['k'], stroke['p']
     if k == 'o':
         cx, cy, r = pts[0]
@@ -158,22 +136,19 @@ def symbol(name, ink, acc, tint, vb='0 0 24 24'):
 
 # ---------------------------------------------------------------- the mark
 def logo(c_ink='currentColor', c_brick='#9c3d24', c_moss='#2f4a3a', c_tint='#f0d9cc'):
-    """Two ridgelines meeting in a valley: the old one in ink, the redrawn one over it in brick, a small tree and a low sun."""
+    """Two ridgelines meeting in a valley: the old one in ink, the redrawn one under it in brick, and a low sun. Three strokes so it holds at 16px."""
     rng = random.Random('logo')
     old = roughen(C((2.2, 15), (7, 9.6), (12, 13), (16, 19.2), (20, 13), (25, 9.6), (29.8, 15)), rng, .25)
     new = roughen(C((2.2, 18.2), (7, 12.8), (12, 16.2), (16, 22.4), (20, 16.2), (25, 12.8), (29.8, 18.2)), rng, .25)
-    sun = roughen(O(16, 6.4, 2.4), rng)
-    tree = roughen(P((8.4, 23.4), (8.4, 27.2)), rng, .1) + roughen(Z((8.4, 16.6), (11.6, 23.4), (5.2, 23.4)), rng, .12)
-    ground = roughen(P((3.4, 28), (28.6, 28)), rng, .2)
+    sun = roughen(O(16, 6.2, 2.6), rng)
+    tree = ''
+    ground = ''
     return (sun, old, new, tree, ground, c_ink, c_brick, c_moss, c_tint)
 
 def logo_inner(c_ink, c_brick, c_moss, c_tint, var=False):
-    sun, old, new, tree, ground, ki, kb, km, kt = logo(c_ink, c_brick, c_moss, c_tint)
-    if var: kb, km, kt = ACC, 'var(--icon-moss,currentColor)', TINT
-    return ('<path style="fill:%s;stroke:none" transform="translate(.8 .7)" d="%s"/>' % (kt, sun) if not var else
-            '<path style="fill:%s;stroke:none" transform="translate(.8 .7)" d="%s"/>' % (kt, sun)) + \
-        '<path d="%s" style="stroke:%s"/><path d="%s" style="stroke:%s"/><path d="%s" style="stroke:%s"/><path d="%s" style="stroke:%s"/><path d="%s" style="stroke:%s"/>' % (
-            old, 'currentColor' if var else ki, new, kb, sun, kb, tree, km, ground, 'currentColor' if var else ki)
+    sun, old, new, _, _, ki, kb, km, kt = logo(c_ink, c_brick, c_moss, c_tint)
+    if var: kb, ki = ACC, 'currentColor'
+    return '<path d="%s" style="stroke:%s"/><path d="%s" style="stroke:%s"/><path d="%s" style="stroke:%s"/>' % (old, ki, new, kb, sun, kb)
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
@@ -186,7 +161,7 @@ def main():
     sprite = ('<svg xmlns="http://www.w3.org/2000/svg" style="display:none">\n<!-- Generated by scripts/build_icons.py. Do not edit by hand. -->\n'
               + '\n'.join(syms) + '\n</svg>\n')
     (OUT / 'icons.svg').write_text(sprite)
-    attrs = 'fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"'
+    attrs = 'fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'
     (OUT / 'logo.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" %s color="#1f1d1a">%s</svg>\n'
                                   % (attrs, logo_inner('#1f1d1a', '#9c3d24', '#2f4a3a', '#f0d9cc')))
     (OUT / 'favicon.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" %s><rect x="1" y="1" width="30" height="30" rx="7" fill="#f6f1e7" stroke="#1f1d1a" stroke-width="1.2"/><g transform="translate(3.4 3.6) scale(.79)" stroke-width="2.2">%s</g></svg>\n'
