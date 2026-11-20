@@ -26,6 +26,10 @@
   --rose: #b17c83;
   --kelly: #4f9b60;
   --peri: #7c849f;
+  /* drawing set: pencil grey for plan linework, blueprint field and its chalk line (Topanga sheets L-1 to L-3) */
+  --pencil: #4a4743;
+  --blueprint: #1e3a5f;
+  --draft-line: #e8eef5;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
