@@ -198,6 +198,7 @@ Makes the whole site feel drawn instead of printed. Load `assets/rds/sketch.css`
 - **Generated art** `scripts/sketchlib.py` (tiny hand-drawn SVG helper: wobbly lines, offset tint, hatching, trees, sun, rain) and `scripts/guide_art.py` regenerate every Field Guide infobox drawing (300x150, one tinted field, single-weight ink line, hand labels). Add a new entry's art there, then run `python3 scripts/guide_art.py`.
 - **Essay figures** (`.rv-svg`): flat tints become hatched fills (patterns `#rv-h-*` injected by `sketch.js`), shapes get a 1.6px ink outline, gridlines are dotted, labels get a paper halo so they stay legible over hatching.
 - **Topanga study**: its inline styles are overridden by attribute selectors at the end of `sketch.css` (rules, frames, callout tape). New studies should use the `rv-` components instead.
+- **Tile banner** `rv-tiles` (`scripts/tiles_art.py`): three flat tinted tiles side by side, each mixing a drafting object (compass, ruler, scale bar), a plan or section fragment and a texture (grid, halftone, contour). Used under the headline of the guide, notes and studies indexes. Borrowed from the collage recipe in the reference library; the art itself is original.
 - **Marker highlight**: `rds-mark` is now a tilted brick-tint block that wipes in.
 - **Focus**: dashed brick marker ring on every focusable element.
 - **Ornaments**: `rv-divider` (vine with three leaves), `rv-sun` (slow-turning sun doodle), `rv-hero__flip` (hand note with arrow), `rv-404` (404 layout with a signpost drawing), `rds-empty` (magnifier doodle).
