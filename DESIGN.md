@@ -106,6 +106,9 @@ Every page uses one script for the header, footer, breadcrumbs and search, so th
 
 **Content rules**: cite every number; mark estimates as estimates; end every study with what is unknown and what would be measured before/after; say "concept study, not commissioned"; no invented quotes or sources.
 
+## Notes (long-form essays)
+
+`notes/index.html` (index: feature, topic filter, rows) and `notes/<slug>/index.html` (essays). Styles are in `assets/rds/notes.css` (`rv-` prefix), script in `assets/rds/notes.js` (reading-progress line, topic filter). Essay anatomy: `rv-ehead` (back link + topic tag, `rds-display` headline, `rds-lead` dek, mono `rv-byline` with date, reading time, source count) → `rds-toc` contents rail → `rv-body` of numbered sections (`rv-num` + h2; prose at 68ch, figures `rv-fig rv-wide` break out to 60rem) → `rv-pull` pull quotes → `rds-callout--plain` "What I could not verify" → `rv-sources` numbered list. Footnotes are `<sup class="rv-fn"><a href="#nN">` linking to `<li id="nN">` with a back-arrow. Inline SVG figures use the `.rv-svg` classes (`ln`, `f-*`, `s-*`, `t-*`) so drawings stay in palette. Each essay ends with two related notes as `rds-rows`.
 ## Studies
 
 Files: `assets/studies.css` (all rules for study pages), `assets/studies.js` (page behavior), `studies/index.html` (the index), `studies/_template/index.html` (copy this).

@@ -23,6 +23,11 @@ Design rules live in `DESIGN.md` (the Redrawn Design System). Agent rules live i
 
 ```
 index.html                         front page
+studies/topanga-willows/index.html study 01 (self-contained page)
+notes/index.html                   notes index; notes/<slug>/index.html are the essays
+assets/rds/tokens.css             Redrawn Design System design tokens (colors, spacing, radii, fonts)
+assets/rds/rds.css               Redrawn Design System components
+assets/rds/notes.css, notes.js    styles and script for the Notes section
 studies/index.html                 studies index
 studies/_template/index.html       copy to start a new study (see DESIGN.md > Studies)
 studies/topanga-willows/index.html study 01
