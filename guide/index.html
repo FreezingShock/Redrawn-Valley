@@ -14,19 +14,14 @@
 </head>
 <body class="rds-page">
 
-<header class="rds-nav" data-rds-nav>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav">
 <a class="rds-nav__brand" href="../index.html">Redrawn Valley</a>
-<ul class="rds-nav__links">
-<li><a href="../index.html#studies">Studies</a></li>
-<li><a href="../guide/index.html" aria-current="page">Field guide</a></li>
-</ul>
-<a class="rds-btn rds-btn--ghost rds-btn--sm" href="../studies/topanga-willows/index.html">First study</a>
 </header>
 
-<main data-rds-article>
+<main id="main" data-rds-article>
 <section class="rds-section" style="padding-bottom:var(--space-8)">
 <div class="rds-container">
-<nav aria-label="Breadcrumb"><ol class="rds-crumbs"><li><a href="../index.html">Redrawn Valley</a></li><li aria-current="page">Field guide</li></ol></nav>
+<nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav>
 <div class="rds-sechead">
 <p class="rds-eyebrow">Field guide · 11 entries</p>
 <h1 class="rds-display" data-rds-split>The ideas behind the drawings</h1>
@@ -37,7 +32,7 @@
 <section class="rds-section rds-band-sunk" style="padding-top:var(--space-12)">
 <div class="rds-container">
 <div class="rds-guidebar">
-<div class="rds-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><input type="search" data-rds-search placeholder="Search entries (press /)" aria-label="Search the field guide" autocomplete="off"></div>
+<div class="rds-guide-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><input type="search" data-rds-search placeholder="Filter these entries" aria-label="Filter the field guide" autocomplete="off"></div>
 <div class="rds-chips" role="group" aria-label="Filter by topic" id="topics"><button class="rds-chip" type="button" data-rds-topic="all" aria-pressed="true">All</button><button class="rds-chip" type="button" data-rds-topic="heat" aria-pressed="false">Heat</button><button class="rds-chip" type="button" data-rds-topic="trees" aria-pressed="false">Trees and shade</button><button class="rds-chip" type="button" data-rds-topic="water" aria-pressed="false">Water and ground</button><button class="rds-chip" type="button" data-rds-topic="valley" aria-pressed="false">Valley context</button></div>
 <p class="rds-guide-count" data-rds-count aria-live="polite">11 entries</p>
 </div>
@@ -58,16 +53,10 @@
 </section>
 </main>
 
-<footer class="rds-footer">
-<div class="rds-footer__grid">
-<div><p class="rds-footer__brand">Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>
-<div><h4>Field guide</h4><ul><li><a href="../guide/index.html">All entries</a></li><li><a href="../guide/bioswale/index.html">Bioswale</a></li><li><a href="../guide/cool-pavement/index.html">Cool pavement</a></li><li><a href="../guide/impervious-surface/index.html">Impervious surface</a></li><li><a href="../guide/los-angeles-river/index.html">Los Angeles River</a></li><li><a href="../guide/permeable-paving/index.html">Permeable paving</a></li><li><a href="../guide/riparian-corridor/index.html">Riparian corridor</a></li></ul></div>
-<div><h4>Studies</h4><ul><li><a href="../studies/topanga-willows/index.html">01 Topanga Willows</a></li></ul></div>
-</div>
-<div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>
-</footer>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
 
 <script src="../assets/rds/rds.js"></script>
 <script src="../assets/rds/article.js"></script>
+<script src="../assets/site-shell.js"></script>
 </body>
 </html>

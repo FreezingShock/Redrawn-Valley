@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://redrawn-valley.vercel.app/sitemap.xml

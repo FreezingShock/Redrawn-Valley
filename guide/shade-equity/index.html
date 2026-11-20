@@ -14,19 +14,14 @@
 </head>
 <body class="rds-page">
 
-<header class="rds-nav" data-rds-nav>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav">
 <a class="rds-nav__brand" href="../../index.html">Redrawn Valley</a>
-<ul class="rds-nav__links">
-<li><a href="../../index.html#studies">Studies</a></li>
-<li><a href="../../guide/index.html" aria-current="page">Field guide</a></li>
-</ul>
-<a class="rds-btn rds-btn--ghost rds-btn--sm" href="../../studies/topanga-willows/index.html">First study</a>
 </header>
 
-<main data-rds-article>
+<main id="main" data-rds-article>
 <article class="rds-article">
 <div class="rds-article__wrap">
-<nav aria-label="Breadcrumb"><ol class="rds-crumbs"><li><a href="../../index.html">Redrawn Valley</a></li><li><a href="../index.html">Field guide</a></li><li aria-current="page">Shade equity</li></ol></nav>
+<nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav>
 <header class="rds-article__head">
 <p class="rds-tag rds-tag--brick">Field guide · Trees and shade</p>
 <h1 class="rds-article__title">Shade equity</h1>
@@ -55,16 +50,10 @@
 </article>
 </main>
 
-<footer class="rds-footer">
-<div class="rds-footer__grid">
-<div><p class="rds-footer__brand">Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>
-<div><h4>Field guide</h4><ul><li><a href="../../guide/index.html">All entries</a></li><li><a href="../../guide/bioswale/index.html">Bioswale</a></li><li><a href="../../guide/cool-pavement/index.html">Cool pavement</a></li><li><a href="../../guide/impervious-surface/index.html">Impervious surface</a></li><li><a href="../../guide/los-angeles-river/index.html">Los Angeles River</a></li><li><a href="../../guide/permeable-paving/index.html">Permeable paving</a></li><li><a href="../../guide/riparian-corridor/index.html">Riparian corridor</a></li></ul></div>
-<div><h4>Studies</h4><ul><li><a href="../../studies/topanga-willows/index.html">01 Topanga Willows</a></li></ul></div>
-</div>
-<div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>
-</footer>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
 
 <script src="../../assets/rds/rds.js"></script>
 <script src="../../assets/rds/article.js"></script>
+<script src="../../assets/site-shell.js"></script>
 </body>
 </html>

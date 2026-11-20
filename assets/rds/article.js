@@ -87,9 +87,6 @@
         apply();
       });
     });
-    doc.addEventListener('keydown', function (e) {
-      if (e.key === '/' && input && doc.activeElement !== input && !/input|textarea/i.test(doc.activeElement.tagName)) { e.preventDefault(); input.focus(); }
-    });
     apply();
   }
 
