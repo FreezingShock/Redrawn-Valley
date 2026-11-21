@@ -15,6 +15,8 @@ caveat-500-700.woff2 and dm-mono-400.woff2. It keeps Basic Latin, Latin-1, commo
 to the axes the site uses (wght 400-700, INFM 70-100, BNCE -100..100); and pins Caveat to weight 700. Needs fontTools and brotli.
 All four families are SIL OFL 1.1 with no Reserved Font Name, so subsetting and self-hosting are allowed (see assets/fonts/OFL.txt)."""
 import sys, re, hashlib, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import assetver
 
 root = pathlib.Path(__file__).resolve().parent.parent
 SRC = root / 'scripts' / 'data' / 'fonts'
@@ -123,7 +125,7 @@ def main():
     for f, rel in pages():
         t = f.read_text(encoding='utf-8')
         new = rewrite(t, head_block(up_for(f), preload, sheet))
-        if new != t:
+        if assetver.strip(new) != assetver.strip(t):   # stamps are assetver's job, so a stamped copy is not stale
             stale.append(rel)
             if not check: f.write_text(new, encoding='utf-8')
     if check:

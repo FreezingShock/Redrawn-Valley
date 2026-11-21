@@ -136,7 +136,7 @@
         });
         /* a heading's own text goes in one wrapper: some headings are flex rows (number, text, anchor), where loose word spans would
            each become a flex item, never wrap and push the page wider than a phone */
-        if (top) { var box = el('span', 'fl-t'); box.appendChild(frag); frag = box; }
+        if (top) { var box = el('span', 'fl-tx'); box.appendChild(frag); frag = box; }
         n.parentNode.replaceChild(frag, n);
       } else if (n.nodeType === 1 && !/^(svg|img|br|script|style)$/i.test(n.nodeName) && !n.classList.contains('fl-w')) wrapChars(n, state, true);
     });
