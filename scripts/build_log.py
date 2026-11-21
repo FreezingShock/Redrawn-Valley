@@ -17,6 +17,7 @@ Commits that touch only generated files (the log, the search index, the sitemap)
 the log does not add entries about itself. Needs full history: in CI use `fetch-depth: 0`.
 Never invents anything: with no notes, an entry is just the subject, the date and the pages it touched."""
 import re, sys, json, html, subprocess, pathlib, datetime
+import sys as _sys, pathlib as _pl; _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent)); import assetver as _av
 
 root = pathlib.Path(__file__).resolve().parent.parent
 SITE_URL = 'https://redrawnvalley.vercel.app'
@@ -225,7 +226,7 @@ if __name__ == '__main__':
     for name, body in out.items():
         path = root / name
         if '--check' in sys.argv:
-            if not path.exists() or path.read_text(encoding='utf-8') != body: stale.append(name)
+            if not path.exists() or _av.strip(path.read_text(encoding='utf-8')) != _av.strip(body): stale.append(name)
         else:
             path.write_text(body, encoding='utf-8'); print(f'wrote {name} ({len(body):,} bytes)')
     if stale: print('stale: ' + ', '.join(stale) + ' (run python3 scripts/build_log.py)'); sys.exit(1)

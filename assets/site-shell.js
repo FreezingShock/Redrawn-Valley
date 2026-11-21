@@ -8,6 +8,7 @@
 (function () {
   var doc = document, me = doc.currentScript;
   var siteRoot = new URL('../', new URL('./', me && me.src ? me.src : location.href)); // script lives in assets/
+  var Q = me && me.src && me.src.match(/\?[^#]*$/) ? me.src.match(/\?[^#]*$/)[0] : ''; // ?v= fingerprint; files this script loads reuse it (scripts/assetver.py)
   var isFile = location.protocol === 'file:';
   function href(p) { return new URL(p + (isFile && (p === '' || /\/$/.test(p)) ? 'index.html' : ''), siteRoot).href; }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -27,13 +28,13 @@
   }
 
   /* scroll effects: progress bar, drawing figures, counters, parallax art (off under prefers-reduced-motion) */
-  if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href; fx.defer = true; doc.head.appendChild(fx); }
+  if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href + Q; fx.defer = true; doc.head.appendChild(fx); }
 
   /* citation jump links from the Sources library (#cite=ID.N): scroll to the marker and highlight the sentence */
-  if (!doc.querySelector('script[src*="cite-jump.js"]') && /cite=/.test(location.hash)) { var cj = doc.createElement('script'); cj.src = new URL('assets/rds/cite-jump.js', siteRoot).href; cj.defer = true; doc.head.appendChild(cj); }
-  else if (!doc.querySelector('script[src*="cite-jump.js"]')) { window.addEventListener('hashchange', function once() { if (/cite=/.test(location.hash)) { window.removeEventListener('hashchange', once); var c2 = doc.createElement('script'); c2.src = new URL('assets/rds/cite-jump.js', siteRoot).href; doc.head.appendChild(c2); } }); }
+  if (!doc.querySelector('script[src*="cite-jump.js"]') && /cite=/.test(location.hash)) { var cj = doc.createElement('script'); cj.src = new URL('assets/rds/cite-jump.js', siteRoot).href + Q; cj.defer = true; doc.head.appendChild(cj); }
+  else if (!doc.querySelector('script[src*="cite-jump.js"]')) { window.addEventListener('hashchange', function once() { if (/cite=/.test(location.hash)) { window.removeEventListener('hashchange', once); var c2 = doc.createElement('script'); c2.src = new URL('assets/rds/cite-jump.js', siteRoot).href + Q; doc.head.appendChild(c2); } }); }
   /* related-pages rail ("Keep reading") and the Random page links: assets/rds/rail.js */
-  if (!doc.querySelector('script[src*="rail.js"]')) { var rl = doc.createElement('script'); rl.src = new URL('assets/rds/rail.js', siteRoot).href; rl.defer = true; doc.head.appendChild(rl); }
+  if (!doc.querySelector('script[src*="rail.js"]')) { var rl = doc.createElement('script'); rl.src = new URL('assets/rds/rail.js', siteRoot).href + Q; rl.defer = true; doc.head.appendChild(rl); }
 
   /* Header order follows what the site is for: the studies first, then the reference and writing that support them.
      Entries with a `kind` open a flyout listing their pages (read from the search index); About is a plain link. */
@@ -205,8 +206,8 @@
   var searchImpl = null, searchP = null;
   function loadSearch() {
     if (!searchP) searchP = new Promise(function (res) {
-      var s = doc.createElement('script'); s.src = new URL('assets/rds/search.js', siteRoot).href;
-      s.onload = function () { res(window.RVSearchBoot({ esc: esc, all: all, href: href, icon: icon, siteRoot: siteRoot, labels: LABELS, loadIndex: loadIndex, data: function () { return DATA; } })); };
+      var s = doc.createElement('script'); s.src = new URL('assets/rds/search.js', siteRoot).href + Q;
+      s.onload = function () { res(window.RVSearchBoot({ esc: esc, all: all, href: href, icon: icon, siteRoot: siteRoot, q: Q, labels: LABELS, loadIndex: loadIndex, data: function () { return DATA; } })); };
       s.onerror = function () { res(null); }; doc.head.appendChild(s);
     }).then(function (i) { searchImpl = i; return i; });
     return searchP;

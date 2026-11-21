@@ -10,6 +10,7 @@
   var doc = document, me = doc.currentScript;
   if (/[?&]embed=1(&|$)/.test(location.search)) return;
   var siteRoot = new URL('../../', me && me.src ? me.src : location.href);
+  var Q = me && me.src && me.src.match(/\?[^#]*$/) ? me.src.match(/\?[^#]*$/)[0] : '';
   var isFile = location.protocol === 'file:';
   var reduceMQ = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
   function href(p) { return new URL(p + (isFile && (p === '' || /\/$/.test(p)) ? 'index.html' : ''), siteRoot).href; }
@@ -97,11 +98,11 @@
   /* ---------- styles ---------- */
   function css() {
     if (doc.querySelector('link[href*="rail.css"]')) return;
-    var l = doc.createElement('link'); l.rel = 'stylesheet'; l.href = new URL('assets/rds/rail.css', siteRoot).href; doc.head.appendChild(l);
+    var l = doc.createElement('link'); l.rel = 'stylesheet'; l.href = new URL('assets/rds/rail.css', siteRoot).href + Q; doc.head.appendChild(l);
   }
   function loadArt(cb) {
     if (window.RDSArt) return cb();
-    var s = doc.createElement('script'); s.src = new URL('assets/rds/motifs.js', siteRoot).href; s.onload = cb; doc.head.appendChild(s);
+    var s = doc.createElement('script'); s.src = new URL('assets/rds/motifs.js', siteRoot).href + Q; s.onload = cb; doc.head.appendChild(s);
   }
 
   /* ---------- build ---------- */
