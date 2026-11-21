@@ -22,7 +22,9 @@ if (!els[i].hasAttribute('data-in') && !els[i].__rdsWatched) { els[i].__rdsWatch
 
 this._ui = function () {
 var doc = document;
-var canScroll = function (el) { return el ? (el.scrollHeight > el.clientHeight + 2) : (doc.documentElement.scrollHeight > window.innerHeight + 2); };
+var canScroll = function (el) { if (el) return el.scrollHeight > el.clientHeight + 2; var now = performance.now(); if (!self._cs || now - self._cs.t > 600) var hh = doc.documentElement.scrollHeight; self._cs = { t: now, h: hh, v: hh > window.innerHeight + 2 }; return self._cs.v; }; /* page height read is cached for 0.6 s: reading scrollHeight every frame forces a layout */
+/* Page-level positions are measured once per 0.6 s and compared with scrollY, so a scroll frame does not force a layout per link. */
+var topOf = function (el, scEl) { if (scEl) return el.getBoundingClientRect().top; var now = performance.now(); if (el.__at === undefined || now - el.__att > 600) { el.__at = el.getBoundingClientRect().top + window.pageYOffset; el.__att = now; } return el.__at - window.pageYOffset; };
 var tocs = doc.querySelectorAll('[data-toc]');
 [].forEach.call(tocs, function (t) { [].forEach.call(t.querySelectorAll('a'), function (a, i) { a.style.setProperty('--i', i); }); t.classList.add('kt-ready'); });
 for (var t = 0; t < tocs.length; t++) {
@@ -31,22 +33,22 @@ var top0 = sc ? sc.getBoundingClientRect().top : 0, h = sc ? sc.clientHeight : w
 var links = toc.querySelectorAll('a[href^="#"]'), act = 0, can = canScroll(sc), lockAt = -1;
 for (var i = 0; i < links.length; i++) {
 var el = doc.getElementById(links[i].getAttribute('href').slice(1));
-if (el && can && el.getBoundingClientRect().top - top0 < h * 0.4) act = i;
+if (el && can && topOf(el, sc) - top0 < h * 0.4) act = i;
 if (self._lock && Date.now() < self._lock.until && links[i].getAttribute('href') === self._lock.href) lockAt = i;
 }
-if (can && links.length) { var atEnd = sc ? (sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 2) : (window.innerHeight + window.pageYOffset >= doc.documentElement.scrollHeight - 2); if (atEnd && toc.hasAttribute('data-toc-end')) act = links.length - 1; }
+if (can && links.length) { var atEnd = sc ? (sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 2) : (window.innerHeight + window.pageYOffset >= (self._cs ? self._cs.h : doc.documentElement.scrollHeight) - 2); if (atEnd && toc.hasAttribute('data-toc-end')) act = links.length - 1; }
 if (lockAt >= 0) act = lockAt;
-for (var j = 0; j < links.length; j++) { if (j === act) links[j].setAttribute('aria-current', 'true'); else links[j].removeAttribute('aria-current'); }
+for (var j = 0; j < links.length; j++) { var on = j === act, has = links[j].hasAttribute('aria-current'); if (on && !has) links[j].setAttribute('aria-current', 'true'); else if (!on && has) links[j].removeAttribute('aria-current'); }
 var cnt = toc.querySelector('[data-toc-count]');
 if (cnt) { var txt = (act < 9 ? '0' : '') + (act + 1); if (cnt.textContent !== txt) cnt.textContent = txt; }
 var nm = toc.querySelector('[data-toc-name]');
 if (nm && links[act]) { var lab = links[act].getAttribute('data-label') || ''; if (nm.textContent !== lab) nm.textContent = lab; }
-toc.style.setProperty('--p', links.length > 1 ? act / (links.length - 1) : 0);
+var pv = links.length > 1 ? act / (links.length - 1) : 0; if (toc.__p !== pv) { toc.__p = pv; toc.style.setProperty('--p', pv); }
 }
 var scs = doc.querySelectorAll('[data-scrolly]'), page = canScroll(null);
 for (var s = 0; s < scs.length; s++) {
 var steps = scs[s].querySelectorAll('[data-step]'), a = 0;
-for (var k = 0; k < steps.length; k++) { var n = +steps[k].getAttribute('data-step'); if (!page || steps[k].getBoundingClientRect().top < window.innerHeight * 0.62) a = Math.max(a, n); }
+for (var k = 0; k < steps.length; k++) { var n = +steps[k].getAttribute('data-step'); if (!page || topOf(steps[k], null) < window.innerHeight * 0.62) a = Math.max(a, n); }
 if (scs[s].hasAttribute('data-pin')) a = +scs[s].getAttribute('data-pin');
 if (scs[s].getAttribute('data-st') !== String(a)) scs[s].setAttribute('data-st', a);
 var lyr = scs[s].querySelectorAll('.lyr');
