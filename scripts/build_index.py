@@ -5,10 +5,9 @@ Run: python3 scripts/build_index.py          (writes assets/search-index.json, s
 Every page with a <title> is indexed except 404.html and anything marked <meta name="robots" content="noindex">.
 CI regenerates the index on integration, so a page PR does not need to commit it."""
 import re, sys, json, pathlib, datetime
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from html.parser import HTMLParser
 
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root, html_files
 # Production domain for sitemap.xml. Change here if the domain changes.
 SITE_URL = 'https://redrawnvalley.vercel.app'
 SECTIONS = {'': 'Home', 'a-z': 'A–Z index', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'topics': 'Topics', 'log': 'Sketchbook log', 'about': 'About'}
@@ -50,9 +49,9 @@ class Page(HTMLParser):
 
 def build():
     pages, urls = [], []
-    for f in sorted(root.rglob('*.html')):
+    for f in html_files():
         rel = f.relative_to(root)
-        if any(p in ('.git', 'node_modules') for p in rel.parts) or rel.name == '404.html': continue
+        if rel.name == '404.html': continue
         src = f.read_text(encoding='utf-8')
         if rel.as_posix() == 'a-z/index.html': src = re.sub(r'<!-- atlas:start.*?<!-- atlas:end -->', '', src, flags=re.S)   # generated list: not indexed twice
         p = Page(); p.feed(src)

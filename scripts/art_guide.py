@@ -1,7 +1,7 @@
-"""Regenerates the hand-drawn infobox art for every Field Guide entry. Run: python3 scripts/guide_art.py"""
+"""Regenerates the hand-drawn infobox art for every Field Guide entry. Run: python3 scripts/art_guide.py"""
 import re, pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from sketchlib import *
+from art_lib import *
 W,H=300,150
 A={}
 def bioswale():

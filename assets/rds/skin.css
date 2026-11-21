@@ -423,7 +423,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-study .ktab{font-family:var(--rv-hand);font-size:var(--fs-17)}
 .rv-study .kt{font-family:var(--rv-hand)}
 
-/* ---------- flat-tile collage banner (scripts/tiles_art.py) ---------- */
+/* ---------- flat-tile collage banner (scripts/art_tiles.py) ---------- */
 .rv-tiles{margin:var(--space-8) 0 var(--space-12);border:var(--rv-stroke) solid var(--edge);border-radius:var(--rv-r-lg);overflow:hidden;box-shadow:var(--rv-pencil);aspect-ratio:1120/220;background:var(--paper-sunk)}
 .rv-tiles svg{display:block;width:100%;height:100%}
 @media (max-width:640px){.rv-tiles{aspect-ratio:16/10}}
