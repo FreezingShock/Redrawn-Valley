@@ -40,7 +40,7 @@
     { label: 'Notes', url: 'notes/', kind: 'notes', icon: 'notes', blurb: 'Short essays with the evidence shown.', max: 5, all: 'All notes' },
     { label: 'About', url: 'index.html#about' }
   ];
-  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', about: 'About' };
+  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', topics: 'Topics', about: 'About' };
   var sitePath = new URL(siteRoot).pathname;
   var rel = decodeURIComponent(location.pathname.slice(sitePath.length)).replace(/index\.html$/, '');
   var section = rel.split('/')[0];
@@ -129,6 +129,7 @@
     var more = nav.querySelector('.rv-tab-more'), sheet;
     var M = [
       ['Home', '', 'home', 'Front page'],
+      ['Topics', 'topics/', 'tree', 'Heat, trees, water and more, across every page'],
       ['Method', 'index.html#method', 'ruler', 'How a study is made'],
       ['About', 'index.html#about', 'info', 'Who draws this, and why'],
       ['Lab notes', 'lab/', 'thermometer', 'How the patterns, icons and type were made'],
@@ -152,7 +153,7 @@
 
   /* ---------- footer ---------- */
   function footer(el) {
-    var site = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['About', 'index.html#about']]
+    var site = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['Topics', 'topics/'], ['About', 'index.html#about']]
       .map(function (n) { return '<li><a href="' + esc(href(n[1])) + '">' + n[0] + '</a></li>'; }).join('');
     el.innerHTML = '<div class="rds-footer__grid">' +
       '<div><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
