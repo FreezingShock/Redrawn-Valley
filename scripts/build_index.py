@@ -5,6 +5,8 @@ Run: python3 scripts/build_index.py          (writes assets/search-index.json, s
 Every page with a <title> is indexed except 404.html and anything marked <meta name="robots" content="noindex">.
 CI regenerates the index on integration, so a page PR does not need to commit it."""
 import re, sys, json, pathlib, datetime
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from places import place_entry, places_json
 from html.parser import HTMLParser
 
 root = pathlib.Path(__file__).resolve().parent.parent
@@ -48,7 +50,7 @@ class Page(HTMLParser):
         s.text.append(d)
 
 def build():
-    pages, urls = [], []
+    pages, urls, places = [], [], []
     for f in sorted(root.rglob('*.html')):
         rel = f.relative_to(root)
         if any(p in ('.git', 'node_modules') for p in rel.parts) or rel.name == '404.html': continue
@@ -70,7 +72,7 @@ def build():
         if p.meta.get('rv-place'): entry['pl'] = p.meta['rv-place'].strip()
         g = re.match(r'^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$', p.meta.get('rv-geo', ''))
         if g: entry['g'] = [float(g.group(1)), float(g.group(2))]
-        pages.append(entry); urls.append((url, f.stat().st_mtime))
+        pages.append(entry); urls.append((url, f.stat().st_mtime)); places.append(place_entry(url, sec, title, entry['d'], p.meta))
     pages.sort(key=lambda e: (e['u'] != '', e['s'], e['u']))
     labels = {k: v for k, v in SECTIONS.items()}
     for e in pages: labels.setdefault(e['s'], e['s'].replace('-', ' ').title())
@@ -79,7 +81,8 @@ def build():
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u, _ in urls: sm.append(f'  <url><loc>{SITE_URL}/{u}</loc></url>')
     sm.append('</urlset>')
-    return {'assets/search-index.json': index, 'sitemap.xml': '\n'.join(sm) + '\n',
+    topics = json.loads((root / 'assets/topics.json').read_text(encoding='utf-8'))['topics']
+    return {'assets/places.json': places_json(places, topics), 'assets/search-index.json': index, 'sitemap.xml': '\n'.join(sm) + '\n',
             'robots.txt': f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n'}
 
 if __name__ == '__main__':

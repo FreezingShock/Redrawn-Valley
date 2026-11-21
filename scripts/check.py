@@ -42,6 +42,12 @@ for f in sorted(root.rglob('*.html')):
 for f in (root / 'assets').rglob('*.css'):
     for m in re.findall(r"@import url\('?(?!https?:)([^')]+)", f.read_text(encoding='utf-8')):
         if not (f.parent / m).exists(): errors.append(f'{f.relative_to(root)}: missing import {m}')
+for f in sorted(root.glob('*/*/index.html')):
+    sec = f.parent.parent.name
+    if sec not in ('studies', 'guide', 'notes') or f.parent.name.startswith('_'): continue
+    head = f.read_text(encoding='utf-8')[:6000]
+    if 'noindex' in head or 'name="rv-geo"' in head or 'name="rv-scope"' in head: continue
+    warns.append(f'{f.relative_to(root)}: no map location; add <meta name="rv-geo" content="lat,lng"> or <meta name="rv-scope" content="valley"> (see DESIGN.md > Valley map)')
 import subprocess
 if subprocess.run([sys.executable, str(root / 'scripts' / 'build_index.py'), '--check'], capture_output=True).returncode:
     warns.append('search index or sitemap is stale: run python3 scripts/build_index.py and commit the result')
