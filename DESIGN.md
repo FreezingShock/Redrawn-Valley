@@ -323,3 +323,12 @@ One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>`
 
 - **Nav**: `rds-nav` is a hand-washed paper band: brick and moss tints over paper with a deckled hairline lower edge (`::before` and `::after` in `skin.css` Part 4). The page-wide "no shadows" rule has one more exception here: a soft `drop-shadow` under the deckled edge once the page scrolls. The active section keeps the brick hand rule and goes bold. Search is the header's main action: ink fill with the pencil offset.
 - **Hero buttons**: primary `rv-cta` draws its outline, fills brick, then its arrow draws, flies off and a new one settles in (hover repeats it). Secondary `rv-textlink` is ink text with a drawn rule and arrow. Brick appears once, on the primary. All of it is CSS only and skipped under reduced motion.
+
+## A-Z index (`a-z/`, `scripts/build_atlas.py`, `assets/rds/atlas.css`, `atlas.js`)
+
+One alphabetical list of every term, place, source and drawing, each with links to every page (and section) that uses it. The list is **generated**, never hand-edited: `python3 scripts/build_index.py` (or `build_atlas.py` alone) rewrites the region between the `atlas:start` / `atlas:end` comments in `a-z/index.html`, and `scripts/check.py` warns when it is stale. A new article needs no edit: its title, figure captions, source list and any mention of an existing term or place are picked up on the next run. To add a term or place, add it to `scripts/data/atlas.json` (aliases, "see" cross-references, place notes) or mark it up with `data-term="..."` / `data-place="..."`.
+
+- **Components**: `rv-az__tools` (filter input `rds-guide-search`, kind chips `rds-chip`), sticky `rv-az__jump` letter strip with scroll spy, `rv-az__group` per letter, `rv-az__entry` rows (headword, kind tag, gloss, uses list; two columns from 1000px). The list is `data-rv-noindex` so search does not index every entry twice.
+- **Behavior**: kind chips and live filter share `?q=` and `?k=` in the URL; letters with no matches are hidden; "See" rows jump to their target; back-to-top button; smooth scrolling only when motion is allowed. Everything is readable without JS.
+- **Sources** merge across pages by URL; the numbered circles link to each in-text use. Drawings are every `<figure>` with a caption plus infobox sketch captions (pages with more than 12, like the icon gallery, are skipped).
+- Limits: mentions are word matches, so unnamed ideas are missed and a name in another sense can be listed.
