@@ -241,6 +241,17 @@ Load `<script src="…/assets/rds/loops.js" defer>` (it pulls in `loops.css` its
 - **Rules**: tokens only; 2 to 4 flat colours; no text except the decorative scale bar; keep the host's own text legible at 375 and 1280px; do not put a loop on pages that already have a moving figure at the same spot. Use `data-loop-still` to force the still.
 - **API**: `RDSLoops.mount(host, kind, seed)`, `RDSLoops.pause()`, `RDSLoops.play()`, `RDSLoops.kinds`. The `scripts/check.py` and search index are unaffected.
 
+## Margin sketches (`assets/rds/margins.js`, `margins.css`)
+
+Big original pencil drawings that fill empty page margins. Loaded automatically by `loops.js`, so every page with a `<main>` gets them; opt out with `<main data-margins-none>`. Not mounted inside iframes (lab demos).
+
+- **Kinds**: `plan` (lot, building, stalls, tree canopies, dashed flow line, scale bar, north arrow), `section` (ground hatch, tree, swale, scale figure), `contour`, `compass` (draws a brick arc), `tools` (set square and sliding scale ruler), `protractor` (a measured angle), `tiles` (2 x 3 flat tiles whose colours slowly swap). Seeded by the page slug; kinds and sides alternate down the page.
+- **Desktop (1000px and up)**: fragments sit in the side gutters, 420 to 620px wide, bleeding off the window edge, and fade out before the text column (mask), so type is never crossed. Narrow gutters (under 150px) draw fainter.
+- **Phones**: one big fragment every ~1.7 screen heights at 20% opacity, behind the text, bleeding off a side.
+- **Motion**: lines draw on when a fragment first scrolls in; then it drifts a few pixels, canopies pulse, flow lines run, the ruler slides, the compass swings, tile colours swap. Only while on screen. Reduced motion, Save-Data, 2g and print show the finished still; the Pause background button (`rv-loops-paused`) stops it.
+- **Layering**: the layer is `z-index:-1` inside `<main>` (which becomes an isolated stacking context). `.rds-band-sunk` turns 62% opaque inside `main` so the art shows through. Skips areas covered by a hero loop.
+- **API**: `RDSMargins.relayout()`, `RDSMargins.kinds`. Add a kind as `K.name = function (d, r, c)` using `d.line`, `d.fill`, `d.hatch`, `d.grid`.
+
 ## Known issues
 
 - The Topanga study's text and layout styles are now in `study.css` using tokens, so token changes reach them. Its SVG drawings still carry inline `style` attributes and hex colours (they are redrawn separately).
