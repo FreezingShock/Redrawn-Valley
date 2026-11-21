@@ -297,7 +297,8 @@ main[data-rds-article] .rds-crumbs:empty{box-sizing:border-box;min-height:calc(v
    <div class="rds-art" data-rds-art="banner|strip|card|square" data-seed="slug" data-topic="shade water" aria-hidden="true"></div>
    Flat tiles, grid-filled solids, drafting tools. Live drift only while on screen and only when motion is allowed. */
 .rds-art{display:block;position:relative;overflow:hidden;line-height:0;background:var(--paper-sunk);margin:0}
-.rds-art:empty{display:none}
+/* an empty art box with data-rds-art is waiting for motifs.js: keep its box (aspect ratio from its class) so filling it in does not push the page down; any other empty box stays hidden */
+.rds-art:empty:not([data-rds-art]){display:none}
 .rds-art>svg{display:block;width:100%;height:100%}
 .rds-art--banner{aspect-ratio:1120/220}
 .rds-art--strip{aspect-ratio:1120/56}

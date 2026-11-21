@@ -8,7 +8,7 @@ To add a generator, append it to STEPS; it must accept --check."""
 import subprocess, sys
 from common import ROOT, CHECK
 
-STEPS = ['build_drawings.py', 'build_log.py', 'build_sources.py', 'build_theme.py', 'build_index.py', 'build_topics.py', 'build_sitemap.py', 'build_fonts.py', 'build_index.py', 'extract_art.py', 'assetver.py']
+STEPS = ['build_drawings.py', 'build_log.py', 'build_sources.py', 'build_theme.py', 'build_index.py', 'build_topics.py', 'build_sitemap.py', 'build_fonts.py', 'ensure_theme.py', 'build_index.py', 'extract_art.py', 'assetver.py']
 here = ROOT / 'scripts'
 
 if CHECK:

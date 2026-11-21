@@ -97,12 +97,12 @@
   --radius-md: 8px;
   --radius-lg: 16px;
   --radius-pill: 999px;
-  --font-display: Shantell Sans, Comic Neue, system-ui, sans-serif;
-  --font-serif: Figtree, system-ui, sans-serif;
-  --font-sans: Figtree, system-ui, sans-serif;
-  --font-mono: Figtree, system-ui, sans-serif;
+  --font-display: Shantell Sans, Shantell Sans Fallback, Comic Neue, system-ui, sans-serif;
+  --font-serif: Figtree, Figtree Fallback, system-ui, sans-serif;
+  --font-sans: Figtree, Figtree Fallback, system-ui, sans-serif;
+  --font-mono: Figtree, Figtree Fallback, system-ui, sans-serif;
   --font-num: DM Mono, ui-monospace, monospace;
-  --font-hand: Caveat, Shantell Sans, cursive;
+  --font-hand: Caveat, Shantell Sans, Shantell Sans Fallback, cursive;
 
   /* ---------- 3. scales ---------- */
   /* type ramp: the sizes the site actually uses, in px (named by size so a rule reads like the number it replaced) */
