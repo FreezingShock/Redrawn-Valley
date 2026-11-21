@@ -123,14 +123,7 @@
   .rds-nav__search svg{width:20px;height:20px}
   .rds-nav>.rds-btn{height:44px}
 
-  /* ---- bottom tab bar ---- */
-  .rv-tabbar{position:fixed;inset:auto 0 0 0;z-index:var(--z-chrome);display:grid;grid-template-columns:repeat(5,1fr);height:calc(var(--rv-tab) + var(--rv-safe));padding-bottom:var(--rv-safe);background:var(--paper);border-top:1px solid var(--line-strong)}
-  .rv-tabbar a,.rv-tabbar button{appearance:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;border:0;background:none;padding:0;color:var(--ink-muted);font:500 var(--fs-11)/14px var(--rds-sans);letter-spacing:.01em;text-decoration:none;cursor:pointer;position:relative}
-  .rv-tabbar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-  .rv-tabbar [aria-current=page]{color:var(--brick)}
-  .rv-tabbar [aria-current=page]::before{content:"";position:absolute;top:-1px;left:30%;right:30%;height:3px;background:var(--brick);border-radius:0 0 2px 2px}
-  .rv-tabbar a:active,.rv-tabbar button:active{background:var(--paper-sunk)}
-  .rv-tabbar a:focus-visible,.rv-tabbar button:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+  /* ---- bottom tab bar: see tabbar.css ---- */
 
   /* ---- buttons and inputs: 48px, full width where they stand alone ---- */
   .rds-btn{height:48px}
@@ -266,7 +259,6 @@
 
 /* small phones (360) */
 @media (max-width:374px){
-  .rv-tabbar a,.rv-tabbar button{font-size:10.5px}
   .rv-facts{grid-template-columns:1fr 1fr}
 }
 
@@ -479,7 +471,6 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 @media (max-width:640px){.rv-nav__caret,.rv-nav__panel{display:none}}
 
 /* phone tab bar: More button and sheet */
-.rv-tab-more[aria-current=true]{color:var(--brick)}
 .rv-menusheet .rv-sheet__body{padding-top:0}
 .rv-moreList{list-style:none;margin:0 calc(-1*var(--space-6));padding:0}
 .rv-moreList a{display:flex;align-items:center;gap:var(--space-4);min-height:60px;padding:var(--space-3) var(--space-6);border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}

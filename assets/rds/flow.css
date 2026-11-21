@@ -75,7 +75,7 @@
 .fl-on .rds-nav__brand .rds-logo{transition:transform var(--dur-slow) cubic-bezier(.34,1.8,.5,1)}
 .fl-on .rds-nav__brand:hover .rds-logo,.fl-on .rds-nav__brand:focus-visible .rds-logo{transform:rotate(-14deg) translateY(-2px) scale(1.12)}
 /* icons wiggle when their button is pressed */
-.fl-on :is(.rds-btn,.rds-nav__search,.rv-tabbar a):active .rds-icon{animation:fl-wiggle var(--dur-medium) var(--ease-std)}
+.fl-on :is(.rds-btn,.rds-nav__search):active .rds-icon{animation:fl-wiggle var(--dur-medium) var(--ease-std)}
 @keyframes fl-wiggle{30%{transform:rotate(-14deg)}60%{transform:rotate(10deg)}100%{transform:none}}
 
 @media (prefers-reduced-motion:reduce){.fl-stage,.fl-dab{display:none}}

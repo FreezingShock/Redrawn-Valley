@@ -116,23 +116,37 @@
     });
   }
 
-  /* ---------- bottom tab bar (phones only; skin.css hides it above 640px) ---------- */
+  /* ---------- bottom tab bar (phones only; tabbar.css shows it at 640px and below, tabbar.js animates it) ---------- */
+  /* Strokes are copies of the sprite's studies, guide, notes, search and menu icons (assets/rds/icons/icons.svg), inlined so
+     tabbar.css can line-draw them (a <use> shadow tree can't take a per-path draw). Second stroke = the brick accent. */
+  var TAB_ICONS = {
+    studies: ['M3.59 6.78Q6.33 5.57 9.22 4.77Q12.18 5.84 15.17 6.81Q17.7 5.79 20.26 4.83Q20.14 11.17 20.34 17.5Q17.65 18.25 15.11 19.41Q12.12 18.15 9.13 16.9Q6.43 18.07 3.7 19.18Q3.8 13.28 3.82 7.38', 'M9.13 4.88Q9.15 10.87 8.82 16.86'],
+    guide: ['M5.5 4.73Q12.02 4.55 18.54 4.79Q18.34 12.17 18.21 19.56Q12 19.71 5.79 19.59Q5.97 12.44 5.88 5.28', 'M9.61 4.76Q9.77 12.16 9.46 19.55'],
+    notes: ['M4.92 19.8Q5.52 17.58 5.82 15.3Q11.04 10.31 16.06 5.13Q17.58 6.47 18.97 7.94Q13.8 13.23 8.63 18.53Q6.87 19.4 5.18 20.38', 'M13.62 7.61Q15.12 9.02 16.7 10.34'],
+    search: ['M4.43 9.49C4.77 8.85 5.4 6.46 6.45 5.65C7.5 4.84 9.32 4.59 10.74 4.66C12.17 4.72 13.97 5.13 14.97 6.05C15.98 6.96 16.71 8.77 16.76 10.16C16.81 11.54 16.18 13.26 15.27 14.36C14.36 15.45 12.73 16.51 11.3 16.73C9.86 16.96 7.83 16.53 6.66 15.71C5.49 14.89 4.62 13.21 4.28 11.82C3.94 10.42 4.57 8.07 4.63 7.33', 'M14.89 14.85Q17.51 17.46 20.12 20.08'],
+    menu: ['M4.13 6.85Q12.09 6.76 20.05 7.14M4.03 12.37Q12.08 12.02 20.14 11.8', 'M4.04 17.16Q9.35 16.87 14.67 16.82']
+  };
+  function tabIcon(n) { var d = TAB_ICONS[n]; return '<span class="rv-tab__ico"><svg class="rv-tab__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path pathLength="1" d="' + d[0] + '"/><path class="rv-tab__acc" pathLength="1" d="' + d[1] + '"/></svg></span>'; }
   function tabbar() {
     if (doc.querySelector('.rv-tabbar')) return;
-    var ic = function (n) { return icon(n, '', 24); };
     /* Home is the brand in the top bar, so the tab bar spends its slots on sections, search and a More sheet. */
     var T = [
-      ['Studies', 'studies/', 'studies', ic('studies')],
-      ['Guide', 'guide/', 'guide', ic('guide')],
-      ['Notes', 'notes/', 'notes', ic('notes')]
+      ['Studies', 'studies/', 'studies'],
+      ['Guide', 'guide/', 'guide'],
+      ['Notes', 'notes/', 'notes']
     ];
     var nav = doc.createElement('nav'); nav.className = 'rv-tabbar'; nav.setAttribute('aria-label', 'Main');
-    nav.innerHTML = T.map(function (t) {
-      var on = section === t[2];
-      return '<a href="' + esc(href(t[1])) + '"' + (on ? ' aria-current="page"' : '') + '>' + t[3] + '<span>' + t[0] + '</span></a>';
-    }).join('') + '<button type="button" data-rv-search-open>' + ic('search') + '<span>Search</span></button>' +
-      '<button type="button" class="rv-tab-more" aria-haspopup="dialog">' + ic('menu') + '<span>More</span></button>';
+    nav.innerHTML = '<svg class="rv-tabbar__edge" viewBox="0 0 400 6" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path vector-effect="non-scaling-stroke" d="M0 3.1Q40 2.2 82 3.2T170 2.8T262 3.3T338 2.7T400 3"/></svg>' +
+      '<span class="rv-tabbar__mark" aria-hidden="true"><svg viewBox="0 0 56 40"><ellipse class="rv-tabbar__wash" cx="28" cy="20" rx="21" ry="14.5"/><path class="rv-tabbar__loop" pathLength="1" d="M9 23C6.5 11 20 4.5 31 5.2C44 6 52 13 50 22.5C48 32 36 36 25 35C13 34 5.5 27.5 8.5 16.5C10 11.5 14 8.5 19 7.2"/></svg></span>' +
+      T.map(function (t) {
+        var on = section === t[2];
+        return '<a class="rv-tab" href="' + esc(href(t[1])) + '"' + (on ? ' aria-current="page"' : '') + '>' + tabIcon(t[2]) + '<span class="rv-tab__label">' + t[0] + '</span></a>';
+      }).join('') + '<button type="button" class="rv-tab" data-rv-search-open>' + tabIcon('search') + '<span class="rv-tab__label">Search</span></button>' +
+      '<button type="button" class="rv-tab rv-tab-more" aria-haspopup="dialog">' + tabIcon('menu') + '<span class="rv-tab__label">More</span></button>';
     doc.body.appendChild(nav);
+    /* style first, then behavior; the bar stays hidden (skin.css) until tabbar.css is in */
+    var cssL = doc.createElement('link'); cssL.rel = 'stylesheet'; cssL.href = new URL('assets/rds/tabbar.css', siteRoot).href + Q; doc.head.appendChild(cssL);
+    var js = doc.createElement('script'); js.src = new URL('assets/rds/tabbar.js', siteRoot).href + Q; js.onload = function () { if (window.RVTabbarBoot) window.RVTabbarBoot(nav); }; doc.head.appendChild(js);
     var more = nav.querySelector('.rv-tab-more'), sheet;
     var M = [
       ['Home', '', 'home', 'Front page'],

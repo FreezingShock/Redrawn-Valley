@@ -261,10 +261,6 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 @media (max-width:640px){.rds-nav__brand .rds-logo{width:30px;height:30px}.rds-nav__brand{gap:var(--space-2)}}
 @media (prefers-reduced-motion:reduce){.rds-nav__brand .rds-logo{transition:none}.rds-nav__brand:hover .rds-logo{transform:none}}
 
-/* phone tab bar: quiet linework, brick accent only on the current tab */
-.rv-tabbar .rds-icon{--icon-accent:currentColor;--icon-tint:transparent;width:24px;height:24px;stroke-width:1.9;vertical-align:baseline}
-.rv-tabbar [aria-current=page] .rds-icon{--icon-accent:var(--brick);--icon-tint:var(--brick-tint)}
-
 /* topic icon at the head of an index row */
 .rds-row__icon{--icon-accent:var(--brick);width:2rem;height:2rem;margin-right:var(--space-3);vertical-align:-.55rem;color:var(--ink)}
 .rds-row__icon--moss{--icon-accent:var(--moss);--icon-tint:var(--moss-tint)}

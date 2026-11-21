@@ -125,6 +125,9 @@
   /* layout */
   --measure: 68ch; --container: 1120px;
   --rv-gutter: 20px; --rv-bar: 52px; --rv-tab: 56px; --rv-safe: env(safe-area-inset-bottom,0px);
+  /* phone tab bar (assets/rds/tabbar.css) */
+  --tab-icon: 26px; --tab-mark-w: 52px; --tab-mark-h: 34px; --tab-stroke: 1.9; --tab-edge-stroke: 1.5px;
+  --tab-press-scale: .84; --tab-press-tilt: -5deg; --tab-lift: -2px; --tab-dab: 44px;
   /* hand-drawn shapes, line weight, pencil shadows */
   --rv-r-lg: 22px 9px 24px 10px/10px 24px 9px 22px;
   --rv-r-md: 10px 5px 12px 6px/6px 12px 5px 10px;
