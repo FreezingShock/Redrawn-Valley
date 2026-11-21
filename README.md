@@ -43,6 +43,7 @@ guide/<slug>/index.html            Field guide entries (11)
 assets/rds/article.css, article.js Redrawn Design System article components
 assets/rds/rds.js                Redrawn Design System motion: reveals, drawings, nav, contents rail
 assets/rds/icons/                  hand-drawn icon sprite, logo and favicon (scripts/build_icons.py); gallery at icons/index.html
+assets/rds/flow.js, flow.css        page motion: opening, tile wipe between pages, handwritten headings, click dab (DESIGN.md > Flow)
 assets/site.css                    rules specific to this site
 assets/site.js                     before/after toggle on the front page
 assets/studies.css, studies.js     study pages: article layout, infobox, page behavior
