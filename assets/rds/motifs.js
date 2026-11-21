@@ -25,7 +25,7 @@
   /* ---------- palette (tokens.css; art accents are decorative only) ---------- */
   var SAT = ['moss', 'slate', 'brick', 'ochre', 'sky', 'rose', 'kelly', 'peri'];
   var PALE = ['sand', 'sage', 'blush', 'raised'];
-  var VAR = { moss: '--moss', slate: '--slate', brick: '--brick', ochre: '--ochre', sky: '--sky', rose: '--rose', kelly: '--kelly', peri: '--peri', sand: '--paper-sunk', sage: '--moss-tint', blush: '--brick-tint', raised: '--paper-raised', ink: '--ink', paper: '--paper' };
+  var VAR = { moss: '--moss-fill', slate: '--slate-fill', brick: '--brick-fill', ochre: '--ochre', sky: '--sky', rose: '--rose', kelly: '--kelly', peri: '--peri', sand: '--paper-sunk', sage: '--moss-tint', blush: '--brick-tint', raised: '--paper-raised', ink: '--ink-field', paper: '--paper' };
   function v(name) { return 'var(' + VAR[name] + ')'; }
   var TOPICS = [
     { re: /shade|tree|canopy|leaf|riparian/, fields: ['moss', 'kelly', 'sky', 'ochre'], motifs: ['plan', 'section', 'gridDisc', 'overlap', 'icon', 'contours'], icons: ['tree', 'leaf', 'shade'] },
@@ -144,7 +144,7 @@
   };
   M.icon = function (w, h, rnd, c) {
     var names = c.icons, a = rnd.pick(names), b = rnd.pick(names.filter(function (n) { return n !== a; }).concat([a])), sz = Math.min(w, h) * .52;
-    function u(n, cls) { return '<svg class="m-ico ' + cls + '" x="' + f(w / 2 - sz / 2) + '" y="' + f(h / 2 - sz / 2) + '" width="' + f(sz) + '" height="' + f(sz) + '" viewBox="0 0 24 24" style="color:var(--ink);--icon-accent:var(--paper);--icon-tint:rgba(246,241,231,.4);overflow:visible" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="' + SPRITE + '#i-' + n + '"/></svg>'; }
+    function u(n, cls) { return '<svg class="m-ico ' + cls + '" x="' + f(w / 2 - sz / 2) + '" y="' + f(h / 2 - sz / 2) + '" width="' + f(sz) + '" height="' + f(sz) + '" viewBox="0 0 24 24" style="color:var(--ink);--icon-accent:var(--paper);--icon-tint:color-mix(in srgb,var(--paper) 40%,transparent);overflow:visible" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="' + SPRITE + '#i-' + n + '"/></svg>'; }
     return { svg: u(a, 'm-ico-a') + u(b, 'm-ico-b'), uses: [], shift: function (el) { el.classList.toggle('is-alt'); } };
   };
 

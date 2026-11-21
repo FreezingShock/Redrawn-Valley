@@ -6,7 +6,7 @@
 .dg{position:relative}
 
 /* ---- toolbar and filters ---- */
-.dg-toolbar{position:sticky;top:var(--dg-top);z-index:12;display:grid;grid-template-columns:minmax(0,320px) 1fr auto;align-items:center;gap:var(--space-4);
+.dg-toolbar{position:sticky;top:var(--dg-top);z-index:var(--z-subbar);display:grid;grid-template-columns:minmax(0,320px) 1fr auto;align-items:center;gap:var(--space-4);
   padding:var(--space-3) var(--space-4);margin-inline:calc(-1*var(--space-4));background:color-mix(in srgb,var(--paper-sunk) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .dg-search{position:relative;display:block}
 .dg-search .rds-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--ink-muted)}
@@ -38,14 +38,14 @@
 .dg-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:var(--space-6);align-items:stretch;margin-top:var(--space-6)}
 .dg[data-size=l] .dg-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr))}
 .dg-card{display:flex;flex-direction:column;position:relative;background:var(--paper-raised);border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-lg,16px);overflow:hidden;
-  opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease-out),transform .5s var(--ease-out),box-shadow var(--dur-base) var(--ease-out);content-visibility:auto;contain-intrinsic-size:auto 420px}
+  opacity:0;transform:translateY(18px);transition:opacity var(--dur-medium) var(--ease-out),transform var(--dur-medium) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);content-visibility:auto;contain-intrinsic-size:auto 420px}
 .dg-card.is-in{opacity:1;transform:none}
 .dg-card[hidden]{display:none}
 .dg-card:hover,.dg-card:focus-within{box-shadow:4px 5px 0 0 var(--ink)}
 .dg-card.is-in:hover{transform:translate(-2px,-2px)}
 .dg-card__art{display:block;width:100%;padding:0;border:0;border-bottom:1px solid var(--ink);background:var(--paper);cursor:zoom-in;position:relative;aspect-ratio:var(--ar,4/3);overflow:hidden;text-align:left;flex:none}
 .dg-host{position:absolute;inset:var(--space-3);display:block;pointer-events:none}
-.dg-card__art.is-loading::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 9px,var(--line) 9px 10px);opacity:.7;animation:dg-hatch 1.4s linear infinite}
+.dg-card__art.is-loading::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 9px,var(--line) 9px 10px);opacity:.7;animation:dg-hatch var(--dur-draw) linear infinite}
 @keyframes dg-hatch{to{background-position:28px 0}}
 .dg-card__art.is-failed::after{content:"Could not load this drawing. Open it on its page.";position:absolute;inset:0;display:grid;place-items:center;padding:var(--space-6);text-align:center;font:400 14px/22px var(--rds-sans);color:var(--ink-muted)}
 .dg-zoom{position:absolute;top:var(--space-3);right:var(--space-3);display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--ink);border-radius:var(--radius-pill);background:var(--paper-raised);opacity:0;transform:translateY(-4px) scale(.9);transition:opacity var(--dur-fast),transform var(--dur-base) var(--ease-out);pointer-events:none}
@@ -81,7 +81,7 @@
 }
 @media (max-width:640px){
   .dg-section{--dg-top:var(--rv-bar,52px);padding-top:var(--space-6)}
-  .dg-bar{position:sticky;top:var(--dg-top);z-index:12;margin-inline:calc(-1*var(--rv-gutter,18px));background:var(--paper-sunk);border-bottom:1px solid var(--line)}
+  .dg-bar{position:sticky;top:var(--dg-top);z-index:var(--z-subbar);margin-inline:calc(-1*var(--rv-gutter,18px));background:var(--paper-sunk);border-bottom:1px solid var(--line)}
   .dg-toolbar{position:static;grid-template-columns:1fr auto;padding:var(--space-2) var(--rv-gutter,18px);margin:0;border:0;background:transparent;gap:var(--space-2)}
   .dg-seg,.dg-reset--d{display:none}
   .dg-reset--m{display:inline-block;min-height:32px;padding:0}

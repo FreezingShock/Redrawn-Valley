@@ -1,0 +1,44 @@
+{
+ "assets/rds/cite-jump.js": {
+  "easing": 1
+ },
+ "assets/rds/flow.css": {
+  "easing": 5,
+  "motion": 9
+ },
+ "assets/rds/flow.js": {
+  "colour": 13,
+  "easing": 2
+ },
+ "assets/rds/loops.js": {
+  "easing": 2
+ },
+ "assets/rds/margins.css": {
+  "easing": 1,
+  "motion": 5
+ },
+ "assets/rds/rail.css": {
+  "motion": 3
+ },
+ "assets/rds/rds.css": {
+  "motion": 8
+ },
+ "assets/rds/search.css": {
+  "easing": 2,
+  "motion": 19
+ },
+ "assets/rds/skin.css": {
+  "easing": 1,
+  "motion": 11
+ },
+ "assets/rds/sources.css": {
+  "motion": 4
+ },
+ "assets/rds/theme.js": {
+  "colour": 2,
+  "easing": 1
+ },
+ "assets/studies.css": {
+  "motion": 20
+ }
+}

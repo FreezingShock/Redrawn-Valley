@@ -17,6 +17,7 @@ A new article needs nothing: its title, figures, sources and any mention of an e
 next time this runs. To add a term or place, add it to scripts/data/atlas.json or mark it up with data-term / data-place."""
 import re, sys, json, html, pathlib
 from html.parser import HTMLParser
+import sys as _sys, pathlib as _pl; _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent)); import assetver as _av
 
 root = pathlib.Path(__file__).resolve().parent.parent
 PAGE = root / 'a-z' / 'index.html'
@@ -270,7 +271,20 @@ def build_entries(pages, data):
     for key, s in S.items():
         e = {'head': s['head'], 'kind': 'source', 'href': None, 'gloss': '', 'tags': [s['kind']] if s['kind'] else [], 'uses': s['uses'], 'aliases': set(), 'see': None, 'ext': s['url'], 'drawing': None}
         E[('src-' + key, 'source')] = e
-    # drawings
+    # drawings: one source of truth is assets/drawings.json (scripts/build_drawings.py, step one of regen.py);
+    # until that file exists, fall back to the captions found here
+    dj = root / 'assets' / 'drawings.json'
+    titles = {p['url']: p['title'] for p in pages}
+    if dj.exists():
+        for d in json.loads(dj.read_text(encoding='utf-8')).get('drawings', []):
+            pt = titles.get(d['page'], d['page'].strip('/').split('/')[-1].replace('-', ' ').title())
+            tag = (f"Fig. {d['fig']} · " if d.get('fig') else '') + pt
+            gloss = ' '.join(x.rstrip('.') + '.' for x in (d.get('caption', ''), d.get('note', '')) if x)
+            e = {'head': d['label'], 'kind': 'drawing', 'href': 'drawings/#' + d['id'], 'gloss': short(gloss, 220), 'tags': [tag], 'uses': {}, 'aliases': set(), 'see': None, 'ext': '', 'drawing': d}
+            if d['page'] in titles:
+                e['uses'][d['page']] = {'title': pt, 'anchors': [(d['anchor'], d.get('heading') or '')] if d.get('anchor') else []}
+            E[('fig-' + d['id'], 'drawing')] = e
+        return E
     for p in pages:
         for f in extract_figures(p):
             tag = (f['num'] + ' · ' if f['num'] else '') + p['title']
@@ -393,7 +407,7 @@ if __name__ == '__main__':
     for name, body in out.items():
         path = root / name
         if '--check' in sys.argv:
-            if path.read_text(encoding='utf-8') != body: stale.append(name)
+            if _av.strip(path.read_text(encoding='utf-8')) != _av.strip(body): stale.append(name)
         else:
             path.write_text(body, encoding='utf-8'); print(f'wrote {name}: ' + ', '.join(f'{v} {k}s' for k, v in counts.items()))
     if stale: print('stale: ' + ', '.join(stale) + ' (run python3 scripts/build_atlas.py)'); sys.exit(1)

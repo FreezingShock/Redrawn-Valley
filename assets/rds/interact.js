@@ -23,7 +23,7 @@
   /* load our stylesheet once, next to this script */
   if (SRC && !doc.querySelector('link[data-rv-interact]')) {
     var lk = doc.createElement('link');
-    lk.rel = 'stylesheet'; lk.href = SRC.replace(/\.js.*$/, '.css'); lk.setAttribute('data-rv-interact', '');
+    lk.rel = 'stylesheet'; lk.href = SRC.replace(/\.js(\?.*)?$/, '.css$1'); lk.setAttribute('data-rv-interact', '');
     doc.head.appendChild(lk);
   }
 
