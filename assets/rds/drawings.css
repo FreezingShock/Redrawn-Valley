@@ -1,0 +1,116 @@
+/* Drawings gallery (drawings/index.html). Components: dg-bar, dg-toolbar, dg-filters, dg-grid, dg-card, dg-lbx.
+   Cards use the sketchbook frame and offset hover shadow from interact.css; drawings are rendered in shadow roots
+   (assets/rds/drawings.js) so each keeps the stylesheet of the page it comes from. */
+.dg-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.dg-section{--dg-top:72px;padding-top:var(--space-12)}
+.dg{position:relative}
+
+/* ---- toolbar and filters ---- */
+.dg-toolbar{position:sticky;top:var(--dg-top);z-index:var(--z-subbar);display:grid;grid-template-columns:minmax(0,320px) 1fr auto;align-items:center;gap:var(--space-4);
+  padding:var(--space-3) var(--space-4);margin-inline:calc(-1*var(--space-4));background:color-mix(in srgb,var(--paper-sunk) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.dg-search{position:relative;display:block}
+.dg-search .rds-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--ink-muted)}
+.dg-search .rds-input{width:100%;padding-left:42px}
+.dg-count{display:flex;align-items:center;gap:var(--space-4);margin:0;font:400 14px/22px var(--rds-mono);color:var(--ink-faint)}
+.dg-count b{color:var(--ink);font-weight:500}
+.dg-tools{display:flex;align-items:center;gap:var(--space-3)}
+.dg-seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:var(--radius-pill);overflow:hidden;background:var(--paper-raised)}
+.dg-seg button,.dg-toggle,.dg-reset{font:600 12px/16px var(--rds-sans);letter-spacing:.08em;text-transform:uppercase;min-height:44px;padding:0 var(--space-4);border:0;background:transparent;color:var(--ink);cursor:pointer;transition:background-color var(--dur-fast),color var(--dur-fast)}
+.dg-seg button[aria-pressed=true]{background:var(--ink);color:var(--on-ink)}
+.dg-seg button:not([aria-pressed=true]):hover{background:var(--paper-sunk)}
+.dg-toggle{display:none;border:1px solid var(--line-strong);border-radius:var(--radius-pill);background:var(--paper-raised);gap:var(--space-2);align-items:center}
+.dg-toggle b[hidden]{display:none}
+.dg-toggle b{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:8px;border-radius:10px;background:var(--brick);color:var(--on-brick);font:600 11px/1 var(--rds-sans);letter-spacing:0}
+.dg-reset--m{display:none}
+.dg-reset{color:var(--brick);text-decoration:underline;text-underline-offset:3px}
+.dg-seg button:focus-visible,.dg-toggle:focus-visible,.dg-reset:focus-visible,.dg-chip:focus-visible,.dg-card__art:focus-visible{outline:2px solid var(--brick);outline-offset:3px}
+.dg-filters{display:grid;gap:var(--space-3);padding-block:var(--space-6) var(--space-8)}
+.dg-fgroup{display:grid;grid-template-columns:96px 1fr;align-items:start;gap:var(--space-3)}
+.dg-fgroup>.rds-eyebrow{padding-top:14px}
+.dg-chips{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.dg-chip{font:600 12px/16px var(--rds-sans);letter-spacing:.06em;text-transform:uppercase;padding:10px 14px;min-height:40px;border-radius:var(--radius-pill);border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background-color var(--dur-fast),color var(--dur-fast),border-color var(--dur-fast),transform var(--dur-fast) var(--ease-out)}
+.dg-chip:hover{background:var(--paper-raised);transform:translateY(-1px)}
+.dg-chip[aria-pressed=true]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.dg-chip i{font:400 11px/1 var(--rds-mono);font-style:normal;opacity:.65;letter-spacing:0}
+.dg-chip[data-zero]:not([aria-pressed=true]){opacity:.42}
+
+/* ---- grid ---- */
+.dg-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:var(--space-6);align-items:stretch;margin-top:var(--space-6)}
+.dg[data-size=l] .dg-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr))}
+.dg-card{display:flex;flex-direction:column;position:relative;background:var(--paper-raised);border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-lg,16px);overflow:hidden;
+  opacity:0;transform:translateY(18px);transition:opacity var(--dur-medium) var(--ease-out),transform var(--dur-medium) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);content-visibility:auto;contain-intrinsic-size:auto 420px}
+.dg-card.is-in{opacity:1;transform:none}
+.dg-card[hidden]{display:none}
+.dg-card:hover,.dg-card:focus-within{box-shadow:4px 5px 0 0 var(--ink)}
+.dg-card.is-in:hover{transform:translate(-2px,-2px)}
+.dg-card__art{display:block;width:100%;padding:0;border:0;border-bottom:1px solid var(--ink);background:var(--paper);cursor:zoom-in;position:relative;aspect-ratio:var(--ar,4/3);overflow:hidden;text-align:left;flex:none}
+.dg-host{position:absolute;inset:var(--space-3);display:block;pointer-events:none}
+.dg-card__art.is-loading::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 9px,var(--line) 9px 10px);opacity:.7;animation:dg-hatch var(--dur-draw) linear infinite}
+@keyframes dg-hatch{to{background-position:28px 0}}
+.dg-card__art.is-failed::after{content:"Could not load this drawing. Open it on its page.";position:absolute;inset:0;display:grid;place-items:center;padding:var(--space-6);text-align:center;font:400 14px/22px var(--rds-sans);color:var(--ink-muted)}
+.dg-zoom{position:absolute;top:var(--space-3);right:var(--space-3);display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--ink);border-radius:var(--radius-pill);background:var(--paper-raised);opacity:0;transform:translateY(-4px) scale(.9);transition:opacity var(--dur-fast),transform var(--dur-base) var(--ease-out);pointer-events:none}
+.dg-zoom svg{width:18px;height:18px}
+.dg-card:hover .dg-zoom,.dg-card__art:focus-visible .dg-zoom{opacity:1;transform:none}
+@media (hover:none){.dg-zoom{opacity:1;transform:none}}
+.dg-card__body{flex:1;align-content:start;display:grid;gap:var(--space-2);padding:var(--space-4) var(--space-4) var(--space-4)}
+.dg-card__meta{display:flex;align-items:center;gap:var(--space-3);margin:0;font:400 12px/16px var(--rds-mono);color:var(--ink-faint)}
+.dg-card__title{margin:0;font:500 18px/1.3 var(--rds-serif)}
+.dg-card__note{margin:0;font:400 13px/20px var(--rds-mono);color:var(--ink-faint)}
+.dg-card__where{margin:auto 0 0;padding-top:var(--space-3);border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:4px var(--space-4);font:400 14px/22px var(--rds-sans)}
+.dg-card__where a{color:var(--moss);text-underline-offset:3px}
+.dg-card__where a:hover{color:var(--moss-deep)}
+.dg-empty{margin-top:var(--space-12);padding:var(--space-12) var(--space-6);text-align:center;border:1px dashed var(--line-strong);border-radius:var(--radius-lg);display:grid;gap:var(--space-3);justify-items:center}
+.dg-empty p{margin:0}
+
+/* ---- lightbox extras (toolbar controls inside the shared .rv-lightbox) ---- */
+.dg-lbx{display:flex;align-items:center;gap:var(--space-2);flex:none;flex-wrap:wrap;justify-content:flex-end}
+.dg-lbx button,.dg-lbx a{font:600 12px/16px var(--rds-sans);letter-spacing:.06em;text-transform:uppercase;min-height:44px;min-width:44px;padding:0 var(--space-3);display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line-strong);border-radius:var(--radius-pill);background:var(--paper-raised);color:var(--ink);cursor:pointer;text-decoration:none}
+.dg-lbx button:hover,.dg-lbx a:hover{background:var(--paper-sunk)}
+.dg-lbx button[aria-pressed=true]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.dg-lbx button:focus-visible,.dg-lbx a:focus-visible{outline:2px solid var(--brick);outline-offset:3px}
+.dg-lbx__short{display:none}
+@media (max-width:640px){.dg-lbx__short{display:inline}}
+.dg-lbx__pos{font:400 12px/16px var(--rds-mono);color:var(--ink-faint);padding:0 var(--space-1);flex:none}
+.dg-lbx__stages{display:flex;gap:var(--space-1);flex-wrap:wrap}
+.dg-big{display:block;width:100%;height:100%}
+
+/* ---- responsive ---- */
+@media (max-width:900px){
+  .dg-toolbar{grid-template-columns:1fr auto;grid-template-areas:"s t" "c c"}
+  .dg-search{grid-area:s}.dg-tools{grid-area:t}.dg-count{grid-area:c}
+}
+@media (max-width:640px){
+  .dg-section{--dg-top:var(--rv-bar,52px);padding-top:var(--space-6)}
+  .dg-bar{position:sticky;top:var(--dg-top);z-index:var(--z-subbar);margin-inline:calc(-1*var(--rv-gutter,18px));background:var(--paper-sunk);border-bottom:1px solid var(--line)}
+  .dg-toolbar{position:static;grid-template-columns:1fr auto;padding:var(--space-2) var(--rv-gutter,18px);margin:0;border:0;background:transparent;gap:var(--space-2)}
+  .dg-seg,.dg-reset--d{display:none}
+  .dg-reset--m{display:inline-block;min-height:32px;padding:0}
+  .dg-reset[hidden]{display:none}
+  .dg-toggle{display:inline-flex}
+  .dg-filters{display:none;padding:var(--space-2) var(--rv-gutter,18px) var(--space-4);max-height:min(58vh,420px);overflow-y:auto;overscroll-behavior:contain;border-top:1px solid var(--line)}
+  .dg-bar.is-open .dg-filters{display:grid}
+  .dg-fgroup{grid-template-columns:1fr;gap:var(--space-1)}
+  .dg-fgroup>.rds-eyebrow{padding-top:0}
+  .dg-grid{margin-top:var(--space-4);gap:var(--space-4)}
+  /* lightbox toolbar becomes three rows: caption, stages, then navigation and tools */
+  .rv-lightbox:has(.dg-lbx) .rv-lightbox__bar{flex-wrap:wrap;gap:var(--space-2)}
+  .rv-lightbox:has(.dg-lbx) .rv-lightbox__cap{order:1;flex:1 1 100%}
+  .rv-lightbox:has(.dg-lbx) [data-z="in"],.rv-lightbox:has(.dg-lbx) [data-z="out"]{display:none}
+  .rv-lightbox:has(.dg-lbx) .rv-lightbox__tools{order:3;margin-left:auto}
+  .dg-lbx__pos{display:none}
+  .dg-lbx__full{display:none}
+  .dg-lbx{display:contents}
+  .dg-lbx__stages{order:2;flex:1 1 100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .dg-lbx__stages button{flex:none}
+  .dg-lbx>button,.dg-lbx>.dg-lbx__pos,.dg-lbx>a{order:3}
+}
+@media (prefers-reduced-motion:reduce){
+  .dg-card{opacity:1;transform:none;transition:box-shadow var(--dur-fast)}
+  .dg-card.is-in:hover{transform:none}
+  .dg-card__art.is-loading::before{animation:none}
+}
+@media print{.dg-bar,.dg-zoom{display:none}.dg-card{opacity:1;transform:none;break-inside:avoid}}
+
+/* embedded in the lab note (?embed=1) */
+.rv-embed .rv-nhead,.rv-embed .dg-section~.rds-section{display:none}
+.rv-embed .dg-section{padding-block:var(--space-3) var(--space-6)}

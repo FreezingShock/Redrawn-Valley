@@ -30,7 +30,7 @@
   function progress() {
     if (!bar) return;
     var h = doc.documentElement.scrollHeight - vh, p = h > 0 ? clamp(window.pageYOffset / h, 0, 1) : 0;
-    if (Math.abs(p - lastP) > .002) { bar.style.transform = 'scaleX(' + p.toFixed(4) + ')'; lastP = p; }
+    if (Math.abs(p - lastP) > .002) { bar.parentNode.style.setProperty('--p', p.toFixed(4)); lastP = p; }
   }
 
   /* ---------- figures that draw themselves ---------- */

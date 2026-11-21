@@ -30,6 +30,9 @@
   /* scroll effects: progress bar, drawing figures, counters, parallax art (off under prefers-reduced-motion) */
   if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href + Q; fx.defer = true; doc.head.appendChild(fx); }
 
+  /* cozy layer: time of day, the lamp clicking on, copy stamp (assets/rds/cozy-moments.js loads cozy-moments.css) */
+  if (!doc.querySelector('script[src*="cozy-moments.js"]')) { var cz = doc.createElement('script'); cz.src = new URL('assets/rds/cozy-moments.js', siteRoot).href + Q; cz.defer = true; doc.head.appendChild(cz); }
+
   /* citation jump links from the Sources library (#cite=ID.N): scroll to the marker and highlight the sentence */
   if (!doc.querySelector('script[src*="cite-jump.js"]') && /cite=/.test(location.hash)) { var cj = doc.createElement('script'); cj.src = new URL('assets/rds/cite-jump.js', siteRoot).href + Q; cj.defer = true; doc.head.appendChild(cj); }
   else if (!doc.querySelector('script[src*="cite-jump.js"]')) { window.addEventListener('hashchange', function once() { if (/cite=/.test(location.hash)) { window.removeEventListener('hashchange', once); var c2 = doc.createElement('script'); c2.src = new URL('assets/rds/cite-jump.js', siteRoot).href + Q; doc.head.appendChild(c2); } }); }
@@ -46,7 +49,9 @@
     { label: 'Topics', url: 'topics/', icon: 'tree', note: 'Heat, trees, water and more, across every page' },
     { label: 'A\u2013Z index', url: 'a-z/', icon: 'contents', note: 'Every term, place, source and drawing' },
     { label: 'Sources', url: 'sources/', icon: 'footnote', note: 'Every citation, and where it is used' },
-    { label: 'Sketchbook log', url: 'log/', icon: 'contents', note: 'Everything new, by date' }
+    { label: 'Sketchbook log', url: 'log/', icon: 'contents', note: 'Everything new, by date' },
+    { label: 'Valley map', url: 'map/', icon: 'pin', note: 'Every page, pinned where it happens' },
+    { label: 'Drawings', url: 'drawings/', icon: 'ruler', note: 'Every figure on one filterable, zoomable sheet' }
   ];
   var ABOUT = [
     { label: 'About', url: 'about/', icon: 'info', note: 'Who draws this, and why' },
@@ -58,10 +63,10 @@
     { label: 'Studies', url: 'studies/', kind: 'studies', icon: 'studies', blurb: 'Site studies of small places, redrawn.', max: 4, all: 'All studies' },
     { label: 'Field guide', url: 'guide/', kind: 'guide', icon: 'guide', blurb: 'Terms and ideas, one page each.', max: 6, all: 'All entries' },
     { label: 'Notes', url: 'notes/', kind: 'notes', icon: 'notes', blurb: 'Short essays with the evidence shown.', max: 5, all: 'All notes' },
-    { label: 'Explore', id: 'explore', icon: 'search', blurb: 'Find things by topic, term, source or date.', items: EXPLORE, sections: ['topics', 'a-z', 'sources', 'log', 'map', 'gallery'] },
+    { label: 'Explore', id: 'explore', icon: 'search', blurb: 'Find things by topic, term, source or date.', items: EXPLORE, sections: ['topics', 'a-z', 'sources', 'log', 'map', 'drawings'] },
     { label: 'About', url: 'about/' }
   ];
-  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', topics: 'Topics', log: 'Sketchbook log', about: 'About', sitemap: 'Sitemap', sources: 'Sources', 'a-z': 'A\u2013Z index' };
+  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', map: 'Valley map', topics: 'Topics', log: 'Sketchbook log', drawings: 'Drawings', about: 'About', sitemap: 'Sitemap', sources: 'Sources', 'a-z': 'A\u2013Z index' };
   var sitePath = new URL(siteRoot).pathname;
   var rel = decodeURIComponent(location.pathname.slice(sitePath.length)).replace(/index\.html$/, '');
   var section = rel.split('/')[0];

@@ -217,7 +217,7 @@
       var cp = e.target.closest('[data-copy]');
       if (cp) {
         var id = cp.closest('.rv-src').id, url = location.origin + location.pathname + '#' + id;
-        (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).catch(function () { }).then(function () { cp.classList.add('is-done'); history.replaceState(null, '', '#' + id); setTimeout(function () { cp.classList.remove('is-done'); }, 1400); });
+        (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).catch(function () { }).then(function () { cp.classList.add('is-done'); if (window.RVCozy) window.RVCozy.tag(cp, 'Link copied'); history.replaceState(null, '', '#' + id); setTimeout(function () { cp.classList.remove('is-done'); }, 1400); });
       }
     });
     els.caveat.addEventListener('change', function () { state.caveat = els.caveat.checked; apply(); });

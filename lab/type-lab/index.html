@@ -3,20 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="../../assets/rds/theme.js?v=ea1484357c"></script>
-<script src="../../assets/rds/flow.js?v=9739b5e536"></script>
+<script src="../../assets/rds/flow.js?v=d597fc7f22"></script>
 <title>Choosing a hand for the type | Lab notes | Redrawn Valley</title>
 <meta name="description" content="Forty-six font entries screened for license, accents, size and legibility, six type directions built from them, and three ways to write text in. The research, the verdict and the live lab.">
 <meta name="rv-topics" content="making">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Architects+Daughter&display=swap">
-<link rel="stylesheet" href="../../assets/rds/tokens.css?v=fc4ec3a5a0">
-<link rel="stylesheet" href="../../assets/rds/rds.css?v=f3c2b7b669">
-<link rel="stylesheet" href="../../assets/rds/notes.css?v=3a668ec931">
-<link rel="stylesheet" href="../../assets/rds/lab.css?v=51a4ce8dfe">
-<link rel="stylesheet" href="../../assets/rds/skin.css?v=2425ec21b5">
-<link rel="stylesheet" href="../../assets/rds/theme.css?v=7909c5650f">
+<link rel="preload" href="../../assets/fonts/shantell-sans.d8e1c0ce.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/figtree.233cd99b.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts/fonts.5cd73cf4.css?v=5cd73cf47b">
+<link rel="stylesheet" href="../../assets/rds/tokens.css?v=fe6a9c46f1">
+<link rel="stylesheet" href="../../assets/rds/rds.css?v=d951bc7b24">
+<link rel="stylesheet" href="../../assets/rds/notes.css?v=343665f53b">
+<link rel="stylesheet" href="../../assets/rds/lab.css?v=d848065b77">
+<link rel="stylesheet" href="../../assets/rds/skin.css?v=5ba13fa00b">
 </head>
 <body class="rds-page">
 <div class="rv-progress" data-rv-progress aria-hidden="true"><i></i></div>
@@ -31,7 +29,7 @@
 <div class="rv-ehead__kicker"><a class="rds-link rds-link--quiet" href="../index.html">&larr; Lab notes</a><span class="rds-tag rds-tag--brick">Type</span></div>
 <h1 class="rds-display" data-rds-reveal>Choosing a hand for the type</h1>
 <p class="rds-lead" data-rds-reveal style="--i:1">Forty-six font entries screened for license, accents, size and legibility, six type directions built from them, and three ways to write text in. The research, the decision (Wobble, now live site-wide) and the live lab are all here.</p>
-<p class="rv-byline"><span>By <b>Nate Anderson</b></span><span>Nov. 21, 2026</span><span>7 min read</span><span>5 sources</span><span>Lab 3 of 7</span></p>
+<p class="rv-byline"><span>By <b>Nate Anderson</b></span><span>Nov. 21, 2026</span><span>7 min read</span><span>5 sources</span><span>Lab 3 of 6</span></p>
 </div></div></header>
 <div class="rds-container"><div class="rv-tiles rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="lab/type-lab" data-topic="type-lab" aria-hidden="true"></div></div>
 <div class="rv-body" data-rv-body><div class="rds-container">
@@ -58,6 +56,7 @@
 <div class="rds-decisions rv-wide">
 <article class="rds-decision"><h3>Treat accents as a hard requirement</h3><p>The Valley has Cañada, Topanga and Tujunga on its maps, and a font that drops the ñ is a font that fails on the first page. Missing glyphs are a rejection, not a footnote.</p><p class="rds-decision__cost"><b>Cost</b>It removed three otherwise attractive fonts from the shortlist.</p></article>
 <article class="rds-decision"><h3>Choose Wobble (Shantell Sans) for the whole site</h3><p>My recommendation in the lab was Hand-cut Serif, with Field Notebook for titles, and I ended up choosing Wobble instead. It is one variable font that covers every role, so the site reads as one hand, and its INFM and BNCE axes let titles be looser while body text stays calmer. IBM Plex Mono stays for citations, captions and numbers, so evidence still looks like evidence. The font tokens now all point at Shantell Sans.</p><p class="rds-decision__cost"><b>Cost</b>Hand fonts read slower over long text, which is why the body setting is deliberately calm. At about 170 KB with all axes it is the heaviest option, trimming axes would cut it, and Shantell has no italic file, so italics are synthesized.</p></article>
+<article class="rds-decision"><h3>Split the type into three voices</h3><p>Wobble worked as a font and failed as a system: used for the nav, buttons, body, labels and notes, one hand-drawn face read as repetition, and the mono in every eyebrow, caption and infobox key read as a template. I kept Shantell Sans for the display voice only (H1, H2, the wordmark, pull quotes). Figtree, a friendly geometric sans with round bowls that echo Shantell, now carries reading text, lead, H3, nav and buttons; I compared it with Hanken Grotesk, Atkinson Hyperlegible and Nunito Sans on a sample page and chose it for warmth without the quirky letterforms of Atkinson. Caveat, a quieter pen hand, is used only for scribbled annotations. DM Mono, a warmer mono than Plex, is kept only for numerals, citation markers and code, with tabular figures and plain case. Eyebrows, tags, infobox keys and captions moved to sentence-case Figtree.</p><p class="rds-small"><strong>Cost:</strong> Shantell about 167 KB, Figtree about 40 KB, Caveat about 73 KB, DM Mono about 35 KB of latin woff2 (sizes read from the Google Fonts CSS API; not re-measured after the change). <strong>Limit:</strong> judged by eye at 375px and 1280px, not with readers.</p></article>
 <article class="rds-decision"><h3>Add three writing effects with two speeds each</h3><p>A pen write-on from single-stroke Hershey data, a typewriter that strikes keys at irregular times, and a sweep that works on any font. Each has a fast and a slow speed, and under reduced motion nothing plays by itself, though a button you press still plays.</p><p class="rds-decision__cost"><b>Cost</b>The pen effect needs its own letterform data, so accents there are added by code and are approximate.</p></article>
 <article class="rds-decision"><h3>Keep the lab as the record, marked noindex</h3><p>The lab stays on the site as the candidate sheet behind the choice, so the research and the five directions I did not pick remain visible. It is noindex because it is a working page; this article is the readable version.</p><p class="rds-decision__cost"><b>Cost</b>The lab shows six directions but only one is live, so the lab no longer matches the site.</p></article>
 </div>
@@ -97,14 +96,14 @@
 <p class="rds-small" style="margin-top:var(--space-6)"><a class="rds-link" href="../index.html">All lab notes <span class="rds-arrow">&rarr;</span></a></p></div></section>
 </main>
 <footer class="rds-footer" data-rv-shell="footer"></footer>
-<script src="../../assets/rds/rds.js?v=2b8294a2b4"></script>
-<script src="../../assets/rds/notes.js?v=8358c86cc9"></script>
-<script src="../../assets/rds/lab.js?v=5dd93ba05d"></script>
-<script src="../../assets/rds/mobile.js?v=f223f7305c"></script>
-<script src="../../assets/rds/motifs.js?v=095fec0efc" defer></script>
-<script src="../../assets/rds/loops.js?v=14a46b2c99" defer></script>
-<script src="../../assets/site-shell.js?v=44bb3c7e7a"></script>
+<script src="../../assets/rds/rds.js?v=fc53736308"></script>
+<script src="../../assets/rds/notes.js?v=f4de62ac6b"></script>
+<script src="../../assets/rds/lab.js?v=8aa38de8b5"></script>
+<script src="../../assets/rds/mobile.js?v=6e4771835c"></script>
+<script src="../../assets/rds/motifs.js?v=363d93b199" defer></script>
+<script src="../../assets/rds/loops.js?v=300d110cbe" defer></script>
+<script src="../../assets/site-shell.js?v=acbd270bbb"></script>
 <script src="../../assets/rds/sketch.js?v=6025410beb" defer></script>
-<script src="../../assets/rds/interact.js?v=3004828bca" defer></script>
+<script src="../../assets/rds/interact.js?v=2771321c2d" defer></script>
 </body>
 </html>
