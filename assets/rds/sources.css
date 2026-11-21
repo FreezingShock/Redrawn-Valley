@@ -112,3 +112,18 @@
 .rv-lib-empty p{margin:0 0 var(--space-4)}
 @media(prefers-reduced-motion:reduce){.rv-src.is-ready,.rv-src.is-flash{animation:none}.rv-src__uses,.rv-src__how .rds-icon,.rv-lib-seg{transition:none}}
 .rv-embed .rv-lib-bar{top:0}.rv-embed .rv-lib-head{padding-block:var(--space-4) var(--space-2)}.rv-embed .rv-lib-head .rds-sechead{display:none}
+
+/* Type rules: labels are at least the site label size, in the label voice (sentence case, no tracking); mono is for numbers only. */
+.rv-lib,.rv-lib-head,.rv-cite-bar{--lab:var(--rv-label-size,13.5px)}
+.rv-lib-lab,.rv-src__meta,.rv-src__hit span,.rv-use__kind,.rv-use__sec,.rv-use__n,.rv-lib-count,.rv-lib-seg span{font-family:var(--font-label,var(--font-sans));font-size:var(--lab);line-height:1.3;font-weight:500;letter-spacing:0;text-transform:none}
+.rv-lib-lab{color:var(--ink-muted)}
+.rv-src__meta{font-weight:500}
+.rv-src__type{font-weight:600}
+.rv-src__hit span{color:var(--brick);font-weight:600}
+.rv-lib-count b,.rv-use__n,.rv-src__cnt b,.rv-lib .rv-chip i,.rv-lib-stats b{font-family:var(--font-mono)}
+.rv-lib .rv-chip{font:600 var(--lab)/1.2 var(--font-label,var(--font-sans));letter-spacing:0;text-transform:none}
+.rv-lib .rv-chip i{font-size:var(--lab);opacity:.7}
+.rv-lib-stats span,.rv-lib-check,.rv-lib-sort,.rv-lib-sort select,.rv-src__toggle,.rv-src__open,.rv-use__go{font-size:max(var(--lab),14px)}
+.rv-lib-seg span{padding-bottom:5px}
+.rv-cite-bar .rv-cite-bar__txt b{font:600 var(--lab)/1.2 var(--font-label,var(--font-sans));letter-spacing:0;text-transform:none}
+.rv-lib-search kbd{font:500 var(--lab)/1 var(--font-mono)}
