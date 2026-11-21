@@ -261,9 +261,10 @@
   var io = window.IntersectionObserver ? new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.target.__art) e.target.__art.live = e.isIntersecting; e.target.classList.toggle('is-live', e.isIntersecting && !reduceMQ.matches); }); }, { threshold: .1 }) : null;
   function observe(el) { if (io) io.observe(el); else { el.__art.live = true; el.classList.add('is-live'); } }
 
-  function shiftTile(el) {
+  function shiftTile(el, at) {
     var a = el.__art, rnd = a.rnd, tiles = el.querySelectorAll('.m-tile'), i;
-    do { i = Math.floor(rnd() * tiles.length); } while (tiles.length > 1 && i === a.last);
+    if (typeof at === 'number' && at >= 0 && at < tiles.length) i = at;
+    else do { i = Math.floor(rnd() * tiles.length); } while (tiles.length > 1 && i === a.last);
     a.last = i; var t = tiles[i], info = a.tiles[i], r = rnd(), cls = t.classList;
     if (info.shift && r < .6) {
       cls.toggle(cls.contains('m-icon') ? 'is-alt' : cls.contains('m-gridSquares') ? 'is-flip' : cls.contains('m-overlap') ? 'is-spread' : cls.contains('m-protractor') ? 'is-turn' : 'is-sq');
@@ -288,6 +289,6 @@
   function slugOf() { var m = location.pathname.replace(/index\.html$/, '').split('/').filter(Boolean); return m.join('/') || 'home'; }
   function init() {
     if (!doc.querySelector('.rds-art--strip') && !doc.querySelector('[data-no-footstrip]')) { var ft = doc.querySelector('.rds-footer,[data-rv-shell="footer"]'); if (ft) { var s = doc.createElement('div'); s.className = 'rds-art rds-art--strip rv-footstrip'; s.setAttribute('data-rds-art', 'strip'); s.setAttribute('data-art-mobile', 'stripm'); s.setAttribute('data-seed', 'foot:' + slugOf()); ft.parentNode.insertBefore(s, ft); } } [].slice.call(doc.querySelectorAll('[data-rds-art]')).forEach(function (el) { render(el); }); }
-  window.RDSArt = { renderMotif: function (el, name, seed, kind) { return render(el, { kind: kind || 'card', seed: seed || name, topic: '', only: name }); }, render: render, reroll: reroll, build: build, motifs: Object.keys(M), palette: SAT };
+  window.RDSArt = { poke: function (el, tile) { var t = el.querySelectorAll('.m-tile'); if (!el.__art || reduceMQ.matches || !t.length) return false; var i = Array.prototype.indexOf.call(t, tile); if (i < 0) return false; shiftTile(el, i); return true; }, renderMotif: function (el, name, seed, kind) { return render(el, { kind: kind || 'card', seed: seed || name, topic: '', only: name }); }, render: render, reroll: reroll, build: build, motifs: Object.keys(M), palette: SAT };
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
 })();

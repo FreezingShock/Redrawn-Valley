@@ -46,6 +46,7 @@ var scs = doc.querySelectorAll('[data-scrolly]'), page = canScroll(null);
 for (var s = 0; s < scs.length; s++) {
 var steps = scs[s].querySelectorAll('[data-step]'), a = 0;
 for (var k = 0; k < steps.length; k++) { var n = +steps[k].getAttribute('data-step'); if (!page || steps[k].getBoundingClientRect().top < window.innerHeight * 0.62) a = Math.max(a, n); }
+if (scs[s].hasAttribute('data-pin')) a = +scs[s].getAttribute('data-pin');
 if (scs[s].getAttribute('data-st') !== String(a)) scs[s].setAttribute('data-st', a);
 var lyr = scs[s].querySelectorAll('.lyr');
 for (var q = 0; q < lyr.length; q++) { var ln = +(/\bl(\d+)\b/.exec(lyr[q].getAttribute('class')) || [0, 0])[1]; lyr[q].classList.toggle('is-on', ln <= a); }

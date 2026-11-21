@@ -243,3 +243,13 @@ Seeded generative art in the recipe of the reference contact sheets (kept in the
 - **Rise**: headings, quotes and figures below the fold settle in (`.fx-rise`). Anything already on screen, inside a scrolly figure, or using `data-rds-*` reveals is left alone.
 
 Performance: one passive scroll listener, one rAF per frame, and only figures and art near the viewport are updated (IntersectionObserver); only CSS custom properties change per frame.
+
+## Interaction layer (`assets/rds/interact.css`, `interact.js`)
+
+One deferred script (`<script src="…/assets/rds/interact.js" defer></script>`, after `sketch.js`; it loads its own stylesheet). Everything is additive and works with a thumb: 44px targets on touch, nothing that only appears on hover, reduced motion respected.
+
+- **Redraw art** `rv-reroll`: every `data-rds-art="banner"` gets a Redraw button (new random seed via `RDSArt.reroll`) and, once changed, an undo button back to the page's `data-seed`. Tiles also shift on hover (desktop) or tap, using `RDSArt.poke(art, tile)`. The art root loses `aria-hidden` (only its drawing keeps it) so the buttons stay reachable.
+- **Entry previews** `rv-tip`: links in article, essay and study bodies, infoboxes, hatnotes and See also that point to a guide entry, note or study show a card (kind, title, section if the link has a `#hash`, one-line description) from `assets/search-index.json`. Hover or keyboard focus; hidden on touch. Footnote markers and pager links are skipped.
+- **Draggable compare**: `[data-rv-compare]` gets a third segmented option, Slide, and a handle (`rv-slider`, `role="slider"`, arrow keys, Home/End). Swiping sideways on the picture also starts it; vertical swipes still scroll. Mode is `data-view="slide"` with `--pos` (percent).
+- **Explorable plans** `rv-stages`: each `[data-scrolly]` figure gets a row of stage buttons built from its `.kstep` labels. Choosing one sets `data-pin` (studies.js honours it); Follow scroll releases it.
+- **Zoomable drawings** `rv-zoombtn` + `rv-lightbox`: figure drawings (viewBox at least 360 wide, not infobox or art) get a Zoom button that opens a `<dialog>` with wheel, pinch, drag, double-click and +/- zoom. The copy drops the pencil filter so it stays crisp.
