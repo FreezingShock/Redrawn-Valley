@@ -4,8 +4,8 @@
   --ease-in-out:cubic-bezier(.65,0,.35,1);
   --dur-fast:160ms; --dur-base:320ms; --dur-slow:720ms; --dur-draw:1600ms;
   --stagger:70ms; --measure:68ch; --container:1120px;
-  --rds-serif:var(--font-serif, Newsreader, Georgia, serif);
-  --rds-sans:var(--font-sans, "Hanken Grotesk", system-ui, sans-serif);
+  --rds-serif:var(--font-serif, "Shantell Sans", system-ui, sans-serif);
+  --rds-sans:var(--font-sans, "Shantell Sans", system-ui, sans-serif);
   --rds-mono:var(--font-mono, "IBM Plex Mono", ui-monospace, monospace);
 }
 .rds-page{margin:0;background:var(--paper);color:var(--ink);font:400 16px/26px var(--rds-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -157,7 +157,7 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .rds-prose ul{margin:0 0 var(--space-6);padding-left:var(--space-6);display:grid;gap:var(--space-2)}
 
 /* Hand annotation: for drawings and the odd margin note */
-.rds-note{display:inline-flex;align-items:flex-end;gap:var(--space-2);font:400 18px/24px var(--font-hand, "Architects Daughter", sans-serif);color:var(--brick);transform:rotate(-2deg)}
+.rds-note{display:inline-flex;align-items:flex-end;gap:var(--space-2);font:400 18px/24px var(--font-hand, "Shantell Sans", sans-serif);color:var(--brick);transform:rotate(-2deg)}
 .rds-note--moss{color:var(--moss)} .rds-note--ink{color:var(--ink-muted)}
 .rds-note svg{width:72px;height:auto;flex:none;overflow:visible}
 .rds-note svg path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}

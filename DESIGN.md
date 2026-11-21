@@ -31,7 +31,7 @@ Rules: brick = do something / look here; moss = links, trees, proposed changes; 
 
 ## Typography
 
-Fonts (Google Fonts, loaded in the page `<head>` and by `rds.css`): **Newsreader** (serif, display/prose/titles), **Hanken Grotesk** (sans, UI/body/lead), **IBM Plex Mono** (captions, figure labels, meta, numbers), **Architects Daughter** (hand notes only).
+Fonts (Google Fonts, loaded in the page `<head>`): **Shantell Sans** (variable; the `--font-serif`, `--font-sans` and `--font-hand` tokens all point at it, chosen from the type lab at `/fonts/`) and **IBM Plex Mono** (captions, figure labels, meta, citations, numbers). Shantell has no italic file, so italics are medium-weight roman. Roles are told apart by weight and the `INFM` axis (informality): 100 for titles, headings and UI lettering, 15 for reading text (set on `.rds-page`). The `BNCE` axis makes the wordmark wobble on hover. The type layer is the last block of `skin.css`; the size column below is the pre-Wobble spec, the layer shrinks reading text to 17.5/30 and display sizes by about 10 to 15%.
 
 | Class | Spec |
 |---|---|
