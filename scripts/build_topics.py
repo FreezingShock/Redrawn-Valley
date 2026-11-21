@@ -6,9 +6,11 @@ Inputs: assets/topics.json (topic definitions) and the <meta name="rv-topics"> t
 scripts/build_index.py. Add a page, tag it, run this script (and build_index.py), commit the result.
 See DESIGN.md > Topics."""
 import sys, json, html, pathlib, importlib.util
-import sys as _sys, pathlib as _pl; _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent)); import assetver as _av
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from build_fonts import block_for as fonts_head  # self-hosted font links, one source of truth
+import assetver as _av
 
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root
 spec = importlib.util.spec_from_file_location('build_index', root / 'scripts' / 'build_index.py')
 bi = importlib.util.module_from_spec(spec); spec.loader.exec_module(bi)
 
@@ -46,14 +48,13 @@ def head(depth, title, desc, extra_css='', slug=''):
 <script src="{up}assets/rds/flow.js"></script>
 <title>{e(title)} | Redrawn Valley</title>
 <meta name="description" content="{e(desc)}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM@400..700,-100..100,0..100&family=IBM+Plex+Mono:wght@400;500&display=swap">
+{fonts_head(up)}
 <link rel="stylesheet" href="{up}assets/rds/tokens.css">
 <link rel="stylesheet" href="{up}assets/rds/rds.css">
 <link rel="stylesheet" href="{up}assets/rds/topics.css">
 <link rel="stylesheet" href="{up}assets/rds/skin.css">
 <link rel="stylesheet" href="{up}assets/rds/theme.css">
+<link rel="stylesheet" href="{up}assets/rds/cozy.css">
 </head>
 <body class="rds-page">
 <header class="rds-nav" data-rds-nav data-rv-shell="nav">

@@ -1,0 +1,57 @@
+/* Redrawn Design System: cozy paper. Carries the top bar's language (hand-washed paper, torn edge with a pencil hairline, warm soft shadow)
+   into panels, cards, filters, the Continue block and the footer. Tokens only (tokens.css > section 4). Documented in DESIGN.md > Cozy paper.
+   Loaded after skin.css and theme.css so it refines their panel styles; remove this file and the site falls back to the plain pencil panels. */
+
+/* ---------- panels: a sheet of paper resting on the desk ---------- */
+.rds-keypoints,.rds-infobox,.rv-infobox,.rds-callout,.rds-contents,.rv-feature,a.rds-card,.rds-card,a.rv-rail__card{
+  background-image:var(--paper-wash);background-repeat:no-repeat;background-size:100% 140px;
+  border-color:var(--edge-soft);box-shadow:var(--shadow-paper),var(--glow-lamp)}
+.rds-callout{background-color:var(--brick-tint)}
+.rds-callout--moss{background-color:var(--moss-tint)}
+.rds-callout--plain{background-color:var(--paper-raised)}
+.rds-keypoints{background-color:var(--paper-raised);position:relative}
+.rds-keypoints__list>li{border-top-style:dashed;border-top-color:var(--edge-soft)}
+.rds-keypoints__list>li:first-child{border-top:0}
+/* tape on the In short box, same strip as the infobox */
+.rds-keypoints::before{content:"";position:absolute;z-index:var(--z-raised-2);width:84px;height:24px;top:-12px;right:var(--space-8);background:var(--tape);opacity:.92;transform:rotate(2.5deg);
+  border-left:2px dotted color-mix(in srgb,var(--pal-line-strong) 55%,transparent);border-right:2px dotted color-mix(in srgb,var(--pal-line-strong) 55%,transparent);pointer-events:none}
+.rds-infobox__foot,.rds-keypoints__foot{border-top-style:dashed;border-top-color:var(--edge-soft)}
+
+/* cards and features lift like paper being picked up, not like a stamped box */
+a.rds-card,.rv-feature,.rds-card,a.rv-rail__card{transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out),border-color var(--dur-fast) var(--ease-std)}
+a.rds-card:hover,.rv-feature:hover,aa.rv-rail__card:hover{box-shadow:var(--shadow-paper-lift),var(--glow-lamp);border-color:var(--edge)}
+
+/* ---------- filters and chips ---------- */
+.rds-input,.rv-seg{background-color:var(--paper-raised);border-color:var(--edge-soft);box-shadow:inset 0 2px 3px -1px var(--warm-shadow),0 1px 0 var(--edge-soft)}
+.rds-input:hover{border-color:var(--edge)}
+.rds-input:focus,.rds-input:focus-visible{box-shadow:var(--shadow-paper),var(--glow-lamp)}
+.rds-chip,.rv-chip{background-color:var(--paper-raised);border-color:var(--edge-soft);box-shadow:0 1px 0 var(--edge-soft),0 3px 5px -3px var(--warm-shadow);
+  transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-std)}
+.rds-chip:hover,.rv-chip:hover{transform:translateY(-1px) rotate(-.6deg);border-color:var(--edge);box-shadow:0 1px 0 var(--edge-soft),0 6px 8px -4px var(--warm-shadow)}
+.rds-chip:active,.rv-chip:active{transform:translateY(1px);box-shadow:none}
+
+/* ---------- Continue: a torn sheet instead of a ruled line ---------- */
+.rv-cont{position:relative;isolation:isolate;border-top:0;margin-top:calc(var(--space-16) + var(--deckle-h));padding:var(--space-12) var(--space-6) var(--space-8);margin-inline:calc(-1*var(--space-6));
+  background:var(--paper-sunk);background-image:var(--paper-wash);background-repeat:no-repeat;background-size:100% 220px;
+  filter:drop-shadow(0 -4px 6px color-mix(in srgb,var(--warm-shadow) 70%,transparent))}
+.rv-cont::before{content:"";position:absolute;left:0;right:0;top:calc(1px - var(--deckle-h));height:var(--deckle-h);z-index:var(--z-under);pointer-events:none;
+  background:var(--paper-sunk);-webkit-mask:var(--deckle) 0 0/var(--deckle-w) var(--deckle-h) repeat-x;mask:var(--deckle) 0 0/var(--deckle-w) var(--deckle-h) repeat-x}
+.rv-cont::after{content:"";position:absolute;left:0;right:0;top:calc(1px - var(--deckle-h));height:var(--deckle-h);z-index:var(--z-under);pointer-events:none;opacity:.7;
+  background:var(--line-strong);-webkit-mask:var(--deckle-line) 0 0/var(--deckle-w) var(--deckle-h) repeat-x;mask:var(--deckle-line) 0 0/var(--deckle-w) var(--deckle-h) repeat-x}
+.rv-cont__h{border-bottom-style:dashed;border-bottom-color:var(--edge-soft)}
+
+/* ---------- footer: torn from the same sheet as the bar, with a lamp over the brand ---------- */
+.rds-footer::before{display:block;top:calc(1px - var(--deckle-h));height:var(--deckle-h);background:var(--band);background-image:none;
+  -webkit-mask:var(--deckle) 0 0/var(--deckle-w) var(--deckle-h) repeat-x;mask:var(--deckle) 0 0/var(--deckle-w) var(--deckle-h) repeat-x;z-index:var(--z-raised)}
+.rds-footer::after{content:"";position:absolute;inset:0;z-index:var(--z-base);pointer-events:none;
+  background:radial-gradient(38% 70% at 14% 0,color-mix(in srgb,var(--pal-ochre) 22%,transparent),transparent 72%)}
+:root[data-theme="dark"] .rds-footer::after{background:radial-gradient(38% 70% at 14% 0,color-mix(in srgb,var(--brick) 20%,transparent),transparent 72%)}
+.rds-footer>*{position:relative;z-index:var(--z-raised)}
+.rv-footstrip{border-bottom-width:0;margin-bottom:var(--deckle-h)}
+
+@media (max-width:640px){
+  .rv-cont{padding:var(--space-8) var(--space-4) var(--space-6);margin-inline:calc(-1*var(--space-4));margin-top:calc(var(--space-12) + var(--deckle-h))}
+  .rds-keypoints::before{right:var(--space-6)}
+}
+@media (prefers-reduced-motion:reduce){a.rds-card,.rv-feature,.rds-card,.rds-chip,.rv-chip{transition:none}.rds-chip:hover,.rv-chip:hover{transform:none}}
+@media print{.rv-cont::before,.rv-cont::after,.rds-footer::after{display:none}.rv-cont{filter:none}}

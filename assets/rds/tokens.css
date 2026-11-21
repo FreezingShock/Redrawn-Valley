@@ -13,8 +13,6 @@
   --pal-ink: #1f1d1a;
   --pal-ink-muted: #5c564c;
   --pal-ink-faint: #655e51;
-  --pal-ink-subtle: #6e675a;
-  --pal-line-subtle: #a79f8e;
   --pal-on-ink-muted: #b8b0a0;
   --pal-brick: #9c3d24;
   --pal-brick-deep: #7d2f1a;
@@ -99,22 +97,28 @@
   --radius-md: 8px;
   --radius-lg: 16px;
   --radius-pill: 999px;
-  --font-serif: Shantell Sans, Comic Neue, system-ui, sans-serif;
-  --font-sans: Shantell Sans, Comic Neue, system-ui, sans-serif;
-  --font-mono: IBM Plex Mono, ui-monospace, monospace;
-  --font-hand: Shantell Sans, Comic Neue, system-ui, sans-serif;
+  --font-display: Shantell Sans, Shantell Sans Fallback, Comic Neue, system-ui, sans-serif;
+  --font-serif: Figtree, Figtree Fallback, system-ui, sans-serif;
+  --font-sans: Figtree, Figtree Fallback, system-ui, sans-serif;
+  --font-mono: Figtree, Figtree Fallback, system-ui, sans-serif;
+  --font-num: DM Mono, ui-monospace, monospace;
+  --font-hand: Caveat, Shantell Sans, Shantell Sans Fallback, cursive;
 
   /* ---------- 3. scales ---------- */
   /* type ramp: the sizes the site actually uses, in px (named by size so a rule reads like the number it replaced) */
   --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-15: 15px; --fs-16: 16px; --fs-17: 17px; --fs-18: 18px; --fs-19: 19px;
   --fs-20: 20px; --fs-22: 22px; --fs-24: 24px; --fs-26: 26px; --fs-30: 30px;
   /* legacy font aliases (older rules read these) */
-  --rds-serif: var(--font-serif); --rds-sans: var(--font-sans); --rds-mono: var(--font-mono); --rv-hand: var(--font-hand);
+  --rds-serif: var(--font-serif); --rds-sans: var(--font-sans); --rds-mono: var(--font-mono); --rv-hand: var(--font-sans);
   /* motion */
   --tap-min: 44px; --tap-min-fine: 24px; --focus-w: 2px; --focus-gap: 3px;
-  --dur-instant: .01ms; --dur-fast: 160ms; --dur-quick: 200ms; --dur-base: 320ms; --dur-medium: 450ms; --dur-slow: 720ms; --dur-slower: 900ms; --dur-draw: 1600ms;
+  --dur-instant: .01ms; --dur-snap: 100ms; --dur-fast: 160ms; --dur-quick: 200ms; --dur-base: 320ms; --dur-medium: 450ms; --dur-slow: 720ms; --dur-slower: 900ms; --dur-long: 1200ms; --dur-draw: 1600ms; --dur-draw-2: 2400ms; --dur-pulse: 3200ms;
   --dur-loop-1: 9s; --dur-loop-2: 12s; --dur-loop-3: 20s; --dur-loop-4: 60s; /* ambient loops */
+  --dur-drift-1: 14s; --dur-drift-2: 21s; --dur-drift-3: 28s; --dur-drift-4: 34s; --dur-spin: 40s; /* unequal drift periods so layers never line up */
   --stagger: 70ms;
+  /* page transitions (assets/rds/flow.js reads these): cover and lift lengths, fade, shuffle cards, tilt, page-turn edge shade and margin rule, card bleed */
+  --flow-cover: 440ms; --flow-lift: 580ms; --flow-fade-in: 200ms; --flow-fade-out: 280ms;
+  --flow-cards: 4; --flow-tilt: 5deg; --flow-edge: 8%; --flow-margin: 12%; --flow-bleed: 6%;
   --ease-out: cubic-bezier(.16,1,.3,1); --ease-in-out: cubic-bezier(.65,0,.35,1);
   --ease-std: ease; --ease-soft-out: ease-out; --ease-soft-in: ease-in; --ease-soft-in-out: ease-in-out; --ease-linear: linear;
   --ease-settle: cubic-bezier(.4,.1,.2,1); --ease-glide: cubic-bezier(.55,0,.4,1); --ease-glide-2: cubic-bezier(.5,0,.3,1);
@@ -124,7 +128,9 @@
   --z-subbar: 12; --z-rail: 15; --z-study-bar: 19; --z-nav: 20; --z-jump: 25; --z-chrome: 30; --z-chrome-2: 31; --z-popover: 40; --z-tip: 60;
   --z-flow-under: 2147482000; --z-flow-cover: 2147483000; --z-flow-top: 2147483001;
   /* layout */
+  --crumb-h: 20px;   /* one breadcrumb line; the empty crumb bar reserves it so the page does not jump when the shell fills it in */
   --measure: 68ch; --container: 1120px;
+  --cv-block: 900px;   /* placeholder height for off-screen sections (content-visibility, see rds.css) until the browser has drawn them once */
   --rv-gutter: 20px; --rv-bar: 52px; --rv-tab: 56px; --rv-safe: env(safe-area-inset-bottom,0px);
   /* phone tab bar (assets/rds/tabbar.css) */
   --tab-icon: 26px; --tab-mark-w: 52px; --tab-mark-h: 34px; --tab-stroke: 1.9; --tab-edge-stroke: 1.5px;
@@ -137,6 +143,23 @@
   --rv-pencil: 2px 3px 0 0 var(--edge);
   --rv-pencil-lift: 3px 5px 0 0 var(--edge);
   --shadow-pencil: var(--rv-pencil); --shadow-pencil-lift: var(--rv-pencil-lift);
+
+  /* ---------- 4. cozy paper (assets/rds/cozy.css): washes, soft warm shadows, torn edge, tape, lamp glow ----------
+     The top bar is the model: a hand-washed paper band (two soft tints), a torn lower edge drawn with a hairline, a warm soft shadow. */
+  --wash-a: color-mix(in srgb,var(--pal-brick-tint) 55%,transparent);   /* warm tint, upper left */
+  --wash-b: color-mix(in srgb,var(--pal-sage) 50%,transparent);         /* cool tint, upper right */
+  --paper-wash: radial-gradient(60% 140% at 8% 0,var(--wash-a),transparent 70%),radial-gradient(50% 140% at 96% 0,var(--wash-b),transparent 70%);
+  --warm-shadow: color-mix(in srgb,var(--pal-ink) 22%,transparent);     /* shadow colour: ink thinned so it reads as brown, not grey */
+  --edge-soft: color-mix(in srgb,var(--edge) 55%,transparent);          /* frame line one step lighter than --edge */
+  --shadow-paper: 0 1px 0 var(--edge-soft),0 2px 3px -1px var(--warm-shadow),0 12px 20px -12px var(--warm-shadow);
+  --shadow-paper-lift: 0 1px 0 var(--edge-soft),0 4px 6px -2px var(--warm-shadow),0 18px 28px -12px var(--warm-shadow);
+  --glow-lamp: 0 0 0 0 transparent;                                     /* lamp glow: none in the light theme, warm halo in the dark one */
+  --tape: color-mix(in srgb,var(--pal-ochre) 38%,var(--pal-paper-raised));
+  --deckle-h: 28px; --deckle-w: 600px;
+  /* torn edge shape: a mask, so the colour comes from background (any panel or band colour, both themes). Filled below the curve; flip it for a bottom edge. */
+  --deckle: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%2228%22 viewBox=%220 0 600 28%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 28V14C30 8 52 17 90 12S150 5 190 13 250 20 300 12 360 4 410 12 470 19 520 11 570 7 600 13V28Z%22 fill=%22%23000%22/%3E%3C/svg%3E");
+  /* the same curve as a hairline, to draw the torn edge's pencil line */
+  --deckle-line: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%2228%22 viewBox=%220 0 600 28%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 14C30 8 52 17 90 12S150 5 190 13 250 20 300 12 360 4 410 12 470 19 520 11 570 7 600 13%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22 stroke-linecap=%22round%22/%3E%3C/svg%3E");
 }
 @media (max-width:374px){ :root{ --rv-gutter: 18px; } }
 
@@ -184,4 +207,10 @@
   --band-line: rgba(243,232,212,.16);
   --veil: rgba(5,3,2,.66);
   --edge: #a99a82;
+  /* moonlit cozy: turquoise and moss washes, deeper brown shadows, a lamp-lit halo on panels */
+  --wash-a: rgba(102,195,192,.10);
+  --wash-b: rgba(156,195,168,.07);
+  --warm-shadow: rgba(0,0,0,.5);
+  --glow-lamp: 0 0 34px -6px rgba(102,195,192,.16);
+  --tape: color-mix(in srgb,var(--ochre) 55%,var(--paper-raised));
 }

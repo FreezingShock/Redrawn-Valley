@@ -54,7 +54,7 @@
   var cur = null, ticking = false;
   function spy() {
     ticking = false; if (!jin) return;
-    var line = (jump.getBoundingClientRect().bottom) + 24, pick = null;
+    var line = (jump.getBoundingClientRect().bottom) + 40, pick = null;
     for (var i = 0; i < groups.length; i++) { if (groups[i].hidden) continue; var r = groups[i].getBoundingClientRect(); if (r.top <= line) pick = groups[i]; else break; }
     var L = pick ? pick.dataset.azGroup : null;
     if (L === cur) return; cur = L;
@@ -68,9 +68,25 @@
   top.addEventListener('click', function () { var t = doc.querySelector('.rv-az__tools'); (t || doc.body).scrollIntoView({ block: 'start' }); });
   doc.body.appendChild(top);
   window.addEventListener('scroll', onScroll, { passive: true });
+  /* Jumping to a letter: the page is long (tens of thousands of pixels on a phone), so a smooth scroll would sweep past every
+     letter on the way and finish a little off the mark. Far jumps are instant; near ones glide. Either way the heading is
+     measured again once the scroll stops and nudged flush under the sticky bar. */
+  var reduce = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  function landing(g) { return g.getBoundingClientRect().top + window.scrollY - (jump.getBoundingClientRect().bottom + 16); }
+  function settle(g, tries) {
+    var off = g.getBoundingClientRect().top - (jump.getBoundingClientRect().bottom + 16);
+    if (Math.abs(off) > 2 && tries > 0) { window.scrollBy({ top: off, behavior: 'instant' }); requestAnimationFrame(function () { settle(g, tries - 1); }); }
+    else spy();
+  }
   jump && jump.addEventListener('click', function (ev) {
     var a = ev.target.closest('a'); if (!a) return; var g = doc.querySelector(a.getAttribute('href')); if (!g) return;
-    ev.preventDefault(); g.scrollIntoView({ block: 'start' }); history.replaceState(null, '', a.getAttribute('href'));
+    ev.preventDefault();
+    var y = landing(g), far = Math.abs(y - window.scrollY) > window.innerHeight * 2;
+    window.scrollTo({ top: y, behavior: far || reduce.matches ? 'instant' : 'smooth' });
+    if (far || reduce.matches) requestAnimationFrame(function () { settle(g, 4); });
+    else if ('onscrollend' in window) window.addEventListener('scrollend', function () { settle(g, 4); }, { once: true });
+    else setTimeout(function () { settle(g, 4); }, 700);
+    history.replaceState(null, '', a.getAttribute('href'));
   });
 
   var p = new URLSearchParams(location.search);

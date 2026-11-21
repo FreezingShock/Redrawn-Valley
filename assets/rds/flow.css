@@ -16,16 +16,46 @@
 .fl-plate.is-out{opacity:0;transition:opacity var(--dur-base) var(--ease-std)}
 .fl-logo{background:var(--paper);border-radius:50%;padding:10px;width:112px;height:112px;overflow:visible}
 .fl-logo path{stroke-dasharray:1;stroke-dashoffset:1}
-.fl-logo.is-drawn path{animation:fl-draw .75s var(--ease-glide-2) forwards}
-.fl-logo.is-drawn path:nth-child(2){animation-delay:.14s}
-.fl-logo.is-drawn path:nth-child(3){animation-delay:.42s;animation-duration:var(--dur-medium)}
+.fl-logo.is-drawn path{animation:fl-draw var(--dur-slow) var(--ease-glide-2) forwards}
+.fl-logo.is-drawn path:nth-child(2){animation-delay:var(--dur-fast)}
+.fl-logo.is-drawn path:nth-child(3){animation-delay:var(--dur-medium);animation-duration:var(--dur-medium)}
 @keyframes fl-draw{to{stroke-dashoffset:0}}
 .fl-leave body{cursor:progress}
 
+/* ---------- link transition kinds (assets/rds/flow.js; lengths and angles are --flow-* tokens) ---------- */
+.fl-sheet,.fl-card,.fl-wash,.fl-frame,.fl-flat{position:absolute;inset:0;display:block;pointer-events:none}
+/* turn: a lined page with a margin rule; the leading edge carries a hairline and a soft shade */
+.fl-sheet{background-color:var(--paper);will-change:transform;
+  background-image:linear-gradient(to right,transparent var(--flow-margin),color-mix(in srgb,var(--brick) 32%,transparent) var(--flow-margin),color-mix(in srgb,var(--brick) 32%,transparent) calc(var(--flow-margin) + var(--rv-stroke)),transparent calc(var(--flow-margin) + var(--rv-stroke))),repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--space-8) - var(--rv-stroke)),var(--line) calc(var(--space-8) - var(--rv-stroke)),var(--line) var(--space-8))}
+.fl-sheet::before{content:"";position:absolute;top:0;bottom:0;width:var(--flow-edge);pointer-events:none}
+.fl-sheet--r{border-left:var(--rv-stroke) solid var(--line-strong)}
+.fl-sheet--r::before{right:100%;background:linear-gradient(to left,color-mix(in srgb,var(--ink) 18%,transparent),transparent)}
+.fl-sheet--l{border-right:var(--rv-stroke) solid var(--line-strong)}
+.fl-sheet--l::before{left:100%;background:linear-gradient(to right,color-mix(in srgb,var(--ink) 18%,transparent),transparent)}
+/* shuffle: index cards with a strip of tape; the top card is the flat cover */
+.fl-card{inset:calc(-1 * var(--flow-bleed));background:var(--paper);border:var(--rv-stroke) solid var(--line-strong);border-radius:var(--rv-r-lg);box-shadow:0 0 var(--space-6) color-mix(in srgb,var(--ink) 16%,transparent);will-change:transform}
+.fl-card::before{content:"";position:absolute;top:calc(var(--flow-bleed) + var(--space-4));left:50%;width:var(--space-24);height:var(--space-4);margin-left:calc(var(--space-12) * -1);background:color-mix(in srgb,var(--tape) 70%,transparent);transform:rotate(-3deg)}
+.fl-card--top{inset:0;border:0;border-radius:0;box-shadow:none}
+.fl-card--top::before{display:none}
+/* bloom: an ink wash; the rim is a tint of one art accent */
+.fl-wash{background:var(--paper)}
+.fl-wash--rim{background:color-mix(in srgb,var(--rim,var(--brick)) 42%,var(--paper))}
+/* sketch: paper that the cloned card grows into */
+.fl-frame{background:var(--paper);overflow:hidden}
+.fl-clone{background:var(--paper-raised);overflow:hidden;transform:none!important;transition:none!important;animation:none!important}
+/* fade */
+.fl-flat{background:var(--paper)}
+
+/* anchor jumps: the heading you land on gets an ink sweep */
+.fl-landed,.fl-landed:focus,.fl-landed:focus-visible{outline:0}
+.fl-landed{background:linear-gradient(var(--brick-tint),var(--brick-tint)) 0 88%/0 .5em no-repeat;animation:fl-land var(--dur-long) var(--ease-out) both;border-radius:var(--radius-sm)}
+@keyframes fl-land{0%{background-size:0 .5em}35%,80%{background-size:100% .5em}100%{background-size:100% .5em;background-color:transparent}}
+
 /* ---------- title write-on: letters ink in along the Wobble axes ---------- */
 .fl-on .fl-title .fl-w{display:inline-block;white-space:nowrap}
+.fl-on .fl-title>.fl-tx{min-width:0}
 .fl-on .fl-title .fl-c{display:inline-block;opacity:0}
-.fl-on .fl-title.fl-go .fl-c{opacity:1;animation:fl-ink .62s var(--ease-out,var(--ease-out)) backwards;animation-delay:calc(var(--c,0) * var(--fl-step,24ms))}
+.fl-on .fl-title.fl-go .fl-c{opacity:1;animation:fl-ink var(--dur-slow) var(--ease-out,var(--ease-out)) backwards;animation-delay:calc(var(--c,0) * var(--fl-step,24ms))}
 .fl-on .fl-title.fl-instant .fl-c{animation:none;opacity:1}
 @keyframes fl-ink{
   0%{opacity:0;transform:translateY(.42em) rotate(-9deg) scale(.6);font-variation-settings:"INFM" 100,"BNCE" 100;clip-path:inset(0 100% 0 0)}
@@ -43,15 +73,15 @@
 
 /* ---------- pencil dab ---------- */
 .fl-dab{position:fixed;z-index:var(--z-flow-under);width:60px;height:60px;margin:-30px 0 0 -30px;pointer-events:none}
-.fl-dab path{stroke-dasharray:1;stroke-dashoffset:1;animation:fl-draw .36s cubic-bezier(.3,.7,.3,1) forwards}
+.fl-dab path{stroke-dasharray:1;stroke-dashoffset:1;animation:fl-draw var(--dur-base) var(--ease-reveal) forwards}
 .fl-dab{animation:fl-dabfade var(--dur-slow) var(--ease-std) forwards}
 @keyframes fl-dabfade{0%,55%{opacity:1;transform:scale(.8)}100%{opacity:0;transform:scale(1.12)}}
 
 /* ---------- hand-drawn rules and crop marks that draw on ---------- */
-.fl-on hr.fl-sk,.fl-on .rds-rule.fl-sk{clip-path:inset(0 100% 0 0);transition:clip-path var(--dur-slower) cubic-bezier(.5,0,.2,1)}
+.fl-on hr.fl-sk,.fl-on .rds-rule.fl-sk{clip-path:inset(0 100% 0 0);transition:clip-path var(--dur-slower) var(--ease-glide-2)}
 .fl-on hr.fl-sk.fl-in,.fl-on .rds-rule.fl-sk.fl-in{clip-path:inset(0)}
-.fl-on :is(.rds-figure,.rds-decision,.rds-callout,.rds-facts,.rds-demo).fl-sk{--m:0px;background-image:linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick));background-repeat:no-repeat;background-size:0 2px,2px 0,0 2px,2px 0,0 2px,2px 0,0 2px,2px 0;background-position:0 0,0 0,100% 0,100% 0,0 100%,0 100%,100% 100%,100% 100%;transition:background-size var(--dur-slow) cubic-bezier(.4,0,.2,1)}
-.fl-on :is(.rds-figure,.rds-decision,.rds-callout,.rds-facts,.rds-demo).fl-sk.fl-in{background-size:22px 2px,2px 22px,22px 2px,2px 22px,22px 2px,2px 22px,22px 2px,2px 22px;animation:fl-crop 1.8s var(--ease-std) .9s forwards}
+.fl-on :is(.rds-figure,.rds-decision,.rds-callout,.rds-facts,.rds-demo).fl-sk{background-image:linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick)),linear-gradient(var(--brick),var(--brick));background-repeat:no-repeat;background-size:0 2px,2px 0,0 2px,2px 0,0 2px,2px 0,0 2px,2px 0;background-position:0 0,0 0,100% 0,100% 0,0 100%,0 100%,100% 100%,100% 100%;transition:background-size var(--dur-slow) var(--ease-settle)}
+.fl-on :is(.rds-figure,.rds-decision,.rds-callout,.rds-facts,.rds-demo).fl-sk.fl-in{background-size:22px 2px,2px 22px,22px 2px,2px 22px,22px 2px,2px 22px,22px 2px,2px 22px;animation:fl-crop var(--dur-draw) var(--ease-std) var(--dur-slower) forwards}
 @keyframes fl-crop{to{background-size:0 2px,2px 0,0 2px,2px 0,0 2px,2px 0,0 2px,2px 0}}
 
 /* ---------- micro-interactions ---------- */
@@ -59,12 +89,12 @@
 .fl-on :is(.rds-prose,.rds-article__body,.rv-body) p a:not(.rds-btn),.fl-on .rds-link{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='6' viewBox='0 0 24 6'%3E%3Cpath d='M0 3Q3 0 6 3T12 3 18 3 24 3' fill='none' stroke='%239c3d24' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:repeat-x;background-position:0 100%;background-size:0 6px;transition:background-size var(--dur-medium) var(--ease-out,var(--ease-std))}
 .fl-on :is(.rds-prose,.rds-article__body,.rv-body) p a:not(.rds-btn):hover,.fl-on :is(.rds-prose,.rds-article__body,.rv-body) p a:not(.rds-btn):focus-visible,.fl-on .rds-link:hover,.fl-on .rds-link:focus-visible{background-size:100% 6px}
 /* buttons, tags, chips squish and spring */
-.fl-on :is(.rds-btn,.rds-chip,.rv-seg button){transition:transform var(--dur-medium) var(--ease-spring),background-color var(--dur-fast) var(--ease-std),border-color .16s var(--ease-std)}
+.fl-on :is(.rds-btn,.rds-chip,.rv-seg button){transition:transform var(--dur-medium) var(--ease-spring),background-color var(--dur-fast) var(--ease-std),border-color var(--dur-fast) var(--ease-std)}
 .fl-on :is(.rds-btn,.rds-chip):hover{transform:translateY(-2px) rotate(-.6deg)}
-.fl-on :is(.rds-btn,.rds-chip):active{transform:translateY(1px) scale(.96) rotate(.4deg);transition-duration:.08s}
+.fl-on :is(.rds-btn,.rds-chip):active{transform:translateY(1px) scale(.96) rotate(.4deg);transition-duration:var(--dur-snap)}
 /* rows and cards: lift with a slight tilt, arrows slide */
 @media (hover:hover){
-  .fl-on .rds-card{transition:transform var(--dur-medium) cubic-bezier(.34,1.4,.5,1)}
+  .fl-on .rds-card{transition:transform var(--dur-medium) var(--ease-spring)}
   .fl-on .rds-card:hover{transform:translateY(-4px) rotate(-.5deg)}
   .fl-on .rds-row .rds-row__title{transition:transform var(--dur-medium) var(--ease-out,var(--ease-std))}
   .fl-on .rds-row:hover .rds-row__title{transform:translateX(8px)}
@@ -72,7 +102,7 @@
   .fl-on .rds-row:hover .rds-row__icon{transform:rotate(-12deg) scale(1.18)}
 }
 /* logo mark: a little hop */
-.fl-on .rds-nav__brand .rds-logo{transition:transform var(--dur-slow) cubic-bezier(.34,1.8,.5,1)}
+.fl-on .rds-nav__brand .rds-logo{transition:transform var(--dur-slow) var(--ease-spring)}
 .fl-on .rds-nav__brand:hover .rds-logo,.fl-on .rds-nav__brand:focus-visible .rds-logo{transform:rotate(-14deg) translateY(-2px) scale(1.12)}
 /* icons wiggle when their button is pressed */
 .fl-on :is(.rds-btn,.rds-nav__search):active .rds-icon{animation:fl-wiggle var(--dur-medium) var(--ease-std)}

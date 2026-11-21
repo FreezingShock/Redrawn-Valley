@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Drawings for studies/ventura-topanga-corner, generated from dimensions (feet) so they stay in proportion.
-Deterministic (seeded). Usage: python3 scripts/ventura_corner_art.py <out_dir>   -> fig1_plan.svg, fig3_section.svg
+Deterministic (seeded). Usage: python3 scripts/art_ventura_corner.py <out_dir>   -> fig1_plan.svg, fig3_section.svg
 All dimensions are ESTIMATES unless the study says otherwise: lot area 0.22 acre and building 5,437 sf come from a
 listing; the 100 x 96 ft lot, 78 x 70 ft building, 10 ft sidewalks and everything proposed are drawing assumptions."""
 import sys, pathlib, math
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from sketchlib import *
+from art_lib import *
 
 S = 5  # px per foot in the plan
 W, H = 1000, 760

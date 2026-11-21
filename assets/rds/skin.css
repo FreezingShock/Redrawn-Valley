@@ -33,6 +33,11 @@
 .rv-sheet__close{appearance:none;border:0;background:none;min-width:44px;height:48px;padding:0 var(--space-4);font:500 var(--fs-15)/1 var(--rds-sans);color:var(--ink);cursor:pointer}
 .rv-sheet__body{overflow-y:auto;overscroll-behavior:contain;padding:var(--space-4) var(--space-6) calc(var(--space-6) + var(--rv-safe))}
 .rv-sheet__close:focus-visible,.rv-sheet a:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+.rv-sheet__grab,.rv-sheet__head{touch-action:none}
+.rv-sheet:not(.is-drag){transition:transform var(--dur-quick) var(--ease-out)}
+.rv-sheet.is-drag{animation:none;transition:none}
+.rv-sheet.is-away{animation:none;transition:transform var(--dur-quick) var(--ease-glide)}
+body:has(.rv-cite-bar.is-in) .rv-jump{opacity:0;pointer-events:none}
 /* contents list inside the sheet */
 .rv-toclist{list-style:none;margin:calc(-1*var(--space-4)) calc(-1*var(--space-6)) 0;padding:0}
 .rv-toclist a{display:flex;align-items:baseline;gap:var(--space-3);min-height:52px;padding:var(--space-3) var(--space-6);border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font:500 var(--fs-17)/24px var(--rds-serif)}
@@ -172,6 +177,7 @@
 
   /* ---- breadcrumbs: one scrolling line instead of wrapping ---- */
   .rds-crumbs{padding-top:var(--space-4)}
+  .rds-crumbs:empty{box-sizing:border-box;min-height:calc(var(--space-4) + var(--tap-min))}
   .rds-crumbs ol{flex-wrap:wrap;row-gap:var(--space-1);white-space:normal;margin-inline:0;padding:0}
   .rds-crumbs li{min-width:0;overflow-wrap:anywhere}
   .rds-crumbs ol::-webkit-scrollbar{display:none}
@@ -180,6 +186,7 @@
   .rds-crumbs a{text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:3px}
   .rds-crumbs li:last-child{max-width:none}
   main[data-rds-article] .rds-crumbs{padding-bottom:var(--space-3)}
+  main[data-rds-article] .rds-crumbs:empty{box-sizing:border-box;min-height:calc(var(--space-4) + var(--tap-min) + var(--space-3))}
 
   /* ---- field guide ---- */
   .rds-article{padding-block:var(--space-4) var(--space-12)}
@@ -265,6 +272,7 @@
 
 @media (prefers-reduced-motion:reduce){
   .rv-sheet[open]{animation:none}
+  .rv-sheet:not(.is-drag),.rv-sheet.is-away{transition:none}
   .rv-jump,.rds-nav,.rv-more::after{transition:none}
 }
 @media print{.rv-tabbar,.rv-jump,.rv-sheet,.rv-more{display:none}}
@@ -296,18 +304,18 @@
 .rds-nav__links a,.rds-nav__search{font-family:var(--rv-hand);font-size:var(--fs-17)}
 .rds-nav__links a{background-image:var(--rv-rule-brick);background-size:0 8px;background-position:0 100%;background-repeat:no-repeat}
 .rds-nav__links a:hover,.rds-nav__links a[aria-current=page]{background-size:100% 8px}
-.rds-row__meta,.rds-btn,.rds-chip,.rv-seg button{font-family:var(--rv-hand)}
+.rds-row__meta,.rds-btn,.rds-chip,.rv-chip,.rv-seg button{font-family:var(--rv-hand)}
 .rds-btn{font-size:var(--fs-17);letter-spacing:.01em}
 .rds-row__meta{font-size:var(--fs-15)}
 
 /* ---------- wobbly borders ---------- */
 .rds-card,.rv-feature,.rds-figure__art,.rv-compare__stage,.rv-about__art,.rds-infobox,.rv-infobox,.rds-card__media{border-radius:var(--rv-r-lg)}
-.rds-callout,.rds-input,.rv-seg,.rds-contents,.rds-hero__art{border-radius:var(--rv-r-md)}
-.rds-tag--solid,.rds-notes li:target,.rv-sources li:target{border-radius:var(--rv-r-sm)}
+.rds-callout,.rds-input,.rv-seg,.rds-contents{border-radius:var(--rv-r-md)}
+.rds-notes li:target,.rv-sources li:target{border-radius:var(--rv-r-sm)}
 .rds-card,.rv-feature,.rv-compare__stage,.rds-infobox,.rv-infobox,.rds-figure__art,.rv-fig .rds-figure__art{border:var(--rv-stroke) solid var(--edge)}
 .rds-input,.rv-seg{border-width:var(--rv-stroke);border-color:var(--edge)}
 .rv-seg button+button{border-left:var(--rv-stroke) solid var(--edge)}
-.rds-chip{border-width:var(--rv-stroke);border-radius:255px 18px 225px 18px/18px 225px 18px 255px}
+.rds-chip,.rv-chip{border-width:var(--rv-stroke);border-radius:255px 18px 225px 18px/18px 225px 18px 255px}
 .rds-callout{border:var(--rv-stroke) solid var(--edge)}
 .rds-callout--plain{background:var(--paper-raised);border-style:dashed}
 .rds-callout--moss{border-color:var(--moss)}
@@ -386,7 +394,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-hero__flip{position:absolute;right:6px;bottom:-54px;display:flex;align-items:flex-end;gap:6px;color:var(--brick);font:400 var(--fs-19)/20px var(--rv-hand);transform:rotate(-3deg);pointer-events:none}
 .rv-hero__flip svg{width:44px;height:40px;flex:none}
 .rv-sun{position:absolute;z-index:var(--z-raised-3);top:-34px;right:-14px;width:84px;height:84px;pointer-events:none;transform-origin:50% 50%}
-.rv-sun{animation:rv-sun-spin 40s var(--ease-linear) infinite}
+.rv-sun{animation:rv-sun-spin var(--dur-spin) var(--ease-linear) infinite}
 @keyframes rv-sun-spin{to{transform:rotate(360deg)}}
 @media (max-width:640px){.rv-hero__flip{display:none}.rv-sun{width:60px;height:60px;top:-26px;right:-4px}}
 
@@ -415,7 +423,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 @media print{.rds-page::before{display:none}.rds-band-sunk::before,.rds-band-sunk::after,.rds-footer::before{display:none}.rv-compare::before,.rv-compare::after,.rds-infobox::before,.rv-infobox::before,.rv-sun{display:none}}
 
 /* ---------- Topanga study: structural rules (its colours, rules and frames are baked into studies/topanga-willows/study.css) ---------- */
-.rv-study [data-scrolly]>figure>div{border:var(--rv-stroke) solid var(--edge);box-shadow:var(--rv-pencil)}
+.rv-study [data-scrolly]>figure>div:not(.rv-stages){border:var(--rv-stroke) solid var(--edge);box-shadow:var(--rv-pencil)}
 .rv-study [data-scrolly]>figure{position:sticky}
 .rv-study .kstep>div:first-child{font-family:var(--rv-hand);font-size:var(--fs-17)}
 .rv-study .ts-taped{border:var(--rv-stroke) solid var(--edge);position:relative}
@@ -423,7 +431,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-study .ktab{font-family:var(--rv-hand);font-size:var(--fs-17)}
 .rv-study .kt{font-family:var(--rv-hand)}
 
-/* ---------- flat-tile collage banner (scripts/tiles_art.py) ---------- */
+/* ---------- flat-tile collage banner (scripts/art_tiles.py) ---------- */
 .rv-tiles{margin:var(--space-8) 0 var(--space-12);border:var(--rv-stroke) solid var(--edge);border-radius:var(--rv-r-lg);overflow:hidden;box-shadow:var(--rv-pencil);aspect-ratio:1120/220;background:var(--paper-sunk)}
 .rv-tiles svg{display:block;width:100%;height:100%}
 @media (max-width:640px){.rv-tiles{aspect-ratio:16/10}}
@@ -447,6 +455,12 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-way .rds-card__foot{justify-content:flex-start}
 .rv-way:hover .rds-card__foot{color:var(--brick)}
 
+/* ---------- filter chips: one component (rds-chip, or its older name rv-chip) used by every filter bar ---------- */
+.rds-chip,.rv-chip{display:inline-flex;align-items:center;gap:var(--space-2);height:36px;padding:0 14px;border:1px solid var(--line-strong);border-radius:var(--radius-pill);background:var(--paper);color:var(--ink);font:500 var(--fs-14)/1 var(--rds-sans);letter-spacing:0;text-transform:none;cursor:pointer;transition:background var(--dur-fast) var(--ease-std),color var(--dur-fast) var(--ease-std),border-color var(--dur-fast) var(--ease-std)}
+.rds-chip:hover,.rv-chip:hover{border-color:var(--ink);background:var(--paper-sunk)}
+.rds-chip[aria-pressed="true"],.rv-chip[aria-pressed="true"]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.rds-chip:focus-visible,.rv-chip:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
 /* ########## PART 3: navigation (header flyouts, phone tab bar, More sheet) ########## */
 .rv-nav__item{position:relative;display:flex;align-items:center}
 .rv-nav__caret{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:24px;height:28px;margin:0 -6px 0 2px;padding:0;border:0;border-radius:var(--radius-sm);background:none;color:var(--ink-muted);cursor:pointer}
@@ -469,7 +483,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-nav__all:hover{color:var(--brick)}.rv-nav__all:hover .rds-icon{transform:translateX(3px)}
 .rv-nav__all:focus-visible,.rv-nav__list a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .rv-nav__item--menu>a{padding-right:0}
-@media (max-width:640px){.rv-nav__caret,.rv-nav__panel{display:none}}
+@media (max-width:640px){.rv-nav__caret,.rv-nav__panel,.rv-nav__trigger{display:none}}
 
 /* phone tab bar: More button and sheet */
 .rv-menusheet .rv-sheet__body{padding-top:0}
@@ -480,45 +494,83 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-moreList span{flex:1;min-width:0;font:400 var(--fs-15)/20px var(--rv-hand);color:var(--ink-muted)}
 .rv-moreList b{display:block;font:500 var(--fs-19)/24px var(--rds-serif);color:var(--ink)}
 .rv-moreList .rv-moreList__go{--icon-accent:var(--ink-faint);width:18px;height:18px;margin-left:auto}
-@media (prefers-reduced-motion:reduce){.rv-nav__panel,.rv-nav__caret .rds-icon,.rv-nav__all .rds-icon{transition:none}}
+
+/* Menus (site-shell.js, one definition for header, More sheet and footer). Explore is a button-triggered flyout; its rows carry an icon and a hand-lettered note. */
+.rds-nav__links .rv-nav__trigger{display:inline-flex;align-items:center;gap:2px;width:auto;height:auto;margin:0;padding:var(--space-2) 0;border:0;border-radius:0;background:var(--rv-rule-brick) 0 100%/0 8px no-repeat;color:var(--ink);font:500 var(--fs-17)/1 var(--rv-hand);cursor:pointer}
+.rds-nav__links .rv-nav__trigger:hover,.rds-nav__links .rv-nav__trigger[data-current],.rds-nav__links .is-open>.rv-nav__trigger{background-size:100% 8px}
+.rds-nav__links .rv-nav__trigger .rds-icon{width:16px;height:16px;transition:transform var(--dur-base) var(--ease-out);color:var(--ink-muted)}
+.rds-nav__links .is-open>.rv-nav__trigger .rds-icon{transform:rotate(180deg);--icon-accent:var(--brick)}
+.rv-nav__list--rich a{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-2);margin:0 calc(-1*var(--space-2))}
+.rv-nav__list--rich .rds-icon{flex:none;width:24px;height:24px;--icon-accent:var(--brick);--icon-tint:var(--brick-tint)}
+.rv-nav__list--rich span{flex:1;min-width:0;font:400 var(--fs-14)/18px var(--rv-hand);color:var(--ink-muted)}
+.rv-nav__list--rich b{display:block;font:500 var(--fs-16)/20px var(--rds-sans);color:var(--ink)}
+.rv-nav__list--rich a:hover b,.rv-nav__list--rich a:focus-visible b{color:var(--brick)}
+.rv-nav__item--menu:has(.rv-nav__list--rich) .rv-nav__panel{width:22rem}
+.rv-nav__item--menu:has(.rv-nav__list--rich) .rv-nav__panel{left:auto;right:-18px}
+/* More sheet groups */
+.rv-moreGroup+.rv-moreGroup{margin-top:var(--space-4)}
+.rv-moreGroup__h{margin:var(--space-4) 0 var(--space-1);font:600 var(--fs-12)/16px var(--rds-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.rv-moreList a[aria-current=page] b{color:var(--brick)}
+/* footer: search link under the author line */
+.rds-footer__find{margin:var(--space-4) 0 0}
+.rds-footer a[data-rv-search-open]{display:inline-flex;align-items:center;gap:var(--space-2)}
+@media (prefers-reduced-motion:reduce){.rv-nav__panel,.rv-nav__caret .rds-icon,.rv-nav__all .rds-icon,.rv-nav__trigger .rds-icon{transition:none}}
 @media print{.rv-nav__panel,.rv-menusheet{display:none}}
 
-/* ---------- type: Wobble (Shantell Sans variable) ----------
-   One family for every role, as picked from the type lab (/fonts/). Roles are told apart by weight and the INFM axis
-   (how informal the letters are): low for reading, high for titles and UI lettering. Evidence (citations, figure labels,
-   numbers, breadcrumbs) stays IBM Plex Mono. The family has no italic file, so italics become medium-weight roman. */
-.rds-page{font-variation-settings:"INFM" 15,"BNCE" 0}
-.rds-display-xl,.rds-display,.rds-h1,.rds-h2,.rds-h3,.rds-article__title,.rds-article__body h2,.rds-article__body h3,.rds-prose h2,.rv-body section>h2,.rv-nfeature__title,.rv-method h3,.rv-sec__head h2,.rv-part__name,.rds-card__title,.rds-row__title,.rds-nav__brand,.rds-footer__brand,.rds-seealso h2,.rds-notes-head,.rv-study-bar__brand,.rds-acc summary,.rds-infobox__title,.rv-infobox__title,.rv-table__title,.rv-facts b,.rv-step__n,.rv-nav__intro b,.rv-moreList b,.rds-search__title{font-variation-settings:"INFM" 100,"BNCE" 0;font-style:normal;letter-spacing:-.005em}
-.rds-display-xl{font-weight:700;font-size:clamp(38px,6.2vw,66px);line-height:1.08}
-.rds-display{font-weight:700;font-size:clamp(32px,4.8vw,50px);line-height:1.1}
-.rds-article__title{font-weight:700;font-size:clamp(34px,5.4vw,54px);line-height:1.08}
-.rv-sec__head h2{font-weight:700;font-size:clamp(28px,3.8vw,42px);line-height:1.12}
-.rv-nfeature__title{font-weight:700;font-size:clamp(26px,3.8vw,38px);line-height:1.12}
-.rds-h1{font-weight:700;font-size:34px}
-.rds-h2,.rds-prose h2,.rds-article__body h2,.rv-body section>h2,.rds-seealso h2,.rds-notes-head{font-weight:600;font-size:clamp(24px,2.6vw,27px);line-height:1.2}
-.rds-h3,.rds-article__body h3,.rds-card__title,.rds-row__title,.rv-method h3,.rds-acc summary,.rv-table__title,.rv-infobox__title{font-weight:600;font-size:var(--fs-19);line-height:1.3}
-.rv-part__name,.rv-facts b{font-weight:700;font-size:var(--fs-26)}
-.rv-step__n{font-weight:700}
+/* ---------- type: three voices ----------
+   Decided in the type lab (/fonts/#decision). Shantell Sans is only the display voice (H1, H2, wordmark, pull quotes, big
+   numerals). Figtree carries reading text, lead, H3, nav, buttons and every other UI string, including eyebrows,
+   tags, labels, infobox keys and captions (sentence case, no tracking). DM Mono (--font-num) is only for numerals, citation
+   markers and code. Caveat is a quiet second hand used only for scribbled annotations. */
+.rds-display-xl,.rds-display,.rds-h1,.rds-h2,.rds-article__title,.rds-article__body h2,.rds-prose h2,.rv-body section>h2,.rv-nfeature__title,.rv-sec__head h2,.rv-part__name,.rv-facts b,.rv-step__n,.rds-nav__brand,.rds-footer__brand,.rv-study-bar__brand,.rv-rail__h,.rds-seealso h2,.rds-notes-head,.rv-study .ts-4,.rv-study .ts-11,.rv-study .ts-42,.rv-study .ts-47,.rv-study .ts-56,.rv-study .ts-69,.rv-study .ts-72,.rv-study .ts-75,.rv-study .ts-79,.rv-study .ts-103,.rv-study .ts-122{font-family:var(--font-display);font-variation-settings:"INFM" 100,"BNCE" 0;font-style:normal;font-weight:700;letter-spacing:-.005em}
+.rds-h3,.rds-article__body h3,.rds-card__title,.rds-row__title,.rv-method h3,.rds-acc summary,.rv-table__title,.rv-infobox__title,.rds-infobox__title,.rv-rail__title,.rv-nav__intro b,.rv-moreList b,.rds-search__title,.rv-moreList b,.rv-study .ts-32,.rv-study .ts-94,.rv-study .ts-110,.rv-study .ts-126{font-family:var(--font-sans);font-style:normal;font-weight:700;letter-spacing:0}
+.rds-display-xl{font-size:clamp(38px,6.2vw,66px);line-height:1.08}
+.rds-display{font-size:clamp(32px,4.8vw,50px);line-height:1.1}
+.rds-article__title{font-size:clamp(34px,5.4vw,54px);line-height:1.08}
+.rv-sec__head h2{font-size:clamp(28px,3.8vw,42px);line-height:1.12}
+.rv-nfeature__title{font-size:clamp(26px,3.8vw,38px);line-height:1.12}
+.rds-h1{font-size:34px}
+.rds-h2,.rds-prose h2,.rds-article__body h2,.rv-body section>h2,.rds-seealso h2,.rds-notes-head{font-weight:600;font-size:clamp(25px,2.8vw,29px);line-height:1.2}
+.rds-h3,.rds-article__body h3,.rds-card__title,.rds-row__title,.rv-method h3,.rds-acc summary,.rv-table__title,.rv-infobox__title,.rv-rail__title{font-size:var(--fs-19);line-height:1.3}
+.rv-part__name,.rv-facts b{font-size:var(--fs-26)}
 .rds-nav__brand,.rds-footer__brand,.rv-study-bar__brand{font-weight:700}
-/* reading text: Shantell sets wider and taller than the serif it replaces, so the size drops a notch */
-.rds-prose,.rds-article__body,.rv-body{font-size:17.5px;line-height:30px;letter-spacing:.003em}
-.rds-lead{font-size:var(--fs-19);line-height:29px}
-.rds-quote p,.rds-prose blockquote,.rds-article__body blockquote,.rv-pull p,.rds-hatnote{font-style:normal;font-weight:500;font-variation-settings:"INFM" 70,"BNCE" 0}
+.rds-footer__brand{font-size:25px;line-height:1.1}
+/* reading text */
+.rds-prose,.rds-article__body,.rv-body{font-size:var(--fs-18);line-height:30px}
+.rds-lead{font-size:19.5px;line-height:30px}
+.rds-quote p,.rds-prose blockquote,.rv-pull p{font-family:var(--font-display);font-style:normal;font-weight:500;font-variation-settings:"INFM" 70,"BNCE" 0}
 .rds-quote p,.rds-prose blockquote{font-size:var(--fs-26)}
 .rv-pull p{font-size:clamp(22px,3vw,28px)}
+.rds-article__body blockquote,.rds-hatnote{font-family:var(--font-sans);font-style:normal;font-weight:500}
 .rds-article__body blockquote{font-size:var(--fs-18)}
-/* hand lettering for UI: the most informal setting */
-.rds-eyebrow,.rds-tag,.rds-nav__links a,.rds-nav__search,.rds-row__meta,.rds-btn,.rds-chip,.rv-seg button,.rds-note,.rv-tabbar a,.rv-tabbar button{font-variation-settings:"INFM" 100,"BNCE" 0}
-.rds-eyebrow{font-size:var(--fs-15)}
-.rds-nav__links a,.rds-nav__search{font-size:var(--fs-15)}
-.rds-btn{font-size:var(--fs-15);font-weight:600}
+.rds-search__input{font-size:var(--fs-18)}
+/* UI: Figtree */
+.rds-nav__links a,.rds-nav__search,.rds-btn,.rds-chip,.rv-seg button,.rv-tabbar a,.rv-tabbar button{font-variation-settings:normal}
+.rds-nav__links a,.rds-nav__search{font-size:15.5px;font-weight:500}
+.rds-btn{font-size:var(--fs-15);font-weight:600;letter-spacing:.005em}
+/* labels: sentence case in the sans, no tracking. Medium-weight text, not tiny tracked capitals */
+.rds-eyebrow,.rds-tag,.rds-row__meta,.rv-tip__kind,.rds-infobox dt,.rv-infobox dt,.rds-footer h4,.rds-contents summary,.rds-notes .rds-kind,.rv-note-read .rds-kind,.rds-categories b,.rds-pager small,.rv-log__page span,.rv-sources h2,.rv-chip,.rv-rail__type,.rv-sheet__title,.rv-table th,.vt-ledger th,.rv-tmatrix thead th,.rv-tstat span,.rv-thead__q span,.rds-decision__cost b,.rvs-label,.rvs-pv__k,.fl-plate__b,.rv-study .ts-9,.rv-study .ts-46,.rv-study .ts-112,.rv-study .ts-121{font-family:var(--font-sans);font-variation-settings:normal;text-transform:none;letter-spacing:.005em;font-weight:600}
+.rds-eyebrow{font-size:14.5px;line-height:20px;color:var(--ink-muted)}
+.rds-tag,.rv-chip,.rv-tip__kind,.rds-categories b,.rv-rail__type,.rv-study .ts-9,.rv-study .ts-46,.rv-study .ts-112,.rv-study .ts-121{font-size:13.5px;line-height:20px}
+.rds-row__meta{font-size:13.5px;font-weight:500;font-variant-numeric:tabular-nums}
+.rds-infobox dt,.rv-infobox dt,.rds-footer h4,.rds-contents summary,.rv-sources h2,.rv-table th,.vt-ledger th,.rv-tmatrix thead th,.rv-tstat span,.rv-thead__q span,.rds-pager small,.rds-notes .rds-kind,.rv-note-read .rds-kind,.rv-sheet__title,.rvs-label,.rvs-pv__k,.rv-log__page span,.rds-decision__cost b{font-size:13.5px;line-height:1.4}
+/* captions, crumbs, meta lines: sans, readable size */
+.rds-figure figcaption,.rv-gal-sizes figcaption,.rds-crumbs ol,.rds-article__meta,.rv-byline,.rv-nmeta,.rv-log__meta,.rv-log__count,.rds-guide-count,.rv-lightbox__cap,.rds-infobox__cap,.rv-infobox__kicker,.rv-infobox__foot,.rv-sources__foot,.rds-row__sub,.rv-compare__bar span,.rv-fig figcaption,.fig-cap,.rv-tfoot{font-family:var(--font-sans);font-size:var(--fs-14);line-height:21px;letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums}
+/* mono earns its place: numerals, citation markers, code, keys that are numbers. DM Mono, tabular, plain case. */
+code,kbd,.rds-mono,.rds-fn,.rv-fn,.rv-cite,.rv-sources li::before,.rv-sources li>b,.rds-notes li::before,.rds-contents li::before,.rds-article__body h2::before,.rv-body section>h2 .rv-num,.rv-table .rv-table__no,.rv-table .rv-table__num,.vt-ledger td:nth-child(n+2),.vt-bars__mi,.rds-toc .rds-toc__count,.rv-toclist a b,.rv-jump__n,.rv-part__n,.rv-az__at a{font-family:var(--font-num);font-variant-numeric:tabular-nums;font-feature-settings:"zero" 0;letter-spacing:0;text-transform:none}
+code,kbd{font-size:.88em}
+.rds-fn,.rv-fn,.rv-cite{font-size:.78em;font-weight:500}
+/* annotations: the quiet second hand */
+.rds-note,.rv-hero__flip,.rv-svg .t-hand,.rv-svg .t-hand-moss,.rv-fplan .dt{font-family:var(--font-hand);font-variation-settings:normal;font-weight:700}
+.rds-note{font-size:21px;line-height:22px}
+.rv-hero__flip{font-size:var(--fs-22)}
+.rv-svg .t-hand,.rv-svg .t-hand-moss{font-size:var(--fs-19)}
+.rv-fplan .dt{font-size:var(--fs-20)}
 /* the wordmark wobbles on hover and focus: the bounce axis steps like a redrawn frame */
 @keyframes rv-wobble{0%{font-variation-settings:"INFM" 100,"BNCE" -70}25%{font-variation-settings:"INFM" 100,"BNCE" 45}50%{font-variation-settings:"INFM" 100,"BNCE" -25}75%{font-variation-settings:"INFM" 100,"BNCE" 80}}
 .rds-nav__brand:hover,.rds-nav__brand:focus-visible,.rds-footer__brand:hover{animation:rv-wobble var(--dur-medium) steps(1) infinite}
 @media (prefers-reduced-motion:reduce){.rds-nav__brand:hover,.rds-nav__brand:focus-visible,.rds-footer__brand:hover{animation:none}}
-
-/* Topanga study headings (generated class names ts-N): same Wobble roles */
-.rv-study .ts-4,.rv-study .ts-11,.rv-study .ts-32,.rv-study .ts-42,.rv-study .ts-47,.rv-study .ts-56,.rv-study .ts-69,.rv-study .ts-72,.rv-study .ts-75,.rv-study .ts-79,.rv-study .ts-94,.rv-study .ts-103,.rv-study .ts-110,.rv-study .ts-122,.rv-study .ts-126{font-variation-settings:"INFM" 100,"BNCE" 0;font-style:normal;font-weight:700;letter-spacing:-.005em}
+/* Topanga study sizes (generated class names ts-N) */
 .rv-study .ts-11,.rv-study .ts-47,.rv-study .ts-69,.rv-study .ts-79,.rv-study .ts-122{font-size:clamp(28px,4.2vw,50px)}
 .rv-study .ts-72,.rv-study .ts-75,.rv-study .ts-103{font-size:clamp(34px,4vw,52px)}
 .rv-study .ts-42,.rv-study .ts-56{font-size:var(--fs-26);font-weight:600}
@@ -526,6 +578,31 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-study .ts-82{font-size:var(--fs-18)}
 .rv-study .ts-111{font-style:normal;font-weight:500}
 
+/* ---- Footer, fuller version (site-shell.js): about line, three link columns, last-updated stamp, back to top ---- */
+.rds-footer__tag{margin:0;color:var(--on-band-muted)}
+.rds-footer__author{margin:var(--space-3) 0 0;color:var(--on-band-muted);max-width:30ch}
+.rds-footer__author b{color:var(--on-band);font-weight:600}
+.rds-footer__col h4{margin-bottom:var(--space-3)}
+.rds-footer__col a{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;overflow-wrap:anywhere}
+.rds-footer__base{display:grid;gap:var(--space-3)}
+.rds-footer__fine,.rds-footer__meta{margin:0}
+.rds-footer__meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2) var(--space-6);font:400 var(--fs-13)/20px var(--rds-mono)}
+.rds-footer__stamp{color:var(--on-band-muted)}
+.rds-footer a.rds-footer__top{display:inline-flex;align-items:center;gap:var(--space-2);font:400 var(--fs-13)/20px var(--rds-mono);color:var(--on-band);background-image:none;min-height:0}
+.rds-footer a.rds-footer__contact{font:400 var(--fs-13)/20px var(--rds-mono);text-decoration:underline;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 40%,transparent);background-image:none}
+.rds-footer a.rds-footer__contact:hover{text-decoration-color:currentColor}
+.rds-footer__top .rds-icon{transition:transform var(--dur-base) var(--ease-out)}
+.rds-footer__top:hover .rds-icon{transform:translateY(-3px)}
+@media (min-width:1000px){.rds-footer__grid{grid-template-columns:1.5fr repeat(3,1fr);gap:var(--space-8) var(--space-6)}}
+@media (min-width:641px) and (max-width:999px){.rds-footer__grid{grid-template-columns:repeat(3,1fr)}.rds-footer__grid>div:first-child{grid-column:1/-1}}
+@media (max-width:640px){
+  .rds-footer a.rds-footer__top,.rds-footer a.rds-footer__contact{display:inline-flex;align-items:center;min-height:44px;font-size:var(--fs-14)}
+  .rds-footer__meta{gap:0 var(--space-6)}
+  .rds-footer__col li{padding-block:11px}
+  .rds-footer__col a{display:-webkit-box;min-height:0}
+  .rds-footer__base{padding-bottom:var(--space-12)}
+}
+@media print{.rds-footer__top{display:none}}
 /* ########## PART 4: nav wash, hero hierarchy ########## */
 /* Nav: a hand-washed paper band instead of a bare bar. Two soft tints (brick left, moss right) over paper, a deckled lower edge drawn in a hairline, and a soft shadow once the page moves. Replaces the flat bar and the 1px rule. */
 .rds-nav,.rds-nav.is-scrolled{background:transparent;border-bottom-color:transparent}
@@ -569,20 +646,20 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-compare__bar span{font:400 var(--fs-17)/22px var(--rv-hand);color:var(--ink-muted)}
 .rv-compare__bar span b{font:inherit;font-weight:400;color:var(--brick);text-decoration:none;background:none;border:0}
 /* drawn labels inside inline SVG still name the retired hand font; use the site's */
-svg text[style*="Architects Daughter"]{font-family:var(--rv-hand)!important}
+svg text[style*="Architects Daughter"]{font-family:var(--font-sans)!important}
 
 /* ---------- hero buttons: drawn in on load ---------- */
 /* Primary: the outline is pencilled in, the brick fills, then the arrow draws and flies off and a new one settles in. Secondary: ink text with a drawn rule. Brick appears once, on the primary. */
 .rv-ctas{align-items:center;column-gap:var(--space-8);row-gap:var(--space-3)}
 .rv-cta{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:var(--space-3);height:52px;padding:0 var(--space-6) 0 var(--space-6);color:var(--on-ink);font:700 var(--fs-18)/1 var(--rv-hand);letter-spacing:.01em;text-decoration:none;-webkit-tap-highlight-color:transparent}
 .rv-cta__frame{position:absolute;inset:0;z-index:var(--z-under);width:100%;height:100%;overflow:visible}
-.rv-cta__shadow{fill:var(--ink);opacity:0;animation:rv-cta-in var(--dur-base) var(--ease-std) 1.15s forwards}
-.rv-cta__fill{fill:var(--brick);opacity:0;animation:rv-cta-in var(--dur-base) var(--ease-std) .95s forwards;transition:fill var(--dur-fast) var(--ease-std)}
-.rv-cta__line{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .85s cubic-bezier(.5,.1,.3,1) .15s forwards}
-.rv-cta__label{color:var(--ink);animation:rv-cta-ink var(--dur-base) var(--ease-std) 1s forwards}
+.rv-cta__shadow{fill:var(--ink);opacity:0;animation:rv-cta-in var(--dur-base) var(--ease-std) var(--dur-long) forwards}
+.rv-cta__fill{fill:var(--brick);opacity:0;animation:rv-cta-in var(--dur-base) var(--ease-std) var(--dur-slower) forwards;transition:fill var(--dur-fast) var(--ease-std)}
+.rv-cta__line{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-slower) var(--ease-settle) var(--dur-fast) forwards}
+.rv-cta__label{color:var(--ink);animation:rv-cta-ink var(--dur-base) var(--ease-std) var(--dur-slower) forwards}
 .rv-cta__arrow{flex:none;width:24px;height:16px;color:var(--on-ink)}
-.rv-cta__arrow path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-base) var(--ease-soft-out) 1.25s forwards}
-.rv-cta__arrow{animation:rv-fly var(--dur-slower) var(--ease-glide) 2.05s both}
+.rv-cta__arrow path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-base) var(--ease-soft-out) var(--dur-long) forwards}
+.rv-cta__arrow{animation:rv-fly var(--dur-slower) var(--ease-glide) calc(var(--dur-draw) + var(--dur-medium)) both}
 .rv-cta:hover .rv-cta__fill{fill:var(--brick-deep)}
 .rv-cta:hover .rv-cta__arrow,.rv-cta:focus-visible .rv-cta__arrow{animation:rv-fly var(--dur-slower) var(--ease-glide) both}
 .rv-cta:active{transform:translate(2px,3px)}
@@ -596,11 +673,11 @@ svg text[style*="Architects Daughter"]{font-family:var(--rv-hand)!important}
   45%{transform:translate(52px,-14px) rotate(-14deg);opacity:0}
   46%{transform:translate(-30px,0);opacity:0}
   100%{transform:none;opacity:1}}
-.rv-textlink{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);height:52px;padding:0 2px;color:var(--ink);font:400 var(--fs-18)/24px var(--rv-hand);text-decoration:none;opacity:0;animation:rv-cta-in var(--dur-medium) var(--ease-std) 1.3s forwards}
+.rv-textlink{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);height:52px;padding:0 2px;color:var(--ink);font:400 var(--fs-18)/24px var(--rv-hand);text-decoration:none;opacity:0;animation:rv-cta-in var(--dur-medium) var(--ease-std) var(--dur-long) forwards}
 .rv-textlink__down{flex:none;width:12px;height:16px;color:var(--ink-muted)}
-.rv-textlink__down path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-base) var(--ease-soft-out) 1.7s forwards}
+.rv-textlink__down path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-base) var(--ease-soft-out) var(--dur-draw) forwards}
 .rv-textlink__rule{position:absolute;left:0;right:0;bottom:11px;width:100%;height:8px;overflow:visible}
-.rv-textlink__rule path{fill:none;stroke:var(--ink-muted);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-slow) var(--ease-soft-out) 1.5s forwards;transition:stroke var(--dur-fast) var(--ease-std)}
+.rv-textlink__rule path{fill:none;stroke:var(--ink-muted);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-slow) var(--ease-soft-out) var(--dur-draw) forwards;transition:stroke var(--dur-fast) var(--ease-std)}
 .rv-textlink:hover .rv-textlink__rule path,.rv-textlink:focus-visible .rv-textlink__rule path{stroke:var(--ink);stroke-width:2}
 .rv-textlink:hover .rv-textlink__down{transform:translateY(3px)}
 .rv-textlink__down{transition:transform var(--dur-base) var(--ease-out)}
@@ -655,3 +732,50 @@ main:focus{outline:none}
 @media (prefers-contrast:more){
   :root{--line:var(--line-strong);--ink-faint:var(--ink-muted)}
 }
+
+/* ---------- controls kit: selects, text fields, checks, ranges, disclosures, search results (formerly browser defaults) ---------- */
+:root{
+  --rv-chev:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2214%22 viewBox=%220 0 20 14%22%3E%3Cpath d=%22M3 4.2C6 6.4 8 8.6 10 10.2 12.2 8.4 14.4 6.2 17 4%22 fill=%22none%22 stroke=%22%231f1d1a%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E");
+  --rv-check:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22%3E%3Cpath d=%22M4 10.5C6 12 7 13.5 8.2 15.6 10.5 11 13 7 16.4 4.4%22 fill=%22none%22 stroke=%22%23f6f1e7%22 stroke-width=%222.6%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E");
+}
+.rds-select,.rds-input[type=text],:is(.rv-lab,.rds-lab-lab) select,:is(.rv-lab,.rds-lab-lab) input[type=text],:is(.rv-lab,.rds-lab-lab) input[type=number]{appearance:none;-webkit-appearance:none;height:44px;min-width:0;padding:0 14px;border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-md);background-color:var(--paper-raised);color:var(--ink);font:400 var(--fs-16)/1 var(--rds-sans);transition:box-shadow var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out)}
+.rds-select,:is(.rv-lab,.rds-lab-lab) select{padding-right:42px;cursor:pointer;background-image:var(--rv-chev);background-repeat:no-repeat;background-position:right 14px center;background-size:18px 12px}
+.rds-select:hover,:is(.rv-lab,.rds-lab-lab) select:hover,:is(.rv-lab,.rds-lab-lab) input[type=text]:hover{box-shadow:var(--rv-pencil);transform:translate(-1px,-1px)}
+.rds-select:focus-visible,:is(.rv-lab,.rds-lab-lab) select:focus-visible,:is(.rv-lab,.rds-lab-lab) input:focus-visible{outline:2px dashed var(--brick);outline-offset:3px;box-shadow:var(--rv-pencil)}
+.rds-select option,:is(.rv-lab,.rds-lab-lab) select option{font:400 var(--fs-16)/1.4 var(--rds-sans);background:var(--paper-raised);color:var(--ink)}
+/* pattern lab: a drafting-table row of labelled controls */
+.rv-lab{display:flex;flex-direction:column;gap:var(--space-3);margin:var(--space-6) 0}
+.rv-lab__row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--space-4)}
+.rv-lab label{display:flex;flex-direction:column;gap:6px;font:400 var(--fs-17)/20px var(--rv-hand);color:var(--ink-muted)}
+.rv-lab__row>.rds-btn{align-self:flex-end}
+.rv-lab .rds-btn[aria-pressed=true]{background:var(--brick);color:var(--on-brick);border-color:var(--ink)}
+.rv-lab [data-status]{font-family:var(--rds-mono);font-size:var(--fs-13)}
+@media (max-width:640px){.rv-lab__row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.rv-lab__row label:first-child{grid-column:1/-1}:is(.rv-lab,.rds-lab-lab) select,:is(.rv-lab,.rds-lab-lab) input[type=text]{height:48px;width:100%}.rv-lab__row>.rds-btn{width:100%;justify-content:center;text-align:center}}
+/* checks, radios and ranges for future forms */
+.rds-check{display:inline-flex;align-items:center;gap:var(--space-3);font:400 var(--fs-16)/24px var(--rds-sans);cursor:pointer}
+.rds-check input{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;margin:0;border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-sm);background:var(--paper-raised) center/16px no-repeat;cursor:pointer;transition:background-color var(--dur-fast) var(--ease-std)}
+.rds-check input[type=radio]{border-radius:50%}
+.rds-check input:checked{background-color:var(--brick);background-image:var(--rv-check)}
+.rds-check input[type=radio]:checked{background-image:radial-gradient(circle,var(--paper-raised) 0 3.5px,transparent 4px)}
+.rds-check input:focus-visible{outline:2px dashed var(--brick);outline-offset:3px}
+input[type=range].rds-range{appearance:none;-webkit-appearance:none;width:100%;height:24px;background:none;cursor:pointer}
+.rds-range::-webkit-slider-runnable-track{height:10px;background:var(--rv-rule-ink) center/240px 10px repeat-x}
+.rds-range::-moz-range-track{height:10px;background:var(--rv-rule-ink) center/240px 10px repeat-x}
+.rds-range::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-6px;border:var(--rv-stroke) solid var(--ink);border-radius:50%;background:var(--brick);box-shadow:var(--rv-pencil)}
+.rds-range::-moz-range-thumb{width:20px;height:20px;border:var(--rv-stroke) solid var(--ink);border-radius:50%;background:var(--brick);box-shadow:var(--rv-pencil)}
+.rds-range:focus-visible{outline:2px dashed var(--brick);outline-offset:4px}
+/* field-guide filter box matches the other fields */
+.rds-guide-search input{border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-md);font-family:var(--rds-sans);appearance:none;-webkit-appearance:none;transition:box-shadow var(--dur-fast) var(--ease-out)}
+.rds-guide-search input:focus,.rds-guide-search input:focus-visible{outline:2px dashed var(--brick);outline-offset:3px;box-shadow:var(--rv-pencil)}
+.rds-guide-search input::-webkit-search-cancel-button{appearance:none;-webkit-appearance:none;width:16px;height:16px;cursor:pointer;background:var(--rv-chev) center/0 0 no-repeat;background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22%3E%3Cpath d=%22M3 3 13 13M13 3 3 13%22 stroke=%22%231f1d1a%22 stroke-width=%221.8%22 stroke-linecap=%22round%22/%3E%3C/svg%3E");background-size:16px}
+/* contents disclosure: hand lettering, hand-drawn chevron */
+.rds-contents summary{font:400 var(--fs-17)/20px var(--rv-hand);letter-spacing:.02em;text-transform:none;color:var(--ink)}
+.rds-contents summary::after{content:"";width:18px;height:12px;margin-left:auto;padding-left:var(--space-3);background:var(--rv-chev) center/18px 12px no-repeat;font:0;transition:transform var(--dur-base) var(--ease-out)}
+.rds-contents:not([open]) summary::after{content:"";transform:rotate(-90deg)}
+.rds-contents summary:hover{color:var(--brick)}
+/* table heads (selection colour lives in cozy-moments.css) */
+.rv-table th{border-bottom:0;background:var(--rv-rule-ink) 0 100%/240px 10px repeat-x;padding-bottom:calc(var(--space-3) + 6px);font-family:var(--rv-hand);font-size:var(--fs-15);letter-spacing:.02em;text-transform:none}
+.rv-table tbody tr{transition:background-color var(--dur-fast) var(--ease-std)}
+.rv-table tbody tr:hover{background:var(--paper-raised)}
+@media (prefers-reduced-motion:reduce){.rds-select,:is(.rv-lab,.rds-lab-lab) select,:is(.rv-lab,.rds-lab-lab) input{transition:none}.rds-select:hover,:is(.rv-lab,.rds-lab-lab) select:hover,:is(.rv-lab,.rds-lab-lab) input:hover{transform:none}}
+:is(.rv-lab,.rds-lab-lab) input[type=text]{min-width:min(260px,100%)}

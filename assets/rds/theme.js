@@ -6,7 +6,7 @@
    API: window.RVTheme = { get(), set(theme, originEl), toggle(originEl) }. See DESIGN.md > Dark theme. */
 (function () {
   var doc = document, root = doc.documentElement, KEY = 'rv-theme';
-  var PAPER = { light: '#f6f1e7', dark: '#15110d' };            /* keep in step with --paper in tokens.css */
+  var PAPER = { light: '#f6f1e7', dark: '#15110d' }; /* token-ok: <meta theme-color> and the cover overlay need the literal target colour before the swap; keep in step with --paper in tokens.css */
   var cur;
 
   function stored() { try { var v = localStorage.getItem(KEY); return v === 'light' || v === 'dark' ? v : null; } catch (e) { return null; } }
@@ -38,7 +38,7 @@
     var R = Math.ceil(Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)));
     var from0 = 'circle(0px at ' + x + 'px ' + y + 'px)', to = 'circle(' + R + 'px at ' + x + 'px ' + y + 'px)';
     var dur = Math.round(Math.min(1100, Math.max(700, R * 0.75)));
-    var ease = 'cubic-bezier(.5,0,.2,1)';
+    var ease = getComputedStyle(root).getPropertyValue('--ease-glide-2').trim() || 'ease-in-out';
     if (doc.startViewTransition) {
       root.classList.add('rv-theming');
       var vt;

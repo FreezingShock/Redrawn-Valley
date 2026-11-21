@@ -9,20 +9,14 @@
    API: RDSLoops.mount(host, kind, seed), RDSLoops.pause(), RDSLoops.play(). Documented in DESIGN.md "Looping backgrounds". */
 (function () {
   'use strict';
+  if (!window.RDSArt) return; /* needs motifs.js (seeded generator) */
   var doc = document, NS = 'http://www.w3.org/2000/svg', T = 28000, STORE = 'rv-loops-paused';
   var script = doc.currentScript, reduceMQ = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
-  var EASE = 'cubic-bezier(.45,0,.2,1)', POP = 'cubic-bezier(.34,1.4,.5,1)';
+  var TOKS = getComputedStyle(doc.documentElement);
+  var EASE = TOKS.getPropertyValue('--ease-glide-2').trim() || 'ease-in-out', POP = TOKS.getPropertyValue('--ease-spring').trim() || 'ease-out';
 
-  /* ---------- seeded random (same recipe as motifs.js) ---------- */
-  function hash(s) { var h = 1779033703 ^ s.length; for (var i = 0; i < s.length; i++) { h = Math.imul(h ^ s.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; } return function () { h = Math.imul(h ^ h >>> 16, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909); return (h ^= h >>> 16) >>> 0; }; }
-  function Rng(seed) {
-    var a = hash(String(seed))(), r = function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-    r.range = function (lo, hi) { return lo + r() * (hi - lo); };
-    r.int = function (lo, hi) { return Math.floor(r.range(lo, hi + 1)); };
-    r.pick = function (arr) { return arr[Math.floor(r() * arr.length)]; };
-    r.shuffle = function (arr) { var o = arr.slice(); for (var i = o.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = o[i]; o[i] = o[j]; o[j] = t; } return o; };
-    return r;
-  }
+  /* ---------- seeded random ---------- */
+  var Rng = window.RDSArt.Rng; /* one seeded generator for all art: defined in motifs.js, which loads first */
   function f(n) { return Math.round(n * 10) / 10; }
   function pt(x, y) { return f(x) + ' ' + f(y); }
 

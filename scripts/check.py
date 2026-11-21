@@ -3,7 +3,7 @@
 Run: python3 scripts/check.py   (exit 1 on problems; placeholder brackets only warn)."""
 import re, sys, pathlib
 from html.parser import HTMLParser
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root, html_files
 errors, warns = [], []
 # Section roots other branches are still building. A link to one warns instead of failing until its index.html lands;
 # once all three exist, delete this set.
@@ -24,8 +24,7 @@ class P(HTMLParser):
             if not v or re.match(r'(https?:|mailto:|tel:|data:|//)', v): continue
             (s.anchors if v.startswith('#') else s.refs).append(v)
 
-for f in sorted(root.rglob('*.html')):
-    if '.git' in f.parts or 'node_modules' in f.parts: continue
+for f in html_files():
     text = f.read_text(encoding='utf-8'); p = P(); p.feed(text)
     rel = f.relative_to(root)
     for v in p.refs:
@@ -42,19 +41,19 @@ for f in sorted(root.rglob('*.html')):
 for f in (root / 'assets').rglob('*.css'):
     for m in re.findall(r"@import url\('?(?!https?:)([^')]+)", f.read_text(encoding='utf-8')):
         if not (f.parent / m).exists(): errors.append(f'{f.relative_to(root)}: missing import {m}')
+for f in sorted(root.glob('*/*/index.html')):
+    sec = f.parent.parent.name
+    if sec not in ('studies', 'guide', 'notes') or f.parent.name.startswith('_'): continue
+    head = f.read_text(encoding='utf-8')[:6000]
+    if 'noindex' in head or 'name="rv-geo"' in head or 'name="rv-scope"' in head: continue
+    warns.append(f'{f.relative_to(root)}: no map location; add <meta name="rv-geo" content="lat,lng"> or <meta name="rv-scope" content="valley"> (see DESIGN.md > Valley map)')
 import subprocess
-if subprocess.run([sys.executable, str(root / 'scripts' / 'build_index.py'), '--check'], capture_output=True).returncode:
-    warns.append('search index or sitemap is stale: run python3 scripts/build_index.py and commit the result')
-if subprocess.run([sys.executable, str(root / 'scripts' / 'build_sources.py'), '--check'], capture_output=True).returncode:
-    warns.append('sources library is stale: run python3 scripts/build_sources.py and commit assets/sources.json (CI also does this after merge)')
-if subprocess.run([sys.executable, str(root / 'scripts' / 'build_topics.py'), '--check'], capture_output=True).returncode:
-    warns.append('topic hubs are stale: run python3 scripts/regen.py and commit the result (CI also does this after merge)')
-if subprocess.run([sys.executable, str(root / 'scripts' / 'assetver.py'), '--check'], capture_output=True).returncode:
-    warns.append('asset fingerprints are stale: run python3 scripts/assetver.py and commit the result (CI also does this after merge)')
+# generated files: one call to regen.py --check names every stale generator
+_r = subprocess.run([sys.executable, str(root / 'scripts' / 'regen.py'), '--check'], capture_output=True, text=True)
+if _r.returncode: warns.append(_r.stdout.strip() or 'generated files are stale: run python3 scripts/regen.py and commit the result (CI also does this after merge)')
 for f in sorted(root.glob('studies/*/index.html')) + sorted(root.glob('guide/*/index.html')) + sorted(root.glob('notes/*/index.html')):
     if f.parent.name != '_template' and 'name="rv-topics"' not in f.read_text(encoding='utf-8'):
         warns.append(f'{f.relative_to(root)}: no <meta name="rv-topics"> (it will not appear in any topic hub)')
-sys.path.insert(0, str(root / 'scripts'))
 import check_tokens
 _e, _w = check_tokens.run(); errors += _e; warns += _w
 for w in warns: print('warn ', w)

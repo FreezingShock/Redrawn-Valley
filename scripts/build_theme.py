@@ -5,7 +5,7 @@ one is redrawn here with its dark-theme colour. Run after changing any url("data
     python3 scripts/build_theme.py          (rewrite)     python3 scripts/build_theme.py --check   (exit 1 if stale)
 Colour map is the dark token set in assets/rds/tokens.css."""
 import re, sys, pathlib
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root
 DARK = {'8a8170': '857663', 'd9d0bd': '3a2e22', '1f1d1a': 'f3e8d4', '9c3d24': '66c3c0', 'ece5d6': '100c08', 'f6f1e7': '17120d',
         '2f4a3a': '9cc3a8', 'dfe6d8': '1a2a21', '35506b': '86aed2'}
 # (file, text just before the url, selector or ':root', property, color overrides for this one)
@@ -14,6 +14,8 @@ RULES = [
  ('skin.css', '--rv-rule-soft:', ':root', '--rv-rule-soft', {}),
  ('skin.css', '--rv-rule-ink:', ':root', '--rv-rule-ink', {}),
  ('skin.css', '--rv-rule-brick:', ':root', '--rv-rule-brick', {}),
+ ('skin.css', '--rv-chev:', ':root', '--rv-chev', {}),
+ ('skin.css', '--rv-check:', ':root', '--rv-check', {}),
  ('skin.css', '.rds-band-sunk::before{top:-27px;background-image:', '.rds-band-sunk::before', 'background-image', {}),
  ('skin.css', '.rds-band-sunk::after{bottom:-1px;background-image:', '.rds-band-sunk::after', 'background-image', {}),
  ('skin.css', '.rds-footer::before{top:-27px;background-image:', '.rds-footer::before', 'background-image', {'1f1d1a': '0b0806'}),

@@ -34,14 +34,17 @@
       });
       el.dataset.rdsSplitDone = '1';
     });
-    all('[data-rds-draw]', scope).forEach(function (svg) {
-      all('.rds-stroke', svg).forEach(function (p, i) {
-        var len = 1000;
-        try { len = Math.ceil(p.getTotalLength()); } catch (e) {}
-        p.style.setProperty('--len', len); p.style.setProperty('--i', i);
-      });
+    all('[data-rds-draw]', scope).forEach(prepDraw);
+  }
+  /* stroke lengths for the draw-on; also run when scripts/extract_art.py's loader (art.js) puts a figure's shapes in later */
+  function prepDraw(svg) {
+    all('.rds-stroke', svg).forEach(function (p, i) {
+      var len = 1000;
+      try { len = Math.ceil(p.getTotalLength()); } catch (e) {}
+      p.style.setProperty('--len', len); p.style.setProperty('--i', i);
     });
   }
+  doc.addEventListener('rv:art', function (e) { if (e.target.hasAttribute && e.target.hasAttribute('data-rds-draw')) prepDraw(e.target); });
 
   var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
