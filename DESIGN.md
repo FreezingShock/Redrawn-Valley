@@ -339,7 +339,7 @@ One alphabetical list of every term, place, source and drawing, each with links 
 
 - **Components**: `rv-az__tools` (filter input `rds-guide-search`, kind chips `rds-chip`), sticky `rv-az__jump` letter strip with scroll spy, `rv-az__group` per letter, `rv-az__entry` rows (headword, kind tag, gloss, uses list; two columns from 1000px). The list is `data-rv-noindex` so search does not index every entry twice.
 - **Behavior**: kind chips and live filter share `?q=` and `?k=` in the URL; letters with no matches are hidden; "See" rows jump to their target; back-to-top button; smooth scrolling only when motion is allowed. Everything is readable without JS.
-- **Sources** merge across pages by URL; the numbered circles link to each in-text use. Drawings are every `<figure>` with a caption plus infobox sketch captions (pages with more than 12, like the icon gallery, are skipped).
+- **Sources** merge across pages by URL; the numbered circles link to each in-text use. Drawings come from `assets/drawings.json` (the drawings gallery, `scripts/build_drawings.py`) and link to `/drawings/#id`; until that file exists, the A-Z falls back to every `<figure>` caption plus infobox sketch captions.
 - Limits: mentions are word matches, so unnamed ideas are missed and a name in another sense can be listed.
 
 ## Keep reading rail and Random page (`assets/rds/rail.js`, `rail.css`)
