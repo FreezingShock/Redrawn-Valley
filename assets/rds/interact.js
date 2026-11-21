@@ -23,7 +23,7 @@
   /* load our stylesheet once, next to this script */
   if (SRC && !doc.querySelector('link[data-rv-interact]')) {
     var lk = doc.createElement('link');
-    lk.rel = 'stylesheet'; lk.href = SRC.replace(/\.js.*$/, '.css'); lk.setAttribute('data-rv-interact', '');
+    lk.rel = 'stylesheet'; lk.href = SRC.replace(/\.js(\?.*)?$/, '.css$1'); lk.setAttribute('data-rv-interact', '');
     doc.head.appendChild(lk);
   }
 
@@ -383,13 +383,25 @@
       e.preventDefault();
     });
     window.addEventListener('resize', function () { if (d.open) fit(); });
-    d.addEventListener('close', function () { inner.innerHTML = ''; s = 1; tx = ty = 0; ptrs = {}; root.classList.remove('rv-lb-open'); });
+    d.addEventListener('close', function () { inner.innerHTML = ''; if (d.__onclose) { var oc = d.__onclose; d.__onclose = null; oc(); } s = 1; tx = ty = 0; ptrs = {}; root.classList.remove('rv-lb-open'); });
     d.__reset = function () { s = 1; tx = ty = 0; ptrs = {}; fit(); };
     return d;
   }
-  function zoomOpen(svg) {
+  /* zoomOpen(svg) zooms a drawing on the page. zoomOpen(null, opts) zooms something built elsewhere (the drawings gallery):
+     opts = { node, caption, extras (element placed in the toolbar), opener (element to refocus), onClose } */
+  function zoomOpen(svg, opts) {
     if (!lb) lb = lbBuild();
     var inner = lb.querySelector('.rv-lightbox__inner'); inner.innerHTML = '';
+    var bar = lb.querySelector('.rv-lightbox__bar'); all('[data-lb-extras]', bar).forEach(function (n) { n.remove(); });
+    if (opts && opts.node) {
+      inner.removeAttribute('data-st'); inner.removeAttribute('data-view'); inner.appendChild(opts.node);
+      if (opts.extras) { opts.extras.setAttribute('data-lb-extras', ''); bar.insertBefore(opts.extras, bar.querySelector('.rv-lightbox__tools')); }
+      lb.querySelector('[data-cap]').textContent = opts.caption || '';
+      lb.__opener = opts.opener || null; lb.__onclose = opts.onClose || null;
+      root.classList.add('rv-lb-open'); if (!lb.open) lb.showModal(); lb.__reset();
+      lb.querySelector('.rv-lightbox__stage').focus({ preventScroll: true });
+      return lb;
+    }
     var clone = svg.cloneNode(true);
     clone.removeAttribute('data-rds-draw'); clone.classList.remove('rv-pencil', 'rv-pencil-shapes'); clone.removeAttribute('style');
     clone.setAttribute('data-in', ''); clone.removeAttribute('width'); clone.removeAttribute('height');
@@ -426,5 +438,5 @@
     addEventListener('load', function () { all('.rds-art[data-rds-art]').forEach(artWatch); });
   }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
-  window.RDSInteract = { zoom: zoomOpen };
+  window.RDSInteract = { zoom: zoomOpen, lightbox: function () { if (!lb) lb = lbBuild(); return lb; } };
 })();

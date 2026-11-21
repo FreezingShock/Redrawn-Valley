@@ -8,7 +8,7 @@
   /* Footnote popovers: hover or focus a [n] marker to read the note without leaving the line. */
   function footnotes(main) {
     var pop = doc.createElement('div');
-    pop.className = 'rds-fn-pop'; pop.setAttribute('role', 'tooltip'); pop.id = 'rds-fn-pop';
+    pop.className = 'rds-fn-pop'; pop.setAttribute('role', 'tooltip'); pop.setAttribute('aria-hidden', 'true'); pop.id = 'rds-fn-pop';
     doc.body.appendChild(pop);
     var timer;
     function show(a) {
@@ -22,10 +22,10 @@
       var left = Math.max(8, Math.min(window.scrollX + r.left - 16, window.scrollX + doc.documentElement.clientWidth - w - 8));
       pop.style.left = left + 'px';
       pop.style.top = (window.scrollY + r.bottom + 8) + 'px';
-      pop.classList.add('is-on');
+      pop.classList.add('is-on'); pop.removeAttribute('aria-hidden');
       a.setAttribute('aria-describedby', pop.id);
     }
-    function hide(a) { timer = setTimeout(function () { pop.classList.remove('is-on'); if (a) a.removeAttribute('aria-describedby'); }, 120); }
+    function hide(a) { timer = setTimeout(function () { pop.classList.remove('is-on'); pop.setAttribute('aria-hidden', 'true'); if (a) a.removeAttribute('aria-describedby'); }, 120); }
     all('.rds-fn a', main).forEach(function (a) {
       a.addEventListener('mouseenter', function () { show(a); });
       a.addEventListener('mouseleave', function () { hide(a); });

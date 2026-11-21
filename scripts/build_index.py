@@ -6,12 +6,13 @@ Every page with a <title> is indexed except 404.html and anything marked <meta n
 CI regenerates the index on integration, so a page PR does not need to commit it."""
 import re, sys, json, pathlib, datetime
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from places import place_entry, places_json
 from html.parser import HTMLParser
 
 root = pathlib.Path(__file__).resolve().parent.parent
 # Production domain for sitemap.xml. Change here if the domain changes.
 SITE_URL = 'https://redrawnvalley.vercel.app'
-SECTIONS = {'': 'Home', 'a-z': 'A–Z index', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'topics': 'Topics', 'log': 'Sketchbook log', 'about': 'About'}
+SECTIONS = {'': 'Home', 'a-z': 'A–Z index', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'map': 'Valley map', 'topics': 'Topics', 'log': 'Sketchbook log', 'about': 'About', 'sitemap': 'Sitemap', 'sources': 'Sources'}
 SKIP_TAGS = {'script', 'style', 'svg', 'noscript', 'nav', 'footer', 'template'}
 TEXT_CAP = 6000
 
@@ -49,7 +50,7 @@ class Page(HTMLParser):
         s.text.append(d)
 
 def build():
-    pages, urls = [], []
+    pages, urls, places = [], [], []
     for f in sorted(root.rglob('*.html')):
         rel = f.relative_to(root)
         if any(p in ('.git', 'node_modules') for p in rel.parts) or rel.name == '404.html': continue
@@ -73,16 +74,24 @@ def build():
         if p.meta.get('rv-place'): entry['pl'] = p.meta['rv-place'].strip()
         g = re.match(r'^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$', p.meta.get('rv-geo', ''))
         if g: entry['g'] = [float(g.group(1)), float(g.group(2))]
-        pages.append(entry); urls.append((url, f.stat().st_mtime))
+        pages.append(entry); urls.append((url, f.stat().st_mtime)); places.append(place_entry(url, sec, title, entry['d'], p.meta))
     pages.sort(key=lambda e: (e['u'] != '', e['s'], e['u']))
     labels = {k: v for k, v in SECTIONS.items()}
     for e in pages: labels.setdefault(e['s'], e['s'].replace('-', ' ').title())
-    index = json.dumps({'sections': labels, 'pages': pages}, ensure_ascii=False, separators=(',', ':')) + '\n'
     today = datetime.date.today().isoformat()
+    # 'updated' feeds the footer's "Last updated" stamp. It moves to today only when the indexed content changes,
+    # so --check stays stable on days when nothing was edited.
+    body = {'sections': labels, 'pages': pages}
+    prev = {}
+    try: prev = json.loads((root / 'assets/search-index.json').read_text(encoding='utf-8'))
+    except Exception: pass
+    updated = prev.get('updated') if all(prev.get(k) == body[k] for k in body) else today
+    index = json.dumps({'updated': updated or today, **body}, ensure_ascii=False, separators=(',', ':')) + '\n'
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u, _ in urls: sm.append(f'  <url><loc>{SITE_URL}/{u}</loc></url>')
     sm.append('</urlset>')
-    out = {'assets/search-index.json': index, 'sitemap.xml': '\n'.join(sm) + '\n',
+    topics = json.loads((root / 'assets/topics.json').read_text(encoding='utf-8'))['topics']
+    out = {'assets/places.json': places_json(places, topics), 'assets/search-index.json': index, 'sitemap.xml': '\n'.join(sm) + '\n',
            'robots.txt': f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n'}
     import build_atlas                                   # the A-Z index is generated from the same pages
     out.update(build_atlas.build()[0])

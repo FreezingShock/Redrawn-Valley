@@ -14,7 +14,7 @@
     var cssP = new Promise(function (res) {
       if (doc.querySelector('link[data-rvs-css]')) return res();
       var l = doc.createElement('link'); l.rel = 'stylesheet'; l.setAttribute('data-rvs-css', '');
-      l.href = new URL('assets/rds/search.css', siteRoot).href;
+      l.href = new URL('assets/rds/search.css', siteRoot).href + (ctx.q || '');
       l.onload = l.onerror = function () { res(); }; setTimeout(res, 1200);
       doc.head.appendChild(l);
     });
@@ -154,15 +154,15 @@
       '<path class="rvs-st rvs-q" pathLength="1" d="M91 54 q0-11 10-11 q10 0 10 9 q0 7-9 10 v5" style="--d:.8s" stroke="var(--brick)"/><circle class="rvs-st rvs-q" pathLength="1" cx="102" cy="78" r="1.6" style="--d:1.1s" stroke="var(--brick)"/></g>' +
       '<path class="rvs-st" pathLength="1" d="M150 30 l5-5 M155 30 l-5-5" style="--d:1.2s" stroke="var(--ochre)"/><circle class="rvs-st" pathLength="1" cx="22" cy="90" r="4" style="--d:1.3s" stroke="var(--slate)"/></svg>';
     var BG = '<svg class="rvs-bg" viewBox="0 0 640 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>' +
-      '<pattern id="rvs-dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#8a8170"/></pattern>' +
-      '<pattern id="rvs-grid" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M12 0H0V12" fill="none" stroke="#2f4a3a" stroke-width="1"/></pattern>' +
+      '<pattern id="rvs-dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="var(--line-strong)"/></pattern>' +
+      '<pattern id="rvs-grid" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M12 0H0V12" fill="none" stroke="var(--moss)" stroke-width="1"/></pattern>' +
       '<clipPath id="rvs-clip"><circle cx="0" cy="0" r="70"/></clipPath></defs>' +
       '<rect width="640" height="420" fill="url(#rvs-dots)" opacity=".55"/>' +
-      '<g class="rvs-f rvs-f1"><g transform="translate(530 330)"><g clip-path="url(#rvs-clip)"><rect x="-80" y="-80" width="160" height="160" fill="url(#rvs-grid)"/></g><circle r="70" fill="none" stroke="#2f4a3a" stroke-width="1.4"/></g></g>' +
-      '<g class="rvs-f rvs-f2"><circle cx="110" cy="340" r="54" fill="#9c3d24" opacity=".16"/><circle cx="154" cy="356" r="54" fill="#35506b" opacity=".16"/><circle cx="132" cy="312" r="54" fill="#be9661" opacity=".2"/></g>' +
-      '<g class="rvs-f rvs-f3"><g transform="translate(470 78)"><rect x="-46" y="-46" width="92" height="92" fill="url(#rvs-grid)" stroke="#2f4a3a" stroke-width="1.4"/></g></g>' +
-      '<g class="rvs-spin"><g transform="translate(70 70)" fill="none" stroke="#8a8170" stroke-width="1.3"><circle r="30"/><path d="M-42 0H42M0-42V42"/><path d="M-21-21L21 21" stroke-dasharray="3 4"/></g></g>' +
-      '<path class="rvs-wave" d="M230 380 q20-26 40 0 t40 0 t40 0 t40 0 t40 0" fill="none" stroke="#35506b" stroke-width="1.4" opacity=".5"/></svg>';
+      '<g class="rvs-f rvs-f1"><g transform="translate(530 330)"><g clip-path="url(#rvs-clip)"><rect x="-80" y="-80" width="160" height="160" fill="url(#rvs-grid)"/></g><circle r="70" fill="none" stroke="var(--moss)" stroke-width="1.4"/></g></g>' +
+      '<g class="rvs-f rvs-f2"><circle cx="110" cy="340" r="54" fill="var(--brick)" opacity=".16"/><circle cx="154" cy="356" r="54" fill="var(--slate)" opacity=".16"/><circle cx="132" cy="312" r="54" fill="var(--ochre)" opacity=".2"/></g>' +
+      '<g class="rvs-f rvs-f3"><g transform="translate(470 78)"><rect x="-46" y="-46" width="92" height="92" fill="url(#rvs-grid)" stroke="var(--moss)" stroke-width="1.4"/></g></g>' +
+      '<g class="rvs-spin"><g transform="translate(70 70)" fill="none" stroke="var(--line-strong)" stroke-width="1.3"><circle r="30"/><path d="M-42 0H42M0-42V42"/><path d="M-21-21L21 21" stroke-dasharray="3 4"/></g></g>' +
+      '<path class="rvs-wave" d="M230 380 q20-26 40 0 t40 0 t40 0 t40 0 t40 0" fill="none" stroke="var(--slate)" stroke-width="1.4" opacity=".5"/></svg>';
 
     /* ---------- state ---------- */
     var dlg, input, listEl, pvEl, bodyEl, chipsEl, countEl, clearBtn, frameEl, ulEl, built = false;
@@ -271,7 +271,7 @@
       state.q = q;
       clearBtn.hidden = !q;
       if (DATA) prep();
-      if (!DATA || !DATA.pages.length) { listEl.innerHTML = '<li class="rvs-label" role="presentation">Loading the index…</li>'; countEl.textContent = ''; return; }
+      if (!DATA || !DATA.pages.length) { listEl.innerHTML = '<li class="rvs-label" role="presentation"><span>Loading the index<span class="cz-dots" aria-hidden="true"><i></i><i></i><i></i></span></span></li>'; countEl.textContent = ''; return; }
       if (!ts.length) {
         var b = rowsForBrowse(); rows = b.rows; counts = b.counts; total = b.total; mode = 'browse';
       } else {
@@ -377,7 +377,7 @@
     var motifsP = null;
     function needArt() {
       if (window.RDSArt) return Promise.resolve();
-      if (!motifsP) motifsP = new Promise(function (res) { var s = doc.createElement('script'); s.src = new URL('assets/rds/motifs.js', siteRoot).href; s.onload = s.onerror = function () { res(); }; doc.head.appendChild(s); });
+      if (!motifsP) motifsP = new Promise(function (res) { var s = doc.createElement('script'); s.src = new URL('assets/rds/motifs.js', siteRoot).href + (ctx.q || ''); s.onload = s.onerror = function () { res(); }; doc.head.appendChild(s); });
       return motifsP;
     }
     function renderPreview(r, quiet) {

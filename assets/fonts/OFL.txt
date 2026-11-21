@@ -1,0 +1,9 @@
+Fonts in this folder are Latin subsets of four open fonts, each licensed under the SIL Open Font License 1.1
+(none declares a Reserved Font Name). The full license text is at https://openfontlicense.org/open-font-license-official-text/
+
+Shantell Sans  Copyright 2022 The Shantell Sans Project Authors (https://github.com/arrowtype/shantell-sans)
+Figtree        Copyright 2022 The Figtree Project Authors (https://github.com/erikdkennedy/figtree)
+Caveat         Copyright 2014 The Caveat Project Authors (https://github.com/googlefonts/caveat)
+DM Mono        Copyright 2020 The DM Mono Project Authors (https://www.github.com/googlefonts/dm-mono)
+
+Modified: subset to Latin and, for Shantell Sans and Caveat, limited to the axes the site uses. See scripts/build_fonts.py.

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://redrawnvalley.vercel.app/a-z/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/about/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/drawings/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/guide/bioswale/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/guide/cool-pavement/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/guide/impervious-surface/</loc></url>
@@ -15,13 +17,18 @@
   <url><loc>https://redrawnvalley.vercel.app/guide/urban-heat-island/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/icons/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/lab/dark-theme/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/lab/drawings-gallery/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/lab/icon-set/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/lab/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/lab/motif-sheet/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/lab/motion-lab/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/lab/pattern-sheet/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/lab/sources-library/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/lab/type-lab/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/lab/valley-map/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/log/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/map/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/notes/hottest-corner/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/notes/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/notes/quarter-mile/</loc></url>
@@ -29,6 +36,8 @@
   <url><loc>https://redrawnvalley.vercel.app/notes/sidewalk-promise/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/notes/soil-volume/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/patterns/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/sitemap/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/sources/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/studies/fallbrook-edge/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/studies/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/studies/topanga-willows/</loc></url>

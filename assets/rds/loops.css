@@ -1,19 +1,19 @@
 /* Redrawn Design System: looping backgrounds (see loops.js and DESIGN.md "Looping backgrounds").
    The layer sits behind a hero: an SVG drawn in tokens, faded toward the text side so type stays readable. */
 .rds-loop-host{position:relative;isolation:isolate}
-.rds-loop{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:.78;
-  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 100%),linear-gradient(90deg,rgba(0,0,0,.14) 0,rgba(0,0,0,.2) 40%,#000 72%);
-  mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 100%),linear-gradient(90deg,rgba(0,0,0,.14) 0,rgba(0,0,0,.2) 40%,#000 72%);
+.rds-loop{position:absolute;inset:0;z-index:var(--z-under);pointer-events:none;overflow:hidden;opacity:.78;
+  -webkit-mask-image:linear-gradient(180deg,var(--pal-black) 0,var(--pal-black) 78%,transparent 100%),linear-gradient(90deg,color-mix(in srgb,var(--pal-black) 14%,transparent) 0,color-mix(in srgb,var(--pal-black) 20%,transparent) 40%,var(--pal-black) 72%);
+  mask-image:linear-gradient(180deg,var(--pal-black) 0,var(--pal-black) 78%,transparent 100%),linear-gradient(90deg,color-mix(in srgb,var(--pal-black) 14%,transparent) 0,color-mix(in srgb,var(--pal-black) 20%,transparent) 40%,var(--pal-black) 72%);
   -webkit-mask-composite:source-in;mask-composite:intersect}
 .rds-loop svg{display:block;width:100%;height:100%}
 .rds-loop svg *{transform-box:fill-box;transform-origin:center}
 .rds-loop--tiles{opacity:.45}
 @media (max-width:959px){
-  .rds-loop{opacity:.6;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.28) 0,rgba(0,0,0,.2) 55%,#000 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,.28) 0,rgba(0,0,0,.2) 55%,#000 100%);-webkit-mask-composite:source-over;mask-composite:add}
+  .rds-loop{opacity:.6;-webkit-mask-image:linear-gradient(180deg,color-mix(in srgb,var(--pal-black) 28%,transparent) 0,color-mix(in srgb,var(--pal-black) 20%,transparent) 55%,var(--pal-black) 100%);mask-image:linear-gradient(180deg,color-mix(in srgb,var(--pal-black) 28%,transparent) 0,color-mix(in srgb,var(--pal-black) 20%,transparent) 55%,var(--pal-black) 100%);-webkit-mask-composite:source-over;mask-composite:add}
   .rds-loop--tiles{opacity:.4}
 }
 /* pause control: always reachable, 44px target, hand lettering like the other small controls */
-.rds-loop__toggle{position:absolute;z-index:3;right:var(--rv-gutter,24px);bottom:var(--space-3);display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-4) 0 var(--space-3);border:var(--rv-stroke,1.5px solid var(--ink));border-radius:var(--rv-r-md,8px);background:var(--paper);color:var(--ink);font:400 15px/1 var(--rv-hand,var(--font-sans));cursor:pointer;transition:transform var(--dur-fast,160ms) var(--ease-out,ease-out),background var(--dur-fast,160ms)}
+.rds-loop__toggle{position:absolute;z-index:var(--z-raised-3);right:var(--rv-gutter,24px);bottom:var(--space-3);display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-4) 0 var(--space-3);border:var(--rv-stroke,1.5px solid var(--ink));border-radius:var(--rv-r-md,8px);background:var(--paper);color:var(--ink);font:400 var(--fs-15)/1 var(--rv-hand,var(--font-sans));cursor:pointer;transition:transform var(--dur-fast,var(--dur-fast)) var(--ease-out,var(--ease-soft-out)),background var(--dur-fast,var(--dur-fast))}
 .rds-loop__toggle:hover{background:var(--paper-raised);transform:translateY(-1px)}
 .rds-loop__toggle svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .rds-loop__toggle .lt-play{display:none;fill:var(--brick);stroke:var(--brick)}
