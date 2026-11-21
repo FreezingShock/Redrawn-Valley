@@ -360,6 +360,15 @@ One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>`
 - **Hero buttons**: primary `rv-cta` draws its outline, fills brick, then its arrow draws, flies off and a new one settles in (hover repeats it). Secondary `rv-textlink` is ink text with a drawn rule and arrow. Brick appears once, on the primary. All of it is CSS only and skipped under reduced motion.
 
 
+## Cozy paper (`assets/rds/cozy.css`, tokens section 4 of `tokens.css`)
+The top bar is the model for how the site should feel: a hand-washed paper band, a torn lower edge drawn with a hairline, a warm soft shadow. `cozy.css` (loaded after `skin.css` and `theme.css`) carries that into every panel instead of the hard ink offset.
+- **Wash:** `--paper-wash` (two tints, `--wash-a` warm, `--wash-b` cool; turquoise and moss in the moonlit theme) goes on top of a panel's paper colour. Applied to In short, infoboxes, callouts, contents, cards, features and the home rail cards.
+- **Shadow:** `--shadow-paper` and `--shadow-paper-lift` are a hairline, a tight contact shadow and a long soft one, all in `--warm-shadow` (ink thinned so it reads brown). `--edge-soft` is the frame line one step lighter than `--edge`. The hard `--shadow-pencil` stays on buttons and anything you press.
+- **Torn edge:** `--deckle` (shape, a mask) and `--deckle-line` (the same curve as a hairline), sized by `--deckle-w`/`--deckle-h`. The colour comes from `background`, so one shape serves a panel, a band and both themes; flip it for a bottom edge. Used on the Continue sheet and the footer.
+- **Tape:** `--tape` strip on the In short box, matching the infobox and callout strips in `skin.css`.
+- **Lamp glow:** `--glow-lamp` is empty in light and a soft turquoise halo around panels in dark; the footer has a warm lamp over the brand in both.
+- Reduced motion drops the lift transitions; print drops the torn edges and glows. Chips and filter inputs are paper too (inset shadow on the input, a small lift on chips).
+
 ## Sources library
 
 `/sources/` lists every source cited anywhere on the site. It is generated, never hand-kept: `python3 scripts/build_sources.py` reads every page and writes `assets/sources.json` (`scripts/regen.py` rebuilds it after every merge to `integration`; `scripts/check.py` warns when it is stale). Use `--report` to see counts and sources that are listed but never cited.
