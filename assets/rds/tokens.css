@@ -125,6 +125,7 @@
   --z-flow-under: 2147482000; --z-flow-cover: 2147483000; --z-flow-top: 2147483001;
   /* layout */
   --measure: 68ch; --container: 1120px;
+  --cv-block: 900px;   /* placeholder height for off-screen sections (content-visibility, see rds.css) until the browser has drawn them once */
   --rv-gutter: 20px; --rv-bar: 52px; --rv-tab: 56px; --rv-safe: env(safe-area-inset-bottom,0px);
   /* phone tab bar (assets/rds/tabbar.css) */
   --tab-icon: 26px; --tab-mark-w: 52px; --tab-mark-h: 34px; --tab-stroke: 1.9; --tab-edge-stroke: 1.5px;
