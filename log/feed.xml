@@ -17,6 +17,27 @@
     <content type="html">&lt;p&gt;Adds the Sketchbook log, a dated feed of everything new on the site, with an Atom feed.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/&quot;&gt;Redrawn Valley&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
   <entry>
+    <title>Scripts/regen.py: one entry point that regenerates log, index and topic hubs in order</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-51</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-51"/>
+    <updated>2026-11-21T00:16:39-08:00</updated>
+    <category term="design" label="Design system"/>
+  </entry>
+  <entry>
+    <title>Topic hubs: generated hub pages per topic, topics index with coverage table, nav and footer links, docs</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-50</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-50"/>
+    <updated>2026-11-21T00:15:46-08:00</updated>
+    <category term="design" label="Design system"/>
+  </entry>
+  <entry>
+    <title>Add Keep reading rail, Random page and scroll tuning</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-48</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-48"/>
+    <updated>2026-11-21T00:13:41-08:00</updated>
+    <category term="design" label="Design system"/>
+  </entry>
+  <entry>
     <title>Search footer: vertically centered row, cleaner result count and key hints</title>
     <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-47</id>
     <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-47"/>
@@ -336,32 +357,5 @@
     <category term="site" label="Site"/>
     <summary>Sitemap and robots.txt now use redrawnvalley.vercel.app.</summary>
     <content type="html">&lt;p&gt;Sitemap and robots.txt now use redrawnvalley.vercel.app.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Notes section opens with five essays</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-6</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-6"/>
-    <updated>2026-11-20T12:03:34-08:00</updated>
-    <category term="note" label="Note"/>
-    <summary>The Notes index and five sourced essays on heat, shade, soil, sidewalks and walking.</summary>
-    <content type="html">&lt;p&gt;The Notes index and five sourced essays on heat, shade, soil, sidewalks and walking.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/notes/hottest-corner/&quot;&gt;The hottest day on record in L.A. County happened in Woodland Hills&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/notes/&quot;&gt;Notes&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/notes/quarter-mile/&quot;&gt;A quarter mile is not the same walk in August&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/notes/shade-beats-paint/&quot;&gt;Shade beats paint, and Pacoima shows why&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/notes/sidewalk-promise/&quot;&gt;The sidewalk is a promise Los Angeles made in court&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/notes/soil-volume/&quot;&gt;A shade tree is a soil problem first&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Topanga infobox links into the field guide</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-7</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-7"/>
-    <updated>2026-11-20T12:02:16-08:00</updated>
-    <category term="site" label="Site"/>
-    <summary>Terms in the study&#x27;s infobox now link to their guide entries.</summary>
-    <content type="html">&lt;p&gt;Terms in the study&amp;#x27;s infobox now link to their guide entries.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Field guide opens with 11 entries</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-5</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-5"/>
-    <updated>2026-11-20T12:01:30-08:00</updated>
-    <category term="guide" label="Field guide"/>
-    <summary>A wiki-style index of terms with 11 sourced entries, from bioswale to urban heat island.</summary>
-    <content type="html">&lt;p&gt;A wiki-style index of terms with 11 sourced entries, from bioswale to urban heat island.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/&quot;&gt;Field guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/san-fernando-valley/&quot;&gt;San Fernando Valley&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
 </feed>
