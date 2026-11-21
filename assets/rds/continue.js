@@ -28,13 +28,23 @@
   if (!plan || segs.length !== 2) return;
   function title(p) { return p.t.split(' | ')[0]; }
   function json(u) { return fetch(new URL(u, siteRoot)).then(function (r) { if (!r.ok) throw 0; return r.json(); }); }
-  Promise.all([json('assets/search-index.json'), json('assets/topics.json').catch(function () { return { topics: [] }; })]).then(function (r) { build(r[0], r[1].topics); }, function () { });
+  /* the reading order is the order of the section's own index page (studies by number, notes oldest first), not the URL */
+  function order() {
+    if (!plan.pager) return Promise.resolve([]);
+    return fetch(new URL(sec + '/' + (isFile ? 'index.html' : ''), siteRoot)).then(function (r) { return r.text(); }).then(function (t) {
+      var out = [], re = /href="([a-z0-9-]+)\/(?:index\.html)?"/g, m;
+      while ((m = re.exec(t))) { var u = sec + '/' + m[1] + '/'; if (out.indexOf(u) < 0) out.push(u); }
+      return out;
+    }).catch(function () { return []; });
+  }
+  Promise.all([json('assets/search-index.json'), json('assets/topics.json').catch(function () { return { topics: [] }; }), order()]).then(function (r) { build(r[0], r[1].topics, r[2]); }, function () { });
 
-  function build(d, topics) {
+  function build(d, topics, ord) {
     var cur = d.pages.filter(function (p) { return p.u === here; })[0]; if (!cur) return;
     var main = doc.querySelector('main'); if (!main || main.querySelector('.rv-cont')) return;
     var mine = cur.k || [];
     var kids = d.pages.filter(function (p) { return p.s === sec && p.u.split('/').length === 3; });
+    kids.sort(function (a, b) { var i = ord.indexOf(a.u), j = ord.indexOf(b.u); return (i < 0 ? 99 : i) - (j < 0 ? 99 : j); });
     function score(p) { var s = 0; (p.k || []).forEach(function (t) { var j = mine.indexOf(t); if (j >= 0) s += j === 0 ? 3 : 2; }); return s; }
 
     var chips = mine.map(function (slug) { var t = topics.filter(function (x) { return x.slug === slug; })[0]; return t ? '<li><a class="rds-chip" href="' + esc(href('topics/' + slug + '/')) + '">' + esc(t.short || t.title) + '</a></li>' : ''; }).join('');
