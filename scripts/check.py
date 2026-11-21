@@ -46,7 +46,7 @@ import subprocess
 if subprocess.run([sys.executable, str(root / 'scripts' / 'build_index.py'), '--check'], capture_output=True).returncode:
     warns.append('search index or sitemap is stale: run python3 scripts/build_index.py and commit the result')
 if subprocess.run([sys.executable, str(root / 'scripts' / 'build_topics.py'), '--check'], capture_output=True).returncode:
-    warns.append('topic hubs are stale: run python3 scripts/build_index.py then python3 scripts/build_topics.py and commit the result')
+    warns.append('topic hubs are stale: run python3 scripts/regen.py and commit the result (CI also does this after merge)')
 for f in sorted(root.glob('studies/*/index.html')) + sorted(root.glob('guide/*/index.html')) + sorted(root.glob('notes/*/index.html')):
     if f.parent.name != '_template' and 'name="rv-topics"' not in f.read_text(encoding='utf-8'):
         warns.append(f'{f.relative_to(root)}: no <meta name="rv-topics"> (it will not appear in any topic hub)')
