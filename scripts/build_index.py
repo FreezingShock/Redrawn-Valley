@@ -64,8 +64,15 @@ def build():
     pages.sort(key=lambda e: (e['u'] != '', e['s'], e['u']))
     labels = {k: v for k, v in SECTIONS.items()}
     for e in pages: labels.setdefault(e['s'], e['s'].replace('-', ' ').title())
-    index = json.dumps({'sections': labels, 'pages': pages}, ensure_ascii=False, separators=(',', ':')) + '\n'
     today = datetime.date.today().isoformat()
+    # 'updated' feeds the footer's "Last updated" stamp. It moves to today only when the indexed content changes,
+    # so --check stays stable on days when nothing was edited.
+    body = {'sections': labels, 'pages': pages}
+    prev = {}
+    try: prev = json.loads((root / 'assets/search-index.json').read_text(encoding='utf-8'))
+    except Exception: pass
+    updated = prev.get('updated') if all(prev.get(k) == body[k] for k in body) else today
+    index = json.dumps({'updated': updated or today, **body}, ensure_ascii=False, separators=(',', ':')) + '\n'
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u, _ in urls: sm.append(f'  <url><loc>{SITE_URL}/{u}</loc></url>')
     sm.append('</urlset>')

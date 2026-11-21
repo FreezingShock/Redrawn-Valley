@@ -148,19 +148,44 @@
   }
 
   /* ---------- footer ---------- */
+  /* Footer: brand + about line, then link columns (explore, studies, field guide, notes, lab notes) filled from the search index,
+     then a base line with the disclaimer, last-updated stamp and back to top. Short lab labels keep the column tidy. */
+  var LAB_SHORT = { 'pattern-sheet': 'Pattern lab', 'icon-set': 'Icon set', 'type-lab': 'Type lab', 'motion-lab': 'Motion lab', 'motif-sheet': 'Motif sheet' };
+  var FOOT_MAX = { guide: 6, notes: 4 };
+  function longDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ''); if (!m) return '';
+    return ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'][+m[2] - 1] + ' ' + (+m[3]) + ', ' + m[1];
+  }
   function footer(el) {
-    var site = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['About', 'index.html#about']]
-      .map(function (n) { return '<li><a href="' + esc(href(n[1])) + '">' + n[0] + '</a></li>'; }).join('');
+    function li(label, u) { return '<li><a href="' + esc(href(u)) + '">' + esc(label) + '</a></li>'; }
+    function col(title, attr, items) { return '<nav class="rds-footer__col" aria-label="' + esc(title) + '"><h4>' + esc(title) + '</h4><ul' + (attr ? ' data-rv-footer-' + attr : '') + '>' + items + '</ul></nav>'; }
+    var explore = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['Lab notes', 'lab/'], ['About', 'index.html#about']].map(function (n) { return li(n[0], n[1]); }).join('') +
+      '<li><a href="#" data-rv-search-open>Search the site</a></li>';
     el.innerHTML = '<div class="rds-footer__grid">' +
-      '<div><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
-      '<div><h4>Site</h4><ul>' + site + '</ul></div>' +
-      '<div><h4>Studies</h4><ul data-rv-footer-studies><li><a href="' + esc(href('studies/')) + '">All studies</a></li></ul></div>' +
-      '<div><h4>Find things</h4><ul><li><a href="#" data-rv-search-open>Search the site</a></li><li><a href="' + esc(new URL('sitemap.xml', siteRoot).href) + '">Sitemap</a></li></ul></div>' +
-      '<div><h4>Design</h4><ul><li><a href="' + esc(new URL('lab/', siteRoot).href) + '">Lab notes</a></li><li><a href="' + esc(new URL('patterns/', siteRoot).href) + '">Pattern sheet</a></li><li><a href="' + esc(new URL('icons/', siteRoot).href) + '">Icon set</a></li></ul></div>' +
-      '</div><div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>';
+      '<div class="rds-footer__about"><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p>' +
+      '<p class="rds-small rds-footer__tag">Small places in the San Fernando Valley, studied and redrawn.</p>' +
+      '<p class="rds-small rds-footer__author">Written and drawn by <b>Nate Anderson</b>, a student headed toward construction management and civil engineering.</p></div>' +
+      col('Explore', '', explore) +
+      col('Studies', 'studies', li('All studies', 'studies/')) +
+      col('Field guide', 'guide', li('All entries', 'guide/')) +
+      col('Notes', 'notes', li('All notes', 'notes/')) +
+      col('Lab notes', 'lab', li('All lab notes', 'lab/')) +
+      '</div><div class="rds-footer__base"><p class="rds-footer__fine">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</p>' +
+      '<p class="rds-footer__meta"><span class="rds-footer__stamp" data-rv-footer-updated hidden></span><a class="rds-footer__top" href="#top" data-rv-top>Back to top ' + icon('arrow-up', '', 16) + '</a></p></div>';
+    var top = el.querySelector('[data-rv-top]');
+    top.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
     loadIndex().then(function (d) {
-      var ul = el.querySelector('[data-rv-footer-studies]'), s = d.pages.filter(function (p) { return p.s === 'studies' && p.u.split('/').length > 2; });
-      if (s.length) ul.innerHTML = s.map(function (p) { return '<li><a href="' + esc(href(p.u)) + '">' + esc(p.t) + '</a></li>'; }).join('') + '<li><a href="' + esc(href('studies/')) + '">All studies</a></li>';
+      function fill(sec, list, all) {
+        var ul = el.querySelector('[data-rv-footer-' + sec + ']'); if (!ul || !list.length) return;
+        ul.innerHTML = list.map(function (p) { return li(LAB_SHORT[p.u.split('/')[1]] || p.t.replace(/\s*\|.*$/, ''), p.u); }).join('') + li(all, sec + '/');
+      }
+      function of(sec) { return d.pages.filter(function (p) { return p.s === sec && p.u.split('/').length > 2; }); }
+      fill('studies', of('studies'), 'All studies');
+      fill('guide', of('guide').slice(0, FOOT_MAX.guide), 'All ' + of('guide').length + ' entries');
+      fill('notes', of('notes').slice(0, FOOT_MAX.notes), 'All notes');
+      fill('lab', of('lab'), 'All lab notes');
+      var st = el.querySelector('[data-rv-footer-updated]'), t = longDate(d.updated);
+      if (t) { st.textContent = 'Last updated ' + t; st.hidden = false; }
     });
   }
 
