@@ -44,7 +44,7 @@
 .ktabs a{background:linear-gradient(currentColor,currentColor) 0 100%/0 2px no-repeat;transition:background-size .32s cubic-bezier(.16,1,.3,1)}
 .ktabs a:hover,.ktabs a[aria-current="true"]{background-size:100% 2px}
 /* --- click tabs --- */
-.ktab{appearance:none;border:0;background:none;padding:10px 0;margin:0;font:500 15px/1 'Hanken Grotesk',system-ui,sans-serif;color:#5c564c;cursor:pointer;border-bottom:3px solid rgba(0,0,0,0);transition:color .16s ease,border-color .16s ease}
+.ktab{appearance:none;border:0;background:none;padding:10px 0;margin:0;font:500 15px/1 var(--font-sans);color:#5c564c;cursor:pointer;border-bottom:3px solid rgba(0,0,0,0);transition:color .16s ease,border-color .16s ease}
 .ktab:hover{color:#1f1d1a}
 .ktab[aria-selected="true"]{color:#1f1d1a;border-bottom-color:#1f1d1a}
 /* --- scroll stages --- */
