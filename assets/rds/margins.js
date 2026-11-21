@@ -176,18 +176,23 @@
     var hosts = [].slice.call(doc.querySelectorAll('.rds-loop-host:not(.rds-footer)')), top = main.getBoundingClientRect().top + scrollY;
     return hosts.some(function (h) { if (h.classList.contains('rds-footer')) return false; var b = h.getBoundingClientRect(), a = b.top + scrollY - top; return !(y1 < a - 20 || y0 > a + b.height + 20); });
   }
+  /* vertical ranges (px from the top of main) of tinted bands with wavy edges; narrow pages keep art out of them */
+  function bandRanges() {
+    var top = main.getBoundingClientRect().top + scrollY;
+    return [].slice.call(main.querySelectorAll('.rds-band-sunk')).map(function (b) { var r = b.getBoundingClientRect(); return [r.top + scrollY - top - 34, r.bottom + scrollY - top + 34]; });
+  }
   function layout() {
     var vw = doc.documentElement.clientWidth, Hh = main.offsetHeight, wide = vw >= 1000, gut = Math.max(0, (vw - 1120) / 2), r = Rng(seedBase + ':layout');
     layer.textContent = ''; frags = []; if (io) io.disconnect();
     layer.className = 'rv-mf-layer ' + (wide ? 'is-wide' : 'is-narrow') + (gut < 150 && wide ? ' is-tight' : '');
-    var rail = wide && doc.querySelector('[data-toc]'), size, side = rail ? 1 : (r() < .5 ? 0 : 1), y = wide ? 120 : 320, order = r.shuffle(KINDS), i = 0;
+    var bands = wide ? [] : bandRanges(), rail = wide && doc.querySelector('[data-toc]'), size, side = rail ? 1 : (r() < .5 ? 0 : 1), y = wide ? 120 : 320, order = r.shuffle(KINDS), i = 0;
     if (wide) size = Math.max(420, Math.min(620, gut + 300)); else size = Math.min(vw * 1.0, 380);
     var step = wide ? size * 1.12 : size * 1.7;
     while (y + size * .6 < Hh && frags.length < 28) {
       var h = size * H / W;
-      if (!overlapsLoop(y, y + h)) {
+      if (!overlapsLoop(y, y + h) && !bands.some(function (b) { return !(y + h < b[0] || y > b[1]); })) {
         var kind = order[i++ % order.length], el = doc.createElement('div'); el.className = 'rv-mf rv-mf--' + kind; el.setAttribute('data-side', side ? 'r' : 'l');
-        var overlap = wide ? (gut < 150 ? 120 : 90) : 0, x;
+        var overlap = wide ? (gut < 150 ? 70 : 24) : 0, x;
         if (wide) x = side ? (vw - gut) - overlap : gut + overlap - size; else x = side ? vw - size * .62 : -size * .38;
         el.style.cssText = 'width:' + n(size) + 'px;height:' + n(h) + 'px;top:' + n(y) + 'px;left:' + n(x) + 'px;--rot:' + n(r.range(-5, 5)) + 'deg;--dur:' + n(r.range(22, 34)) + 's';
         build(el, kind, seedBase + ':' + frags.length + ':' + kind); layer.appendChild(el); frags.push(el); if (io) io.observe(el);
