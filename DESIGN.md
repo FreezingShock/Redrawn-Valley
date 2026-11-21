@@ -323,3 +323,10 @@ One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>`
 
 - **Nav**: `rds-nav` is a hand-washed paper band: brick and moss tints over paper with a deckled hairline lower edge (`::before` and `::after` in `skin.css` Part 4). The page-wide "no shadows" rule has one more exception here: a soft `drop-shadow` under the deckled edge once the page scrolls. The active section keeps the brick hand rule and goes bold. Search is the header's main action: ink fill with the pencil offset.
 - **Hero buttons**: primary `rv-cta` draws its outline, fills brick, then its arrow draws, flies off and a new one settles in (hover repeats it). Secondary `rv-textlink` is ink text with a drawn rule and arrow. Brick appears once, on the primary. All of it is CSS only and skipped under reduced motion.
+
+## Sketchbook log (`log/`, `scripts/build_log.py`, `assets/rds/log.css`, `log.js`)
+
+A dated feed of everything new, built from git history, never edited by hand. `log/index.html` is a normal page with three generated regions (`<!--log:stats-->`, `<!--log:chips-->`, `<!--log:timeline-->`); `python3 scripts/build_log.py` rewrites them plus `log/feed.xml` (Atom, newest 40) and `assets/log.json` (entries, and a first-added and last-updated date for every page; other features can read it). `.github/workflows/log.yml` reruns it after each push to integration.
+- **Entry**: one commit (squash-merged PR). Type is study / note / guide / lab (a new page in that section), else redraw, design or site by subject and files. Pages show as New (added) or Updated (changed), titles read from the pages.
+- **Words**: PR-description trailers `Log: sentence`, `Log-Title:`, `Log-Type:`, `Log: skip` win; then `scripts/log-notes.json` (keyed by PR number); then the commit subject. Commits touching only generated files are never entries.
+- **Components**: `rv-log` timeline (sticky date column on desktop, sticky date bar on phones, dashed rail, icon dot per type, `rv-log__card` per entry, `rv-log__page` pills), type filter chips (`data-rv-topic`, kept in `?type=`), `rds-facts` stats. Under reduced motion it stands still.

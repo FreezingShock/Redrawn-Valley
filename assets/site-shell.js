@@ -37,7 +37,7 @@
     { label: 'Notes', url: 'notes/', kind: 'notes', icon: 'notes', blurb: 'Short essays with the evidence shown.', max: 5, all: 'All notes' },
     { label: 'About', url: 'index.html#about' }
   ];
-  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', about: 'About' };
+  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', log: 'Sketchbook log', about: 'About' };
   var sitePath = new URL(siteRoot).pathname;
   var rel = decodeURIComponent(location.pathname.slice(sitePath.length)).replace(/index\.html$/, '');
   var section = rel.split('/')[0];
@@ -128,6 +128,7 @@
       ['Home', '', 'home', 'Front page'],
       ['Method', 'index.html#method', 'ruler', 'How a study is made'],
       ['About', 'index.html#about', 'info', 'Who draws this, and why'],
+      ['Sketchbook log', 'log/', 'contents', 'Everything new, by date'],
       ['Lab notes', 'lab/', 'thermometer', 'How the patterns, icons and type were made'],
       ['Pattern sheet', 'patterns/', 'leaf', 'Every motif and the palette'],
       ['Icon set', 'icons/', 'pin', 'The hand-drawn icons'],
@@ -155,7 +156,7 @@
       '<div><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
       '<div><h4>Site</h4><ul>' + site + '</ul></div>' +
       '<div><h4>Studies</h4><ul data-rv-footer-studies><li><a href="' + esc(href('studies/')) + '">All studies</a></li></ul></div>' +
-      '<div><h4>Find things</h4><ul><li><a href="#" data-rv-search-open>Search the site</a></li><li><a href="' + esc(new URL('sitemap.xml', siteRoot).href) + '">Sitemap</a></li></ul></div>' +
+      '<div><h4>Find things</h4><ul><li><a href="#" data-rv-search-open>Search the site</a></li><li><a href="' + esc(new URL('log/', siteRoot).href) + '">Sketchbook log</a></li><li><a href="' + esc(new URL('sitemap.xml', siteRoot).href) + '">Sitemap</a></li></ul></div>' +
       '<div><h4>Design</h4><ul><li><a href="' + esc(new URL('lab/', siteRoot).href) + '">Lab notes</a></li><li><a href="' + esc(new URL('patterns/', siteRoot).href) + '">Pattern sheet</a></li><li><a href="' + esc(new URL('icons/', siteRoot).href) + '">Icon set</a></li></ul></div>' +
       '</div><div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>';
     loadIndex().then(function (d) {
