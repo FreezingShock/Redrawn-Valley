@@ -8,7 +8,7 @@
               each with a pencil squiggle that draws underneath.
    Also: a pencil dab where you click, and hand-drawn rules that draw on. Styles are in flow.css (loaded by this script).
    Off for prefers-reduced-motion, embed frames (?embed=1, iframes), print and ?noflow. Nothing breaks without it; a 3 second
-   failsafe always removes the sheet. API: window.RVFlow = { intro(), wipe(url?), write(el), enabled, speed }. See DESIGN.md "Flow". */
+   failsafe always removes the sheet. API: window.RVFlow = { intro(), preview(a, b, x, y), zoomPreview(el), wipe(url?), write(el), enabled, speed }. See DESIGN.md "Flow". */
 (function () {
   'use strict';
   var doc = document, root = doc.documentElement, me = doc.currentScript;
@@ -27,8 +27,9 @@
   function T(ms) { return ms / (API.speed || 1); }
 
   /* ---------- critical style and stylesheet ---------- */
+  var VT = ('onpagereveal' in window) && location.protocol !== 'file:' && !/[?&]novt(&|$)/.test(location.search);   // cross-document view transitions
   var cs = doc.createElement('style');
-  cs.textContent = 'html.fl-cover::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#f6f1e7;pointer-events:none}' +
+  cs.textContent = (VT ? '@view-transition{navigation:auto}' : '') + 'html.fl-cover::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#f6f1e7;pointer-events:none}' +
     '@media print{html.fl-cover::before{display:none}}';
   (doc.head || root).appendChild(cs);
   var css = doc.createElement('link'); css.rel = 'stylesheet'; css.href = BASE + 'flow.css';
@@ -41,15 +42,22 @@
   var flag = null; try { flag = JSON.parse(store.get(NAVKEY) || 'null'); } catch (e) {}
   store.del(NAVKEY);
   var fresh = flag && Date.now() - flag.t < 9000;
+  var sameRef = false; try { sameRef = !!doc.referrer && new URL(doc.referrer).origin === location.origin; } catch (e) {}
   var mode = 'none';
   if (navType === 'back_forward') mode = 'none';
+  else if (VT && navType === 'navigate' && (sameRef || (fresh && flag.vt))) mode = 'vt';
   else if (fresh && navType !== 'reload') mode = 'wipe';
   else if (navType === 'reload' || !store.get(SEENKEY)) mode = 'intro';
   else mode = 'wipe';
   store.set(SEENKEY, '1');
   root.classList.add('fl-on');
-  if (mode !== 'none') root.classList.add('fl-cover');
-  var failsafe = setTimeout(function () { root.classList.remove('fl-cover'); var s = doc.getElementById('fl-stage'); if (s) kill(s); }, 3000);
+  if (mode === 'vt') {
+    /* the browser morphs the clicked panel into this page's header (card) or spreads the new page from the click (plain);
+       classes and the click point are set now, before the first frame, so the destination header can be named in CSS */
+    root.classList.add('fl-vt', fresh && flag.kind === 'card' ? 'fl-vt-card' : 'fl-vt-plain');
+    if (fresh) { root.style.setProperty('--fl-x', Math.round(flag.x * innerWidth) + 'px'); root.style.setProperty('--fl-y', Math.round(flag.y * innerHeight) + 'px'); }
+  } else if (mode !== 'none') root.classList.add('fl-cover');
+  var failsafe = setTimeout(function () { root.classList.remove('fl-cover', 'fl-vt', 'fl-vt-card', 'fl-vt-plain'); var s = doc.getElementById('fl-stage'); if (s) kill(s); }, 3000);
 
   /* ---------- helpers ---------- */
   function el(tag, cls, html) { var n = doc.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; }
@@ -213,7 +221,7 @@
 
   /* ---------- following a link: cover, then go ---------- */
   var leaving = false;
-  function go(url, ox, oy) {
+  function go(url, ox, oy, now) {
     if (leaving) return; leaving = true;
     var lb = labelFor(url), s = buildStage(url);
     s.classList.add('is-leaving'); s.style.pointerEvents = 'auto';
@@ -223,7 +231,7 @@
     var done = tiles(s, 'cover', ox, oy, T(520));
     setTimeout(function () { p.classList.add('has-sub'); writeNow(p.querySelector('.fl-plate__a')); p.classList.add('is-in'); }, T(260));
     store.set(NAVKEY, JSON.stringify({ t: Date.now(), x: ox, y: oy, a: lb.a, b: lb.b }));
-    done.then(function () { setTimeout(function () { location.href = url; }, T(260)); });
+    if (now) { location.href = url; } else done.then(function () { setTimeout(function () { location.href = url; }, T(260)); });
     setTimeout(function () { if (leaving) { leaving = false; kill(s); root.classList.remove('fl-leave'); } }, 6500);   // the page never left (blocked, cancelled): put it back
   }
   /* preview: the whole link transition (cover, then lift) without leaving the page; used by the motion lab */
@@ -238,21 +246,94 @@
     });
     setTimeout(function () { p.classList.add('has-sub'); writeNow(p.querySelector('.fl-plate__a')); p.classList.add('is-in'); }, T(260));
   };
+  API.zoomPreview = function (card, a, b) {
+    if (!card || doc.getElementById('fl-stage')) return;
+    var z0 = doc.querySelector('.fl-zoom'); if (z0) return;
+    zoomCover(card, { a: a || 'Studies', b: b || '' });
+    setTimeout(function () { var z = doc.querySelector('.fl-zoom'); if (z) { z.classList.add('is-out'); setTimeout(function () { try { z.hidePopover(); } catch (e) {} z.remove(); }, T(450)); } }, T(1500));
+  };
+  API.scrollTo = function (id) { var t = doc.getElementById(id); if (t) jump({ preventDefault: function () {} }, doc.body, new URL('#' + id, location.href)); };
   API.wipe = function (url) { go(url || location.href, .5, .5); };
   addEventListener('pageshow', function (e) {
+    if (e.persisted && pending) { pending.style.viewTransitionName = ''; pending = null; }
     if (e.persisted) { leaving = false; var s = doc.getElementById('fl-stage'); if (s) kill(s); root.classList.remove('fl-leave', 'fl-cover'); }
   });
+  /* panels that zoom: the nearest of these around a link */
+  var CARD = '.rv-feature,.rv-nfeature,.rds-card,.rv-rail__card,.rds-row,[data-morph]';
+  var pending = null;                                                 // the clicked panel, until the old page is swapped out
+  function frac(v, size) { return Math.min(1, Math.max(0, v / size)) || .5; }
+
+  /* fallback for browsers without view transitions: the panel's own picture grows to fill the screen while the next page loads (no wait added) */
+  function zoomCover(card, lb) {
+    var r = card.getBoundingClientRect(), z = el('div', 'fl-zoom'); z.setAttribute('aria-hidden', 'true');
+    var cl = card.cloneNode(true); cl.removeAttribute('id'); cl.classList.add('fl-zoom__card'); cl.style.cssText = 'margin:0;width:' + r.width + 'px;height:' + r.height + 'px;pointer-events:none;transform:none;position:absolute;left:0;top:0';
+    z.appendChild(cl);
+    var pl = plate(lb.a, lb.b, false); pl.classList.add('fl-zoom__plate'); z.appendChild(pl);
+    z.style.cssText = 'left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px';
+    if (z.popover === undefined) z.style.zIndex = 2147483001; else z.setAttribute('popover', 'manual');
+    doc.body.appendChild(z); if (z.popover !== undefined) { try { z.showPopover(); } catch (e) {} }
+    var ms = T(520), ease = getComputedStyle(root).getPropertyValue('--ease-in-out').trim() || 'cubic-bezier(.65,0,.35,1)';
+    animate(z, [{ left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', borderRadius: '16px' }, { left: '0px', top: '0px', width: innerWidth + 'px', height: innerHeight + 'px', borderRadius: '0px' }], { duration: ms, easing: ease, fill: 'forwards' });
+    animate(cl, [{ opacity: 1 }, { opacity: 0 }], { duration: ms * .55, delay: ms * .25, easing: 'ease', fill: 'forwards' });
+    setTimeout(function () { pl.classList.add('has-sub', 'is-in'); writeNow(pl.querySelector('.fl-plate__a')); }, ms * .45);
+    setTimeout(function () { if (z.parentNode) { try { z.hidePopover(); } catch (e) {} z.parentNode.removeChild(z); } }, 6500);   // the page never left: put it back
+  }
+
   doc.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
     if ((a.target && a.target !== '_self') || a.hasAttribute('download') || a.hasAttribute('data-no-flow') || a.getAttribute('rel') === 'external') return;
     var u; try { u = new URL(a.href, location.href); } catch (er) { return; }
     if (!/^(https?|file):$/.test(u.protocol) || u.origin !== location.origin) return;
-    if (u.pathname === location.pathname && u.search === location.search) return;
     if (/\.(xml|json|pdf|png|jpe?g|svg|webp|txt|zip|csv)$/i.test(u.pathname)) return;
-    e.preventDefault();
-    go(u.href, Math.min(1, Math.max(0, e.clientX / innerWidth)) || .5, Math.min(1, Math.max(0, e.clientY / innerHeight)) || .5);
+    if (u.pathname === location.pathname && u.search === location.search) { jump(e, a, u); return; }
+    var x = frac(e.clientX, innerWidth), y = frac(e.clientY, innerHeight);
+    var card = a.matches(CARD) ? a : (a.closest(CARD) || null);
+    if (card && card.closest('nav,header.rds-nav,.rv-tabbar,.rv-sheet,dialog,.rds-search')) card = null;
+    if (card) { var cr = card.getBoundingClientRect(); if (cr.width < 120 || cr.height < 40 || cr.bottom < 0 || cr.top > innerHeight) card = null; else { x = frac(cr.left + cr.width / 2, innerWidth); y = frac(cr.top + cr.height / 2, innerHeight); } }
+    var kind = card ? 'card' : 'plain', lb = labelFor(u.href);
+    if (VT) {                                                        // the browser does the transition; nothing is delayed
+      pending = card; store.set(NAVKEY, JSON.stringify({ t: Date.now(), x: x, y: y, a: lb.a, b: lb.b, kind: kind, vt: true }));
+      return;
+    }
+    if (card) {                                                      // fallback: zoom the panel while the next page loads
+      zoomCover(card, lb); store.set(NAVKEY, JSON.stringify({ t: Date.now(), x: x, y: y, a: lb.a, b: lb.b, kind: kind }));
+      return;
+    }
+    go(u.href, x, y, true);
   });
+  /* the old page names the clicked panel just before the browser captures it; the new page names its header (CSS, fl-vt-card) */
+  addEventListener('pageswap', function (e) { if (e.viewTransition && pending) { pending.style.viewTransitionName = 'fl-card'; } });
+  addEventListener('pagereveal', function (e) {
+    if (!e.viewTransition) { root.classList.remove('fl-vt', 'fl-vt-card', 'fl-vt-plain'); return; }
+    var done = function () { root.classList.remove('fl-vt', 'fl-vt-card', 'fl-vt-plain'); };
+    e.viewTransition.finished.then(done, done);
+    setTimeout(lift, root.classList.contains('fl-vt-card') ? T(430) : T(140));   // the new title starts writing as the sheet lifts / the page spreads
+  });
+
+  /* ---------- anchor jumps: an eased glide, then the heading is flagged with an ink sweep ---------- */
+  var gliding = 0;
+  function ease(k) { return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }   // same curve as --ease-in-out
+  function landed(t) { t.classList.remove('fl-landed'); void t.offsetWidth; t.classList.add('fl-landed'); if (t.classList.contains('fl-title')) API.write(t); setTimeout(function () { t.classList.remove('fl-landed'); }, 1500); }
+  function jump(e, a, u) {
+    if (!u.hash || u.hash === '#') return;
+    if (a.closest('[data-rds-toc],[data-toc],.rds-toc,.rv-tabbar,.rv-sheet,dialog,.rds-search')) return;
+    var id = decodeURIComponent(u.hash.slice(1)), t = doc.getElementById(id); if (!t) return;
+    e.preventDefault();
+    var hd = doc.querySelector('[data-rds-nav]'), sm = parseFloat(getComputedStyle(t).scrollMarginTop) || 0;
+    var y0 = pageYOffset, y1 = Math.max(0, Math.min(t.getBoundingClientRect().top + y0 - (sm || ((hd ? hd.offsetHeight : 0) + 20)), root.scrollHeight - innerHeight));
+    var dist = Math.abs(y1 - y0), ms = T(Math.min(1000, 380 + dist * .22)), t0 = null, run = ++gliding;
+    if (dist < 2) { landed(t); return; }
+    function step(now) {
+      if (run !== gliding) return;
+      if (t0 === null) t0 = now;
+      var k = Math.min(1, (now - t0) / ms); scrollTo(0, y0 + (y1 - y0) * ease(k));
+      if (k < 1) requestAnimationFrame(step);
+      else { try { history.pushState(null, '', u.hash); } catch (er) {} t.setAttribute('tabindex', t.getAttribute('tabindex') || '-1'); try { t.focus({ preventScroll: true }); } catch (er) {} landed(t); }
+    }
+    requestAnimationFrame(step);
+  }
+  ['wheel', 'touchstart', 'keydown'].forEach(function (n) { addEventListener(n, function () { gliding++; }, { passive: true }); });   // any input takes the scroll back
 
   API.intro = function () {
     if (doc.getElementById('fl-stage')) return;
@@ -290,8 +371,9 @@
     var s = null;
     if (mode === 'intro') { s = buildStage('intro-' + (Date.now() % 97)); runIntro(s); root.classList.remove('fl-cover'); }
     else if (mode === 'wipe') { s = buildStage(flag && flag.a || 'wipe'); runReveal(s); }
+    else if (mode === 'vt') setTimeout(lift, root.classList.contains('fl-vt-card') ? T(430) : T(200));
     else lift();
     headings(); sketchy();
-    if (!s) lift();
+    if (!s && mode !== 'vt') lift();
   });
 })();

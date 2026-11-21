@@ -78,5 +78,32 @@
 .fl-on :is(.rds-btn,.rds-nav__search,.rv-tabbar a):active .rds-icon{animation:fl-wiggle .4s ease}
 @keyframes fl-wiggle{30%{transform:rotate(-14deg)}60%{transform:rotate(10deg)}100%{transform:none}}
 
-@media (prefers-reduced-motion:reduce){.fl-stage,.fl-dab{display:none}}
-@media print{.fl-stage,.fl-dab{display:none}}
+/* ---------- page changes: cross-document view transitions (flow.js adds @view-transition and the fl-vt classes) ---------- */
+/* a clicked panel zooms to fill the whole screen (the browser grows its picture from its box to a full-screen sheet of paper),
+   then the sheet lifts and the new page's title writes in. --fl-d is the total length, from the site's slow duration token. */
+html.fl-vt-card{--fl-d:var(--dur-slow)}
+html.fl-vt-card::after{content:"";position:fixed;inset:0;background:var(--paper);view-transition-name:fl-card;pointer-events:none}
+::view-transition-group(fl-card){animation-duration:calc(var(--fl-d,720ms) * .62);animation-timing-function:var(--ease-in-out);overflow:clip}
+::view-transition-old(fl-card),::view-transition-new(fl-card){height:100%;width:100%;object-fit:cover;mix-blend-mode:normal}
+::view-transition-old(fl-card){animation:fl-fade-out calc(var(--fl-d,720ms) * .36) ease calc(var(--fl-d,720ms) * .14) both}
+::view-transition-new(fl-card){animation:fl-sheet var(--fl-d,720ms) ease both}
+html.fl-vt-card::view-transition-old(root){animation:fl-fade-out .01s linear calc(var(--fl-d,720ms) * .6) both}
+html.fl-vt-card::view-transition-new(root){animation:fl-fade-in .01s linear calc(var(--fl-d,720ms) * .6) both;opacity:0}
+@keyframes fl-sheet{0%{opacity:0}45%{opacity:1}68%{opacity:1}100%{opacity:0}}
+/* any other link: the new page spreads out from where you clicked, like ink soaking through paper, as its title writes in */
+html.fl-vt-plain::view-transition-old(root){animation:none}
+html.fl-vt-plain::view-transition-new(root){animation:fl-spread var(--dur-slow) var(--ease-out) both}
+@keyframes fl-spread{from{clip-path:circle(0 at var(--fl-x,50%) var(--fl-y,50%))}to{clip-path:circle(150% at var(--fl-x,50%) var(--fl-y,50%))}}
+@keyframes fl-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes fl-fade-out{to{opacity:0}}
+/* browsers without them: the panel's own picture grows to fill the screen */
+.fl-zoom{position:fixed;margin:0;padding:0;border:0;overflow:hidden;background:var(--paper-raised);z-index:2147483001;pointer-events:none;max-width:none;max-height:none;inset:auto;transition:opacity .4s ease}
+.fl-zoom.is-out{opacity:0}
+.fl-zoom .fl-plate{background:transparent}
+/* anchor jumps: the heading you land on gets an ink sweep */
+.fl-landed,.fl-landed:focus,.fl-landed:focus-visible{outline:0}
+.fl-landed{background:linear-gradient(var(--brick-tint),var(--brick-tint)) 0 88%/0 .5em no-repeat;animation:fl-land 1.5s var(--ease-out) both;border-radius:3px}
+@keyframes fl-land{0%{background-size:0 .5em;opacity:1}35%{background-size:100% .5em}80%{background-size:100% .5em}100%{background-size:100% .5em;background-color:transparent}}
+
+@media (prefers-reduced-motion:reduce){.fl-stage,.fl-dab,.fl-zoom{display:none}}
+@media print{.fl-stage,.fl-dab,.fl-zoom{display:none}}
