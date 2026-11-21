@@ -42,6 +42,7 @@ def head(depth, title, desc, extra_css='', slug=''):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="{up}assets/rds/theme.js"></script>
 <script src="{up}assets/rds/flow.js"></script>
 <title>{e(title)} | Redrawn Valley</title>
 <meta name="description" content="{e(desc)}">
@@ -52,6 +53,7 @@ def head(depth, title, desc, extra_css='', slug=''):
 <link rel="stylesheet" href="{up}assets/rds/rds.css">
 <link rel="stylesheet" href="{up}assets/rds/topics.css">
 <link rel="stylesheet" href="{up}assets/rds/skin.css">
+<link rel="stylesheet" href="{up}assets/rds/theme.css">
 </head>
 <body class="rds-page">
 <header class="rds-nav" data-rds-nav data-rv-shell="nav">

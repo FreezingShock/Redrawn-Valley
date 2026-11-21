@@ -14,6 +14,8 @@ main.rv-has-margins{position:relative;isolation:isolate}
 /* phones: very faint, big, bleeding off the edge, always behind the text */
 .rv-mf-layer.is-narrow .rv-mf__svg{opacity:.2}
 .rv-mf-layer.is-narrow .rv-mf{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 82%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 18%,#000 82%,transparent 100%)}
+/* let the art show through the sunk bands */
+main.rv-has-margins .rds-band-sunk{background:rgba(var(--sunk-rgb),.62)}
 /* wide: the layer sits ABOVE section backgrounds (the gutters have no text), so a drawing is continuous across band edges.
    narrow: it stays behind the text and margins.js keeps fragments out of tinted bands. */
 .rv-mf-layer.is-wide{z-index:6}
