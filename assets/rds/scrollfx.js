@@ -30,7 +30,7 @@
   function progress() {
     if (!bar) return;
     var h = doc.documentElement.scrollHeight - vh, p = h > 0 ? clamp(window.pageYOffset / h, 0, 1) : 0;
-    if (Math.abs(p - lastP) > .002) { bar.style.transform = 'scaleX(' + p.toFixed(4) + ')'; lastP = p; }
+    if (Math.abs(p - lastP) > .002) { bar.parentNode.style.setProperty('--p', p.toFixed(4)); lastP = p; }
   }
 
   /* ---------- figures that draw themselves ---------- */
@@ -73,7 +73,7 @@
     es.forEach(function (e) { var i = arts.indexOf(e.target); if (e.isIntersecting && i < 0) arts.push(e.target); else if (!e.isIntersecting && i >= 0) arts.splice(i, 1); });
     update();
   }, { rootMargin: '120px 0px 120px 0px' });
-  function watchArt() { all('.rds-art').forEach(function (a) { if (!a.__fxArt) { a.__fxArt = 1; artIO.observe(a); } }); }
+  function watchArt() { all('.rds-art').forEach(function (a) { if (!a.__fxArt && !a.closest('.rv-rail')) { a.__fxArt = 1; artIO.observe(a); } }); }
   function parallax() {
     arts.forEach(function (a) {
       var r = a.getBoundingClientRect(), c = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2), v = clamp(c, -1, 1);
@@ -124,5 +124,5 @@
   function scan() { watchArt(); watchCounts(); watchRise(); update(); }
   scan();
   window.addEventListener('load', scan);
-  new MutationObserver(function () { watchArt(); }).observe(doc.body, { childList: true, subtree: true });
+  var moT = 0; new MutationObserver(function () { if (moT) return; moT = setTimeout(function () { moT = 0; watchArt(); }, 200); }).observe(doc.body, { childList: true, subtree: true });
 })();

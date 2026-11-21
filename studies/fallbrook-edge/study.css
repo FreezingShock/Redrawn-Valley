@@ -1,0 +1,36 @@
+/* Study 02 (Fallbrook Edge): page styles. Drawing classes are the same as study 01's generated block; figures come from scripts/fallbrook_art.py. */
+.fb-scrolly{width:min(1120px,100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;gap:32px 56px;align-items:flex-start}
+.fb-scrolly>figure{flex:2.2 1 520px;min-width:0;margin:0;position:sticky;top:128px}
+.fb-frame{position:relative;aspect-ratio:1000 / 640;border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-lg);background:var(--paper-raised);overflow:hidden}
+.fb-frame svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.fb-frame--wide{aspect-ratio:1000 / 480}
+.fb-cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 24px;margin-top:12px;font-family:var(--font-mono);font-size:13px;line-height:20px;color:var(--ink-faint)}
+.fb-steps{flex:1 1 260px;min-width:0}
+.fb-steps .kstep{min-height:340px;padding-block:28px 40px;box-sizing:border-box;background:var(--rv-rule-ink) repeat-x 0 0/240px 10px}
+.fb-steps .kstep>div{font-family:var(--font-mono);font-size:13px;color:var(--ink-faint);margin-bottom:8px}
+.fb-steps .kstep h3{font-family:var(--font-serif);font-weight:500;font-size:26px;line-height:1.3;margin:0 0 8px}
+.fb-steps .kstep p{margin:0;color:var(--ink-muted);max-width:44ch}
+.fb-fig{width:min(1120px,100% - 48px);margin:var(--space-8) auto 0}
+.fb-today{transition:opacity .7s ease}
+[data-st="1"] .fb-today,[data-st="2"] .fb-today,[data-st="3"] .fb-today,[data-st="4"] .fb-today{opacity:.28}
+.fb-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-6) var(--space-8);margin:var(--space-6) 0 0}
+.fb-stats b{display:block;font-family:var(--font-serif);font-weight:500;font-size:34px;line-height:1.1;color:var(--ink)}
+.fb-stats span{font-family:var(--font-mono);font-size:13px;line-height:20px;color:var(--ink-faint)}
+@media (max-width:640px){.fb-scrolly>figure{position:static;flex-basis:100%}.fb-steps .kstep{min-height:0;padding-block:20px}.fb-frame svg text{font-size:13px}}
+.ts-fig{--dl-ink:var(--pencil);--dl-moss:var(--moss);--dl-brick:var(--brick);--dl-slate:var(--slate);--dl-tree:var(--moss-tint);--dl-sand:var(--paper-sunk);--dl-text:var(--pencil);--dl-glass:var(--paper-raised);--dl-water:var(--slate);--dl-cool:var(--paper-raised)}
+.ts-fig--bp{--dl-ink:var(--draft-line);--dl-moss:var(--draft-line);--dl-brick:var(--draft-line);--dl-slate:var(--draft-line);--dl-tree:var(--draft-line);--dl-sand:var(--draft-line);--dl-text:var(--draft-line);--dl-glass:var(--draft-line);--dl-water:var(--draft-line);--dl-cool:var(--draft-line)}
+.dk{fill:none;stroke:var(--dl-ink);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.dk-b{stroke-width:2.2}.dk-f{stroke-width:.8;opacity:.55}.dk-d{stroke-dasharray:6 5}
+.dk-m{stroke:var(--dl-moss)}.dk-r{stroke:var(--dl-brick)}.dk-s{stroke:var(--dl-slate)}
+.df-t{fill:var(--dl-tree);opacity:.75}.df-sand{fill:var(--dl-sand);opacity:.9}.df-w{fill:var(--dl-water);opacity:.18}.df-cool{fill:var(--dl-cool);opacity:.55}
+.df-p{opacity:.9}.df-dot{fill:var(--dl-moss)}.df-awn{fill:var(--dl-brick);opacity:.78}.df-glass{fill:var(--dl-glass);opacity:.7}.df-sky{fill:var(--dl-glass);opacity:.0}
+.ts-fig--bp .df-t{opacity:.13}.ts-fig--bp .df-sand{opacity:.16}.ts-fig--bp .df-w{opacity:.2}.ts-fig--bp .df-cool{opacity:.12}.ts-fig--bp .df-awn{opacity:.3}.ts-fig--bp .df-glass{opacity:.12}
+.dt{fill:var(--dl-text);font-family:var(--font-hand);font-size:11px;letter-spacing:.03em}
+.dt-xs{font-size:9px}.dt-s{font-size:10px}.dt-m{font-size:12.5px}.dt-l{font-size:13px}.dt-r{fill:var(--dl-brick)}.dt-g{fill:var(--dl-moss)}
+.op3{opacity:.3}.op4{opacity:.4}.op45{opacity:.45}.op5{opacity:.5}.op6{opacity:.6}.op8{opacity:.8}
+
+/* base page rules (the template's ts-N classes are stagger hooks only, so the page sets its own base) */
+.rv-study [data-rds-root]{background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:26px;-webkit-font-smoothing:antialiased;overflow-x:clip}
+.rv-study .rv-sec__body,.rv-study .rv-sec__body li{font-family:var(--font-sans);font-size:16px;line-height:26px}
+.rv-study .rv-sec__body ul{padding-left:20px;margin:0 0 20px}
+.rv-study .rv-article-head__main>.rds-view{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;font-family:var(--font-mono);font-size:13px;color:var(--ink-faint)}

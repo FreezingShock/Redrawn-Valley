@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../assets/rds/flow.js?v=bc72dc9ff2"></script>
+<title>How the site moves: opening, wipes and handwriting | Lab notes | Redrawn Valley</title>
+<meta name="description" content="Every page now opens with a drawing, changes with a tile wipe, writes its headings in by hand and answers a click with a pencil dab. What I built, why, what it costs, and a live demo.">
+<meta name="rv-topics" content="making">
+<link rel="preload" href="../../assets/fonts/shantell-sans.d8e1c0ce.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/figtree.233cd99b.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts/fonts.5cd73cf4.css?v=5cd73cf47b">
+<link rel="stylesheet" href="../../assets/rds/tokens.css?v=9c4882d763">
+<link rel="stylesheet" href="../../assets/rds/rds.css?v=40f5ec4017">
+<link rel="stylesheet" href="../../assets/rds/notes.css?v=b0187e9ea7">
+<link rel="stylesheet" href="../../assets/rds/lab.css?v=864d102dfa">
+<link rel="stylesheet" href="../../assets/rds/skin.css?v=3978ef2d4c">
+</head>
+<body class="rds-page">
+<div class="rv-progress" data-rv-progress aria-hidden="true"><i></i></div>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav">
+<a class="rds-nav__brand" href="../../index.html">Redrawn Valley</a>
+</header>
+<main id="main">
+<div class="rds-container"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
+<aside class="rds-toc" data-rds-toc aria-label="Contents"><nav><div class="rds-toc__count"><b data-rds-toc-count>01</b> / 05</div><a href="#why"><i></i><span>Why the site moves</span></a><a href="#built"><i></i><span>What plays, and when</span></a><a href="#decisions"><i></i><span>The decisions I made</span></a><a href="#lab"><i></i><span>The live demo</span></a><a href="#limits"><i></i><span>What I could not verify</span></a></nav></aside>
+<article>
+<header class="rv-ehead"><div class="rds-container"><div class="rv-ehead__inner">
+<div class="rv-ehead__kicker"><a class="rds-link rds-link--quiet" href="../index.html">&larr; Lab notes</a><span class="rds-tag rds-tag--brick">Motion</span></div>
+<h1 class="rds-display">How the site moves: opening, wipes and handwriting</h1>
+<p class="rds-lead" data-rds-reveal style="--i:1">The site used to animate only when you scrolled. Now it opens with a drawing, changes pages with a wipe of paper tiles, writes its headings in by hand and answers every click. Here is how that works, what I decided and what it costs.</p>
+<p class="rv-byline"><span>By <b>Nate Anderson</b></span><span>Nov. 21, 2026</span><span>5 min read</span><span>5 sources</span><span>Lab 5 of 6</span></p>
+</div></div></header>
+<div class="rds-container"><div class="rv-tiles rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="lab/motion-lab" data-topic="motion flow" aria-hidden="true"></div></div>
+<div class="rv-body" data-rv-body><div class="rds-container">
+<section id="why" aria-labelledby="why-h">
+<h2 id="why-h"><span class="rv-num">01</span>Why the site moves</h2>
+<p>The site is made of sketches, and a sketch has a before and after: lines appear, then fill in. Pages that just snap from one to the next throw that away. I wanted every moment of waiting (the first load, a reload, a link click) to be a small drawing instead of a blank flash, and I wanted headings to look written rather than printed.</p>
+<p>The references pushed the same way. The tile collages, grid circles and squares from the reference sheets already work as flat, cut-out shapes, which makes them easy to move: a tile can grow, spin and shrink without any new art.</p>
+<dl class="rds-facts rv-wide"><div><dt>things that play, in kinds</dt><dd>4</dd></div><div><dt>opening length, my setting</dt><dd>1.5 s</dd></div><div><dt>page wipe, cover plus lift</dt><dd>about 1.3 s</dd></div><div><dt>script added to each page, one file</dt><dd>1</dd></div></dl>
+</section>
+<section id="built" aria-labelledby="built-h">
+<h2 id="built-h"><span class="rv-num">02</span>What plays, and when</h2>
+<ol class="rds-checklist">
+<li><b>The opening.</b> On the first visit of a browser session, and on every reload, a sheet of paper tiles covers the page. The logo draws itself, &ldquo;Redrawn Valley&rdquo; writes in, a tagline fades up, and the tiles shrink away from the center. It never blocks clicks on the page underneath, and a tap skips ahead.</li>
+<li><b>The page wipe.</b> Following a link covers the page with tiles that grow outward from where you clicked, with the name of the section you are going to written on them. The next page lifts the same tiles from the same spot, so the two pages feel like one move.</li>
+<li><b>Handwritten headings.</b> The page title writes in letter by letter, each letter bouncing on the Wobble font&rsquo;s bounce axis before it settles, with a pencil squiggle drawn under it. Section headings do the same as they scroll into view.<sup class="rv-fn"><a href="#n1" aria-label="Source 1">1</a></sup></li>
+<li><b>Small answers.</b> A click or tap leaves a quick pencil burst. Links get a wavy underline that sweeps in. Buttons spring and squish. Rows slide and their icons tilt. Rules draw on, and figures get crop marks in their corners for a moment.</li>
+</ol>
+<p>Back and forward buttons skip the opening and the wipe, because showing an animation on a page you are returning to feels slow.</p>
+</section>
+<section id="decisions" aria-labelledby="decisions-h">
+<h2 id="decisions-h"><span class="rv-num">03</span>The decisions I made</h2>
+<div class="rds-decisions rv-wide">
+<article class="rds-decision"><h3>Build the wipe myself instead of using the browser&rsquo;s page transitions</h3><p>The View Transition API can fade between pages with almost no code, but it is newer, so older browsers get nothing, and it only crossfades snapshots.<sup class="rv-fn"><a href="#n2" aria-label="Source 2">2</a></sup> A script that covers the page, remembers where you clicked, and lifts the cover on the next page works the same everywhere and can show tiles in our own colors.</p><p class="rds-decision__cost"><b>Cost</b>Each navigation waits about 0.8 s before the next page starts to load, a delay the browser&rsquo;s own transition would not add.</p></article>
+<article class="rds-decision"><h3>Paint a paper sheet before anything else</h3><p>The script sits in the head and adds one CSS rule that paints paper over the page before the first frame, so there is no flash of unstyled content. A three second failsafe removes the sheet if anything goes wrong.</p><p class="rds-decision__cost"><b>Cost</b>It is a blocking script, though a small one, and it hides the page during the opening.</p></article>
+<article class="rds-decision"><h3>Hold the sheet in the top layer</h3><p>The tiles live in a manual popover, which browsers draw above everything including open dialogs, so a link chosen from the search dialog is still covered.<sup class="rv-fn"><a href="#n3" aria-label="Source 3">3</a></sup> Browsers without popovers fall back to a very high z-index.</p><p class="rds-decision__cost"><b>Cost</b>A top-layer sheet cannot be hidden by page code once it is open, so the failsafe has to remove it.</p></article>
+<article class="rds-decision"><h3>Animate tiles with the Web Animations API</h3><p>Over a hundred tiles need staggered delays that depend on their distance from the click. Setting those per tile in code is simpler than generating CSS, and only transforms animate, so the browser can run them on the graphics card.<sup class="rv-fn"><a href="#n4" aria-label="Source 4">4</a></sup></p><p class="rds-decision__cost"><b>Cost</b>On a very slow phone a hundred animated tiles may drop frames. I have not measured that.</p></article>
+<article class="rds-decision"><h3>Turn everything off for reduced motion</h3><p>Under the reduced-motion setting none of this runs: no opening, no wipe, no dab, and headings stay plain text. Large movement across the whole screen is the kind of motion that setting exists to avoid.<sup class="rv-fn"><a href="#n5" aria-label="Source 5">5</a></sup> Embed frames inside lab articles are off too, so a frame never covers its own article.</p><p class="rds-decision__cost"><b>Cost</b>Those visitors never see the opening drawing.</p></article>
+</div>
+</section>
+<section id="lab" aria-labelledby="lab-h">
+<h2 id="lab-h"><span class="rv-num">04</span>The live demo</h2>
+<p>Replay the opening, try the wipe from three starting points, write a heading again, click the grid for the pencil dab and change the speed. The effects play inside the frame, so they cover only the frame.</p>
+<figure class="rds-demo rv-wide" data-rds-reveal>
+<div class="rds-demo__bar"><span class="rds-tag rds-tag--brick">Live demo</span><a href="../../lab/motion-lab/demo/index.html">Open it as its own page <span class="rds-arrow">&rarr;</span></a></div>
+<iframe class="rds-demo__frame" src="../../lab/motion-lab/demo/index.html" title="The motion lab, embedded" loading="lazy" style="--demo-h:980px;--demo-h-m:1180px"></iframe>
+<figcaption>Every effect on the site, one button each.</figcaption>
+</figure>
+</section>
+<section id="limits" aria-labelledby="limits-h"><h2 id="limits-h"><span class="rv-num">05</span>What I could not verify</h2>
+<aside class="rds-callout rds-callout--plain" role="note"><div><p class="rds-callout__title">Limits of this lab</p><ul><li>All timings (1.5 s, 0.5 s, 0.8 s) are my own settings, tuned by eye on a desktop and a phone-size window. I did not measure frame rate on real phones.</li><li>I tested in one Chromium build. Safari and Firefox should run it, since it uses long-standing APIs, but I have not seen it there.</li><li>Each letter of a heading is its own element, and I gave each heading an accessible label with its full text. I have not tried it with a screen reader.</li></ul></div></aside>
+</section>
+<div class="rv-divider" aria-hidden="true"></div>
+<footer class="rv-sources" id="sources"><h2>Sources</h2>
+<ol>
+<li id="n1">Google Fonts. Shantell Sans, for the INFM and BNCE axes. <a href="https://fonts.google.com/specimen/Shantell+Sans" rel="noopener">https://fonts.google.com/specimen/Shantell+Sans</a>.</li>
+<li id="n2">MDN Web Docs. &ldquo;View Transition API.&rdquo; <a href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API</a>.</li>
+<li id="n3">MDN Web Docs. &ldquo;Popover API.&rdquo; <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/Popover_API</a>.</li>
+<li id="n4">MDN Web Docs. &ldquo;Web Animations API.&rdquo; <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API</a>.</li>
+<li id="n5">W3C. &ldquo;Understanding Success Criterion 2.3.3: Animation from Interactions.&rdquo; <a href="https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html" rel="noopener">https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html</a>.</li>
+</ol>
+<p class="rv-sources__foot">Links listed Nov. 21, 2026; I did not re-read them in full for this note. Timings and judgments are mine.</p></footer>
+</div></div>
+</article>
+<section class="rds-section rds-band-sunk rv-after"><div class="rds-container"><div class="rds-sechead"><p class="rds-eyebrow">Keep reading</p><h2 class="rds-h1">More from the lab</h2></div>
+<div class="rds-rows">
+<a class="rds-row" href="../pattern-sheet/index.html"><div><span class="rds-tag rds-tag--brick">Patterns</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-leaf"/></svg>How every page got its own drawing</h3><p class="rds-row__text">The banners on this site are generated from a seed. How I went from a folder of reference sheets to fourteen original motifs, what I decided, and a live lab where you can reroll one.</p></div></a>
+<a class="rds-row" href="../icon-set/index.html"><div><span class="rds-tag rds-tag--brick">Icons</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-pin"/></svg>Thirty-eight icons and a logo, drawn as lists of points</h3><p class="rds-row__text">How the hand-drawn icon set and the ridgeline logo were made, why the first version was thrown out, and the rules that keep new icons consistent.</p></div></a>
+<a class="rds-row" href="../type-lab/index.html"><div><span class="rds-tag rds-tag--brick">Type</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-notes"/></svg>Choosing a hand for the type</h3><p class="rds-row__text">Forty-six font entries screened for license, accents, size and legibility, six type directions built from them, and three ways to write text in. The research, the verdict and the live lab.</p></div></a>
+<a class="rds-row" href="../sources-library/index.html"><div><span class="rds-tag rds-tag--brick">Sources</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-footnote"/></svg>The sources library: every citation, found by script</h3><p class="rds-row__text">How every numbered note on the site is read, merged and made searchable, with jump links to the exact sentence. 5 min read.</p></div></a>
+</div>
+<p class="rds-small" style="margin-top:var(--space-6)"><a class="rds-link" href="../index.html">All lab notes <span class="rds-arrow">&rarr;</span></a></p></div></section>
+</main>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
+<script src="../../assets/rds/rds.js?v=cb4c4c2a17"></script>
+<script src="../../assets/rds/notes.js?v=f4de62ac6b"></script>
+<script src="../../assets/rds/lab.js?v=09df8db12f"></script>
+<script src="../../assets/rds/mobile.js?v=6e4771835c"></script>
+<script src="../../assets/rds/motifs.js?v=5ba47f1edd" defer></script>
+<script src="../../assets/rds/loops.js?v=f68298b88d" defer></script>
+<script src="../../assets/site-shell.js?v=bc806bb206"></script>
+<script src="../../assets/rds/sketch.js?v=6025410beb" defer></script>
+<script src="../../assets/rds/interact.js?v=e3845bb421" defer></script>
+</body>
+</html>

@@ -3,17 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../assets/rds/flow.js?v=bc72dc9ff2"></script>
 <meta name="robots" content="noindex">
 <title>[STUDY NAME] | Redrawn Valley</title>
 <meta name="description" content="[ONE SENTENCE: the place, the question, and the finding]">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Architects+Daughter&display=swap">
-<link rel="stylesheet" href="../../assets/rds/tokens.css">
-<link rel="stylesheet" href="../../assets/rds/rds.css">
-<link rel="stylesheet" href="../../assets/studies.css">
+<link rel="preload" href="../../assets/fonts/shantell-sans.d8e1c0ce.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/figtree.233cd99b.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts/fonts.5cd73cf4.css?v=5cd73cf47b">
+<link rel="stylesheet" href="../../assets/rds/tokens.css?v=9c4882d763">
+<link rel="stylesheet" href="../../assets/rds/rds.css?v=40f5ec4017">
+<link rel="stylesheet" href="../../assets/studies.css?v=3a3f60d715">
 <link rel="stylesheet" href="study.css">
-<link rel="stylesheet" href="../../assets/rds/skin.css">
+<link rel="stylesheet" href="../../assets/rds/skin.css?v=3978ef2d4c">
 </head>
 <!--
   STUDY TEMPLATE. How to use it: see DESIGN.md > Studies.
@@ -28,11 +29,11 @@
 <div data-rds-root class="ts-1">
 
 <!-- Top bar. data-toc makes the part tabs mark the current part (aria-current). -->
+<header class="rds-nav" data-rds-nav data-rv-shell="nav"><a class="rds-nav__brand" href="../../index.html">Redrawn Valley</a></header>
 <header id="top" class="rv-study-bar">
-<nav data-toc aria-label="Parts">
+<nav class="ktabs" data-toc aria-label="Parts">
 <a class="rv-study-bar__brand" href="#top">[STUDY NAME]</a>
-<a class="rv-study-bar__back" href="../index.html">&larr; All studies</a>
-<a href="#part1">Site</a><a href="#part2">Evidence</a><a href="#part3">Design</a><a href="#part4">Delivery</a><a href="#sources">Sources</a><a href="#" data-rv-search-open>Search</a>
+<a href="#part1">Site</a><a href="#part2">Evidence</a><a href="#part3">Design</a><a href="#part4">Delivery</a><a href="#sources">Sources</a>
 </nav>
 </header>
 
@@ -49,6 +50,7 @@
 </nav></div>
 
 <!-- Article head: title block + infobox. The infobox is the encyclopedic summary; fill every row. -->
+<div class="rds-loop-host" data-rds-loop="ridge" data-seed="study-template">
 <header class="rv-article-head">
 <div class="rv-article-head__main">
 <div class="rds-view ts-3">
@@ -68,24 +70,26 @@
 <div><dt>Focus</dt><dd>[HEAT, SHADE, STORMWATER, SEATING: WHICHEVER APPLY]</dd></div>
 <div><dt>Methods</dt><dd><ul><li>[HOW THE SITE WAS READ]</li><li>[HOW EVIDENCE WAS FOUND]</li><li>[WHAT RULES WERE CHECKED]</li><li>[WHAT WAS DRAWN]</li></ul></dd></div>
 <div><dt>Status</dt><dd>Concept study. Not commissioned by the owner.</dd></div>
-<div><dt>By</dt><dd>Nathan [Last name]</dd></div>
+<div><dt>By</dt><dd>Nate Anderson</dd></div>
 <div><dt>Date</dt><dd>[DATE]</dd></div>
 <!-- Field guide terms: plain <span class="rv-term"> until /guide/ has the entry, then <a class="rv-term" href="../../guide/index.html#slug">. -->
 <div><dt>Field guide</dt><dd><div class="rv-infobox__tags"><span class="rv-term" data-term="[TERM-SLUG]">[Term]</span><span class="rv-term" data-term="[TERM-SLUG]">[Term]</span></div></dd></div>
 </dl>
 <div class="rv-infobox__foot">[N] sections &middot; 4 parts &middot; <a href="#sources">[N] sources</a></div>
 </aside>
-</header>
-
-<!-- What is real / estimated. Required on every study. -->
-<section class="rv-sec ts-9">
+<div class="rv-article-head__note">
 <div class="rds-callout rds-view">
 <p class="rds-callout__title">What is real here</p>
 <p>[WHAT COMES FROM A SOURCE OR AN OBSERVATION, WITH CITATIONS]</p>
 <p class="rds-callout__title ts-10">What is estimated</p>
 <p>[EVERY NUMBER YOU SCALED, GUESSED OR ASSUMED, AND HOW FAR OFF IT MIGHT BE]</p>
 </div>
-</section>
+</div>
+</header>
+</div>
+
+<!-- What is real / estimated. Required on every study. -->
+
 
 <!-- PART 1 -->
 <div id="part1" class="rv-part"><div class="rv-part__bar"><span class="rv-part__n">Part 1 of 4</span><span class="rv-part__name">The site</span><span class="rv-part__sub">What is there</span></div></div>
@@ -166,10 +170,12 @@
 
 <footer class="rds-footer" data-rv-shell="footer"></footer>
 </div>
-<script src="../../assets/studies.js"></script>
-<script src="../../assets/rds/mobile.js"></script>
-<script src="../../assets/rds/motifs.js" defer></script>
-<script src="../../assets/site-shell.js"></script>
-<script src="../../assets/rds/sketch.js" defer></script>
+<script src="../../assets/studies.js?v=47f3636eac"></script>
+<script src="../../assets/rds/mobile.js?v=6e4771835c"></script>
+<script src="../../assets/rds/motifs.js?v=5ba47f1edd" defer></script>
+<script src="../../assets/rds/loops.js?v=f68298b88d" defer></script>
+<script src="../../assets/site-shell.js?v=bc806bb206"></script>
+<script src="../../assets/rds/sketch.js?v=6025410beb" defer></script>
+<script src="../../assets/rds/interact.js?v=e3845bb421" defer></script>
 </body>
 </html>

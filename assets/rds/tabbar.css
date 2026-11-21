@@ -1,0 +1,51 @@
+/* Redrawn Design System: phone tab bar. Markup comes from site-shell.js (tabbar()), behavior from tabbar.js.
+   Phones only (max 640px); every value is a token (tokens.css). See DESIGN.md > Tab bar.
+   Pieces: .rv-tabbar (bar) > .rv-tabbar__edge (hand-drawn top line), .rv-tabbar__mark (sketched loop that glides to the
+   current tab), .rv-tab (a link or button) > .rv-tab__ico (line-drawn svg) + .rv-tab__label, .rv-tab__dab (pencil ring on tap). */
+@media (max-width:640px){
+  .rv-tabbar{position:fixed;inset:auto 0 0 0;z-index:var(--z-chrome);display:grid;grid-template-columns:repeat(5,1fr);height:calc(var(--rv-tab) + var(--rv-safe));padding-bottom:var(--rv-safe);background:var(--paper);--tab-i:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  .rv-tabbar__edge{position:absolute;left:0;right:0;top:calc(var(--tab-edge-stroke) * -2);width:100%;height:calc(var(--tab-edge-stroke) * 4);overflow:visible;pointer-events:none;fill:none;stroke:var(--edge);stroke-width:var(--tab-edge-stroke);stroke-linecap:round}
+
+  /* the sketched loop: one element, slid under the current tab (--tab-i), redrawn each time it lands */
+  .rv-tabbar__mark{position:absolute;left:0;top:0;width:calc(100% / 5);height:var(--rv-tab);display:flex;justify-content:center;align-items:flex-start;padding-top:calc((var(--rv-tab) - var(--tab-icon) - 16px) / 2 + var(--tab-icon) / 2 - var(--tab-mark-h) / 2);pointer-events:none;opacity:0;transform:translateX(calc(var(--tab-i) * 100%));transition:opacity var(--dur-quick) var(--ease-out)}
+  .rv-tabbar__mark[data-on]{opacity:1}
+  .rv-tabbar__mark[data-still]{transition:none}
+  .rv-tabbar__mark.is-slide{transition:opacity var(--dur-quick) var(--ease-out),transform var(--dur-base) var(--ease-spring)}
+  .rv-tabbar__mark svg{width:var(--tab-mark-w);height:var(--tab-mark-h);overflow:visible;fill:none;stroke:var(--brick);stroke-width:var(--tab-stroke);stroke-linecap:round;stroke-linejoin:round}
+  .rv-tabbar__wash{fill:var(--brick-tint);stroke:none}
+  .rv-tabbar__loop{stroke-dasharray:1 1.1;stroke-dashoffset:0}
+  .rv-tabbar__mark.is-draw .rv-tabbar__loop{animation:rv-tab-draw var(--dur-medium) var(--ease-reveal) both}
+  .rv-tabbar__mark.is-draw .rv-tabbar__wash{animation:rv-tab-wash var(--dur-base) var(--ease-out) both}
+
+  /* cells */
+  .rv-tabbar .rv-tab{appearance:none;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;min-width:0;min-height:44px;padding:calc((var(--rv-tab) - var(--tab-icon) - 16px) / 2) 0 0;border:0;border-radius:0;background:none;color:var(--ink-muted);font:500 var(--fs-11)/14px var(--rds-sans);letter-spacing:.01em;text-decoration:none;cursor:pointer;position:relative;overflow:hidden;-webkit-user-select:none;user-select:none}
+  .rv-tabbar .rv-tab[aria-current]{color:var(--brick);font-weight:600}
+  .rv-tab__ico{position:relative;display:block;width:var(--tab-icon);height:var(--tab-icon);transition:transform var(--dur-base) var(--ease-spring)}
+  .rv-tab__svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:var(--tab-stroke);stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+  .rv-tab__svg path{stroke-dasharray:1 1.1;stroke-dashoffset:0}
+  .rv-tab__svg .rv-tab__acc{stroke:currentColor}
+  .rv-tab[aria-current] .rv-tab__ico{color:var(--ink);transform:translateY(var(--tab-lift))}
+  .rv-tab[aria-current] .rv-tab__acc{stroke:var(--brick)}
+  .rv-tab__label{display:block;max-width:100%;overflow:hidden;text-overflow:clip;white-space:nowrap;transition:transform var(--dur-base) var(--ease-spring)}
+
+  /* line-draw: the icon's strokes draw on again each time its tab becomes current (the accent stroke a beat later) */
+  .rv-tab.is-draw .rv-tab__svg path{animation:rv-tab-draw var(--dur-medium) var(--ease-reveal) both}
+  .rv-tab.is-draw .rv-tab__svg .rv-tab__acc{animation-delay:var(--dur-fast)}
+
+  /* press: the icon squashes and tilts under the thumb, then springs back; a pencil ring spreads from the touch point */
+  .rv-tab.is-pressed .rv-tab__ico{transform:scale(var(--tab-press-scale)) rotate(var(--tab-press-tilt));transition-duration:var(--dur-fast);transition-timing-function:var(--ease-out)}
+  .rv-tab.is-pressed .rv-tab__label{transform:translateY(1px)}
+  .rv-tab__dab{position:absolute;top:calc(var(--rv-tab) / 2 - var(--tab-dab) / 2);width:var(--tab-dab);height:var(--tab-dab);margin-left:calc(var(--tab-dab) / -2);border:var(--tab-edge-stroke) solid var(--ink-faint);border-radius:50%;pointer-events:none;animation:rv-tab-dab var(--dur-slow) var(--ease-out) both}
+  .rv-tabbar .rv-tab:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+}
+@keyframes rv-tab-draw{from{stroke-dashoffset:1.05}to{stroke-dashoffset:0}}
+@keyframes rv-tab-wash{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes rv-tab-dab{from{opacity:.7;transform:scale(.3)}to{opacity:0;transform:scale(1.5)}}
+@media (prefers-reduced-motion:reduce){
+  .rv-tabbar__mark,.rv-tabbar__mark.is-slide,.rv-tab__ico,.rv-tab__label{transition:none}
+  .rv-tabbar__mark.is-draw .rv-tabbar__loop,.rv-tabbar__mark.is-draw .rv-tabbar__wash,.rv-tab.is-draw .rv-tab__svg path,.rv-tab__dab{animation:none}
+  .rv-tab__dab{display:none}
+  .rv-tab.is-pressed .rv-tab__ico{transform:none}
+  .rv-tab.is-pressed{background:var(--paper-sunk)}
+}
+@media print{.rv-tabbar{display:none}}

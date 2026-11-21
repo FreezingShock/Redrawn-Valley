@@ -5,19 +5,21 @@ Run: python3 scripts/build_index.py          (writes assets/search-index.json, s
 Every page with a <title> is indexed except 404.html and anything marked <meta name="robots" content="noindex">.
 CI regenerates the index on integration, so a page PR does not need to commit it."""
 import re, sys, json, pathlib, datetime
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from places import place_entry, places_json
 from html.parser import HTMLParser
 
 root = pathlib.Path(__file__).resolve().parent.parent
 # Production domain for sitemap.xml. Change here if the domain changes.
 SITE_URL = 'https://redrawnvalley.vercel.app'
-SECTIONS = {'': 'Home', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'about': 'About'}
+SECTIONS = {'': 'Home', 'a-z': 'A–Z index', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'map': 'Valley map', 'topics': 'Topics', 'log': 'Sketchbook log', 'about': 'About', 'sitemap': 'Sitemap', 'sources': 'Sources'}
 SKIP_TAGS = {'script', 'style', 'svg', 'noscript', 'nav', 'footer', 'template'}
 TEXT_CAP = 6000
 
 class Page(HTMLParser):
     def __init__(s):
         super().__init__(convert_charrefs=True)
-        s.title = ''; s.desc = ''; s.noindex = False
+        s.title = ''; s.desc = ''; s.noindex = False; s.meta = {}
         s.heads = []; s.text = []; s.skip = 0; s.stack = []
         s.in_title = False; s.cur = None
     def handle_starttag(s, tag, attrs):
@@ -25,6 +27,7 @@ class Page(HTMLParser):
         if tag == 'meta':
             n = (a.get('name') or '').lower()
             if n == 'description': s.desc = a.get('content', '')
+            if n.startswith('rv-'): s.meta[n] = a.get('content', '')
             if n == 'robots' and 'noindex' in (a.get('content') or ''): s.noindex = True
         if tag == 'title': s.in_title = True
         shell = tag == 'header' and ('data-rds-nav' in a or 'data-rv-shell' in a)
@@ -47,11 +50,13 @@ class Page(HTMLParser):
         s.text.append(d)
 
 def build():
-    pages, urls = [], []
+    pages, urls, places = [], [], []
     for f in sorted(root.rglob('*.html')):
         rel = f.relative_to(root)
         if any(p in ('.git', 'node_modules') for p in rel.parts) or rel.name == '404.html': continue
-        p = Page(); p.feed(f.read_text(encoding='utf-8'))
+        src = f.read_text(encoding='utf-8')
+        if rel.as_posix() == 'a-z/index.html': src = re.sub(r'<!-- atlas:start.*?<!-- atlas:end -->', '', src, flags=re.S)   # generated list: not indexed twice
+        p = Page(); p.feed(src)
         if p.noindex or not p.title.strip(): continue
         url = '' if rel.as_posix() == 'index.html' else (rel.parent.as_posix() + '/' if rel.name == 'index.html' else rel.as_posix())
         sec = url.split('/')[0] if '/' in url else ('' if url == '' else url.rsplit('.', 1)[0])
@@ -60,17 +65,37 @@ def build():
         h1 = next((h for h in p.heads if h['l'] == 1), None)
         entry = {'u': url, 't': title, 's': sec, 'd': re.sub(r'\s+', ' ', p.desc).strip(),
                  'h': [[h['t'], h['id']] for h in p.heads if h['l'] > 1 or h is not h1][:60], 'x': text[:TEXT_CAP]}
-        pages.append(entry); urls.append((url, f.stat().st_mtime))
+        # page metadata scheme (DESIGN.md > Topics): rv-topics = slugs from assets/topics.json, first is primary
+        known = {t['slug'] for t in json.loads((root / 'assets/topics.json').read_text(encoding='utf-8'))['topics']}
+        k = [x for x in (t.strip().lower() for t in p.meta.get('rv-topics', '').split(',')) if x]
+        for x in k:
+            if x not in known: print(f'warning: {rel.as_posix()}: unknown topic "{x}" (add it to assets/topics.json)', file=sys.stderr)
+        if k: entry['k'] = [x for x in k if x in known]
+        if p.meta.get('rv-place'): entry['pl'] = p.meta['rv-place'].strip()
+        g = re.match(r'^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$', p.meta.get('rv-geo', ''))
+        if g: entry['g'] = [float(g.group(1)), float(g.group(2))]
+        pages.append(entry); urls.append((url, f.stat().st_mtime)); places.append(place_entry(url, sec, title, entry['d'], p.meta))
     pages.sort(key=lambda e: (e['u'] != '', e['s'], e['u']))
     labels = {k: v for k, v in SECTIONS.items()}
     for e in pages: labels.setdefault(e['s'], e['s'].replace('-', ' ').title())
-    index = json.dumps({'sections': labels, 'pages': pages}, ensure_ascii=False, separators=(',', ':')) + '\n'
     today = datetime.date.today().isoformat()
+    # 'updated' feeds the footer's "Last updated" stamp. It moves to today only when the indexed content changes,
+    # so --check stays stable on days when nothing was edited.
+    body = {'sections': labels, 'pages': pages}
+    prev = {}
+    try: prev = json.loads((root / 'assets/search-index.json').read_text(encoding='utf-8'))
+    except Exception: pass
+    updated = prev.get('updated') if all(prev.get(k) == body[k] for k in body) else today
+    index = json.dumps({'updated': updated or today, **body}, ensure_ascii=False, separators=(',', ':')) + '\n'
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u, _ in urls: sm.append(f'  <url><loc>{SITE_URL}/{u}</loc></url>')
     sm.append('</urlset>')
-    return {'assets/search-index.json': index, 'sitemap.xml': '\n'.join(sm) + '\n',
-            'robots.txt': f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n'}
+    topics = json.loads((root / 'assets/topics.json').read_text(encoding='utf-8'))['topics']
+    out = {'assets/places.json': places_json(places, topics), 'assets/search-index.json': index, 'sitemap.xml': '\n'.join(sm) + '\n',
+           'robots.txt': f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n'}
+    import build_atlas                                   # the A-Z index is generated from the same pages
+    out.update(build_atlas.build()[0])
+    return out
 
 if __name__ == '__main__':
     out = build(); stale = []

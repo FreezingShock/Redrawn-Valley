@@ -41,7 +41,36 @@
   function openSheet(title, node) {
     buildSheet(); sheetTitle.textContent = title; sheetBody.innerHTML = ''; sheetBody.appendChild(node);
     sheetBody.scrollTop = 0;
-    if (!sheet.open) sheet.showModal();
+    if (!sheet.open) { sheet.showModal(); doc.documentElement.classList.add('rds-lock'); }
+  }
+
+  /* ---------- sheets: drag the handle or header down to dismiss (touch and pen); the sheet follows the finger and a quick flick closes it ---------- */
+  function sheetSwipe() {
+    var s = null;
+    function reset(d) { d.classList.remove('is-drag', 'is-away'); d.style.transform = ''; }
+    doc.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' || e.button) return;
+      var h = e.target.closest && e.target.closest('.rv-sheet__grab,.rv-sheet__head'); if (!h || e.target.closest('button')) return;
+      var d = h.closest('dialog.rv-sheet'); if (!d || !d.open) return;
+      s = { d: d, y: e.clientY, id: e.pointerId, dy: 0, v: 0, t: performance.now(), ly: e.clientY };
+      d.classList.add('is-drag'); try { h.setPointerCapture(e.pointerId); } catch (er) { }
+    });
+    doc.addEventListener('pointermove', function (e) {
+      if (!s || e.pointerId !== s.id) return;
+      var now = performance.now(), dy = e.clientY - s.y;
+      dy = dy < 0 ? dy * .15 : dy;                                  // a little give upward, none needed downward
+      s.v = (e.clientY - s.ly) / Math.max(1, now - s.t); s.t = now; s.ly = e.clientY; s.dy = dy;
+      s.d.style.transform = 'translateY(' + dy.toFixed(1) + 'px)';
+    });
+    function end(e) {
+      if (!s || e.pointerId !== s.id) return;
+      var d = s.d, away = s.dy > Math.min(140, d.offsetHeight * .3) || s.v > .6;
+      s = null; d.classList.remove('is-drag');
+      if (!away) { d.style.transform = ''; return; }
+      d.classList.add('is-away'); d.style.transform = 'translateY(100%)';
+      setTimeout(function () { d.close(); reset(d); }, mq('(prefers-reduced-motion: reduce)') ? 0 : 200);
+    }
+    doc.addEventListener('pointerup', end); doc.addEventListener('pointercancel', end);
   }
 
   /* ---------- contents: pill + sheet ---------- */
@@ -75,7 +104,7 @@
       tEl.textContent = items[cur].text;
       var first = doc.getElementById(items[0].id), ft = doc.querySelector('.rds-footer'), y = win.pageYOffset;
       var past = first && first.getBoundingClientRect().top < win.innerHeight * 0.5;
-      var atFooter = ft && ft.getBoundingClientRect().top < win.innerHeight - 40;
+      var rl = doc.querySelector('.rv-rail'), atFooter = ((rl || ft) && (rl || ft).getBoundingClientRect().top < win.innerHeight - 40); /* the pill also steps aside for the Keep reading rail */
       pill.classList.toggle('is-on', !!past && !atFooter && y > 300);
     }
     win.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
@@ -150,6 +179,6 @@
     if ('MutationObserver' in win) new MutationObserver(follow).observe(nav, { attributes: true, subtree: true, attributeFilter: ['aria-current'] });
   }
 
-  function init() { bar(); footnotes(); collapse(); contents(); studyTabs(); }
+  function init() { bar(); sheetSwipe(); footnotes(); collapse(); contents(); studyTabs(); }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
 })();
