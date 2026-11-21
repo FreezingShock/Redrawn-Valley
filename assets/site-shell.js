@@ -171,13 +171,14 @@
     });
     return res.sort(function (a, b) { return b.score - a.score; }).slice(0, 10);
   }
+  function clean(t) { return String(t || '').replace(/\s*[|\u2013-]\s*(Notes|Field guide|Studies|Redrawn Valley)\s*$/i, '').replace(/\s*#\s*$/, ''); }
   function row(r, i, ts) {
     var p = r.p, h = r.h, url = href(p.u) + (h ? '#' + h[1] : '');
     var dl = (p.d || '').toLowerCase(), body = r.snip != null ? r.snip : (ts.some(function (t) { return dl.indexOf(t) >= 0; }) || !p.x ? p.d || '' : p.x);
     current.push({ href: url });
     return '<li role="option" id="rv-r' + i + '" aria-selected="false"><a href="' + esc(url) + '" tabindex="-1">' +
       '<span class="rds-tag">' + esc((DATA.sections || LABELS)[p.s] || p.s) + '</span>' +
-      '<span class="rds-search__title">' + mark(h ? h[0] : p.t, ts) + '</span>' +
+      '<span class="rds-search__title">' + mark(clean(h ? h[0] : p.t), ts) + '</span>' +
       (h ? '<span class="rds-search__crumb">in ' + esc(p.t) + '</span>' : '<span class="rds-search__text">' + mark(snippet(body, ts), ts) + '</span>') + '</a></li>';
   }
   function run(q) {
