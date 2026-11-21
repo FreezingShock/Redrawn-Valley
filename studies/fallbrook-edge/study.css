@@ -1,6 +1,6 @@
 /* Study 02 (Fallbrook Edge): page styles. Drawing classes are the same as study 01's generated block; figures come from scripts/fallbrook_art.py. */
 .fb-scrolly{width:min(1120px,100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;gap:32px 56px;align-items:flex-start}
-.fb-scrolly>figure{flex:2.2 1 520px;min-width:0;margin:0;position:sticky;top:88px}
+.fb-scrolly>figure{flex:2.2 1 520px;min-width:0;margin:0;position:sticky;top:128px}
 .fb-frame{position:relative;aspect-ratio:1000 / 640;border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-lg);background:var(--paper-raised);overflow:hidden}
 .fb-frame svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .fb-frame--wide{aspect-ratio:1000 / 480}
