@@ -317,3 +317,9 @@ One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>`
 - **Micro-interactions**: pencil dab on click (`.fl-dab`), wavy link underline, spring buttons, tilting cards and rows, logo hop, rules that draw on and figure crop marks (`.fl-sk`).
 - **Off** under `prefers-reduced-motion`, in `?embed=1` frames, print, and with `?noflow`. A 5 s failsafe always removes the sheet.
 - **API**: `RVFlow.intro()`, `RVFlow.preview(a, b, x, y)`, `RVFlow.wipe(url)`, `RVFlow.write(el)`, `RVFlow.speed`. Tile colors are the art accents; tile art is the grid circle and hatched square from the motif system.
+
+## Nav wash and hero buttons
+
+- **Nav**: `rds-nav` is a hand-washed paper band: brick and moss tints over paper with a deckled hairline lower edge (`::before` and `::after` in `skin.css` Part 4). The page-wide "no shadows" rule has one more exception here: a soft `drop-shadow` under the deckled edge once the page scrolls. The active section keeps the brick hand rule and goes bold. Search is the header's main action: ink fill with the pencil offset.
+- **Hero buttons**: primary `rv-cta` draws its outline, fills brick, then its arrow draws, flies off and a new one settles in (hover repeats it). Secondary `rv-textlink` is ink text with a drawn rule and arrow. Brick appears once, on the primary. All of it is CSS only and skipped under reduced motion.
+- **Compare slider**: a mouse moving over the picture moves the line with no click; leaving restores the chosen view. Touch keeps swipe and drag.
