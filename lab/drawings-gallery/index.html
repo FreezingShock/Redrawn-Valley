@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../assets/rds/flow.js?v=75d8ae29e1"></script>
+<title>How the drawings gallery finds every figure | Lab notes | Redrawn Valley</title>
+<meta name="description" content="How one script and one page collect every labeled figure from the studies and notes into a filterable, zoomable sheet, without a list anyone has to keep up to date.">
+<meta name="rv-topics" content="making">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Architects+Daughter&display=swap">
+<link rel="stylesheet" href="../../assets/rds/tokens.css?v=a0b8fda906">
+<link rel="stylesheet" href="../../assets/rds/rds.css?v=25d66e0968">
+<link rel="stylesheet" href="../../assets/rds/notes.css?v=76fbe65cac">
+<link rel="stylesheet" href="../../assets/rds/lab.css?v=2715716817">
+<link rel="stylesheet" href="../../assets/rds/skin.css?v=27c82c82b2">
+</head>
+<body class="rds-page">
+<div class="rv-progress" data-rv-progress aria-hidden="true"><i></i></div>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav">
+<a class="rds-nav__brand" href="../../index.html">Redrawn Valley</a>
+</header>
+<main id="main">
+<div class="rds-container"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
+<aside class="rds-toc" data-rds-toc aria-label="Contents"><nav><div class="rds-toc__count"><b data-rds-toc-count>01</b> / 05</div><a href="#why"><i></i><span>Why the drawings needed one sheet</span></a><a href="#process"><i></i><span>How a figure gets found</span></a><a href="#decisions"><i></i><span>The decisions I made</span></a><a href="#lab"><i></i><span>The live gallery</span></a><a href="#limits"><i></i><span>What I could not verify</span></a></nav></aside>
+<article>
+<header class="rv-ehead"><div class="rds-container"><div class="rv-ehead__inner">
+<div class="rv-ehead__kicker"><a class="rds-link rds-link--quiet" href="../index.html">&larr; Lab notes</a><span class="rds-tag rds-tag--brick">Drawings</span></div>
+<h1 class="rds-display" data-rds-reveal>How the drawings gallery finds every figure</h1>
+<p class="rds-lead" data-rds-reveal style="--i:1">The studies and notes hold 24 labeled drawings spread over 8 pages. A short script finds them, and one page draws them side by side, so a new figure shows up without anyone editing a list.</p>
+<p class="rv-byline"><span>By <b>Nate Anderson</b></span><span>Nov. 21, 2026</span><span>5 min read</span><span>2 sources</span><span>Lab 6</span></p>
+</div></div></header>
+<div class="rds-container"><div class="rv-tiles rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="lab/drawings-gallery" data-topic="drawings gallery making" aria-hidden="true"></div></div>
+<div class="rv-body" data-rv-body><div class="rds-container">
+<section id="why" aria-labelledby="why-h">
+<h2 id="why-h"><span class="rv-num">01</span>Why the drawings needed one sheet</h2>
+<p>The drawings are the part of this site I care about most, and they were hidden in long pages. To compare the Topanga plan with the Fallbrook plan you had to open two studies and scroll. I wanted one place where every plan, section, sketch and chart sits next to the others at the same size.</p>
+<p>I did not want a second list to maintain. A hand-kept gallery goes stale the first time I add a figure and forget to add its entry. So the rule became: if a figure is described for screen readers, it is in the gallery.</p>
+<dl class="rds-facts rv-wide"><div><dt>drawings found today</dt><dd>24</dd></div><div><dt>pages they come from</dt><dd>8</dd></div><div><dt>lines of data I write per new figure</dt><dd>0</dd></div><div><dt>copies of any drawing</dt><dd>0</dd></div></dl>
+<p>The counts are from <code>assets/drawings.json</code> as built on Nov. 21, 2026. They will be higher by the time you read this.</p>
+</section>
+<section id="process" aria-labelledby="process-h">
+<h2 id="process-h"><span class="rv-num">02</span>How a figure gets found</h2>
+<p>A figure counts if it is an inline SVG inside the page body, has <code>role="img"</code> and an <code>aria-label</code>, is at least 360 units wide, and is not marked <code>aria-hidden</code>. I borrowed that test from the zoom button I had already built, so anything you can zoom on a page is something the gallery lists. Banners, infobox sketches and icons are decorative and hidden from screen readers, so they never appear.</p>
+<p><code>scripts/build_drawings.py</code> walks the studies, notes and field guide, applies the test, and writes only metadata: the page, the order of the figure on it, its description, its caption, the nearest section heading and the stages of any staged plan. That file is small (about 14 KB for 24 drawings) because it holds no artwork.</p>
+<p>The gallery page then loads the source page and lifts the figure out of it. Each drawing is placed in a shadow root along with the stylesheets of the page it came from, which keeps the Topanga linework looking like Topanga and the notes charts looking like notes charts, even though their class names collide. Cards load as they scroll near the screen.</p>
+<p>Type and topic are guessed. The type comes from words in the description, then the caption (a plan, a section, a perspective, a chart, otherwise a diagram). The topic uses the same topic slugs as the topic hubs, limited to the topics the page is already tagged with. A figure can override either guess with <code>data-fig-type</code> or <code>data-fig-topics</code>.</p>
+</section>
+<section id="decisions" aria-labelledby="decisions-h">
+<h2 id="decisions-h"><span class="rv-num">03</span>The decisions I made</h2>
+<div class="rds-decisions rv-wide">
+<article class="rds-decision"><h3>Store metadata, draw from the source page</h3><p>Copying the SVG into the data file would have been faster to load, but the Topanga study alone is over 500 KB of markup and every copy would drift from its page. Drawing from the source means a fix to a figure shows up in the gallery at once.</p><p class="rds-decision__cost"><b>Cost</b>The gallery fetches each source page it needs, so the first visit downloads more than a thumbnail list would.</p></article>
+<article class="rds-decision"><h3>Use a shadow root for each drawing</h3><p>The studies style their figures with generated class names that differ from page to page. A shadow root keeps each page&rsquo;s styles with its own figure, so nothing needed renaming. Browsers document this isolation in MDN&rsquo;s guide to shadow DOM.<sup class="rv-fn"><a href="#n1" aria-label="Source 1">1</a></sup></p><p class="rds-decision__cost"><b>Cost</b>Each card loads its own copy of the page stylesheets, which the browser caches but still has to parse.</p></article>
+<article class="rds-decision"><h3>Reuse the zoom lightbox, add three controls</h3><p>The lightbox already handled pinch, drag and keyboard zoom, so I added previous and next, a stage stepper for staged plans, and a &ldquo;View on page&rdquo; link instead of building another viewer.</p><p class="rds-decision__cost"><b>Cost</b>The gallery now depends on one function in <code>interact.js</code> that accepts a prebuilt element.</p></article>
+<article class="rds-decision"><h3>Filters that show counts and keep state in the address</h3><p>Every chip shows how many drawings it would leave, so you never click into an empty result. The filters live in the URL, and <code>#drawing-id</code> opens one drawing, so a drawing can be linked to.</p><p class="rds-decision__cost"><b>Cost</b>Counts are recalculated on every change, which is fine at 24 drawings and would need thought at a few thousand.</p></article>
+<article class="rds-decision"><h3>Load cards as they near the screen</h3><p>Only cards close to the viewport fetch and draw, using an intersection observer.<sup class="rv-fn"><a href="#n2" aria-label="Source 2">2</a></sup> Cards ease in once, and under reduced motion they simply appear.</p><p class="rds-decision__cost"><b>Cost</b>Fast scrolling can outrun the loading, so a card may show a hatched placeholder for a moment.</p></article>
+</div>
+</section>
+<section id="lab" aria-labelledby="lab-h">
+<h2 id="lab-h"><span class="rv-num">04</span>The live gallery</h2>
+<p>This is the real gallery, limited to the first six drawings. Try a filter, then open a drawing and step through a staged plan.</p>
+<figure class="rds-demo rv-wide" data-rds-reveal>
+<div class="rds-demo__bar"><span class="rds-tag rds-tag--brick">Live demo</span><a href="../../drawings/index.html">Open all drawings <span class="rds-arrow">&rarr;</span></a></div>
+<iframe class="rds-demo__frame" src="../../drawings/index.html?embed=1&limit=6" title="The drawings gallery, embedded" loading="lazy" data-fit="auto" style="--demo-h:1500px;--demo-h-m:2400px"></iframe>
+<figcaption>The gallery as it runs on the site, six drawings at a time.</figcaption>
+</figure>
+</section>
+<section id="limits" aria-labelledby="limits-h"><h2 id="limits-h"><span class="rv-num">05</span>What I could not verify</h2>
+<aside class="rds-callout rds-callout--plain" role="note"><div><p class="rds-callout__title">Limits of this lab</p><ul><li>Type and topic are keyword guesses and I checked them by eye on the 24 drawings I have. A new figure with unusual wording could be mislabeled until I set <code>data-fig-type</code>.</li><li>The staged-plan stepper depends on how the study pages mark their steps. A new page that stages a figure in another way would show only its last stage.</li><li>I tested in a current Chromium browser and at 375 and 1280 pixels wide. I did not test Safari or Firefox, and shadow roots with linked stylesheets are the part I would check first.</li><li>The gallery needs JavaScript. Without it, a link sends you to the studies and notes.</li></ul></div></aside>
+</section>
+<div class="rv-divider" aria-hidden="true"></div>
+<footer class="rv-sources" id="sources"><h2>Sources</h2>
+<ol>
+<li id="n1">MDN Web Docs. &ldquo;Using shadow DOM.&rdquo; <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM</a>. Describes shadow DOM as hiding a tree&rsquo;s internals from the page&rsquo;s scripts and styles.</li>
+<li id="n2">MDN Web Docs. &ldquo;Intersection Observer API.&rdquo; <a href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API</a>. Names lazy-loading of content on scroll as a use.</li>
+</ol>
+<p class="rv-sources__foot">Both links viewed Nov. 21, 2026. Counts come from the site&rsquo;s own build; design choices and limits are mine.</p></footer>
+</div></div>
+</article>
+<section class="rds-section rds-band-sunk rv-after"><div class="rds-container"><div class="rds-sechead"><p class="rds-eyebrow">Keep reading</p><h2 class="rds-h1">More from the lab</h2></div>
+<div class="rds-rows">
+<a class="rds-row" href="../pattern-sheet/index.html"><div><span class="rds-tag rds-tag--brick">Patterns</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-leaf"/></svg>How every page got its own drawing</h3><p class="rds-row__text">The banners on this site are generated from a seed. How I went from a folder of reference sheets to fourteen original motifs, what I decided, and a live lab where you can reroll one.</p></div></a>
+<a class="rds-row" href="../icon-set/index.html"><div><span class="rds-tag rds-tag--brick">Icons</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-pin"/></svg>Thirty-eight icons and a logo, drawn as lists of points</h3><p class="rds-row__text">How the hand-drawn icon set and the ridgeline logo were made, why the first version was thrown out, and the rules that keep new icons consistent.</p></div></a>
+<a class="rds-row" href="../type-lab/index.html"><div><span class="rds-tag rds-tag--brick">Type</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-notes"/></svg>Choosing a hand for the type</h3><p class="rds-row__text">Forty-six font entries screened for license, accents, size and legibility, six type directions built from them, and three ways to write text in. The research, the verdict and the live lab.</p></div></a>
+</div>
+<p class="rds-small" style="margin-top:var(--space-6)"><a class="rds-link" href="../index.html">All lab notes <span class="rds-arrow">&rarr;</span></a></p></div></section>
+</main>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
+<script src="../../assets/rds/rds.js?v=cb4c4c2a17"></script>
+<script src="../../assets/rds/notes.js?v=f4de62ac6b"></script>
+<script src="../../assets/rds/lab.js?v=c365746247"></script>
+<script src="../../assets/rds/mobile.js?v=6e4771835c"></script>
+<script src="../../assets/rds/motifs.js?v=b2905aca08" defer></script>
+<script src="../../assets/rds/loops.js?v=120d9d79a4" defer></script>
+<script src="../../assets/site-shell.js?v=9c89f50302"></script>
+<script src="../../assets/rds/sketch.js?v=6025410beb" defer></script>
+<script src="../../assets/rds/interact.js?v=2954d82d25" defer></script>
+</body>
+</html>

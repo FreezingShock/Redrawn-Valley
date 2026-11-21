@@ -49,7 +49,8 @@
     { label: 'Topics', url: 'topics/', icon: 'tree', note: 'Heat, trees, water and more, across every page' },
     { label: 'A\u2013Z index', url: 'a-z/', icon: 'contents', note: 'Every term, place, source and drawing' },
     { label: 'Sources', url: 'sources/', icon: 'footnote', note: 'Every citation, and where it is used' },
-    { label: 'Sketchbook log', url: 'log/', icon: 'contents', note: 'Everything new, by date' }
+    { label: 'Sketchbook log', url: 'log/', icon: 'contents', note: 'Everything new, by date' },
+    { label: 'Drawings', url: 'drawings/', icon: 'ruler', note: 'Every figure on one filterable, zoomable sheet' }
   ];
   var ABOUT = [
     { label: 'About', url: 'about/', icon: 'info', note: 'Who draws this, and why' },
@@ -61,10 +62,10 @@
     { label: 'Studies', url: 'studies/', kind: 'studies', icon: 'studies', blurb: 'Site studies of small places, redrawn.', max: 4, all: 'All studies' },
     { label: 'Field guide', url: 'guide/', kind: 'guide', icon: 'guide', blurb: 'Terms and ideas, one page each.', max: 6, all: 'All entries' },
     { label: 'Notes', url: 'notes/', kind: 'notes', icon: 'notes', blurb: 'Short essays with the evidence shown.', max: 5, all: 'All notes' },
-    { label: 'Explore', id: 'explore', icon: 'search', blurb: 'Find things by topic, term, source or date.', items: EXPLORE, sections: ['topics', 'a-z', 'sources', 'log', 'map', 'gallery'] },
+    { label: 'Explore', id: 'explore', icon: 'search', blurb: 'Find things by topic, term, source or date.', items: EXPLORE, sections: ['topics', 'a-z', 'sources', 'log', 'map', 'drawings'] },
     { label: 'About', url: 'about/' }
   ];
-  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', topics: 'Topics', log: 'Sketchbook log', about: 'About', sitemap: 'Sitemap', sources: 'Sources', 'a-z': 'A\u2013Z index' };
+  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', topics: 'Topics', log: 'Sketchbook log', drawings: 'Drawings', about: 'About', sitemap: 'Sitemap', sources: 'Sources', 'a-z': 'A\u2013Z index' };
   var sitePath = new URL(siteRoot).pathname;
   var rel = decodeURIComponent(location.pathname.slice(sitePath.length)).replace(/index\.html$/, '');
   var section = rel.split('/')[0];
