@@ -53,7 +53,7 @@
 
 /* ---------- title write-on: letters ink in along the Wobble axes ---------- */
 .fl-on .fl-title .fl-w{display:inline-block;white-space:nowrap}
-.fl-on .fl-title>.fl-t{min-width:0}
+.fl-on .fl-title>.fl-tx{min-width:0}
 .fl-on .fl-title .fl-c{display:inline-block;opacity:0}
 .fl-on .fl-title.fl-go .fl-c{opacity:1;animation:fl-ink .62s var(--ease-out,var(--ease-out)) backwards;animation-delay:calc(var(--c,0) * var(--fl-step,24ms))}
 .fl-on .fl-title.fl-instant .fl-c{animation:none;opacity:1}
