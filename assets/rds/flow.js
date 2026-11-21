@@ -14,7 +14,7 @@
      write-on headings: the page title is written in letter by letter on the Wobble axes; section headings write in as they arrive,
               each with a pencil squiggle that draws underneath.
    Also: a pencil dab where you click, and hand-drawn rules that draw on. Styles are in flow.css (loaded by this script); lengths, tilt and
-   edges are --flow-* tokens in tokens.css. Force a kind on a link with data-flow="turn:1" (direction after the colon); opt out with
+   edges are --flow-* tokens in tokens.css. Same-page #links glide (eased, any input cancels) and the heading you land on gets an ink sweep. Force a kind on a link with data-flow="turn:1" (direction after the colon); opt out with
    data-no-flow. Off for prefers-reduced-motion, embed frames (?embed=1, iframes), print and ?noflow. Nothing breaks without it; a 3 second
    failsafe always removes the sheet.
    API: window.RVFlow = { intro(), wipe(url, kind?), preview(kind, a, b, x, y, dir), write(el), kinds, enabled, speed }. See DESIGN.md "Flow". */
@@ -420,10 +420,35 @@
     if (/\.(xml|json|pdf|png|jpe?g|svg|webp|txt|zip|csv)$/i.test(u.pathname)) return null;
     return u;
   }
+
+  /* ---------- anchor jumps (from the earlier panel-zoom work): an eased glide, then the heading gets an ink sweep ---------- */
+  var gliding = 0;
+  function bez(k) { return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }   // the --ease-in-out curve
+  function landed(t) { t.classList.remove('fl-landed'); void t.offsetWidth; t.classList.add('fl-landed'); if (t.classList.contains('fl-title')) API.write(t); setTimeout(function () { t.classList.remove('fl-landed'); }, tn('--dur-long', 1200)); }
+  function jump(e, a, u) {
+    if (!u.hash || u.hash === '#' || a.closest('[data-rds-toc],[data-toc],.rds-toc,.rv-tabbar,.rv-sheet,dialog,.rds-search')) return;
+    var t = doc.getElementById(decodeURIComponent(u.hash.slice(1))); if (!t) return;
+    e.preventDefault();
+    var hd = doc.querySelector('[data-rds-nav]'), sm = parseFloat(getComputedStyle(t).scrollMarginTop) || 0;
+    var y0 = pageYOffset, y1 = Math.max(0, Math.min(t.getBoundingClientRect().top + y0 - (sm || ((hd ? hd.offsetHeight : 0) + 20)), root.scrollHeight - innerHeight));
+    var dist = Math.abs(y1 - y0), ms = T(Math.min(tn('--dur-slower', 900) + 100, tn('--dur-base', 320) + 60 + dist * .22)), t0 = null, run = ++gliding;
+    if (dist < 2) { landed(t); return; }
+    function step(now) {
+      if (run !== gliding) return;
+      if (t0 === null) t0 = now;
+      var k = Math.min(1, (now - t0) / ms); scrollTo(0, y0 + (y1 - y0) * bez(k));
+      if (k < 1) requestAnimationFrame(step);
+      else { try { history.pushState(null, '', u.hash); } catch (er) {} t.setAttribute('tabindex', t.getAttribute('tabindex') || '-1'); try { t.focus({ preventScroll: true }); } catch (er) {} landed(t); }
+    }
+    requestAnimationFrame(step);
+  }
+  ['wheel', 'touchstart', 'keydown'].forEach(function (n) { addEventListener(n, function () { gliding++; }, { passive: true }); });   // any input takes the scroll back
+
   doc.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
-    var u = eligible(a); if (!u) return;
+    var u = eligible(a);
+    if (!u) { try { var h = new URL(a.href, location.href); if (h.origin === location.origin && h.pathname === location.pathname && h.search === location.search) jump(e, a, h); } catch (er) {} return; }
     e.preventDefault();
     go(u.href, choose(a, u, e));
   });

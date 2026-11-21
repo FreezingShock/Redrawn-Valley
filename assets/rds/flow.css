@@ -46,6 +46,11 @@
 /* fade */
 .fl-flat{background:var(--paper)}
 
+/* anchor jumps: the heading you land on gets an ink sweep */
+.fl-landed,.fl-landed:focus,.fl-landed:focus-visible{outline:0}
+.fl-landed{background:linear-gradient(var(--brick-tint),var(--brick-tint)) 0 88%/0 .5em no-repeat;animation:fl-land var(--dur-long) var(--ease-out) both;border-radius:var(--radius-sm)}
+@keyframes fl-land{0%{background-size:0 .5em}35%,80%{background-size:100% .5em}100%{background-size:100% .5em;background-color:transparent}}
+
 /* ---------- title write-on: letters ink in along the Wobble axes ---------- */
 .fl-on .fl-title .fl-w{display:inline-block;white-space:nowrap}
 .fl-on .fl-title .fl-c{display:inline-block;opacity:0}
