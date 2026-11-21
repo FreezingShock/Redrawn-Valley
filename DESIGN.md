@@ -251,12 +251,12 @@ Seeded generative art in the recipe of the reference contact sheets (kept in the
 - **Seed**: same `data-seed` gives the same drawing, so every guide entry and note has its own composition. Use the page slug. `data-topic` biases palette and motifs (shade and trees lean moss and canopy plans; water and rain lean slate, contours and flow; heat and pavement lean brick, halftone and rulers; soil leans ochre and bars). Pages without a topic use the full set.
 - **Rules from the references**: 2 to 4 flat colours plus ink and paper per image; a field colour is never reused within one banner when avoidable; the grid sits on the shape, not the field; ink line weight is constant per drawing; no text on a randomised fill (the only text is mono labels on the ruler and plan, which are decorative).
 - **Live drift**: only while the art is at least 10% on screen, the tab is visible and `prefers-reduced-motion` is not set. Every 5 to 10 seconds one tile shifts: its field colour crossfades (1.4s), a disc morphs to a rounded square, an inset square grows, overlapping circles spread, the protractor needle swings, a big icon crossfades to another, bars rescale. Shapes also drift a few pixels and the compass and ruler sway. Under reduced motion the art is static.
-- **No JS**: the container stays empty and hides (`.rds-art:empty`). The three index banners keep their pre-rendered SVG as a fallback.
+- **No JS**: the container stays empty and hides (`.rds-art:empty`). Without JS the banner is simply absent.
 - **API**: `RDSArt.render(el, {kind, seed, topic})`, `RDSArt.reroll(el)`, `RDSArt.motifs`, `RDSArt.palette`.
 - **Adding a motif**: add a function `M.name = function (w, h, rnd, ctx)` in `motifs.js` returning `{svg, uses, pale?, shift?}`. Draw in local coordinates; use `var(--token)` for every colour; put `m-drift` or `m-sway` on groups that should move; add its transitions to the Motifs block in `rds.css`. Then add it to a topic's list.
 - **Pattern sheet**: `/patterns/` shows every motif, the palette and a seed lab (seed, topic, layout, reroll, pause). Check new motifs there first.
 - **Pencil filter**: `sketch.js` skips anything inside `.rds-art`; the filter breaks blended and oversized shapes.
-- The old pre-rendered banners (`scripts/art_tiles.py`) remain as the fallback on the three index pages.
+- `scripts/art_tiles.py` draws the old static banner. It only refreshes a static banner already on a page and never adds one; the three index pages now use the live banner alone.
 
 ## Looping backgrounds (`assets/rds/loops.js`, `loops.css`)
 
