@@ -31,7 +31,7 @@ Rules: brick = do something / look here; moss = links, trees, proposed changes; 
 
 ## Typography
 
-Fonts (Google Fonts, loaded in the page `<head>`): **Shantell Sans** (variable; the `--font-serif`, `--font-sans` and `--font-hand` tokens all point at it, chosen from the type lab at `/fonts/`) and **IBM Plex Mono** (captions, figure labels, meta, citations, numbers). Shantell has no italic file, so italics are medium-weight roman. Roles are told apart by weight and the `INFM` axis (informality): 100 for titles, headings and UI lettering, 15 for reading text (set on `.rds-page`). The `BNCE` axis makes the wordmark wobble on hover. The type layer is the last block of `skin.css`; the size column below is the pre-Wobble spec, the layer shrinks reading text to 17.5/30 and display sizes by about 10 to 15%.
+Three voices (self-hosted Latin subsets in `assets/fonts/`, see Font files below; decision recorded in `/lab/type-lab/#decisions`): **Shantell Sans** (`--font-display`, variable, axes INFM at 100 and BNCE) for display only: H1, H2, the wordmark, pull quotes and big numerals. **Figtree** (`--font-sans`, `--font-serif`) for everything read or pressed: body, lead, H3, card and row titles, nav, buttons, and all labels, which are sentence-case 600-weight text with no tracking and no all-caps (no tiny tracked eyebrows, tags or infobox keys). **DM Mono** (`--font-num`) only for numerals, citation markers and code, tabular and plain case. **Caveat** (`--font-hand`) only for scribbled annotations (`rds-note`, the home flip hint, drawing notes). `--font-mono` now points at Figtree so legacy meta text is sans; use `--font-num` when a number really needs mono. Rule of thumb: if a string is not a title, a note or a number, it is Figtree. No italic file is loaded, so italics become medium roman. The type layer is the last block of `skin.css`; the size column below is the older spec, the layer sets reading text at 18/30.
 
 | Class | Spec |
 |---|---|
@@ -42,11 +42,13 @@ Fonts (Google Fonts, loaded in the page `<head>`): **Shantell Sans** (variable; 
 | `rds-prose` | serif 19/31, max 68ch; first paragraph 24/36; supports h2, blockquote (italic 30px, top rule), ul, code |
 | `rds-eyebrow` | sans 600 12px caps, +0.08em tracking, muted; sits above every section headline |
 | `rds-small`, `rds-mono` | 14/22 sans, 14/22 mono |
-| `rds-note` (+ `--moss`, `--ink`) | Architects Daughter 18px, rotated -2deg, with optional arrow svg; margin annotations on drawings |
+| `rds-note` (+ `--moss`, `--ink`) | Caveat 700 (`--font-hand`), rotated -2deg, with optional arrow svg; margin annotations on drawings |
 | `rds-mark` | brick hand-drawn highlighter under a word, animates in; use on one phrase per page |
 | `rds-circle` | brick hand-drawn circle around a word |
 
 Headlines are sentences that state the finding ("Soil, not trees, is the hard part"), not labels.
+
+**Font files** (`scripts/build_fonts.py`, run by `regen.py`, checked by `check.py`). Fonts are self-hosted, not loaded from Google: Latin subsets (Basic Latin, Latin-1, common punctuation) of the four OFL families in `scripts/data/fonts/`, written to `assets/fonts/<name>.<hash>.woff2` plus `fonts.<hash>.css` (the `@font-face` rules). Hashed names are cached for a year as immutable (`vercel.json`); a changed font is a new URL. Shantell Sans keeps wght 400-700, INFM 70-100 and BNCE -100..100 (90 KB); Figtree is a 16 KB variable file; DM Mono is the 400 weight only (7.5 KB); Caveat is pinned to 700 (49 KB). Every page head carries two preloads (Shantell, Figtree) and one stylesheet link, and nothing else: Caveat and DM Mono are not preloaded, because a browser fetches a face only when text on the page uses it. Do not hand-edit the font links in a page head and do not write a `font-family` literal in component CSS: use `--font-display`, `--font-sans`, `--font-num`, `--font-hand`. Arrows like the up-right arrow in "Open the source" are not in these subsets and fall back to the system font. To change a family or weight, edit `scripts/build_fonts.py` (`--subset` rebuilds the sources from Google's files) and re-run it. The type lab (`/fonts/`) still loads its own candidate families from Google on purpose.
 
 ## Spacing, radius, layout, motion
 

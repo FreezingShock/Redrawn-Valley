@@ -5,32 +5,23 @@
   <link rel="self" type="application/atom+xml" href="https://redrawnvalley.vercel.app/log/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/"/>
   <id>https://redrawnvalley.vercel.app/log/</id>
-  <updated>2026-11-21T08:31:15+00:00</updated>
+  <updated>2026-11-21T08:38:18+00:00</updated>
   <author><name>Nate Anderson</name></author>
   <entry>
-    <title>Valley map: pannable hand-drawn map of the Valley with pins from page metadata, lab article, nav links, docs</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-b18dec4</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-b18dec4"/>
-    <updated>2026-11-21T08:31:15+00:00</updated>
+    <title>Self-host the type: Latin subsets, hashed immutable files, preload display and body only</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-db65f60</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-db65f60"/>
+    <updated>2026-11-21T08:38:18+00:00</updated>
     <category term="site" label="Site"/>
-    <content type="html">&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/&quot;&gt;Lab notes&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+    <content type="html">&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/a-z/&quot;&gt;A–Z index&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/&quot;&gt;Field guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
   <entry>
-    <title>Valley map: engine, page, places generator, lab article (WIP)</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-ba742a2</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-ba742a2"/>
-    <updated>2026-11-21T08:22:14+00:00</updated>
-    <category term="lab" label="Lab note"/>
-    <content type="html">&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/valley-map/&quot;&gt;Drawing the Valley as a map you can pan&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/map/&quot;&gt;Valley map&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/san-fernando-valley/&quot;&gt;San Fernando Valley&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/shade-equity/&quot;&gt;Shade equity&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Add moonlit dark theme: token swap, sun/moon switch, circle reveal, lab article</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-66</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-66"/>
-    <updated>2026-11-21T00:30:54-08:00</updated>
-    <category term="lab" label="Lab note"/>
-    <summary>How the dark theme was made as a token swap: orange-black paper, cream ink, brick turned moonlit turquoise, contrast checked to WCAG AA, and the circle reveal that switches it on.</summary>
-    <content type="html">&lt;p&gt;How the dark theme was made as a token swap: orange-black paper, cream ink, brick turned moonlit turquoise, contrast checked to WCAG AA, and the circle reveal that switches it on.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/dark-theme/&quot;&gt;A moonlit dark theme, and the circle that switches it on&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/a-z/&quot;&gt;A–Z index&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/&quot;&gt;Field guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+    <title>Three-voice type: Shantell display only, Figtree body/UI, Caveat annotations, DM Mono numerals; labels to sentence-case sans</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-462b76c</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-462b76c"/>
+    <updated>2026-11-21T08:27:54+00:00</updated>
+    <category term="site" label="Site"/>
+    <content type="html">&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/a-z/&quot;&gt;A–Z index&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/&quot;&gt;Field guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
   <entry>
     <title>Vercel: build only main and integration; skip preview builds for other branches</title>
@@ -339,5 +330,14 @@
     <category term="redraw" label="Redraw"/>
     <summary>The plan and perspective drawings now come from a generator driven by the cited dimensions.</summary>
     <content type="html">&lt;p&gt;The plan and perspective drawings now come from a generator driven by the cited dimensions.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Topanga drawings use design tokens</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-24</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-24"/>
+    <updated>2026-11-20T14:42:50-08:00</updated>
+    <category term="redraw" label="Redraw"/>
+    <summary>Replaced inline SVG styles and hex colours with token classes. Geometry and labels did not change.</summary>
+    <content type="html">&lt;p&gt;Replaced inline SVG styles and hex colours with token classes. Geometry and labels did not change.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
 </feed>

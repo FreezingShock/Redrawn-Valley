@@ -99,17 +99,19 @@
   --radius-md: 8px;
   --radius-lg: 16px;
   --radius-pill: 999px;
-  --font-serif: Shantell Sans, Comic Neue, system-ui, sans-serif;
-  --font-sans: Shantell Sans, Comic Neue, system-ui, sans-serif;
-  --font-mono: IBM Plex Mono, ui-monospace, monospace;
-  --font-hand: Shantell Sans, Comic Neue, system-ui, sans-serif;
+  --font-display: Shantell Sans, Comic Neue, system-ui, sans-serif;
+  --font-serif: Figtree, system-ui, sans-serif;
+  --font-sans: Figtree, system-ui, sans-serif;
+  --font-mono: Figtree, system-ui, sans-serif;
+  --font-num: DM Mono, ui-monospace, monospace;
+  --font-hand: Caveat, Shantell Sans, cursive;
 
   /* ---------- 3. scales ---------- */
   /* type ramp: the sizes the site actually uses, in px (named by size so a rule reads like the number it replaced) */
   --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-15: 15px; --fs-16: 16px; --fs-17: 17px; --fs-18: 18px; --fs-19: 19px;
   --fs-20: 20px; --fs-22: 22px; --fs-24: 24px; --fs-26: 26px; --fs-30: 30px;
   /* legacy font aliases (older rules read these) */
-  --rds-serif: var(--font-serif); --rds-sans: var(--font-sans); --rds-mono: var(--font-mono); --rv-hand: var(--font-hand);
+  --rds-serif: var(--font-serif); --rds-sans: var(--font-sans); --rds-mono: var(--font-mono); --rv-hand: var(--font-sans);
   /* motion */
   --tap-min: 44px; --tap-min-fine: 24px; --focus-w: 2px; --focus-gap: 3px;
   --dur-instant: .01ms; --dur-fast: 160ms; --dur-quick: 200ms; --dur-base: 320ms; --dur-medium: 450ms; --dur-slow: 720ms; --dur-slower: 900ms; --dur-draw: 1600ms;
