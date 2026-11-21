@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fallbrook Edge drawings, generated from the City of Los Angeles parcel outlines.
 
-Run:  python3 scripts/fallbrook_art.py     (rewrites the marked drawings in studies/fallbrook-edge/index.html)
+Run:  python3 scripts/art_fallbrook.py     (rewrites the marked drawings in studies/fallbrook-edge/index.html)
 
 Inputs: scripts/data/fallbrook_parcels.py (parcel rings, [lon, lat]) and the design numbers below. Every count and length
 printed in the study text is computed here, with asserts. Linework is seeded pencil wobble (same file every run); colours

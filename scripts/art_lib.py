@@ -1,6 +1,6 @@
 """Tiny hand-drawn SVG helper used to (re)generate the Field Guide infobox art and other sketches.
 Deterministic: each drawing seeds its own RNG, so re-running gives identical files. Palette tokens only.
-Usage: from sketchlib import *; d=Draw(seed); d.line(...); svg=d.svg(300,150)"""
+Usage: from art_lib import *; d=Draw(seed); d.line(...); svg=d.svg(300,150)"""
 import math, random
 INK='#1f1d1a'; MOSS='#2f4a3a'; BRICK='#9c3d24'; SLATE='#35506b'; LINE='#d9d0bd'; STRONG='#8a8170'
 MOSST='#dfe6d8'; BRICKT='#f0d9cc'; SUNK='#ece5d6'; RAISED='#fbf8f1'; SKY='#e8eef5'

@@ -6,6 +6,7 @@ Reads the page list through scripts/build_index.py, so a new page appears here o
 sitemap.xml (for search engines) is written by build_index.py; this page is the one people read. See DESIGN.md > Menus."""
 import sys, html, json, pathlib, importlib.util
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent)); import assetver as _av
+from build_fonts import block_for as fonts_head  # self-hosted font links, one source of truth
 
 root = pathlib.Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location('build_index', root / 'scripts' / 'build_index.py')
@@ -49,9 +50,7 @@ def build():
 <script src="{up}assets/rds/flow.js"></script>
 <title>Sitemap | Redrawn Valley</title>
 <meta name="description" content="Every page on Redrawn Valley, grouped the way the menus group them: studies, field guide, notes, topics, reference, lab notes and about.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM@400..700,-100..100,0..100&family=IBM+Plex+Mono:wght@400;500&display=swap">
+{fonts_head(up)}
 <link rel="stylesheet" href="{up}assets/rds/tokens.css">
 <link rel="stylesheet" href="{up}assets/rds/rds.css">
 <link rel="stylesheet" href="{up}assets/rds/notes.css">

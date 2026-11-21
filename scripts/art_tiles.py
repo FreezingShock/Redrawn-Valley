@@ -1,9 +1,9 @@
 """Flat-tile collage banners for the guide, notes and studies index pages: 3 tinted fields side by side, each with one
 drafting object (compass, ruler, scale bar), one plan/section fragment and one texture (grid, halftone, contour).
-Run: python3 scripts/tiles_art.py   (rewrites the <figure class="rv-tiles"> block in each index page)"""
+Run: python3 scripts/art_tiles.py   (rewrites the <figure class="rv-tiles"> block in each index page)"""
 import math, pathlib, re, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from sketchlib import *
+from art_lib import *
 H=220
 def grid(d,x,y,w,h,gap=14,color=MOSS,op=.35,sw=1):
     p=''.join('M%d %dV%d'%(x+i,y,y+h) for i in range(0,int(w)+1,gap))+''.join('M%d %dH%d'%(x,y+j,x+w) for j in range(0,int(h)+1,gap))

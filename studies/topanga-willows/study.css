@@ -237,7 +237,7 @@
 .z14{font-size:14px}
 .z15{font-size:15px}
 .z9{font-size:9px}
-/* tp:gen start (written by scripts/topanga_art.py) */
+/* tp:gen start (written by scripts/art_topanga.py) */
 .ts-fig{--dl-ink:var(--pencil);--dl-moss:var(--moss);--dl-brick:var(--brick);--dl-slate:var(--slate);--dl-tree:var(--moss-tint);--dl-sand:var(--paper-sunk);--dl-text:var(--pencil);--dl-glass:var(--paper-raised);--dl-water:var(--slate);--dl-cool:var(--paper-raised)}
 .ts-fig--bp{--dl-ink:var(--draft-line);--dl-moss:var(--draft-line);--dl-brick:var(--draft-line);--dl-slate:var(--draft-line);--dl-tree:var(--draft-line);--dl-sand:var(--draft-line);--dl-text:var(--draft-line);--dl-glass:var(--draft-line);--dl-water:var(--draft-line);--dl-cool:var(--draft-line)}
 .dk{fill:none;stroke:var(--dl-ink);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}

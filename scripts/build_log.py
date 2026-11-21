@@ -11,15 +11,15 @@ One log entry per commit (the repo squash-merges, so a commit is a pull request)
 
 Where the words come from, first match wins:
   1. A commit trailer in the PR description:  `Log: one plain sentence`   `Log-Title: ...`   `Log-Type: redraw`   `Log: skip`
-  2. scripts/log-notes.json, keyed by PR number ("44": {"title": ..., "summary": ..., "type": ...})
+  2. scripts/log_notes.json, keyed by PR number ("44": {"title": ..., "summary": ..., "type": ...})
   3. The commit subject, and the target page's own <meta name="description"> for a new page.
 Commits that touch only generated files (the log, the search index, the sitemap) never appear, so regenerating
 the log does not add entries about itself. Needs full history: in CI use `fetch-depth: 0`.
 Never invents anything: with no notes, an entry is just the subject, the date and the pages it touched."""
 import re, sys, json, html, subprocess, pathlib, datetime
-import sys as _sys, pathlib as _pl; _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent)); import assetver as _av
+import assetver as _av
 
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root
 SITE_URL = 'https://redrawnvalley.vercel.app'
 REPO = 'https://github.com/FreezingShock/Redrawn-Valley'
 AUTHOR = 'Nate Anderson'
@@ -74,7 +74,7 @@ def classify(subject, added, files):
     return 'site'
 
 def load_notes():
-    f = root / 'scripts' / 'log-notes.json'
+    f = root / 'scripts' / 'log_notes.json'
     return json.loads(f.read_text(encoding='utf-8')) if f.exists() else {}
 
 def trailers(body):

@@ -6,19 +6,11 @@
 (function () {
   'use strict';
   var doc = document, NS = 'http://www.w3.org/2000/svg';
-  if (window.top !== window) return;
+  if (window.top !== window || !window.RDSArt) return;
   var main = doc.querySelector('main'); if (!main || main.hasAttribute('data-margins-none')) return;
   var script = doc.currentScript;
 
-  function hash(s) { var h = 1779033703 ^ s.length; for (var i = 0; i < s.length; i++) { h = Math.imul(h ^ s.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; } return function () { h = Math.imul(h ^ h >>> 16, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909); return (h ^= h >>> 16) >>> 0; }; }
-  function Rng(seed) {
-    var a = hash(String(seed))(), r = function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-    r.range = function (lo, hi) { return lo + r() * (hi - lo); };
-    r.int = function (lo, hi) { return Math.floor(r.range(lo, hi + 1)); };
-    r.pick = function (a) { return a[Math.floor(r() * a.length)]; };
-    r.shuffle = function (a) { var o = a.slice(); for (var i = o.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = o[i]; o[i] = o[j]; o[j] = t; } return o; };
-    return r;
-  }
+  var Rng = window.RDSArt.Rng, hash = window.RDSArt.hash; /* one seeded generator for all art: defined in motifs.js, which loads first */
   function slug() { var m = location.pathname.replace(/index\.html$/, '').split('/').filter(Boolean); return m.join('/') || 'home'; }
   function n(x) { return Math.round(x * 10) / 10; }
   function S(tag, a, p) { var e = doc.createElementNS(NS, tag); for (var k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }

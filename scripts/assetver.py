@@ -9,7 +9,7 @@ Run: python3 scripts/assetver.py          rewrite the HTML in place (regen.py ru
      python3 scripts/assetver.py --check  exit 1 if any reference is missing a current ?v= (writes nothing)
 Other generators import strip() so their --check ignores the stamps."""
 import re, sys, hashlib, pathlib
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root, html_files
 EXTS = ('.css', '.js')
 STAMP = re.compile(r'(\.(?:css|js))\?v=[0-9a-f]{8,12}')
 REF = re.compile(r'''((?:src|href)=["'])([^"'#?]*?)(\.(?:css|js))(\?[^"'#]*)?(["'])''')
@@ -56,8 +56,7 @@ def stamp(html, page):
 
 def main():
     check = '--check' in sys.argv; stale = []
-    for f in sorted(root.rglob('*.html')):
-        if {'.git', 'node_modules'} & set(f.parts): continue
+    for f in html_files():
         old = f.read_text(encoding='utf-8'); new = stamp(strip(old), f)
         if new != old:
             stale.append(f.relative_to(root).as_posix())
