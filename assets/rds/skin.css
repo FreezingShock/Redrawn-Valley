@@ -288,7 +288,7 @@
   --rv-r-sm:5px 3px 6px 3px/3px 6px 3px 5px;
   --rv-pencil:2px 3px 0 0 var(--ink);
   --rv-pencil-lift:3px 5px 0 0 var(--ink);
-  --rv-hand:var(--font-hand,"Shantell Sans",system-ui,sans-serif);
+  --rv-hand:var(--font-sans,Figtree,system-ui,sans-serif);
   --rv-stroke:1.5px;
   --rv-grain:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22220%22 height=%22220%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.85%22 numOctaves=%222%22 seed=%227%22/%3E%3CfeColorMatrix values=%220 0 0 0 .25  0 0 0 0 .2  0 0 0 0 .12  0 0 0 .22 0%22/%3E%3C/filter%3E%3Crect width=%22220%22 height=%22220%22 filter=%22url(%23n)%22 opacity=%22.5%22/%3E%3C/svg%3E");
   --rv-rule:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%2210%22 viewBox=%220 0 240 10%22%3E%3Cpath d=%22M0 5.4C14 4.2 22 6.3 38 5.2S62 4.1 80 5.5 104 6.4 122 5 148 4.2 166 5.4 196 6.2 214 4.9 232 5.3 240 5.4%22 fill=%22none%22 stroke=%22%238a8170%22 stroke-width=%221.4%22 stroke-linecap=%22round%22/%3E%3C/svg%3E");
@@ -501,46 +501,63 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 @media (prefers-reduced-motion:reduce){.rv-nav__panel,.rv-nav__caret .rds-icon,.rv-nav__all .rds-icon{transition:none}}
 @media print{.rv-nav__panel,.rv-menusheet{display:none}}
 
-/* ---------- type: Wobble (Shantell Sans variable) ----------
-   One family for every role, as picked from the type lab (/fonts/). Roles are told apart by weight and the INFM axis
-   (how informal the letters are): low for reading, high for titles and UI lettering. Evidence (citations, figure labels,
-   numbers, breadcrumbs) stays IBM Plex Mono. The family has no italic file, so italics become medium-weight roman. */
-.rds-page{font-variation-settings:"INFM" 15,"BNCE" 0}
-.rds-display-xl,.rds-display,.rds-h1,.rds-h2,.rds-h3,.rds-article__title,.rds-article__body h2,.rds-article__body h3,.rds-prose h2,.rv-body section>h2,.rv-nfeature__title,.rv-method h3,.rv-sec__head h2,.rv-part__name,.rds-card__title,.rds-row__title,.rds-nav__brand,.rds-footer__brand,.rds-seealso h2,.rds-notes-head,.rv-study-bar__brand,.rds-acc summary,.rds-infobox__title,.rv-infobox__title,.rv-table__title,.rv-facts b,.rv-step__n,.rv-nav__intro b,.rv-moreList b,.rds-search__title{font-variation-settings:"INFM" 100,"BNCE" 0;font-style:normal;letter-spacing:-.005em}
-.rds-display-xl{font-weight:700;font-size:clamp(38px,6.2vw,66px);line-height:1.08}
-.rds-display{font-weight:700;font-size:clamp(32px,4.8vw,50px);line-height:1.1}
-.rds-article__title{font-weight:700;font-size:clamp(34px,5.4vw,54px);line-height:1.08}
-.rv-sec__head h2{font-weight:700;font-size:clamp(28px,3.8vw,42px);line-height:1.12}
-.rv-nfeature__title{font-weight:700;font-size:clamp(26px,3.8vw,38px);line-height:1.12}
-.rds-h1{font-weight:700;font-size:34px}
-.rds-h2,.rds-prose h2,.rds-article__body h2,.rv-body section>h2,.rds-seealso h2,.rds-notes-head{font-weight:600;font-size:clamp(24px,2.6vw,27px);line-height:1.2}
-.rds-h3,.rds-article__body h3,.rds-card__title,.rds-row__title,.rv-method h3,.rds-acc summary,.rv-table__title,.rv-infobox__title{font-weight:600;font-size:19px;line-height:1.3}
-.rv-part__name,.rv-facts b{font-weight:700;font-size:26px}
-.rv-step__n{font-weight:700}
+/* ---------- type: three voices ----------
+   Decided in the type lab (/fonts/#decision). Shantell Sans is only the display voice (H1, H2, wordmark, pull quotes, big
+   numerals). Figtree carries reading text, lead, H3, nav, buttons and every other UI string. IBM Plex Mono carries eyebrows,
+   tags, labels, infobox keys, citations and data. Caveat is a quiet second hand used only for scribbled annotations. */
+.rds-display-xl,.rds-display,.rds-h1,.rds-h2,.rds-article__title,.rds-article__body h2,.rds-prose h2,.rv-body section>h2,.rv-nfeature__title,.rv-sec__head h2,.rv-part__name,.rv-facts b,.rv-step__n,.rds-nav__brand,.rds-footer__brand,.rv-study-bar__brand,.rv-rail__h,.rds-seealso h2,.rds-notes-head,.rv-study .ts-4,.rv-study .ts-11,.rv-study .ts-42,.rv-study .ts-47,.rv-study .ts-56,.rv-study .ts-69,.rv-study .ts-72,.rv-study .ts-75,.rv-study .ts-79,.rv-study .ts-103,.rv-study .ts-122{font-family:var(--font-display);font-variation-settings:"INFM" 100,"BNCE" 0;font-style:normal;font-weight:700;letter-spacing:-.005em}
+.rds-h3,.rds-article__body h3,.rds-card__title,.rds-row__title,.rv-method h3,.rds-acc summary,.rv-table__title,.rv-infobox__title,.rds-infobox__title,.rv-rail__title,.rv-nav__intro b,.rv-moreList b,.rds-search__title,.rv-moreList b,.rv-study .ts-32,.rv-study .ts-94,.rv-study .ts-110,.rv-study .ts-126{font-family:var(--font-sans);font-style:normal;font-weight:700;letter-spacing:0}
+.rds-display-xl{font-size:clamp(38px,6.2vw,66px);line-height:1.08}
+.rds-display{font-size:clamp(32px,4.8vw,50px);line-height:1.1}
+.rds-article__title{font-size:clamp(34px,5.4vw,54px);line-height:1.08}
+.rv-sec__head h2{font-size:clamp(28px,3.8vw,42px);line-height:1.12}
+.rv-nfeature__title{font-size:clamp(26px,3.8vw,38px);line-height:1.12}
+.rds-h1{font-size:34px}
+.rds-h2,.rds-prose h2,.rds-article__body h2,.rv-body section>h2,.rds-seealso h2,.rds-notes-head{font-weight:600;font-size:clamp(25px,2.8vw,29px);line-height:1.2}
+.rds-h3,.rds-article__body h3,.rds-card__title,.rds-row__title,.rv-method h3,.rds-acc summary,.rv-table__title,.rv-infobox__title,.rv-rail__title{font-size:19px;line-height:1.3}
+.rv-part__name,.rv-facts b{font-size:26px}
 .rds-nav__brand,.rds-footer__brand,.rv-study-bar__brand{font-weight:700}
-/* reading text: Shantell sets wider and taller than the serif it replaces, so the size drops a notch */
-.rds-prose,.rds-article__body,.rv-body{font-size:17.5px;line-height:30px;letter-spacing:.003em}
-.rds-lead{font-size:19px;line-height:29px}
-.rds-quote p,.rds-prose blockquote,.rds-article__body blockquote,.rv-pull p,.rds-hatnote{font-style:normal;font-weight:500;font-variation-settings:"INFM" 70,"BNCE" 0}
+.rds-footer__brand{font-size:25px;line-height:1.1}
+/* reading text */
+.rds-prose,.rds-article__body,.rv-body{font-size:18px;line-height:30px}
+.rds-lead{font-size:19.5px;line-height:30px}
+.rds-quote p,.rds-prose blockquote,.rv-pull p{font-family:var(--font-display);font-style:normal;font-weight:500;font-variation-settings:"INFM" 70,"BNCE" 0}
 .rds-quote p,.rds-prose blockquote{font-size:26px}
 .rv-pull p{font-size:clamp(22px,3vw,28px)}
+.rds-article__body blockquote,.rds-hatnote{font-family:var(--font-sans);font-style:normal;font-weight:500}
 .rds-article__body blockquote{font-size:18px}
-/* hand lettering for UI: the most informal setting */
-.rds-eyebrow,.rds-tag,.rds-nav__links a,.rds-nav__search,.rds-row__meta,.rds-btn,.rds-chip,.rv-seg button,.rds-note,.rv-tabbar a,.rv-tabbar button{font-variation-settings:"INFM" 100,"BNCE" 0}
-.rds-eyebrow{font-size:15px}
-.rds-nav__links a,.rds-nav__search{font-size:15px}
-.rds-btn{font-size:15px;font-weight:600}
+.rds-search__input{font-size:18px}
+/* UI: Figtree */
+.rds-nav__links a,.rds-nav__search,.rds-btn,.rds-chip,.rv-seg button,.rv-tabbar a,.rv-tabbar button{font-variation-settings:normal}
+.rds-nav__links a,.rds-nav__search{font-size:15.5px;font-weight:500}
+.rds-btn{font-size:15px;font-weight:600;letter-spacing:.005em}
+/* labels: sentence case in the sans, no tracking. Medium-weight text, not tiny tracked capitals */
+.rds-eyebrow,.rds-tag,.rds-row__meta,.rv-tip__kind,.rds-infobox dt,.rv-infobox dt,.rds-footer h4,.rds-contents summary,.rds-notes .rds-kind,.rv-note-read .rds-kind,.rds-categories b,.rds-pager small,.rv-log__page span,.rv-sources h2,.rv-chip,.rv-rail__type,.rv-sheet__title,.rv-table th,.vt-ledger th,.rv-tmatrix thead th,.rv-tstat span,.rv-thead__q span,.rds-decision__cost b,.rvs-label,.rvs-pv__k,.fl-plate__b,.rv-study .ts-9,.rv-study .ts-46,.rv-study .ts-112,.rv-study .ts-121{font-family:var(--font-sans);font-variation-settings:normal;text-transform:none;letter-spacing:.005em;font-weight:600}
+.rds-eyebrow{font-size:14.5px;line-height:20px;color:var(--ink-muted)}
+.rds-tag,.rv-chip,.rv-tip__kind,.rds-categories b,.rv-rail__type,.rv-study .ts-9,.rv-study .ts-46,.rv-study .ts-112,.rv-study .ts-121{font-size:13.5px;line-height:20px}
+.rds-row__meta{font-size:13.5px;font-weight:500;font-variant-numeric:tabular-nums}
+.rds-infobox dt,.rv-infobox dt,.rds-footer h4,.rds-contents summary,.rv-sources h2,.rv-table th,.vt-ledger th,.rv-tmatrix thead th,.rv-tstat span,.rv-thead__q span,.rds-pager small,.rds-notes .rds-kind,.rv-note-read .rds-kind,.rv-sheet__title,.rvs-label,.rvs-pv__k,.rv-log__page span,.rds-decision__cost b{font-size:13.5px;line-height:1.4}
+/* captions, crumbs, meta lines: sans, readable size */
+.rds-figure figcaption,.rv-gal-sizes figcaption,.rds-crumbs ol,.rds-article__meta,.rv-byline,.rv-nmeta,.rv-log__meta,.rv-log__count,.rds-guide-count,.rv-lightbox__cap,.rds-infobox__cap,.rv-infobox__kicker,.rv-infobox__foot,.rv-sources__foot,.rds-row__sub,.rv-compare__bar span,.rv-fig figcaption,.fig-cap,.rv-tfoot{font-family:var(--font-sans);font-size:14px;line-height:21px;letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums}
+/* mono earns its place: numerals, citation markers, code, keys that are numbers. DM Mono, tabular, plain case. */
+code,kbd,.rds-mono,.rds-fn,.rv-fn,.rv-cite,.rv-sources li::before,.rv-sources li>b,.rds-notes li::before,.rds-contents li::before,.rds-article__body h2::before,.rv-body section>h2 .rv-num,.rv-table .rv-table__no,.rv-table .rv-table__num,.vt-ledger td:nth-child(n+2),.vt-bars__mi,.rds-toc .rds-toc__count,.rv-toclist a b,.rv-jump__n,.rv-part__n,.rv-az__at a{font-family:var(--font-num);font-variant-numeric:tabular-nums;font-feature-settings:"zero" 0;letter-spacing:0;text-transform:none}
+code,kbd{font-size:.88em}
+.rds-fn,.rv-fn,.rv-cite{font-size:.78em;font-weight:500}
+/* annotations: the quiet second hand */
+.rds-note,.rv-hero__flip,.rv-svg .t-hand,.rv-svg .t-hand-moss,.rv-fplan .dt{font-family:var(--font-hand);font-variation-settings:normal;font-weight:700}
+.rds-note{font-size:21px;line-height:22px}
+.rv-hero__flip{font-size:22px}
+.rv-svg .t-hand,.rv-svg .t-hand-moss{font-size:19px}
+.rv-fplan .dt{font-size:20px}
 /* the wordmark wobbles on hover and focus: the bounce axis steps like a redrawn frame */
 @keyframes rv-wobble{0%{font-variation-settings:"INFM" 100,"BNCE" -70}25%{font-variation-settings:"INFM" 100,"BNCE" 45}50%{font-variation-settings:"INFM" 100,"BNCE" -25}75%{font-variation-settings:"INFM" 100,"BNCE" 80}}
 .rds-nav__brand:hover,.rds-nav__brand:focus-visible,.rds-footer__brand:hover{animation:rv-wobble .5s steps(1) infinite}
 @media (prefers-reduced-motion:reduce){.rds-nav__brand:hover,.rds-nav__brand:focus-visible,.rds-footer__brand:hover{animation:none}}
-
-/* Topanga study headings (generated class names ts-N): same Wobble roles */
-.rv-study .ts-4,.rv-study .ts-11,.rv-study .ts-32,.rv-study .ts-42,.rv-study .ts-47,.rv-study .ts-56,.rv-study .ts-69,.rv-study .ts-72,.rv-study .ts-75,.rv-study .ts-79,.rv-study .ts-94,.rv-study .ts-103,.rv-study .ts-110,.rv-study .ts-122,.rv-study .ts-126{font-variation-settings:"INFM" 100,"BNCE" 0;font-style:normal;font-weight:700;letter-spacing:-.005em}
+/* Topanga study sizes (generated class names ts-N) */
 .rv-study .ts-11,.rv-study .ts-47,.rv-study .ts-69,.rv-study .ts-79,.rv-study .ts-122{font-size:clamp(28px,4.2vw,50px)}
 .rv-study .ts-72,.rv-study .ts-75,.rv-study .ts-103{font-size:clamp(34px,4vw,52px)}
-.rv-study .ts-42,.rv-study .ts-56{font-size:26px;font-weight:600}
-.rv-study .ts-32,.rv-study .ts-94,.rv-study .ts-110,.rv-study .ts-126{font-size:20px;font-weight:600}
+.rv-study .ts-42,.rv-study .ts-56{font-size:27px;font-weight:600}
+.rv-study .ts-32,.rv-study .ts-94,.rv-study .ts-110,.rv-study .ts-126{font-size:20px}
 .rv-study .ts-82{font-size:18px}
 .rv-study .ts-111{font-style:normal;font-weight:500}
 
@@ -587,7 +604,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-compare__bar span{font:400 17px/22px var(--rv-hand);color:var(--ink-muted)}
 .rv-compare__bar span b{font:inherit;font-weight:400;color:var(--brick);text-decoration:none;background:none;border:0}
 /* drawn labels inside inline SVG still name the retired hand font; use the site's */
-svg text[style*="Architects Daughter"]{font-family:var(--rv-hand)!important}
+svg text[style*="Architects Daughter"]{font-family:var(--font-sans)!important}
 
 /* ---------- hero buttons: drawn in on load ---------- */
 /* Primary: the outline is pencilled in, the brick fills, then the arrow draws and flies off and a new one settles in. Secondary: ink text with a drawn rule. Brick appears once, on the primary. */
