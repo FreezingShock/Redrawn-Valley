@@ -186,6 +186,29 @@ One layer, loaded **last** on every page, scoped to phones (max 640px) and table
 - **Touch, not hover** (`@media (hover:none)`): no hover shifts, a `:active` background instead, no tap highlight.
 - **Rule**: new components must work with a thumb: 44px minimum targets, nothing that only appears on hover, no second sticky bar at the top. Check every new page at 360 and 430px.
 
+## Controls kit (end of `skin.css`)
+
+No control should look like the browser default. Use:
+- **Select**: `.rds-select` (or any `select` inside `.rv-lab`): ink outline, hand-drawn chevron, pencil shadow on hover, dashed brick focus ring.
+- **Text field**: `.rds-input`; the field-guide filter and pattern-lab seed share the same border and focus.
+- **Check / radio**: `<label class="rds-check"><input type="checkbox">Label</label>` (brick fill, hand-drawn tick).
+- **Range**: `<input type="range" class="rds-range">`, a wobbly rule track with a brick thumb.
+- **Disclosure**: `.rds-contents summary` uses hand lettering and a rotating chevron.
+- **Search dialog**: the bar carries the focus ring (a brick rule), the active result has a brick tick, titles drop the ` | Section` suffix.
+- Tables (`.rv-table`) use a hand-drawn head rule. 
+New controls go in this block, not in page `<style>` tags.
+
+## Controls kit (end of `skin.css`; chevron and tick are data-URI art with dark copies from `scripts/build_theme.py`)
+
+No control should look like the browser default. Use:
+- **Select**: `.rds-select` (or any `select` inside `.rv-lab`): ink outline, hand-drawn chevron, pencil shadow on hover, dashed brick focus ring.
+- **Text field**: `.rds-input`; the field-guide filter and pattern-lab seed share the same border and focus.
+- **Check / radio**: `<label class="rds-check"><input type="checkbox">Label</label>` (brick fill, hand-drawn tick).
+- **Range**: `<input type="range" class="rds-range">`, a wobbly rule track with a brick thumb.
+- **Disclosure**: `.rds-contents summary` uses hand lettering and a rotating chevron.
+- Tables (`.rv-table`) use a hand-drawn head rule. 
+New controls go in this block, not in page `<style>` tags.
+
 ## Using this when adding pages
 
 1. Start from `index.html`'s `<head>` (fonts, `tokens.css`, `rds.css`, `site.css`) and `<body class="rds-page">`; load `assets/rds/rds.js` at the end. Paths are relative; pages in `studies/x/` use `../../assets/...`.
