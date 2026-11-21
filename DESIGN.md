@@ -511,7 +511,7 @@ Shared CSS and JS are cached for a year, so every reference carries a content fi
 - A script that loads another file builds its URL from its own `src` and keeps the query string (`script.src.replace(/loops\.js/, 'loops.css')`, or `+ Q` in `site-shell.js` and `rail.js`). Do not strip the query, and do not load a shared asset by a bare path: it would be cached as immutable and could go stale.
 - `vercel.json` headers: `assets|fonts` CSS and JS are `public, max-age=31536000, immutable`; the icon sprites are one day with stale-while-revalidate; generated JSON in `assets/` is five minutes plus stale-while-revalidate (it is fetched by bare path, so it cannot be immutable); HTML keeps Vercel's default `max-age=0, must-revalidate`.
 - New generator that writes HTML? Write plain `assets/...` paths and compare with `assetver.strip()` in `--check`, as `build_topics.py` does. `regen.py` adds the stamps.
-- `ignoreCommand` in `vercel.json`: Vercel builds only `main` and `integration`, so PR branches do not use up the daily deploy limit. Verify branches locally.
+- `ignoreCommand` in `vercel.json`: Vercel builds only `main` and `integration`, so PR branches do not use up the daily deploy limit. Verify branches locally. It also skips the "Update Sketchbook log" bot commit (generated files only), which halves deploys on integration; the next real merge deploys the new log.
 
 ## Tokens (`assets/rds/tokens.css`): the one token file
 Every design value lives in `assets/rds/tokens.css` and nowhere else. A new system or feature (a page, a lab, a component, a script that injects CSS) must read these tokens; if one is missing, add it to `tokens.css` and list it here, do not write the literal in the component.
