@@ -1,0 +1,33 @@
+{
+  "_doc": "Topic definitions for the topic hubs. A page joins a topic with <meta name=\"rv-topics\" content=\"heat, trees\"> (slugs below, first = primary). Run python3 scripts/build_topics.py after changing this file or tagging a page. See DESIGN.md > Topics.",
+  "topics": [
+    {"slug": "heat", "title": "Heat", "short": "Heat", "icon": "heat", "accent": "brick",
+     "art": "heat",
+     "blurb": "Why the Valley runs hot, what pavement and roofs add to it, and what lowers the heat a person actually feels.",
+     "question": "What makes a block hot, and what would cool the person standing on it?"},
+    {"slug": "trees", "title": "Trees and shade", "short": "Trees", "icon": "tree", "accent": "moss",
+     "art": "tree shade canopy",
+     "blurb": "Shade, canopy and the soil trees need: who has shade, how it is measured, and what it takes to grow it.",
+     "question": "Where would a tree actually fit, and what does it need to survive?"},
+    {"slug": "water", "title": "Water and ground", "short": "Water", "icon": "water", "accent": "slate",
+     "art": "water rain river",
+     "blurb": "Where rain goes in the Valley: hard surfaces, planted swales, permeable paving, the river, and the ground underneath.",
+     "question": "Where does the rain go, and could more of it stay on site?"},
+    {"slug": "parking", "title": "Parking and pavement", "short": "Parking", "icon": "pavement", "accent": "ochre",
+     "art": "soil ground",
+     "blurb": "The lots and asphalt behind most of my study sites: how they heat up, shed water and use space, and what could replace some of them.",
+     "question": "How much of a lot has to stay asphalt?"},
+    {"slug": "streets", "title": "Streets and sidewalks", "short": "Streets", "icon": "sidewalk", "accent": "rose",
+     "art": "walk sidewalk equity",
+     "blurb": "Sidewalks, crossings and frontage: who can walk where, and how much of the walk is in the sun.",
+     "question": "Is this a place you can walk in August?"},
+    {"slug": "valley", "title": "The Valley", "short": "Valley", "icon": "pin", "accent": "moss",
+     "art": "valley place",
+     "blurb": "The place itself: the Valley's setting, its record heat, and the river that drains it.",
+     "question": "What is special about this place, and what is just general?"},
+    {"slug": "making", "title": "How the site is made", "short": "Making", "icon": "ruler", "accent": "slate",
+     "art": "making",
+     "blurb": "The lab notes: how the type, icons, motifs and motion were chosen, each written up with the research, the decisions and a live demo.",
+     "question": "Why does the site look and move the way it does?"}
+  ]
+}

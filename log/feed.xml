@@ -5,8 +5,17 @@
   <link rel="self" type="application/atom+xml" href="https://redrawnvalley.vercel.app/log/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/"/>
   <id>https://redrawnvalley.vercel.app/log/</id>
-  <updated>2026-11-21T00:08:49-08:00</updated>
+  <updated>2026-11-21T08:13:29+00:00</updated>
   <author><name>Nate Anderson</name></author>
+  <entry>
+    <title>Add Sketchbook log: a dated feed built from git history, with Atom feed and rebuild workflow</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-c9760b5</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-c9760b5"/>
+    <updated>2026-11-21T08:13:29+00:00</updated>
+    <category term="site" label="Site"/>
+    <summary>Adds the Sketchbook log, a dated feed of everything new on the site, with an Atom feed.</summary>
+    <content type="html">&lt;p&gt;Adds the Sketchbook log, a dated feed of everything new on the site, with an Atom feed.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/&quot;&gt;Redrawn Valley&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
   <entry>
     <title>Study rail polish</title>
     <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-44</id>
@@ -357,14 +366,5 @@
     <category term="site" label="Site"/>
     <summary>Added the Studies index, a template for new studies, the infobox and the shared study styles.</summary>
     <content type="html">&lt;p&gt;Added the Studies index, a template for new studies, the infobox and the shared study styles.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/&quot;&gt;Studies&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Shared header, footer, search and sitemap</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-2</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-2"/>
-    <updated>2026-11-20T11:55:58-08:00</updated>
-    <category term="site" label="Site"/>
-    <summary>Every page now gets the same header, footer and breadcrumbs from one script, with site search, a 404 page and a sitemap.</summary>
-    <content type="html">&lt;p&gt;Every page now gets the same header, footer and breadcrumbs from one script, with site search, a 404 page and a sitemap.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/&quot;&gt;Redrawn Valley&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
 </feed>
