@@ -16,7 +16,14 @@
   /* scroll effects: progress bar, drawing figures, counters, parallax art (off under prefers-reduced-motion) */
   if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href; fx.defer = true; doc.head.appendChild(fx); }
 
-  var NAV = [['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['About', 'index.html#about']];
+  /* Header order follows what the site is for: the studies first, then the reference and writing that support them.
+     Entries with a `kind` open a flyout listing their pages (read from the search index); About is a plain link. */
+  var NAV = [
+    { label: 'Studies', url: 'studies/', kind: 'studies', icon: 'studies', blurb: 'Site studies of small places, redrawn.', max: 4, all: 'All studies' },
+    { label: 'Field guide', url: 'guide/', kind: 'guide', icon: 'guide', blurb: 'Terms and ideas, one page each.', max: 6, all: 'All entries' },
+    { label: 'Notes', url: 'notes/', kind: 'notes', icon: 'notes', blurb: 'Short essays with the evidence shown.', max: 5, all: 'All notes' },
+    { label: 'About', url: 'index.html#about' }
+  ];
   var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', about: 'About' };
   var sitePath = new URL(siteRoot).pathname;
   var rel = decodeURIComponent(location.pathname.slice(sitePath.length)).replace(/index\.html$/, '');
@@ -42,9 +49,16 @@
     });
   }
   function header(el) {
-    var links = NAV.map(function (n) {
-      var on = n[1].split('#')[0] !== 'index.html' && n[1] === section + '/';
-      return '<li><a href="' + esc(href(n[1])) + '"' + (on ? ' aria-current="page"' : '') + '>' + n[0] + '</a></li>';
+    var links = NAV.map(function (n, i) {
+      var on = n.kind && n.url === section + '/';
+      var a = '<a href="' + esc(href(n.url)) + '"' + (on ? ' aria-current="page"' : '') + '>' + n.label + '</a>';
+      if (!n.kind) return '<li class="rv-nav__item">' + a + '</li>';
+      return '<li class="rv-nav__item rv-nav__item--menu" data-rv-kind="' + n.kind + '">' + a +
+        '<button class="rv-nav__caret" type="button" aria-expanded="false" aria-controls="rv-panel-' + i + '" aria-label="' + esc(n.label) + ' pages">' + icon('chevron-down', '', 16) + '</button>' +
+        '<div class="rv-nav__panel" id="rv-panel-' + i + '" role="group" aria-label="' + esc(n.label) + '">' +
+        '<p class="rv-nav__intro">' + icon(n.icon, '', 28) + '<span><b>' + n.label + '</b>' + n.blurb + '</span></p>' +
+        '<ul class="rv-nav__list" data-rv-list></ul>' +
+        '<a class="rv-nav__all" href="' + esc(href(n.url)) + '">' + n.all + icon('arrow-right', '', 16) + '</a></div></li>';
     }).join('');
     el.innerHTML = '<a class="rds-skip" href="#main">Skip to content</a>' +
       '<a class="rds-nav__brand" href="' + esc(href('')) + '">' + logoMark() + '<span>Redrawn Valley</span></a>' +
@@ -53,24 +67,70 @@
       '<button class="rds-nav__menu" type="button" aria-expanded="false" aria-controls="rv-menu">Menu</button>';
     var btn = el.querySelector('.rds-nav__menu'), ul = el.querySelector('.rds-nav__links');
     btn.addEventListener('click', function () { var o = ul.classList.toggle('is-open'); btn.setAttribute('aria-expanded', o); btn.textContent = o ? 'Close' : 'Menu'; });
+
+    /* flyouts: hover or focus opens on a pointer; the caret button toggles for keyboard and touch; Esc and outside click close */
+    var items = all('.rv-nav__item--menu', el), timer;
+    function setOpen(li, o) { li.classList.toggle('is-open', o); li.querySelector('.rv-nav__caret').setAttribute('aria-expanded', o); }
+    function closeAll(except) { items.forEach(function (li) { if (li !== except) setOpen(li, false); }); }
+    items.forEach(function (li) {
+      li.querySelector('.rv-nav__caret').addEventListener('click', function () { var o = !li.classList.contains('is-open'); closeAll(li); setOpen(li, o); });
+      li.addEventListener('mouseenter', function () { if (!window.matchMedia('(hover:hover)').matches) return; clearTimeout(timer); closeAll(li); setOpen(li, true); });
+      li.addEventListener('mouseleave', function () { if (!window.matchMedia('(hover:hover)').matches) return; timer = setTimeout(function () { setOpen(li, false); }, 160); });
+      li.addEventListener('focusout', function (e) { if (!li.contains(e.relatedTarget)) setOpen(li, false); });
+      li.addEventListener('keydown', function (e) { if (e.key === 'Escape' && li.classList.contains('is-open')) { setOpen(li, false); li.querySelector('.rv-nav__caret').focus(); } });
+    });
+    doc.addEventListener('click', function (e) { if (!el.contains(e.target)) closeAll(); });
+    loadIndex().then(function (d) {
+      items.forEach(function (li) {
+        var kind = li.getAttribute('data-rv-kind'), n = NAV.filter(function (x) { return x.kind === kind; })[0];
+        var pages = d.pages.filter(function (p) { return p.s === kind && p.u.split('/').filter(Boolean).length === 2; });
+        li.querySelector('[data-rv-list]').innerHTML = pages.slice(0, n.max).map(function (p) {
+          var here = rel === p.u;
+          return '<li><a href="' + esc(href(p.u)) + '"' + (here ? ' aria-current="page"' : '') + '>' + esc(p.t.split(' | ')[0]) + '</a></li>';
+        }).join('');
+        var all_ = li.querySelector('.rv-nav__all'); if (pages.length > n.max) all_.firstChild.textContent = n.all.replace('All ', 'All ' + pages.length + ' ');
+      });
+    });
   }
 
   /* ---------- bottom tab bar (phones only; skin.css hides it above 640px) ---------- */
   function tabbar() {
     if (doc.querySelector('.rv-tabbar')) return;
     var ic = function (n) { return icon(n, '', 24); };
+    /* Home is the brand in the top bar, so the tab bar spends its slots on sections, search and a More sheet. */
     var T = [
-      ['Home', '', '', ic('home')],
-      ['Guide', 'guide/', 'guide', ic('guide')],
       ['Studies', 'studies/', 'studies', ic('studies')],
+      ['Guide', 'guide/', 'guide', ic('guide')],
       ['Notes', 'notes/', 'notes', ic('notes')]
     ];
     var nav = doc.createElement('nav'); nav.className = 'rv-tabbar'; nav.setAttribute('aria-label', 'Main');
     nav.innerHTML = T.map(function (t) {
-      var on = t[2] ? section === t[2] : rel === '';
+      var on = section === t[2];
       return '<a href="' + esc(href(t[1])) + '"' + (on ? ' aria-current="page"' : '') + '>' + t[3] + '<span>' + t[0] + '</span></a>';
-    }).join('') + '<button type="button" data-rv-search-open>' + ic('search') + '<span>Search</span></button>';
+    }).join('') + '<button type="button" data-rv-search-open>' + ic('search') + '<span>Search</span></button>' +
+      '<button type="button" class="rv-tab-more" aria-haspopup="dialog">' + ic('menu') + '<span>More</span></button>';
     doc.body.appendChild(nav);
+    var more = nav.querySelector('.rv-tab-more'), sheet;
+    var M = [
+      ['Home', '', 'home', 'Front page'],
+      ['Method', 'index.html#method', 'ruler', 'How a study is made'],
+      ['About', 'index.html#about', 'info', 'Who draws this, and why'],
+      ['Pattern sheet', 'patterns/', 'leaf', 'Every motif and the palette'],
+      ['Icon set', 'icons/', 'pin', 'The hand-drawn icons'],
+      ['Sitemap', 'sitemap.xml', 'contents', 'Every page, as a list']
+    ];
+    more.addEventListener('click', function () {
+      if (!sheet) {
+        sheet = doc.createElement('dialog'); sheet.className = 'rv-sheet rv-menusheet'; sheet.setAttribute('aria-labelledby', 'rv-more-title');
+        sheet.innerHTML = '<div class="rv-sheet__grab" aria-hidden="true"></div><div class="rv-sheet__head"><h2 class="rv-sheet__title" id="rv-more-title">More</h2><button type="button" class="rv-sheet__close">Close</button></div><div class="rv-sheet__body"><ul class="rv-moreList">' +
+          M.map(function (m) { return '<li><a href="' + esc(m[1] === 'sitemap.xml' ? new URL(m[1], siteRoot).href : href(m[1])) + '">' + icon(m[2], '', 24) + '<span><b>' + m[0] + '</b>' + m[3] + '</span>' + icon('chevron-right', 'rv-moreList__go', 18) + '</a></li>'; }).join('') + '</ul></div>';
+        doc.body.appendChild(sheet);
+        sheet.querySelector('.rv-sheet__close').addEventListener('click', function () { sheet.close(); });
+        sheet.addEventListener('click', function (e) { if (e.target === sheet || e.target.closest('a')) sheet.close(); });
+        sheet.addEventListener('close', function () { doc.documentElement.classList.remove('rds-lock'); more.removeAttribute('aria-current'); });
+      }
+      sheet.showModal(); doc.documentElement.classList.add('rds-lock'); more.setAttribute('aria-current', 'true');
+    });
   }
 
   /* ---------- footer ---------- */
