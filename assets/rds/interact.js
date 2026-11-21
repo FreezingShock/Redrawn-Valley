@@ -302,22 +302,59 @@
         if (k === 'close') d.close(); else if (k === 'in') zoomAt(c.x, c.y, s * 1.5); else if (k === 'out') zoomAt(c.x, c.y, s / 1.5); else { s = 1; tx = ty = 0; fit(); } return; }
       if (e.target === d) d.close();
     });
-    stage.addEventListener('wheel', function (e) { e.preventDefault(); var p = rel(e); zoomAt(p.x, p.y, s * Math.exp(-e.deltaY * (e.ctrlKey ? .01 : .0018))); }, { passive: false });
-    stage.addEventListener('dblclick', function (e) { var p = rel(e); if (s > 1.2) { s = 1; tx = ty = 0; fit(); } else zoomAt(p.x, p.y, 2.6); });
+    stage.addEventListener('wheel', function (e) { e.preventDefault(); var p = rel(e), dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * 400 : e.deltaY; zoomAt(p.x, p.y, s * Math.exp(-dy * (e.ctrlKey ? .01 : .0018))); }, { passive: false });
+    stage.addEventListener('dblclick', function (e) { if (performance.now() - tapZoomT < 400) return; var p = rel(e); if (s > 1.2) { s = 1; tx = ty = 0; fit(); } else zoomAt(p.x, p.y, 2.6); });
+    /* Touch feel: a drag keeps gliding after release, a pinch moves with the midpoint of the fingers, a double tap zooms (dblclick is
+       unreliable on phones), and at fit size a sideways flick steps to the next drawing (d.__swipe) and a downward flick closes. */
+    var tapZoomT = -1e9, vx = 0, vy = 0, lastT = 0, glide = 0, down = null, lastTap = null, mid = null;
+    function stopGlide() { if (glide) { cancelAnimationFrame(glide); glide = 0; } }
+    function coast() {
+      var t0 = performance.now();
+      (function tick(t) {
+        var dt = Math.min(.05, (t - t0) / 1000); t0 = t; tx += vx * dt; ty += vy * dt; var f = Math.exp(-dt * 5); vx *= f; vy *= f; fit();
+        glide = Math.abs(vx) + Math.abs(vy) > 12 ? requestAnimationFrame(tick) : 0;
+      })(t0);
+    }
+    function midOf() { var ids = Object.keys(ptrs), a = ptrs[ids[0]], b = ptrs[ids[1]]; return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }; }
     stage.addEventListener('pointerdown', function (e) {
+      stopGlide(); vx = vy = 0; lastT = performance.now();
       ptrs[e.pointerId] = { x: e.clientX, y: e.clientY }; stage.setPointerCapture(e.pointerId); stage.classList.add('is-grab');
-      var ids = Object.keys(ptrs); if (ids.length === 2) { var a = ptrs[ids[0]], b = ptrs[ids[1]]; pinch = Math.hypot(a.x - b.x, a.y - b.y); }
+      var ids = Object.keys(ptrs);
+      if (ids.length === 1) down = { x: e.clientX, y: e.clientY, t: performance.now(), moved: false, touch: e.pointerType !== 'mouse' };
+      else { down = null; if (ids.length === 2) { var a = ptrs[ids[0]], b = ptrs[ids[1]]; pinch = Math.hypot(a.x - b.x, a.y - b.y); mid = midOf(); } }
     });
     stage.addEventListener('pointermove', function (e) {
       var p = ptrs[e.pointerId]; if (!p) return; var ids = Object.keys(ptrs);
       if (ids.length === 2) {
         var a = ptrs[ids[0]], b = ptrs[ids[1]]; if (e.pointerId == ids[0]) a = { x: e.clientX, y: e.clientY }; else b = { x: e.clientX, y: e.clientY };
-        var dist = Math.hypot(a.x - b.x, a.y - b.y), r = stage.getBoundingClientRect();
-        if (pinch) zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, s * dist / pinch); pinch = dist;
-      } else { tx += e.clientX - p.x; ty += e.clientY - p.y; fit(); }
+        var dist = Math.hypot(a.x - b.x, a.y - b.y), r = stage.getBoundingClientRect(), m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+        if (mid) { tx += m.x - mid.x; ty += m.y - mid.y; }
+        if (pinch) zoomAt(m.x - r.left, m.y - r.top, s * dist / pinch); else fit();
+        pinch = dist; mid = m;
+      } else {
+        var dx = e.clientX - p.x, dy = e.clientY - p.y, now = performance.now(), dts = Math.max(.008, (now - lastT) / 1000); lastT = now;
+        if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) > 6) down.moved = true;
+        tx += dx; ty += dy; fit(); vx = vx * .6 + (dx / dts) * .4; vy = vy * .6 + (dy / dts) * .4;
+      }
       ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
     });
-    function up(e) { delete ptrs[e.pointerId]; pinch = 0; if (!Object.keys(ptrs).length) stage.classList.remove('is-grab'); }
+    function up(e) {
+      var wasOne = Object.keys(ptrs).length === 1, pt = ptrs[e.pointerId]; delete ptrs[e.pointerId]; pinch = 0; mid = null;
+      if (!Object.keys(ptrs).length) stage.classList.remove('is-grab');
+      if (!wasOne || !down || e.type === 'pointercancel') { down = null; return; }
+      var dx = (pt ? pt.x : down.x) - down.x, dy = (pt ? pt.y : down.y) - down.y, now = performance.now(), d0 = down; down = null;
+      if (d0.touch && !d0.moved && now - d0.t < 350) {                         /* a tap: two in a row zoom */
+        var r = stage.getBoundingClientRect();
+        if (lastTap && now - lastTap.t < 320 && Math.hypot(d0.x - lastTap.x, d0.y - lastTap.y) < 32) { lastTap = null; tapZoomT = now; if (s > 1.2) { s = 1; tx = ty = 0; fit(); } else zoomAt(d0.x - r.left, d0.y - r.top, 2.6); }
+        else lastTap = { x: d0.x, y: d0.y, t: now };
+        return;
+      }
+      if (s <= 1.02 && d0.touch && now - d0.t < 600) {
+        if (Math.abs(dx) > 64 && Math.abs(dx) > Math.abs(dy) * 1.5 && d.__swipe) { d.__swipe(dx < 0 ? 1 : -1); return; }
+        if (dy > 110 && dy > Math.abs(dx) * 2) { d.close(); return; }
+      }
+      if (now - lastT < 80 && (Math.abs(vx) + Math.abs(vy)) > 120 && s > 1) coast();
+    }
     stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
     stage.addEventListener('keydown', function (e) {
       var c = center(), st = 60;
@@ -328,7 +365,7 @@
       e.preventDefault();
     });
     window.addEventListener('resize', function () { if (d.open) fit(); });
-    d.addEventListener('close', function () { inner.innerHTML = ''; if (d.__onclose) { var oc = d.__onclose; d.__onclose = null; oc(); } s = 1; tx = ty = 0; ptrs = {}; root.classList.remove('rv-lb-open'); });
+    d.addEventListener('close', function () { stopGlide(); d.__swipe = null; inner.innerHTML = ''; if (d.__onclose) { var oc = d.__onclose; d.__onclose = null; oc(); } s = 1; tx = ty = 0; ptrs = {}; root.classList.remove('rv-lb-open'); });
     d.__reset = function () { s = 1; tx = ty = 0; ptrs = {}; fit(); };
     return d;
   }
@@ -342,7 +379,7 @@
       inner.removeAttribute('data-st'); inner.removeAttribute('data-view'); inner.appendChild(opts.node);
       if (opts.extras) { opts.extras.setAttribute('data-lb-extras', ''); bar.insertBefore(opts.extras, bar.querySelector('.rv-lightbox__tools')); }
       lb.querySelector('[data-cap]').textContent = opts.caption || '';
-      lb.__opener = opts.opener || null; lb.__onclose = opts.onClose || null;
+      lb.__opener = opts.opener || null; lb.__onclose = opts.onClose || null; lb.__swipe = opts.onSwipe || null; var th = lb.querySelector('.rv-show-touch'); th.textContent = opts.onSwipe ? 'Pinch to zoom, drag to move, double-tap to zoom in, swipe sideways for the next drawing.' : 'Pinch to zoom, drag to move, double-tap to zoom in.';
       root.classList.add('rv-lb-open'); if (!lb.open) lb.showModal(); lb.__reset();
       lb.querySelector('.rv-lightbox__stage').focus({ preventScroll: true });
       return lb;
@@ -360,7 +397,7 @@
     inner.appendChild(clone);
     var fig = svg.closest('figure'), cap = fig && fig.querySelector('figcaption');
     lb.querySelector('[data-cap]').textContent = (cap ? all(':scope > *', cap).map(function (n) { return n.textContent.trim(); }).filter(Boolean).join(' · ') || cap.textContent : (svg.getAttribute('aria-label') || '')).replace(/\s+/g, ' ').trim();
-    lb.__opener = svg.parentNode.querySelector('.rv-zoombtn');
+    lb.__opener = svg.parentNode.querySelector('.rv-zoombtn'); lb.__swipe = null; lb.querySelector('.rv-show-touch').textContent = 'Pinch to zoom, drag to move, double-tap to zoom in.';
     root.classList.add('rv-lb-open'); lb.showModal(); lb.__reset();
     lb.querySelector('.rv-lightbox__stage').focus({ preventScroll: true });
   }

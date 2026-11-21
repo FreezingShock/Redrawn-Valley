@@ -266,8 +266,17 @@
     }
 
     var dragging = false, moved = false, ptrs = {}, pinch = null, dragStart = null, lastMove = 0;
+    /* On a phone the map fills most of the screen, so a map that grabs every touch would trap the page scroll. Until it is tapped
+       it leaves touches to the page (CSS: touch-action pan-y); a tap unlocks it for drag and pinch, and a tap outside locks it again. */
+    var coarse = window.matchMedia ? matchMedia('(pointer: coarse)') : { matches: false };
+    function locked(e) { return coarse.matches && e.pointerType === 'touch' && !stage.classList.contains('is-unlocked'); }
+    stage.addEventListener('click', function (e) {
+      if (!coarse.matches || stage.classList.contains('is-unlocked') || e.target.closest('.rvm-card, .rvm-pin, .rvm-cluster, .rvm-zoom, .rvm-layers')) return;
+      stage.classList.add('is-unlocked'); showHint('Map unlocked: drag to move, pinch to zoom. Tap outside it to scroll the page again.');
+    });
+    doc.addEventListener('pointerdown', function (e) { if (e.pointerType === 'touch' && !stage.contains(e.target)) stage.classList.remove('is-unlocked'); }, { passive: true });
     stage.addEventListener('pointerdown', function (e) {
-      if (e.target.closest('.rvm-card, .rvm-zoom, .rvm-layers')) return;
+      if (e.target.closest('.rvm-card, .rvm-zoom, .rvm-layers') || locked(e)) return;
       if (e.button != null && e.button > 0) return;
       ptrs[e.pointerId] = { x: e.clientX, y: e.clientY }; active = true; stage.classList.add('is-active');
       var n = Object.keys(ptrs).length;

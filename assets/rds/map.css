@@ -144,6 +144,7 @@
 .rvm-note{margin:0;font:400 13px/20px var(--font-mono);color:var(--ink-faint);max-width:70ch}
 .rvm-note--err{color:var(--rust)}
 
+@media (pointer:coarse){.rvm-stage{touch-action:pan-y}.rvm-hint{white-space:normal;left:var(--space-3);right:calc(var(--space-3) + 60px);width:auto;text-align:center;transform:translateY(10px)}.rvm-hint.is-in{transform:none}.rvm-stage.is-unlocked{touch-action:none}}
 @media (max-width:1000px){.rvm-main{grid-template-columns:1fr}.rvm-panel{height:auto;max-height:none}.rvm-panel__scroll{overflow:visible}}
 @media (max-width:640px){
   .rvm{--rvm-h:min(58svh,520px)}

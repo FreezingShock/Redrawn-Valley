@@ -243,7 +243,7 @@
         }
       });
       var cap = (x.fig ? 'Fig. ' + x.fig + ': ' : '') + x.title + (x.note ? ' · ' + short(x.note, 80) : '') + ' · ' + x.sec.noun + (x.p.no ? ' ' + x.p.no : '') + ', ' + short(x.p.title, 40);
-      RDSInteract.zoom(null, { node: host, caption: cap, extras: ex, opener: x.art, onClose: function () {
+      RDSInteract.zoom(null, { node: host, caption: cap, extras: ex, opener: x.art, onSwipe: step, onClose: function () {
         cur = ''; if (location.hash) history.replaceState(null, '', location.pathname + location.search);
         if (x.art && x.art.isConnected) x.art.focus({ preventScroll: true });
       } });
