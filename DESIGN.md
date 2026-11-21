@@ -323,3 +323,15 @@ One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>`
 
 - **Nav**: `rds-nav` is a hand-washed paper band: brick and moss tints over paper with a deckled hairline lower edge (`::before` and `::after` in `skin.css` Part 4). The page-wide "no shadows" rule has one more exception here: a soft `drop-shadow` under the deckled edge once the page scrolls. The active section keeps the brick hand rule and goes bold. Search is the header's main action: ink fill with the pencil offset.
 - **Hero buttons**: primary `rv-cta` draws its outline, fills brick, then its arrow draws, flies off and a new one settles in (hover repeats it). Secondary `rv-textlink` is ink text with a drawn rule and arrow. Brick appears once, on the primary. All of it is CSS only and skipped under reduced motion.
+
+
+## Sources library
+
+`/sources/` lists every source cited anywhere on the site. It is generated, never hand-kept: `python3 scripts/build_sources.py` reads every page and writes `assets/sources.json` (CI refreshes it on each pull request; `scripts/check.py` warns when it is stale). Use `--report` to see counts and sources that are listed but never cited.
+
+- **What counts as a citation.** A link to an in-page `#id` inside `<sup>` or a `.rds-fn`, `.rv-fn`, `.rv-cite` wrapper, where the `#id` is an `<li>` in a notes list (`.rds-notes`, `.rv-sources`, or `#sources`). Pull quotes with a plain-text `[n]` inside `blockquote > cite` count as quoted uses. New article formats work without changes as long as they follow this pattern, so keep using the footnote components.
+- **Merging.** Sources merge by canonical URL (scheme, `www`, `utm_*`, fragment and trailing slash ignored). A source with no URL merges on its citation text. A `rds-kind` label or an `rv-src-note` beside a source is carried into the library (type and caveat).
+- **Types and topics** are rule-based (`DOMAIN_RULES`, `TOPICS` in the script). Put `<meta name="rv-topics" content="Heat, Water and soil">` on a page to override its topics.
+- **Jump links.** Each use has `page/#cite=<listItemId>.<n>&src=<sourceId>`: the nth marker on that page for that list item. `assets/rds/cite-jump.js` (loaded by `site-shell.js` when a `#cite=` hash is present) scrolls there, pulses the marker, highlights the sentence with the CSS Custom Highlight API (whole-paragraph tint as the fallback) and shows `rv-cite-bar` with previous/next use, the entry and a way back. The marker rules in JS and Python must stay identical; change them together.
+- **Components.** `rv-lib-*` (stats, type bar, sticky search, filter rows), `rv-src` (source card; `--c` is its type color), `rv-use` (a page and its uses). Styles in `assets/rds/sources.css`, behavior in `assets/rds/sources.js`. Search matches title, publisher, type, topic, caveat, citing page and the sentence each use backs; state is kept in the URL (`?q=&type=&topic=&in=&caveat=1&sort=`); `/` focuses the search on this page.
+- Motion: cards rise in, the use list opens with a grid-row transition, counters count up. All of it stops under `prefers-reduced-motion`.

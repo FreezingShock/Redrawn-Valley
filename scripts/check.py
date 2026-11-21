@@ -45,6 +45,8 @@ for f in (root / 'assets').rglob('*.css'):
 import subprocess
 if subprocess.run([sys.executable, str(root / 'scripts' / 'build_index.py'), '--check'], capture_output=True).returncode:
     warns.append('search index or sitemap is stale: run python3 scripts/build_index.py and commit the result')
+if subprocess.run([sys.executable, str(root / 'scripts' / 'build_sources.py'), '--check'], capture_output=True).returncode:
+    warns.append('sources library is stale: run python3 scripts/build_sources.py and commit assets/sources.json (CI refreshes it on PRs)')
 for w in warns: print('warn ', w)
 for e in errors: print('ERROR', e)
 print(f'{len(errors)} errors, {len(warns)} warnings'); sys.exit(1 if errors else 0)
