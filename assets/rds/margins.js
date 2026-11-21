@@ -180,7 +180,7 @@
     var vw = doc.documentElement.clientWidth, Hh = main.offsetHeight, wide = vw >= 1000, gut = Math.max(0, (vw - 1120) / 2), r = Rng(seedBase + ':layout');
     layer.textContent = ''; frags = []; if (io) io.disconnect();
     layer.className = 'rv-mf-layer ' + (wide ? 'is-wide' : 'is-narrow') + (gut < 150 && wide ? ' is-tight' : '');
-    var size, side = r() < .5 ? 0 : 1, y = wide ? 120 : 320, order = r.shuffle(KINDS), i = 0;
+    var rail = wide && doc.querySelector('[data-toc]'), size, side = rail ? 1 : (r() < .5 ? 0 : 1), y = wide ? 120 : 320, order = r.shuffle(KINDS), i = 0;
     if (wide) size = Math.max(420, Math.min(620, gut + 300)); else size = Math.min(vw * 1.0, 380);
     var step = wide ? size * 1.12 : size * 1.7;
     while (y + size * .6 < Hh && frags.length < 28) {
@@ -192,7 +192,7 @@
         el.style.cssText = 'width:' + n(size) + 'px;height:' + n(h) + 'px;top:' + n(y) + 'px;left:' + n(x) + 'px;--rot:' + n(r.range(-5, 5)) + 'deg;--dur:' + n(r.range(22, 34)) + 's';
         build(el, kind, seedBase + ':' + frags.length + ':' + kind); layer.appendChild(el); frags.push(el); if (io) io.observe(el);
       }
-      side = side ? 0 : 1; y += step + r.range(0, size * .35);
+      side = rail ? 1 : (side ? 0 : 1); y += step + r.range(0, size * .35);
     }
   }
   function init() {

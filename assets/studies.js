@@ -24,6 +24,7 @@ this._ui = function () {
 var doc = document;
 var canScroll = function (el) { return el ? (el.scrollHeight > el.clientHeight + 2) : (doc.documentElement.scrollHeight > window.innerHeight + 2); };
 var tocs = doc.querySelectorAll('[data-toc]');
+[].forEach.call(tocs, function (t) { [].forEach.call(t.querySelectorAll('a'), function (a, i) { a.style.setProperty('--i', i); }); t.classList.add('kt-ready'); });
 for (var t = 0; t < tocs.length; t++) {
 var toc = tocs[t], sc = toc.closest('[data-scroller]');
 var top0 = sc ? sc.getBoundingClientRect().top : 0, h = sc ? sc.clientHeight : window.innerHeight;

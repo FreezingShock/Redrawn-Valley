@@ -253,6 +253,7 @@ Big original pencil drawings that fill empty page margins. Loaded automatically 
 - **Phones**: one big fragment every ~1.7 screen heights at 20% opacity, behind the text, bleeding off a side.
 - **Motion**: lines draw on when a fragment first scrolls in; then it drifts a few pixels, canopies pulse, flow lines run, the ruler slides, the compass swings, tile colours swap. Only while on screen. Reduced motion, Save-Data, 2g and print show the finished still; the Pause background button (`rv-loops-paused`) stops it.
 - **Layering**: the layer is `z-index:-1` inside `<main>` (which becomes an isolated stacking context). `.rds-band-sunk` turns 62% opaque inside `main` so the art shows through. Skips areas covered by a hero loop.
+- **Study rail**: pages with a section rail (`[data-toc]`) keep sketches on the right only. The rail itself (`.kt`, `studies.css`) has a feathered paper wash behind it (`nav::before`, blurred, so it reads over any art), ticks that draw in one by one (`--i` set by `studies.js`), a pulsing accent tick, and brick-coloured active label and counter against muted inactive items. Reduced motion shows it still.
 - **API**: `RDSMargins.relayout()`, `RDSMargins.kinds`. Add a kind as `K.name = function (d, r, c)` using `d.line`, `d.fill`, `d.hatch`, `d.grid`.
 
 ## Known issues
