@@ -51,7 +51,7 @@
 .rv-svg .t-slate{fill:var(--slate)}
 .rv-svg .t-hand{font-family:var(--font-hand);font-size:17px;fill:var(--brick)}
 .rv-svg .t-hand-moss{font-family:var(--font-hand);font-size:17px;fill:var(--moss)}
-.rv-svg .ln{stroke:#4a4743;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.rv-svg .ln{stroke:var(--pencil);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .rv-svg .hair{stroke:var(--line-strong);fill:none;stroke-width:1}
 .rv-svg .ghost{stroke:var(--line);fill:none;stroke-width:1}
 .rv-svg .f-brick{fill:var(--brick)} .rv-svg .f-moss{fill:var(--moss)} .rv-svg .f-slate{fill:var(--slate)} .rv-svg .f-ink{fill:var(--ink)}
