@@ -264,7 +264,7 @@
       state.q = q;
       clearBtn.hidden = !q;
       if (DATA) prep();
-      if (!DATA || !DATA.pages.length) { listEl.innerHTML = '<li class="rvs-label" role="presentation">Loading the index…</li>'; countEl.textContent = ''; return; }
+      if (!DATA || !DATA.pages.length) { listEl.innerHTML = '<li class="rvs-label" role="presentation"><span>Loading the index<span class="cz-dots" aria-hidden="true"><i></i><i></i><i></i></span></span></li>'; countEl.textContent = ''; return; }
       if (!ts.length) {
         var b = rowsForBrowse(); rows = b.rows; counts = b.counts; total = b.total; mode = 'browse';
       } else {

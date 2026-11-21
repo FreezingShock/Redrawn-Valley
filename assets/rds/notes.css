@@ -1,9 +1,8 @@
 /* Notes: long-form essay layout. Site-only rules (rv- prefix), built on Redrawn Design System tokens.
    Loaded after rds.css by notes/index.html and notes/<slug>/index.html. Documented in DESIGN.md under "Notes". */
 
-/* Reading progress: a 3px brick line under the nav, driven by notes.js */
-.rv-progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:var(--z-chrome);pointer-events:none}
-.rv-progress i{display:block;height:100%;background:var(--brick);transform:scaleX(0);transform-origin:0 50%}
+/* Reading progress: the pencil line from rds.css (.rv-progress), driven by notes.js; this file only sets its stacking */
+.rv-progress{z-index:var(--z-chrome)}
 
 /* Essay header */
 .rv-ehead{padding-block:var(--space-16) var(--space-12);border-bottom:1px solid var(--line)}
@@ -24,9 +23,10 @@
 .rv-body section>ul{padding-left:var(--space-6);display:grid;gap:var(--space-2);margin-block:0 var(--space-6)}
 .rv-body section p a,.rv-body section li a{color:var(--moss)}
 .rv-body section>h2{font:500 var(--fs-30)/1.2 var(--rds-serif);letter-spacing:-.01em;margin:var(--space-12) auto var(--space-4);scroll-margin-top:96px}
-.rv-body section:first-child>h2{margin-top:0}
+.rv-body section:first-of-type>h2{margin-top:0}
+.rv-body>.rds-container>.rds-keypoints{width:min(var(--col),100%);margin:0 auto var(--space-12)}
 .rv-body section>h2 .rv-num{display:block;font:400 var(--fs-13)/20px var(--rds-mono);letter-spacing:.04em;color:var(--brick);margin-bottom:var(--space-1)}
-.rv-body section:first-child>p:nth-of-type(1){font-size:var(--fs-24);line-height:36px}
+.rv-body section:first-of-type>p:nth-of-type(1){font-size:var(--fs-24);line-height:36px}
 .rv-body code{font:400 .82em var(--rds-mono);background:var(--paper-sunk);padding:2px 6px;border-radius:var(--radius-sm)}
 .rv-body .rds-callout{margin-block:var(--space-8);width:min(var(--col),100%)}
 .rv-body .rds-callout ul{margin:var(--space-2) 0 0;padding-left:var(--space-4);display:grid;gap:var(--space-2)}
@@ -95,10 +95,6 @@
 .rv-nmeta{font:400 var(--fs-13)/20px var(--rds-mono);color:var(--ink-faint)}
 @media (min-width:860px){.rv-nfeature{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
 .rv-filter{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-8)}
-.rv-chip{font:600 var(--fs-12)/16px var(--rds-sans);letter-spacing:.08em;text-transform:uppercase;padding:10px 14px;min-height:40px;border-radius:var(--radius-pill);border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;transition:background-color var(--dur-fast) var(--ease-std),color var(--dur-fast) var(--ease-std)}
-.rv-chip:hover{background:var(--paper-sunk)}
-.rv-chip[aria-pressed=true]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
-.rv-chip:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .rv-nrows .rds-row__meta{display:flex;flex-direction:column;gap:2px;text-align:right}
 .rv-nrows .rds-row__text{max-width:44ch}
 .rv-nrows .rds-tag{margin-bottom:var(--space-1)}
@@ -109,5 +105,5 @@
 .rv-method p{margin:0;font:400 var(--fs-15)/24px var(--rds-sans);color:var(--ink-muted)}
 .rv-method>div{padding-top:var(--space-4);border-top:1px solid var(--ink)}
 
-@media (prefers-reduced-motion:reduce){.rv-progress i{transition:none}}
-@media (max-width:640px){.rv-body section:first-child>p:nth-of-type(1){font-size:var(--fs-20);line-height:31px}.rv-pull p{font-size:var(--fs-24)}}
+
+@media (max-width:640px){.rv-body section:first-of-type>p:nth-of-type(1){font-size:var(--fs-20);line-height:31px}.rv-pull p{font-size:var(--fs-24)}}

@@ -14,6 +14,8 @@ RULES = [
  ('skin.css', '--rv-rule-soft:', ':root', '--rv-rule-soft', {}),
  ('skin.css', '--rv-rule-ink:', ':root', '--rv-rule-ink', {}),
  ('skin.css', '--rv-rule-brick:', ':root', '--rv-rule-brick', {}),
+ ('skin.css', '--rv-chev:', ':root', '--rv-chev', {}),
+ ('skin.css', '--rv-check:', ':root', '--rv-check', {}),
  ('skin.css', '.rds-band-sunk::before{top:-27px;background-image:', '.rds-band-sunk::before', 'background-image', {}),
  ('skin.css', '.rds-band-sunk::after{bottom:-1px;background-image:', '.rds-band-sunk::after', 'background-image', {}),
  ('skin.css', '.rds-footer::before{top:-27px;background-image:', '.rds-footer::before', 'background-image', {'1f1d1a': '0b0806'}),

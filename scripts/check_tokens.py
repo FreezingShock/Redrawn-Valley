@@ -8,7 +8,7 @@ Run: python3 scripts/check_tokens.py [--update-baseline]  (check.py runs it)"""
 import re, sys, json, pathlib
 root = pathlib.Path(__file__).resolve().parent.parent
 BASE = root / 'scripts' / 'token-baseline.json'
-SKIP = {'assets/rds/tokens.css', 'assets/rds/theme.css'}   # tokens live in tokens.css; theme.css holds generated dark data-URI art
+SKIP = {'assets/rds/tokens.css', 'assets/rds/theme.css'}   # tokens live in tokens.css; theme.css holds generated dark data-URI art  # assets/fonts/ holds generated @font-face rules, which must name the family
 URL = re.compile(r'url\((?:"[^"]*"|\'[^\']*\'|[^)]*)\)')
 PAT = {
     'colour': re.compile(r'#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3}(?:[0-9a-fA-F]{2})?)?\b|\b(?:rgba?|hsla?)\(\s*\d'),
@@ -43,7 +43,7 @@ def run(update=False):
     now = {}
     for f in sorted(list((root / 'assets').rglob('*.css')) + list((root / 'assets').rglob('*.js'))):
         rel = f.relative_to(root).as_posix()
-        if rel in SKIP or '/icons/' in rel: continue
+        if rel in SKIP or '/icons/' in rel or rel.startswith('assets/fonts/'): continue
         c = scan(f)
         if c: now[rel] = c
     if update: BASE.write_text(json.dumps(now, indent=1, sort_keys=True) + '\n'); print('wrote scripts/token-baseline.json'); return [], []

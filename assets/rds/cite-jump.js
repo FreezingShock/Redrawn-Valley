@@ -85,6 +85,7 @@
     '.rv-cite-bar .rv-cite-bar__back:hover{background:var(--brick)}',
     '.rv-cite-bar .rv-cite-bar__x{border-color:transparent;font-size:20px;padding:10px 12px}',
     '@media(max-width:640px){.rv-cite-bar{bottom:calc(76px + env(safe-area-inset-bottom));flex-wrap:wrap;gap:8px;padding:10px;width:calc(100vw - 24px)}.rv-cite-bar__txt{flex:1 1 calc(100% - 80px)}.rv-cite-bar__list{display:none!important}}',
+    '.rv-cite-bar{box-sizing:border-box}',
     '@media(prefers-reduced-motion:reduce){.rv-cite-hit,.rv-cite-block{animation:none!important}.rv-cite-bar{transition:none}}'
   ].join('\n');
   doc.head.appendChild(st);
@@ -148,6 +149,15 @@
   window.addEventListener('hashchange', function () { run(false); });
   if (doc.readyState === 'complete') setTimeout(function () { run(true); }, 60);
   else window.addEventListener('load', function () { setTimeout(function () { run(true); }, 260); });
-  /* a second pass once reveals / layout settle */
-  window.addEventListener('load', function () { setTimeout(function () { var h = parseHash(); if (h) { var m = markers(h.id)[h.k - 1]; if (m) { var r = m.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) go(h, true); } } }, 1400); });
+  /* Esc clears the highlight and the bar, like the x button */
+  doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && bar) { clear(); bar.remove(); bar = null; } });
+  /* a second pass once reveals / layout settle, but only if the reader has not taken over the scroll in the meantime
+     (otherwise a quick scroll away would be pulled back to the citation) */
+  var touched = false;
+  ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(function (n) { window.addEventListener(n, function () { touched = true; }, { passive: true, once: true }); });
+  window.addEventListener('hashchange', function () { touched = false; });
+  window.addEventListener('load', function () { setTimeout(function () {
+    if (touched) return;
+    var h = parseHash(); if (h) { var m = markers(h.id)[h.k - 1]; if (m) { var r = m.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) go(h, true); } }
+  }, 1400); });
 })();

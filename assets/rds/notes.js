@@ -10,7 +10,7 @@
       if (!body) return;
       var r = body.getBoundingClientRect(), total = r.height - window.innerHeight * 0.6;
       var p = total > 0 ? Math.min(1, Math.max(0, (-r.top + window.innerHeight * 0.2) / total)) : 0;
-      fill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      bar.style.setProperty('--p', p.toFixed(4));
     };
     window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     window.addEventListener('resize', update);

@@ -66,7 +66,12 @@
 
 /* Article head: title block on the left, infobox on the right (stacked under 1000px). */
 .rv-article-head{width:min(1120px,100% - 48px);margin-inline:auto;padding-block:clamp(56px,7vw,112px) var(--space-12);display:grid;gap:var(--space-12) var(--space-16);align-items:start}
-@media (min-width:1000px){.rv-article-head{grid-template-columns:minmax(0,1fr) 340px}}
+/* Title block, the real/estimated note and the infobox share one grid: the box spans both left-hand rows, so the note
+   fills the space beside it and nothing is left empty. Under 1000px everything stacks (title, box, note). */
+.rv-article-head__note{min-width:0}
+.rv-article-head__note>*{margin:0}
+@media (min-width:1000px){.rv-article-head{grid-template-columns:minmax(0,1fr) 340px;grid-template-rows:auto 1fr;grid-template-areas:"main box" "note box";align-items:start}
+.rv-article-head__main{grid-area:main}.rv-article-head>.rv-infobox{grid-area:box}.rv-article-head__note{grid-area:note}}
 .rv-article-head__main{display:flex;flex-direction:column;gap:28px;min-width:0}
 
 /* Infobox: the at-a-glance panel. dl rows of label + value, optional groups, tags, and a foot. */
@@ -232,3 +237,5 @@ span.rv-term{color:var(--ink-muted)}
 .rv-study-bar nav>a[aria-current="true"]:not(.rv-study-bar__brand){color:var(--brick)}
 .rv-study-bar__ink{position:absolute;left:0;bottom:0;height:3px;width:0;border-radius:2px;background:var(--brick);opacity:0;pointer-events:none;transition:transform var(--dur-medium) var(--ease-out),width var(--dur-medium) var(--ease-out),opacity var(--dur-quick) var(--ease-std)}
 @media (prefers-reduced-motion:reduce){.rv-study-bar nav,.rv-study-bar__brand,.rv-study-bar__ink{transition:none}.rv-study-bar__brand{transform:none}}
+
+.rv-study .rds-keypoints{max-width:56rem;margin:0 auto var(--space-12)}
