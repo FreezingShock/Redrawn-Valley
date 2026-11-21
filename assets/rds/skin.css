@@ -172,6 +172,7 @@
 
   /* ---- breadcrumbs: one scrolling line instead of wrapping ---- */
   .rds-crumbs{padding-top:var(--space-4)}
+  .rds-crumbs:empty{box-sizing:border-box;min-height:calc(var(--space-4) + var(--tap-min))}
   .rds-crumbs ol{flex-wrap:wrap;row-gap:var(--space-1);white-space:normal;margin-inline:0;padding:0}
   .rds-crumbs li{min-width:0;overflow-wrap:anywhere}
   .rds-crumbs ol::-webkit-scrollbar{display:none}
@@ -180,6 +181,7 @@
   .rds-crumbs a{text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:3px}
   .rds-crumbs li:last-child{max-width:none}
   main[data-rds-article] .rds-crumbs{padding-bottom:var(--space-3)}
+  main[data-rds-article] .rds-crumbs:empty{box-sizing:border-box;min-height:calc(var(--space-4) + var(--tap-min) + var(--space-3))}
 
   /* ---- field guide ---- */
   .rds-article{padding-block:var(--space-4) var(--space-12)}

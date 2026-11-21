@@ -124,6 +124,7 @@
   --z-subbar: 12; --z-rail: 15; --z-study-bar: 19; --z-nav: 20; --z-jump: 25; --z-chrome: 30; --z-chrome-2: 31; --z-popover: 40; --z-tip: 60;
   --z-flow-under: 2147482000; --z-flow-cover: 2147483000; --z-flow-top: 2147483001;
   /* layout */
+  --crumb-h: 20px;   /* one breadcrumb line; the empty crumb bar reserves it so the page does not jump when the shell fills it in */
   --measure: 68ch; --container: 1120px;
   --cv-block: 900px;   /* placeholder height for off-screen sections (content-visibility, see rds.css) until the browser has drawn them once */
   --rv-gutter: 20px; --rv-bar: 52px; --rv-tab: 56px; --rv-safe: env(safe-area-inset-bottom,0px);
