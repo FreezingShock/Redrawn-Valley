@@ -49,6 +49,8 @@ if subprocess.run([sys.executable, str(root / 'scripts' / 'build_sources.py'), '
     warns.append('sources library is stale: run python3 scripts/build_sources.py and commit assets/sources.json (CI also does this after merge)')
 if subprocess.run([sys.executable, str(root / 'scripts' / 'build_topics.py'), '--check'], capture_output=True).returncode:
     warns.append('topic hubs are stale: run python3 scripts/regen.py and commit the result (CI also does this after merge)')
+if subprocess.run([sys.executable, str(root / 'scripts' / 'assetver.py'), '--check'], capture_output=True).returncode:
+    warns.append('asset fingerprints are stale: run python3 scripts/assetver.py and commit the result (CI also does this after merge)')
 for f in sorted(root.glob('studies/*/index.html')) + sorted(root.glob('guide/*/index.html')) + sorted(root.glob('notes/*/index.html')):
     if f.parent.name != '_template' and 'name="rv-topics"' not in f.read_text(encoding='utf-8'):
         warns.append(f'{f.relative_to(root)}: no <meta name="rv-topics"> (it will not appear in any topic hub)')
