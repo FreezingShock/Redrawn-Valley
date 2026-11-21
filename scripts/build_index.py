@@ -11,14 +11,14 @@ from html.parser import HTMLParser
 root = pathlib.Path(__file__).resolve().parent.parent
 # Production domain for sitemap.xml. Change here if the domain changes.
 SITE_URL = 'https://redrawnvalley.vercel.app'
-SECTIONS = {'': 'Home', 'a-z': 'A–Z index', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'about': 'About'}
+SECTIONS = {'': 'Home', 'a-z': 'A–Z index', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'topics': 'Topics', 'about': 'About'}
 SKIP_TAGS = {'script', 'style', 'svg', 'noscript', 'nav', 'footer', 'template'}
 TEXT_CAP = 6000
 
 class Page(HTMLParser):
     def __init__(s):
         super().__init__(convert_charrefs=True)
-        s.title = ''; s.desc = ''; s.noindex = False
+        s.title = ''; s.desc = ''; s.noindex = False; s.meta = {}
         s.heads = []; s.text = []; s.skip = 0; s.stack = []
         s.in_title = False; s.cur = None
     def handle_starttag(s, tag, attrs):
@@ -26,6 +26,7 @@ class Page(HTMLParser):
         if tag == 'meta':
             n = (a.get('name') or '').lower()
             if n == 'description': s.desc = a.get('content', '')
+            if n.startswith('rv-'): s.meta[n] = a.get('content', '')
             if n == 'robots' and 'noindex' in (a.get('content') or ''): s.noindex = True
         if tag == 'title': s.in_title = True
         shell = tag == 'header' and ('data-rds-nav' in a or 'data-rv-shell' in a)
@@ -61,6 +62,15 @@ def build():
         h1 = next((h for h in p.heads if h['l'] == 1), None)
         entry = {'u': url, 't': title, 's': sec, 'd': re.sub(r'\s+', ' ', p.desc).strip(),
                  'h': [[h['t'], h['id']] for h in p.heads if h['l'] > 1 or h is not h1][:60], 'x': text[:TEXT_CAP]}
+        # page metadata scheme (DESIGN.md > Topics): rv-topics = slugs from assets/topics.json, first is primary
+        known = {t['slug'] for t in json.loads((root / 'assets/topics.json').read_text(encoding='utf-8'))['topics']}
+        k = [x for x in (t.strip().lower() for t in p.meta.get('rv-topics', '').split(',')) if x]
+        for x in k:
+            if x not in known: print(f'warning: {rel.as_posix()}: unknown topic "{x}" (add it to assets/topics.json)', file=sys.stderr)
+        if k: entry['k'] = [x for x in k if x in known]
+        if p.meta.get('rv-place'): entry['pl'] = p.meta['rv-place'].strip()
+        g = re.match(r'^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$', p.meta.get('rv-geo', ''))
+        if g: entry['g'] = [float(g.group(1)), float(g.group(2))]
         pages.append(entry); urls.append((url, f.stat().st_mtime))
     pages.sort(key=lambda e: (e['u'] != '', e['s'], e['u']))
     labels = {k: v for k, v in SECTIONS.items()}

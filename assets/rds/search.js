@@ -184,8 +184,8 @@
         '<div class="rvs-chips" role="group" aria-label="Filter results"></div>' +
         '<div class="rvs-body" data-mode="browse"><ul class="rvs-list" id="rvs-list" role="listbox" aria-label="Results"></ul>' +
           '<aside class="rvs-pv" aria-label="Preview"></aside></div>' +
-        '<footer class="rvs-foot"><p class="rvs-count rds-mono" aria-live="polite"></p>' +
-          '<p class="rvs-keys rds-mono" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>⌘</kbd><kbd>↵</kbd> new tab</span><span><kbd>⌥</kbd><kbd>←</kbd><kbd>→</kbd> filter</span><span><kbd>esc</kbd> close</span></p></footer>';
+        '<footer class="rvs-foot"><p class="rvs-count" aria-live="polite"></p>' +
+          '<p class="rvs-keys" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>⌘</kbd><kbd>↵</kbd> new tab</span><span><kbd>⌥</kbd><kbd>←</kbd><kbd>→</kbd> filter</span><span><kbd>esc</kbd> close</span></p></footer>';
       doc.body.appendChild(dlg);
       input = dlg.querySelector('.rvs-input'); listEl = dlg.querySelector('.rvs-list'); pvEl = dlg.querySelector('.rvs-pv'); bodyEl = dlg.querySelector('.rvs-body');
       chipsEl = dlg.querySelector('.rvs-chips'); countEl = dlg.querySelector('.rvs-count'); clearBtn = dlg.querySelector('.rvs-clear'); frameEl = dlg.querySelector('.rvs-frame'); ulEl = dlg.querySelector('.rvs-ul');
@@ -293,7 +293,8 @@
       bodyEl.setAttribute('data-mode', mode === 'none-filtered' ? 'none' : mode);
       dlg.setAttribute('data-mode', mode === 'none-filtered' ? 'none' : mode);
       var n = rows.length, msg = mode === 'browse' ? (total + ' pages to browse') : (mode === 'results' ? n + (n === 1 ? ' result' : ' results') + (ts.length && total > n && state.filter === 'all' ? '' : '') : 'No results for “' + q.trim() + '”');
-      if (countEl.textContent !== msg) { countEl.textContent = msg; if (n !== lastCount && !reduceMQ.matches) { countEl.classList.remove('roll'); void countEl.offsetWidth; countEl.classList.add('roll'); } }
+      var html = mode === 'results' ? '<b>' + n + '</b> ' + (n === 1 ? 'result' : 'results') : esc(msg);
+      if (countEl.getAttribute('data-m') !== msg) { countEl.setAttribute('data-m', msg); countEl.innerHTML = html; if (n !== lastCount && !reduceMQ.matches) { countEl.classList.remove('roll'); void countEl.offsetWidth; countEl.classList.add('roll'); } }
       lastCount = n;
       setActive(state.active, false, true);
     }
