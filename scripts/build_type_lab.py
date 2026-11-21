@@ -283,8 +283,8 @@ def build_css():
         lab = d['roles']['label']
         out.append(f'{sel} .tl-ui .rds-btn,{sel} .tl-ui .rds-tag{{font-family:{lab[0]},var(--rds-sans);font-weight:{lab[1]};letter-spacing:{lab[4]};{lab[5]}font-variation-settings:inherit}}\n')
         out.append(f'{sel} .tl-ui .rds-link{{font-family:{d["roles"]["body"][0]},var(--rds-sans);font-size:{d["roles"]["body"][2]}}}\n')
-        out.append(f'main[data-body="site"] {sel} .tl-body{{font-family:var(--rds-serif);font-weight:400;font-size:19px;line-height:1.65;letter-spacing:0;font-style:normal;font-variation-settings:normal}}\n')
-        out.append(f'main[data-body="site"] {sel} .tl-lead{{font-family:var(--rds-serif);font-weight:400;font-size:21px;line-height:1.5;letter-spacing:0;font-style:normal;font-variation-settings:normal}}\n')
+        out.append(f'main[data-body="site"] {sel} .tl-body{{font-family:"Newsreader",Georgia,serif;font-weight:400;font-size:19px;line-height:1.65;letter-spacing:0;font-style:normal;font-variation-settings:normal}}\n')
+        out.append(f'main[data-body="site"] {sel} .tl-lead{{font-family:"Newsreader",Georgia,serif;font-weight:400;font-size:21px;line-height:1.5;letter-spacing:0;font-style:normal;font-variation-settings:normal}}\n')
         out.append(f'{sel} .tl-svgfont .svgt{{font-family:{lab[0]},var(--rds-sans);font-weight:{lab[1]};font-size:11px;letter-spacing:{lab[4]};{lab[5]}}}\n')
     return ''.join(out)
 
