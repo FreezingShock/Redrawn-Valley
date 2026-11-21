@@ -53,7 +53,9 @@ def build():
     for f in sorted(root.rglob('*.html')):
         rel = f.relative_to(root)
         if any(p in ('.git', 'node_modules') for p in rel.parts) or rel.name == '404.html': continue
-        p = Page(); p.feed(f.read_text(encoding='utf-8'))
+        src = f.read_text(encoding='utf-8')
+        if rel.as_posix() == 'a-z/index.html': src = re.sub(r'<!-- atlas:start.*?<!-- atlas:end -->', '', src, flags=re.S)   # generated list: not indexed twice
+        p = Page(); p.feed(src)
         if p.noindex or not p.title.strip(): continue
         url = '' if rel.as_posix() == 'index.html' else (rel.parent.as_posix() + '/' if rel.name == 'index.html' else rel.as_posix())
         sec = url.split('/')[0] if '/' in url else ('' if url == '' else url.rsplit('.', 1)[0])
