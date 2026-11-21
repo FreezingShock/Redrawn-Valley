@@ -24,6 +24,7 @@ Design rules live in `DESIGN.md` (the Redrawn Design System). Agent rules live i
 ```
 index.html                         front page
 studies/topanga-willows/index.html study 01 (self-contained page)
+studies/ventura-topanga-corner/    study 03 (22001 Ventura Blvd corner); art from scripts/ventura_corner_art.py
 notes/index.html                   notes index; notes/<slug>/index.html are the essays
 assets/rds/tokens.css             Redrawn Design System design tokens (colors, spacing, radii, fonts)
 assets/rds/rds.css               Redrawn Design System components (and the icon component)

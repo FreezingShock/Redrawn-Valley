@@ -135,6 +135,7 @@ Components (prefix `rv-`, tokens only):
 - Legacy study-script hooks (keep as is): `rds-view` (reveal), `rds-split`/`rds-w` (headline words), `rds-draw` with `.s`/`.f`, `kt` rail, `kstep`/`data-scrolly`, `data-toc`.
 
 - **Study 02 drawings are generated from public parcel data**: `python3 scripts/fallbrook_art.py` redraws the parcel plan, the staged frontage plan and the section from `scripts/data/fallbrook_parcels.py` (City of Los Angeles parcel outlines) and the design numbers at the top of the script, with asserts. Study-specific styles live in `studies/<slug>/study.css` (`fb-` prefix); drawing classes (`dk`, `df-*`, `dt`) are the same as study 01.
+- **Study 03 pieces** (`studies/ventura-topanga-corner`, drawings from `scripts/ventura_corner_art.py`): staged layers `.stg-fN` (appear at stage N) and `.stg-uN` (shown until stage N), driven by `data-st` on `[data-scrolly]`; distance bars `vt-bars` (rows on a mile axis with a quarter-mile rule); `vt-ledger` (two-number table); `vt-loop` (two panels animated on a 12 s loop, static under reduced motion); `vt-rows` (study rows with a fixed meta column). Plan drawings are generated from dimensions in feet.
 
 **Adding a study**
 1. Copy `studies/_template/index.html` to `studies/<slug>/index.html` (same depth, so paths stay valid). Delete the noindex meta and the instruction comment.
