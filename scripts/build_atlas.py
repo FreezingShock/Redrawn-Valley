@@ -270,7 +270,20 @@ def build_entries(pages, data):
     for key, s in S.items():
         e = {'head': s['head'], 'kind': 'source', 'href': None, 'gloss': '', 'tags': [s['kind']] if s['kind'] else [], 'uses': s['uses'], 'aliases': set(), 'see': None, 'ext': s['url'], 'drawing': None}
         E[('src-' + key, 'source')] = e
-    # drawings
+    # drawings: one source of truth is assets/drawings.json (scripts/build_drawings.py, step one of regen.py);
+    # until that file exists, fall back to the captions found here
+    dj = root / 'assets' / 'drawings.json'
+    titles = {p['url']: p['title'] for p in pages}
+    if dj.exists():
+        for d in json.loads(dj.read_text(encoding='utf-8')).get('drawings', []):
+            pt = titles.get(d['page'], d['page'].strip('/').split('/')[-1].replace('-', ' ').title())
+            tag = (f"Fig. {d['fig']} · " if d.get('fig') else '') + pt
+            gloss = ' '.join(x.rstrip('.') + '.' for x in (d.get('caption', ''), d.get('note', '')) if x)
+            e = {'head': d['label'], 'kind': 'drawing', 'href': 'drawings/#' + d['id'], 'gloss': short(gloss, 220), 'tags': [tag], 'uses': {}, 'aliases': set(), 'see': None, 'ext': '', 'drawing': d}
+            if d['page'] in titles:
+                e['uses'][d['page']] = {'title': pt, 'anchors': [(d['anchor'], d.get('heading') or '')] if d.get('anchor') else []}
+            E[('fig-' + d['id'], 'drawing')] = e
+        return E
     for p in pages:
         for f in extract_figures(p):
             tag = (f['num'] + ' · ' if f['num'] else '') + p['title']
