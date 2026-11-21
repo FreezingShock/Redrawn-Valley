@@ -235,6 +235,13 @@
     all('[data-rv-shell="footer"]').forEach(footer);
     all('[data-rv-crumbs]').forEach(crumbs);
     tabbar();
+    /* skip link: move focus into <main>, not just the scroll position (Safari and some readers only scroll) */
+    doc.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a.rds-skip'); if (!a) return;
+      var m = doc.getElementById('main'); if (!m) return;
+      if (!m.hasAttribute('tabindex')) m.setAttribute('tabindex', '-1');
+      m.focus({ preventScroll: false });
+    });
     /* the standalone study bar has no site header, so it gets the theme switch beside its Search link */
     all('nav.ktabs').forEach(function (k) {
       var srch = k.querySelector('[data-rv-search-open]');

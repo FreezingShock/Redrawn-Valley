@@ -50,10 +50,10 @@
 /* ---------- "Contents" pill (articles, essays, studies; under 900px) ---------- */
 .rv-jump{display:none}
 @media (max-width:899px){
-  .rv-jump{position:fixed;left:50%;bottom:16px;z-index:var(--z-jump);transform:translate(-50%,12px);display:inline-flex;align-items:center;gap:var(--space-3);max-width:calc(100% - 2*var(--rv-gutter));height:44px;padding:0 var(--space-4) 0 var(--space-3);border:0;border-radius:var(--radius-pill);background:var(--ink);color:var(--on-ink);font:500 var(--fs-14)/1 var(--rds-sans);cursor:pointer;opacity:0;pointer-events:none;transition:opacity var(--dur-base) var(--ease-std),transform var(--dur-base) var(--ease-out)}
+  .rv-jump{position:fixed;left:50%;bottom:16px;z-index:var(--z-jump);transform:translate(-50%,12px);display:inline-flex;align-items:center;gap:var(--space-3);max-width:calc(100% - 2*var(--rv-gutter));min-height:44px;padding:var(--space-2) var(--space-4) var(--space-2) var(--space-3);border:0;border-radius:var(--radius-pill);background:var(--ink);color:var(--on-ink);font:500 var(--fs-14)/1 var(--rds-sans);cursor:pointer;opacity:0;pointer-events:none;transition:opacity var(--dur-base) var(--ease-std),transform var(--dur-base) var(--ease-out)}
   .rv-jump.is-on{opacity:1;pointer-events:auto;transform:translate(-50%,0)}
   .rv-jump__n{flex:none;font:400 var(--fs-12)/1 var(--rds-mono);color:var(--on-ink-muted)}
-  .rv-jump__t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rv-jump__t{min-width:0;overflow-wrap:anywhere;text-align:left;line-height:var(--lh-snug,1.25)}
   .rv-jump::after{content:"";flex:none;width:7px;height:7px;border-top:1.5px solid currentColor;border-left:1.5px solid currentColor;transform:rotate(45deg) translate(2px,2px)}
   .rv-jump:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 }
@@ -172,12 +172,13 @@
 
   /* ---- breadcrumbs: one scrolling line instead of wrapping ---- */
   .rds-crumbs{padding-top:var(--space-4)}
-  .rds-crumbs ol{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;scrollbar-width:none;margin-inline:calc(-1*var(--rv-gutter));padding:0 var(--rv-gutter);-webkit-mask-image:linear-gradient(90deg,var(--pal-black) calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,var(--pal-black) calc(100% - 32px),transparent)}
+  .rds-crumbs ol{flex-wrap:wrap;row-gap:var(--space-1);white-space:normal;margin-inline:0;padding:0}
+  .rds-crumbs li{min-width:0;overflow-wrap:anywhere}
   .rds-crumbs ol::-webkit-scrollbar{display:none}
   .rds-crumbs li{flex:none;display:flex;align-items:center}
   .rds-crumbs a{display:inline-block;padding-block:10px;border-bottom:0}
   .rds-crumbs a{text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:3px}
-  .rds-crumbs li:last-child{max-width:60vw;overflow:hidden;text-overflow:ellipsis}
+  .rds-crumbs li:last-child{max-width:none}
   main[data-rds-article] .rds-crumbs{padding-bottom:var(--space-3)}
 
   /* ---- field guide ---- */
@@ -460,7 +461,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-nav__intro .rds-icon{flex:none;width:28px;height:28px;--icon-accent:var(--brick)}
 .rv-nav__intro b{display:block;font:500 var(--fs-18)/22px var(--rds-serif);color:var(--ink)}
 .rv-nav__list{list-style:none;margin:0 0 var(--space-2);padding:0}
-.rv-nav__list a{display:block;padding:7px var(--space-2);margin:0 -8px;border-radius:var(--radius-sm);font:500 var(--fs-15)/20px var(--rds-sans);color:var(--ink);text-decoration:none;background:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rv-nav__list a{display:block;padding:7px var(--space-2);margin:0 -8px;border-radius:var(--radius-sm);font:500 var(--fs-15)/20px var(--rds-sans);color:var(--ink);text-decoration:none;background:none;overflow-wrap:anywhere}
 .rv-nav__list a:hover,.rv-nav__list a:focus-visible{background:var(--paper-sunk);color:var(--brick)}
 .rv-nav__list a[aria-current=page]{color:var(--brick);box-shadow:inset 2px 0 0 var(--brick)}
 .rv-nav__all{display:inline-flex;align-items:center;gap:var(--space-2);font:400 var(--fs-16)/20px var(--rv-hand);color:var(--moss);text-decoration:none}
@@ -557,9 +558,9 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 /* the lower search box now opens the same dialog as the header */
 .rv-lookup{appearance:none;display:grid;gap:var(--space-2);margin-top:var(--space-2);padding:0;border:0;background:none;text-align:left;cursor:pointer;width:100%;max-width:440px;color:inherit}
 .rv-lookup__lab{font:400 var(--fs-17)/20px var(--rv-hand);color:var(--ink-muted)}
-.rv-lookup__box{display:flex;align-items:center;gap:var(--space-3);height:44px;padding:0 var(--space-3);border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--paper-raised);color:var(--ink-faint);font:400 var(--fs-16)/1 var(--rds-sans);transition:border-color var(--dur-fast) var(--ease-std)}
+.rv-lookup__box{display:flex;align-items:center;gap:var(--space-3);min-height:44px;padding:var(--space-2) var(--space-3);border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--paper-raised);color:var(--ink-faint);font:400 var(--fs-16)/1 var(--rds-sans);transition:border-color var(--dur-fast) var(--ease-std)}
 .rv-lookup__box .rds-icon{flex:none;--icon-accent:currentColor;--icon-tint:transparent}
-.rv-lookup__box span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rv-lookup__box span{flex:1;min-width:0;overflow-wrap:anywhere}
 .rv-lookup__box kbd{font:400 var(--fs-12)/1 var(--rds-mono);border:1px solid var(--line);border-radius:var(--radius-sm);padding:3px 6px;background:var(--paper)}
 .rv-lookup:hover .rv-lookup__box{border-color:var(--edge)}
 .rv-lookup:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:var(--radius-md)}
@@ -612,4 +613,45 @@ svg text[style*="Architects Daughter"]{font-family:var(--rv-hand)!important}
   .rv-cta__label{animation:none;color:var(--on-ink)}
   .rv-cta__arrow,.rv-cta:hover .rv-cta__arrow{animation:none}
   .rv-cta:active{transform:none}
+}
+
+/* ---------- tablet header: brand, links, theme and search fit without sideways scroll ---------- */
+@media (min-width:641px) and (max-width:1000px){
+  .rds-nav{gap:var(--space-4);padding-inline:var(--space-4)}
+  .rds-nav__links{gap:var(--space-4);flex-wrap:wrap}
+  .rds-nav__search{margin-left:var(--space-2)}
+  .rds-nav__search kbd{display:none}
+}
+
+/* ---------- long words and URLs wrap instead of pushing the page sideways ---------- */
+.rds-article__body :is(p,li,cite,figcaption,td,dd,a),.rds-notes :is(li,cite,a),.rds-note,.rv-log__text{overflow-wrap:anywhere}
+
+/* ---------- Accessibility layer (documented in DESIGN.md > Accessibility) ---------- */
+/* Skip link: a real button-sized target that lands focus on <main> (see site-shell.js). */
+.rds-skip:focus-visible{top:var(--space-2);outline:var(--focus-w) solid var(--paper);outline-offset:var(--focus-gap);box-shadow:0 0 0 calc(var(--focus-w) + var(--focus-gap)) var(--ink)}
+main:focus{outline:none}
+/* Focus ring stays visible on the dark footer and other dark bands, where brick would sink. */
+.rds-footer :where(a,button,input,summary,[tabindex]):focus-visible,.rds-band-ink :where(a,button,[tabindex]):focus-visible{outline-color:var(--pal-on-band-accent)}
+/* Scrollers reachable by keyboard get a ring too. */
+:where([tabindex="0"]):focus-visible{outline:var(--focus-w) solid var(--brick);outline-offset:calc(-1 * var(--focus-w))}
+/* Touch: every control is at least 44px tall; pointers that can aim keep the compact look but never go under 24px. */
+@media (pointer:coarse){
+  :where(.rds-chip,.rv-chip,.rds-btn,.rv-seg button,.rv-stages__btn,.rv-lib-seg,.rv-az__at a,.rv-az__page,.rds-footer a,.rds-crumbs a,.rv-nav__list a,.rds-notes .rds-back){min-height:var(--tap-min);display:inline-flex;align-items:center}
+  .rv-lib-seg{min-width:var(--tap-min)}
+}
+:where(.rv-az__at a,.rv-az__page,.rv-lib-seg,.rds-fn a){min-height:var(--tap-min-fine);min-width:var(--tap-min-fine);display:inline-flex;align-items:center}
+.rds-fn a{justify-content:center}
+/* Every animation, transition and page transition stops for people who ask for less motion. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:var(--dur-instant)!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:var(--dur-instant)!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
+}
+/* Windows high contrast: keep borders and rings visible. */
+@media (forced-colors:active){
+  :where(a,button,input,summary,[tabindex]):focus-visible{outline:var(--focus-w) solid Highlight}
+  .rds-btn,.rds-chip,.rv-chip,.rv-seg button,.rv-stages__btn{border:1px solid ButtonText}
+}
+/* More contrast on request: firmer hairlines and muted text. */
+@media (prefers-contrast:more){
+  :root{--line:var(--line-strong);--ink-faint:var(--ink-muted)}
 }

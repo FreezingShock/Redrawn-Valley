@@ -30,7 +30,7 @@
 .kt nav:hover a,.kt nav:focus-within a{height:20px}
 .kt nav:hover a[data-g],.kt nav:focus-within a[data-g]{margin-top:10px}
 .kt a i{display:block;flex:none;width:12px;height:2px;border-radius:1px;background:var(--line-strong);transition:width var(--dur-base) var(--ease-out),height .3s var(--ease-out),background-color .2s var(--ease-std)}
-.kt a span{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:var(--fs-13);line-height:18px;text-shadow:0 0 3px var(--paper),0 0 8px var(--paper),0 0 14px var(--paper);transition:max-width var(--dur-base) var(--ease-out),opacity .2s var(--ease-std)}
+.kt a span{max-width:0;opacity:0;overflow:hidden;font-size:var(--fs-13);line-height:18px;text-shadow:0 0 3px var(--paper),0 0 8px var(--paper),0 0 14px var(--paper);transition:max-width var(--dur-base) var(--ease-out),opacity .2s var(--ease-std)}
 .kt nav:hover a span,.kt nav:focus-within a span{max-width:240px;opacity:1}
 .kt a:hover{color:var(--brick)}
 .kt a:hover i{width:22px;background:var(--brick)}
