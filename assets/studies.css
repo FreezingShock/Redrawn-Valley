@@ -130,9 +130,9 @@ span.rv-term{color:var(--ink-muted)}
 .rv-sources li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--line);scroll-margin-top:96px}
 .rv-sources li>b{font:400 13px/22px var(--rds-mono);color:var(--ink-faint)}
 .rv-sources a{overflow-wrap:anywhere}
-.rv-study-bar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
-.rv-study-bar nav{width:min(1120px,100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 32px;min-height:64px;padding-block:8px}
-.rv-study-bar__brand{font:500 24px/1 var(--rds-serif);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.rv-study-bar{position:sticky;top:72px;z-index:19;background:var(--paper);border-bottom:1px solid var(--line);transition:top var(--dur-base,.25s) ease}
+.rv-study-bar nav{width:min(1120px,100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;gap:4px 28px;min-height:44px;padding-block:0}
+.rv-study-bar__brand{margin-right:auto;font:500 19px/1 var(--rds-serif);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
 .rv-study-bar__back{color:var(--ink-muted);text-decoration:none;font-size:14px;margin-right:auto;padding:8px 0}
 .rv-study-bar nav>a:not(.rv-study-bar__brand):not(.rv-study-bar__back){color:var(--ink);text-decoration:none;font-size:15px;font-weight:500;padding:8px 0}
 .rv-infobox dd a{color:var(--moss)}
@@ -218,3 +218,7 @@ span.rv-term{color:var(--ink-muted)}
 .kt a[aria-current="true"] i{animation:kt-tick .7s cubic-bezier(.16,1,.3,1) both,kt-beat 2.8s ease-in-out 1s infinite}
 @keyframes kt-beat{50%{box-shadow:0 0 0 6px rgba(156,61,36,0)}}
 @media (prefers-reduced-motion:reduce){.kt nav::before,.kt .cnt{transition:none;opacity:1;transform:none}.kt-ready a i,.kt a[aria-current="true"] i{animation:none}}
+
+/* study pages do not load rds.js, so the shared header never shrinks: hold it at its full 72px so the part bar can stick right under it */
+.rv-study .rds-nav,.rv-study .rds-nav.is-scrolled{height:72px}
+@media (max-width:640px){.rv-study .rds-nav,.rv-study .rds-nav.is-scrolled{height:var(--rv-bar)}}
