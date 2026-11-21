@@ -54,6 +54,9 @@ if subprocess.run([sys.executable, str(root / 'scripts' / 'assetver.py'), '--che
 for f in sorted(root.glob('studies/*/index.html')) + sorted(root.glob('guide/*/index.html')) + sorted(root.glob('notes/*/index.html')):
     if f.parent.name != '_template' and 'name="rv-topics"' not in f.read_text(encoding='utf-8'):
         warns.append(f'{f.relative_to(root)}: no <meta name="rv-topics"> (it will not appear in any topic hub)')
+sys.path.insert(0, str(root / 'scripts'))
+import check_tokens
+_e, _w = check_tokens.run(); errors += _e; warns += _w
 for w in warns: print('warn ', w)
 for e in errors: print('ERROR', e)
 print(f'{len(errors)} errors, {len(warns)} warnings'); sys.exit(1 if errors else 0)

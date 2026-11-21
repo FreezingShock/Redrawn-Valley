@@ -20,7 +20,7 @@ RULES = [
  ('skin.css', '.rds-eyebrow::before{content:"";flex:none;width:26px;height:8px;background:', '.rds-eyebrow::before', 'background-image', {}),
  ('skin.css', '.rv-divider{height:22px;margin:var(--space-12) auto;width:200px;background:', '.rv-divider', 'background-image', {}),
  ('skin.css', '.rds-empty::before{content:"";display:block;width:120px;height:96px;margin:0 auto var(--space-3);background:', '.rds-empty::before', 'background-image', {}),
- ('skin.css', '.rds-nav::after{content:"";position:absolute;left:0;right:0;top:calc(100% - 1px);height:14px;z-index:-1;pointer-events:none;transition:filter var(--dur-base) ease,opacity var(--dur-fast) ease;\n  background:', '.rds-nav::after', 'background-image', {}),
+ ('skin.css', '.rds-nav::after{content:"";position:absolute;left:0;right:0;top:calc(100% - 1px);height:14px;z-index:var(--z-under);pointer-events:none;transition:filter var(--dur-base) var(--ease-std),opacity var(--dur-fast) var(--ease-std);\n  background:', '.rds-nav::after', 'background-image', {}),
  ('rds.css', '.rds-mark{background:', '.rds-mark', 'background-image', {}),
  ('rds.css', '.rds-circle{background:', '.rds-circle', 'background-image', {}),
  ('flow.css', '.fl-on :is(.rds-prose,.rds-article__body,.rv-body) p a:not(.rds-btn),.fl-on .rds-link{background-image:', '.fl-on :is(.rds-prose,.rds-article__body,.rv-body) p a:not(.rds-btn),.fl-on .rds-link', 'background-image', {}),

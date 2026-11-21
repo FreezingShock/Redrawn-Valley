@@ -1,49 +1,89 @@
-/* Redrawn Design System tokens. Generated from the Redrawn Design System; edit there, not here. */
+/* Redrawn Design System tokens: the single token file for the whole site. Documented in DESIGN.md > Tokens.
+   Layers: (1) --pal-* raw palette, theme-invariant, never read by components except where a colour must NOT change with the theme
+   (art, print, dark bands); (2) role names (--paper, --ink, --brick ...) are the semantic layer components use and the dark theme swaps;
+   (3) scale tokens: space, radius, type ramp (--fs-*), motion (--dur-*, --ease-*), stacking (--z-*), layout, hand-drawn shape and shadow.
+   Never write a literal colour, duration, easing, z-index or font stack in component CSS or JS: add or reuse a token here. */
 :root{
+  /* ---------- 1. palette (raw) ---------- */
+  --pal-paper: #f6f1e7;
+  --pal-paper-raised: #fbf8f1;
+  --pal-paper-sunk: #ece5d6;
+  --pal-line: #d9d0bd;
+  --pal-line-strong: #8a8170;
+  --pal-ink: #1f1d1a;
+  --pal-ink-muted: #5c564c;
+  --pal-ink-faint: #655e51;
+  --pal-ink-subtle: #6e675a;
+  --pal-line-subtle: #a79f8e;
+  --pal-on-ink-muted: #b8b0a0;
+  --pal-brick: #9c3d24;
+  --pal-brick-deep: #7d2f1a;
+  --pal-brick-tint: #f0d9cc;
+  --pal-moss: #2f4a3a;
+  --pal-moss-deep: #213529;
+  --pal-moss-tint: #dfe6d8;
+  --pal-rust: #8c1c2e;
+  --pal-slate: #35506b;
+  --pal-sky: #7ba3c0;
+  --pal-ochre: #be9661;
+  --pal-rose: #b17c83;
+  --pal-kelly: #4f9b60;
+  --pal-peri: #7c849f;
+  --pal-sage: #d6e2d6;
+  --pal-pencil: #4a4743;
+  --pal-blueprint: #1e3a5f;
+  --pal-draft-line: #e8eef5;
+  --pal-on-band-accent: #d98a6c;
+  --pal-on-band-moss: #a9c3b0;
+  --pal-black: #000;
+  --pal-white: #fff;
+
+  /* ---------- 2. semantic roles (light) ---------- */
+
   color-scheme: light;
-  --paper: #f6f1e7;
-  --paper-rgb: 246,241,231;
+  --paper: var(--pal-paper);
+  --paper-rgb: 246,241,231; /* raw triplets: legacy rgba() washes; new code uses color-mix() */
   --sunk-rgb: 236,229,214;
-  --paper-raised: #fbf8f1;
-  --paper-sunk: #ece5d6;
-  --line: #d9d0bd;
-  --line-strong: #8a8170;
-  --ink: #1f1d1a;
-  --ink-muted: #5c564c;
-  --ink-faint: #655e51;
-  --on-ink: #f6f1e7;
-  --on-ink-muted: #b8b0a0;
-  --brick: #9c3d24;
-  --brick-deep: #7d2f1a;
-  --brick-tint: #f0d9cc;
-  --on-brick: #fbf8f1;
-  --moss: #2f4a3a;
-  --moss-deep: #213529;
-  --moss-tint: #dfe6d8;
-  --on-moss: #f6f1e7;
-  --rust: #8c1c2e;
+  --paper-raised: var(--pal-paper-raised);
+  --paper-sunk: var(--pal-paper-sunk);
+  --line: var(--pal-line);
+  --line-strong: var(--pal-line-strong);
+  --ink: var(--pal-ink);
+  --ink-muted: var(--pal-ink-muted);
+  --ink-faint: var(--pal-ink-faint);
+  --on-ink: var(--pal-paper);
+  --on-ink-muted: var(--pal-on-ink-muted);
+  --brick: var(--pal-brick);
+  --brick-deep: var(--pal-brick-deep);
+  --brick-tint: var(--pal-brick-tint);
+  --on-brick: var(--pal-paper-raised);
+  --moss: var(--pal-moss);
+  --moss-deep: var(--pal-moss-deep);
+  --moss-tint: var(--pal-moss-tint);
+  --on-moss: var(--pal-paper);
+  --rust: var(--pal-rust);
   /* solid art fields: same as the accents in light; muted deep versions in dark so cream linework reads on them */
-  --brick-fill: #9c3d24;
-  --moss-fill: #2f4a3a;
-  --slate-fill: #35506b;
-  --ink-field: #1f1d1a;
-  --slate: #35506b;
+  --brick-fill: var(--pal-brick);
+  --moss-fill: var(--pal-moss);
+  --slate-fill: var(--pal-slate);
+  --ink-field: var(--pal-ink);
+  --slate: var(--pal-slate);
   /* art accents: decorative fields for the motif system only (assets/rds/motifs.js). Never for text or UI state. */
-  --sky: #7ba3c0;
-  --ochre: #be9661;
-  --rose: #b17c83;
-  --kelly: #4f9b60;
-  --peri: #7c849f;
+  --sky: var(--pal-sky);
+  --ochre: var(--pal-ochre);
+  --rose: var(--pal-rose);
+  --kelly: var(--pal-kelly);
+  --peri: var(--pal-peri);
   /* drawing set: pencil grey for plan linework, blueprint field and its chalk line (Topanga sheets L-1 to L-3) */
-  --pencil: #4a4743;
-  --blueprint: #1e3a5f;
-  --draft-line: #e8eef5;
+  --pencil: var(--pal-pencil);
+  --blueprint: var(--pal-blueprint);
+  --draft-line: var(--pal-draft-line);
   /* dark bands (footer, ink sections) keep their own tokens so they stay dark in both themes */
-  --band: #1f1d1a;
-  --on-band: #f6f1e7;
-  --on-band-muted: #b8b0a0;
-  --band-line: rgba(246,241,231,.18);
-  --veil: rgba(31,29,26,.5);
+  --band: var(--pal-ink);
+  --on-band: var(--pal-paper);
+  --on-band-muted: var(--pal-on-ink-muted);
+  --band-line: color-mix(in srgb,var(--pal-paper) 18%,transparent);
+  --veil: color-mix(in srgb,var(--pal-ink) 50%,transparent);
   --edge: var(--ink); /* hand-drawn frame lines: full ink on paper, softer in the dark theme */
   --space-1: 4px;
   --space-2: 8px;
@@ -63,7 +103,38 @@
   --font-sans: Shantell Sans, Comic Neue, system-ui, sans-serif;
   --font-mono: IBM Plex Mono, ui-monospace, monospace;
   --font-hand: Shantell Sans, Comic Neue, system-ui, sans-serif;
+
+  /* ---------- 3. scales ---------- */
+  /* type ramp: the sizes the site actually uses, in px (named by size so a rule reads like the number it replaced) */
+  --fs-11: 11px; --fs-12: 12px; --fs-13: 13px; --fs-14: 14px; --fs-15: 15px; --fs-16: 16px; --fs-17: 17px; --fs-18: 18px; --fs-19: 19px;
+  --fs-20: 20px; --fs-22: 22px; --fs-24: 24px; --fs-26: 26px; --fs-30: 30px;
+  /* legacy font aliases (older rules read these) */
+  --rds-serif: var(--font-serif); --rds-sans: var(--font-sans); --rds-mono: var(--font-mono); --rv-hand: var(--font-hand);
+  /* motion */
+  --dur-fast: 160ms; --dur-quick: 200ms; --dur-base: 320ms; --dur-medium: 450ms; --dur-slow: 720ms; --dur-slower: 900ms; --dur-draw: 1600ms;
+  --dur-loop-1: 9s; --dur-loop-2: 12s; --dur-loop-3: 20s; --dur-loop-4: 60s; /* ambient loops */
+  --stagger: 70ms;
+  --ease-out: cubic-bezier(.16,1,.3,1); --ease-in-out: cubic-bezier(.65,0,.35,1);
+  --ease-std: ease; --ease-soft-out: ease-out; --ease-soft-in: ease-in; --ease-soft-in-out: ease-in-out; --ease-linear: linear;
+  --ease-settle: cubic-bezier(.4,.1,.2,1); --ease-glide: cubic-bezier(.55,0,.4,1); --ease-glide-2: cubic-bezier(.5,0,.3,1);
+  --ease-spring: cubic-bezier(.34,1.56,.5,1); --ease-reveal: cubic-bezier(.3,.7,.2,1); --ease-reveal-2: cubic-bezier(.2,.8,.2,1);
+  /* stacking order, low to high */
+  --z-under: -1; --z-base: 0; --z-raised: 1; --z-raised-2: 2; --z-raised-3: 3; --z-raised-4: 4; --z-lifted: 5; --z-layer: 6; --z-grain: 10;
+  --z-subbar: 12; --z-rail: 15; --z-study-bar: 19; --z-nav: 20; --z-jump: 25; --z-chrome: 30; --z-chrome-2: 31; --z-popover: 40; --z-tip: 60;
+  --z-flow-under: 2147482000; --z-flow-cover: 2147483000; --z-flow-top: 2147483001;
+  /* layout */
+  --measure: 68ch; --container: 1120px;
+  --rv-gutter: 20px; --rv-bar: 52px; --rv-tab: 56px; --rv-safe: env(safe-area-inset-bottom,0px);
+  /* hand-drawn shapes, line weight, pencil shadows */
+  --rv-r-lg: 22px 9px 24px 10px/10px 24px 9px 22px;
+  --rv-r-md: 10px 5px 12px 6px/6px 12px 5px 10px;
+  --rv-r-sm: 5px 3px 6px 3px/3px 6px 3px 5px;
+  --rv-stroke: 1.5px;
+  --rv-pencil: 2px 3px 0 0 var(--edge);
+  --rv-pencil-lift: 3px 5px 0 0 var(--edge);
+  --shadow-pencil: var(--rv-pencil); --shadow-pencil-lift: var(--rv-pencil-lift);
 }
+@media (max-width:374px){ :root{ --rv-gutter: 18px; } }
 
 /* Moonlit dark theme: a token swap. Warm orange-black paper, cream ink, brick becomes moonlit turquoise.
    theme.js sets data-theme on <html> before first paint. Contrast checked to WCAG AA (see /lab/dark-theme/). */
