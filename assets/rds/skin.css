@@ -310,8 +310,8 @@ body:has(.rv-cite-bar.is-in) .rv-jump{opacity:0;pointer-events:none}
 
 /* ---------- wobbly borders ---------- */
 .rds-card,.rv-feature,.rds-figure__art,.rv-compare__stage,.rv-about__art,.rds-infobox,.rv-infobox,.rds-card__media{border-radius:var(--rv-r-lg)}
-.rds-callout,.rds-input,.rv-seg,.rds-contents,.rds-hero__art{border-radius:var(--rv-r-md)}
-.rds-tag--solid,.rds-notes li:target,.rv-sources li:target{border-radius:var(--rv-r-sm)}
+.rds-callout,.rds-input,.rv-seg,.rds-contents{border-radius:var(--rv-r-md)}
+.rds-notes li:target,.rv-sources li:target{border-radius:var(--rv-r-sm)}
 .rds-card,.rv-feature,.rv-compare__stage,.rds-infobox,.rv-infobox,.rds-figure__art,.rv-fig .rds-figure__art{border:var(--rv-stroke) solid var(--edge)}
 .rds-input,.rv-seg{border-width:var(--rv-stroke);border-color:var(--edge)}
 .rv-seg button+button{border-left:var(--rv-stroke) solid var(--edge)}
@@ -394,7 +394,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-hero__flip{position:absolute;right:6px;bottom:-54px;display:flex;align-items:flex-end;gap:6px;color:var(--brick);font:400 var(--fs-19)/20px var(--rv-hand);transform:rotate(-3deg);pointer-events:none}
 .rv-hero__flip svg{width:44px;height:40px;flex:none}
 .rv-sun{position:absolute;z-index:var(--z-raised-3);top:-34px;right:-14px;width:84px;height:84px;pointer-events:none;transform-origin:50% 50%}
-.rv-sun{animation:rv-sun-spin 40s var(--ease-linear) infinite}
+.rv-sun{animation:rv-sun-spin var(--dur-spin) var(--ease-linear) infinite}
 @keyframes rv-sun-spin{to{transform:rotate(360deg)}}
 @media (max-width:640px){.rv-hero__flip{display:none}.rv-sun{width:60px;height:60px;top:-26px;right:-4px}}
 
@@ -653,13 +653,13 @@ svg text[style*="Architects Daughter"]{font-family:var(--font-sans)!important}
 .rv-ctas{align-items:center;column-gap:var(--space-8);row-gap:var(--space-3)}
 .rv-cta{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:var(--space-3);height:52px;padding:0 var(--space-6) 0 var(--space-6);color:var(--on-ink);font:700 var(--fs-18)/1 var(--rv-hand);letter-spacing:.01em;text-decoration:none;-webkit-tap-highlight-color:transparent}
 .rv-cta__frame{position:absolute;inset:0;z-index:var(--z-under);width:100%;height:100%;overflow:visible}
-.rv-cta__shadow{fill:var(--ink);opacity:0;animation:rv-cta-in var(--dur-base) var(--ease-std) 1.15s forwards}
-.rv-cta__fill{fill:var(--brick);opacity:0;animation:rv-cta-in var(--dur-base) var(--ease-std) .95s forwards;transition:fill var(--dur-fast) var(--ease-std)}
-.rv-cta__line{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .85s cubic-bezier(.5,.1,.3,1) .15s forwards}
-.rv-cta__label{color:var(--ink);animation:rv-cta-ink var(--dur-base) var(--ease-std) 1s forwards}
+.rv-cta__shadow{fill:var(--ink);opacity:0;animation:rv-cta-in var(--dur-base) var(--ease-std) var(--dur-long) forwards}
+.rv-cta__fill{fill:var(--brick);opacity:0;animation:rv-cta-in var(--dur-base) var(--ease-std) var(--dur-slower) forwards;transition:fill var(--dur-fast) var(--ease-std)}
+.rv-cta__line{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-slower) var(--ease-settle) var(--dur-fast) forwards}
+.rv-cta__label{color:var(--ink);animation:rv-cta-ink var(--dur-base) var(--ease-std) var(--dur-slower) forwards}
 .rv-cta__arrow{flex:none;width:24px;height:16px;color:var(--on-ink)}
-.rv-cta__arrow path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-base) var(--ease-soft-out) 1.25s forwards}
-.rv-cta__arrow{animation:rv-fly var(--dur-slower) var(--ease-glide) 2.05s both}
+.rv-cta__arrow path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-base) var(--ease-soft-out) var(--dur-long) forwards}
+.rv-cta__arrow{animation:rv-fly var(--dur-slower) var(--ease-glide) calc(var(--dur-draw) + var(--dur-medium)) both}
 .rv-cta:hover .rv-cta__fill{fill:var(--brick-deep)}
 .rv-cta:hover .rv-cta__arrow,.rv-cta:focus-visible .rv-cta__arrow{animation:rv-fly var(--dur-slower) var(--ease-glide) both}
 .rv-cta:active{transform:translate(2px,3px)}
@@ -673,11 +673,11 @@ svg text[style*="Architects Daughter"]{font-family:var(--font-sans)!important}
   45%{transform:translate(52px,-14px) rotate(-14deg);opacity:0}
   46%{transform:translate(-30px,0);opacity:0}
   100%{transform:none;opacity:1}}
-.rv-textlink{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);height:52px;padding:0 2px;color:var(--ink);font:400 var(--fs-18)/24px var(--rv-hand);text-decoration:none;opacity:0;animation:rv-cta-in var(--dur-medium) var(--ease-std) 1.3s forwards}
+.rv-textlink{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);height:52px;padding:0 2px;color:var(--ink);font:400 var(--fs-18)/24px var(--rv-hand);text-decoration:none;opacity:0;animation:rv-cta-in var(--dur-medium) var(--ease-std) var(--dur-long) forwards}
 .rv-textlink__down{flex:none;width:12px;height:16px;color:var(--ink-muted)}
-.rv-textlink__down path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-base) var(--ease-soft-out) 1.7s forwards}
+.rv-textlink__down path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-base) var(--ease-soft-out) var(--dur-draw) forwards}
 .rv-textlink__rule{position:absolute;left:0;right:0;bottom:11px;width:100%;height:8px;overflow:visible}
-.rv-textlink__rule path{fill:none;stroke:var(--ink-muted);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-slow) var(--ease-soft-out) 1.5s forwards;transition:stroke var(--dur-fast) var(--ease-std)}
+.rv-textlink__rule path{fill:none;stroke:var(--ink-muted);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw var(--dur-slow) var(--ease-soft-out) var(--dur-draw) forwards;transition:stroke var(--dur-fast) var(--ease-std)}
 .rv-textlink:hover .rv-textlink__rule path,.rv-textlink:focus-visible .rv-textlink__rule path{stroke:var(--ink);stroke-width:2}
 .rv-textlink:hover .rv-textlink__down{transform:translateY(3px)}
 .rv-textlink__down{transition:transform var(--dur-base) var(--ease-out)}

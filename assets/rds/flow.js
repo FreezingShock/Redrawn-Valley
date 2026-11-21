@@ -37,7 +37,8 @@
 
   /* ---------- critical style and stylesheet ---------- */
   var cs = doc.createElement('style');
-  cs.textContent = 'html.fl-cover::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#f6f1e7;pointer-events:none}html[data-theme=dark].fl-cover::before{background:#17120d}' +
+  /* critical path: painted before tokens.css has loaded, so these two literals match --pal-paper and dark --paper */
+  cs.textContent = 'html.fl-cover::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#f6f1e7;pointer-events:none}html[data-theme=dark].fl-cover::before{background:#17120d}' + /* token-ok */
     '@media print{html.fl-cover::before{display:none}}';
   (doc.head || root).appendChild(cs);
   var css = doc.createElement('link'); css.rel = 'stylesheet'; css.href = BASE + 'flow.css' + ((me && me.src && me.src.match(/\?.*$/)) || [''])[0];
@@ -76,7 +77,7 @@
   }
 
   /* ---------- the sheet: a grid of paper tiles ---------- */
-  var ACCENTS = ['#9c3d24', '#2f4a3a', '#35506b', '#be9661', '#7ba3c0', '#b17c83', '#4f9b60', '#7c849f'];
+  var ACCENTS = ['brick', 'moss', 'slate', 'ochre', 'sky', 'rose', 'kelly', 'peri'].map(function (n) { return 'var(--pal-' + n + ')'; });
   function shell() {
     var s = el('div', 'fl-stage'); s.id = 'fl-stage'; s.setAttribute('aria-hidden', 'true');
     if (s.popover === undefined) { s.style.zIndex = 2147483001; } else { s.setAttribute('popover', 'manual'); }   // token-ok: no-popover fallback, the same layer as --z-flow-top
@@ -111,7 +112,7 @@
         var d = (t._d / max) * spread, acc = t.classList.contains('fl-t--a');
         var from = dir === 'cover' ? { transform: 'scale(0) rotate(' + (acc ? -90 : -12) + 'deg)', opacity: 1 } : { transform: 'scale(1.03) rotate(0deg)', opacity: 1 };
         var to = dir === 'cover' ? { transform: 'scale(1.03) rotate(0deg)', opacity: 1 } : { transform: 'scale(0) rotate(' + (acc ? 90 : 14) + 'deg)', opacity: 1 };
-        var a = animate(t, [from, to], { duration: ms - spread, delay: d, easing: dir === 'cover' ? 'cubic-bezier(.3,1.3,.5,1)' : 'cubic-bezier(.6,0,.4,1)', fill: 'both' });
+        var a = animate(t, [from, to], { duration: ms - spread, delay: d, easing: dir === 'cover' ? ease('--ease-spring', 'ease-out') : ease('--ease-glide', 'ease-in-out'), fill: 'both' });
         if (!a) { t.style.transform = to.transform; if (--left === 0) res(); return; }
         anims.push(a); a.onfinish = function () { if (--left === 0) res(); };
       });
@@ -478,11 +479,11 @@
   };
 
   /* ---------- pencil dab on click ---------- */
-  var DAB = ['#9c3d24', '#2f4a3a', '#35506b'], dabN = 0;
+  var DAB = ['var(--pal-brick)', 'var(--pal-moss)', 'var(--pal-slate)'], dabN = 0;
   function dab(x, y) {
     var c = DAB[dabN++ % 3], ticks = '', n = 7, k;
     for (k = 0; k < n; k++) { var an = (k / n) * Math.PI * 2 + (dabN % 2) * .3, r1 = 13, r2 = 21 + (k % 2) * 5; ticks += '<path pathLength="1" d="M' + (30 + Math.cos(an) * r1).toFixed(1) + ' ' + (30 + Math.sin(an) * r1).toFixed(1) + 'L' + (30 + Math.cos(an) * r2).toFixed(1) + ' ' + (30 + Math.sin(an) * r2).toFixed(1) + '"/>'; }
-    var d = el('div', 'fl-dab', '<svg viewBox="0 0 60 60" width="60" height="60" fill="none" stroke="' + c + '" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path pathLength="1" d="M30 14C40 13 47 21 46 30S38 46 29 46 13 39 14 30 21 15 31 14"/>' + ticks + '</svg>');
+    var d = el('div', 'fl-dab', '<svg viewBox="0 0 60 60" width="60" height="60" fill="none" style="stroke:' + c + '" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path pathLength="1" d="M30 14C40 13 47 21 46 30S38 46 29 46 13 39 14 30 21 15 31 14"/>' + ticks + '</svg>');
     d.style.left = x + 'px'; d.style.top = y + 'px'; doc.body.appendChild(d);
     setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, T(760));
   }
