@@ -33,6 +33,11 @@
 .rv-sheet__close{appearance:none;border:0;background:none;min-width:44px;height:48px;padding:0 var(--space-4);font:500 var(--fs-15)/1 var(--rds-sans);color:var(--ink);cursor:pointer}
 .rv-sheet__body{overflow-y:auto;overscroll-behavior:contain;padding:var(--space-4) var(--space-6) calc(var(--space-6) + var(--rv-safe))}
 .rv-sheet__close:focus-visible,.rv-sheet a:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+.rv-sheet__grab,.rv-sheet__head{touch-action:none}
+.rv-sheet:not(.is-drag){transition:transform var(--dur-quick) var(--ease-out)}
+.rv-sheet.is-drag{animation:none;transition:none}
+.rv-sheet.is-away{animation:none;transition:transform var(--dur-quick) var(--ease-glide)}
+body:has(.rv-cite-bar.is-in) .rv-jump{opacity:0;pointer-events:none}
 /* contents list inside the sheet */
 .rv-toclist{list-style:none;margin:calc(-1*var(--space-4)) calc(-1*var(--space-6)) 0;padding:0}
 .rv-toclist a{display:flex;align-items:baseline;gap:var(--space-3);min-height:52px;padding:var(--space-3) var(--space-6);border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font:500 var(--fs-17)/24px var(--rds-serif)}
@@ -267,6 +272,7 @@
 
 @media (prefers-reduced-motion:reduce){
   .rv-sheet[open]{animation:none}
+  .rv-sheet:not(.is-drag),.rv-sheet.is-away{transition:none}
   .rv-jump,.rds-nav,.rv-more::after{transition:none}
 }
 @media print{.rv-tabbar,.rv-jump,.rv-sheet,.rv-more{display:none}}

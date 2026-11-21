@@ -110,7 +110,8 @@
   }
 
   /* ---------- writing letters on ---------- */
-  function wrapChars(node, state) {
+  function wrapChars(node, state, nested) {
+    var top = !nested;
     Array.prototype.slice.call(node.childNodes).forEach(function (n) {
       if (n.nodeType === 3) {
         var frag = doc.createDocumentFragment(), words = n.nodeValue.split(/(\s+)/);
@@ -121,8 +122,11 @@
           for (var i = 0; i < w.length; i++) { var c = el('span', 'fl-c'); c.textContent = w.charAt(i); c.style.setProperty('--c', state.n++); ws.appendChild(c); }
           frag.appendChild(ws);
         });
+        /* a heading's own text goes in one wrapper: some headings are flex rows (number, text, anchor), where loose word spans would
+           each become a flex item, never wrap and push the page wider than a phone */
+        if (top) { var box = el('span', 'fl-t'); box.appendChild(frag); frag = box; }
         n.parentNode.replaceChild(frag, n);
-      } else if (n.nodeType === 1 && !/^(svg|img|br|script|style)$/i.test(n.nodeName) && !n.classList.contains('fl-w')) wrapChars(n, state);
+      } else if (n.nodeType === 1 && !/^(svg|img|br|script|style)$/i.test(n.nodeName) && !n.classList.contains('fl-w')) wrapChars(n, state, true);
     });
   }
   var SQUIGGLE = '<svg class="fl-ul__svg" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M2 7C14 3 22 10 36 6S58 3 72 7 96 10 110 5 134 4 148 8s24 2 50-3"/></svg>';
