@@ -503,8 +503,9 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 
 /* ---------- type: three voices ----------
    Decided in the type lab (/fonts/#decision). Shantell Sans is only the display voice (H1, H2, wordmark, pull quotes, big
-   numerals). Figtree carries reading text, lead, H3, nav, buttons and every other UI string. IBM Plex Mono carries eyebrows,
-   tags, labels, infobox keys, citations and data. Caveat is a quiet second hand used only for scribbled annotations. */
+   numerals). Figtree carries reading text, lead, H3, nav, buttons and every other UI string, including eyebrows,
+   tags, labels, infobox keys and captions (sentence case, no tracking). DM Mono (--font-num) is only for numerals, citation
+   markers and code. Caveat is a quiet second hand used only for scribbled annotations. */
 .rds-display-xl,.rds-display,.rds-h1,.rds-h2,.rds-article__title,.rds-article__body h2,.rds-prose h2,.rv-body section>h2,.rv-nfeature__title,.rv-sec__head h2,.rv-part__name,.rv-facts b,.rv-step__n,.rds-nav__brand,.rds-footer__brand,.rv-study-bar__brand,.rv-rail__h,.rds-seealso h2,.rds-notes-head,.rv-study .ts-4,.rv-study .ts-11,.rv-study .ts-42,.rv-study .ts-47,.rv-study .ts-56,.rv-study .ts-69,.rv-study .ts-72,.rv-study .ts-75,.rv-study .ts-79,.rv-study .ts-103,.rv-study .ts-122{font-family:var(--font-display);font-variation-settings:"INFM" 100,"BNCE" 0;font-style:normal;font-weight:700;letter-spacing:-.005em}
 .rds-h3,.rds-article__body h3,.rds-card__title,.rds-row__title,.rv-method h3,.rds-acc summary,.rv-table__title,.rv-infobox__title,.rds-infobox__title,.rv-rail__title,.rv-nav__intro b,.rv-moreList b,.rds-search__title,.rv-moreList b,.rv-study .ts-32,.rv-study .ts-94,.rv-study .ts-110,.rv-study .ts-126{font-family:var(--font-sans);font-style:normal;font-weight:700;letter-spacing:0}
 .rds-display-xl{font-size:clamp(38px,6.2vw,66px);line-height:1.08}

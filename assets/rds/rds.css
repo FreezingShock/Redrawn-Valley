@@ -6,7 +6,7 @@
   --stagger:70ms; --measure:68ch; --container:1120px;
   --rds-serif:var(--font-serif, "Shantell Sans", system-ui, sans-serif);
   --rds-sans:var(--font-sans, "Shantell Sans", system-ui, sans-serif);
-  --rds-mono:var(--font-mono, "IBM Plex Mono", ui-monospace, monospace);
+  --rds-mono:var(--font-mono);
 }
 .rds-page{margin:0;background:var(--paper);color:var(--ink);font:400 16px/26px var(--rds-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .rds-page *,.rds-page *::before,.rds-page *::after{box-sizing:border-box}

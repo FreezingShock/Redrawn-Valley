@@ -1,4 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "ignoreCommand": "case \"$VERCEL_GIT_COMMIT_REF\" in main|integration) exit 1 ;; *) exit 0 ;; esac"
+  "ignoreCommand": "case \"$VERCEL_GIT_COMMIT_REF\" in main|integration) exit 1 ;; *) exit 0 ;; esac",
+  "headers": [
+    {
+      "source": "/assets/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
 }

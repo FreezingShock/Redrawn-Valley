@@ -47,6 +47,8 @@ if subprocess.run([sys.executable, str(root / 'scripts' / 'build_index.py'), '--
     warns.append('search index or sitemap is stale: run python3 scripts/build_index.py and commit the result')
 if subprocess.run([sys.executable, str(root / 'scripts' / 'build_sources.py'), '--check'], capture_output=True).returncode:
     warns.append('sources library is stale: run python3 scripts/build_sources.py and commit assets/sources.json (CI also does this after merge)')
+if subprocess.run([sys.executable, str(root / 'scripts' / 'build_fonts.py'), '--check'], capture_output=True).returncode:
+    errors.append('self-hosted fonts or page font links are stale (run python3 scripts/build_fonts.py)')
 if subprocess.run([sys.executable, str(root / 'scripts' / 'build_topics.py'), '--check'], capture_output=True).returncode:
     warns.append('topic hubs are stale: run python3 scripts/regen.py and commit the result (CI also does this after merge)')
 for f in sorted(root.glob('studies/*/index.html')) + sorted(root.glob('guide/*/index.html')) + sorted(root.glob('notes/*/index.html')):

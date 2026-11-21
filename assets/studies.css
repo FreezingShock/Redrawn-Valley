@@ -23,7 +23,7 @@
 /* --- table of contents rail: ticks, the current one thick with its label pinned; hover opens the rest. No background. --- */
 .kt{position:sticky;top:0;height:0;z-index:15}
 .kt nav{position:absolute;left:8px;top:76px;display:flex;flex-direction:column;padding:8px 16px 12px 10px;background:none}
-.kt .cnt{font-family:'IBM Plex Mono', ui-monospace, monospace;font-size:11px;line-height:16px;color:#655e51;margin-bottom:6px;white-space:nowrap}
+.kt .cnt{font-family:var(--font-mono);font-size:11px;line-height:16px;color:#655e51;margin-bottom:6px;white-space:nowrap}
 .kt .cnt b{color:#1f1d1a;font-weight:500}
 .kt a{display:flex;align-items:center;gap:10px;height:8px;text-decoration:none;color:#5c564c;transition:height .3s cubic-bezier(.16,1,.3,1),margin-top .3s cubic-bezier(.16,1,.3,1)}
 .kt a[data-g]{margin-top:5px}
@@ -203,7 +203,7 @@ span.rv-term{color:var(--ink-muted)}
 .kt nav::before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:rgba(251,248,241,.96);border:1px solid rgba(31,29,26,.22);border-radius:3px 7px 4px 8px/7px 3px 8px 4px;box-shadow:2px 3px 0 rgba(31,29,26,.1);opacity:0;transform:translateX(-8px) rotate(-.4deg);transform-origin:0 0;transition:opacity .5s ease,transform .7s cubic-bezier(.16,1,.3,1)}
 .kt nav.kt-ready::before{opacity:1;transform:rotate(-.4deg)}
 @media (min-width:1480px){.kt nav{min-width:176px}}
-.kt .cnt{display:flex;align-items:baseline;gap:4px;margin:0 0 8px;padding-bottom:7px;border-bottom:1px dashed rgba(31,29,26,.25);font:400 11px/14px var(--rds-mono,'IBM Plex Mono',monospace);letter-spacing:.02em;color:#6e675a;font-variant-numeric:tabular-nums;opacity:0;transform:translateY(-4px);transition:opacity .5s ease .1s,transform .6s cubic-bezier(.16,1,.3,1) .1s}
+.kt .cnt{display:flex;align-items:baseline;gap:4px;margin:0 0 8px;padding-bottom:7px;border-bottom:1px dashed rgba(31,29,26,.25);font:400 11px/14px var(--font-mono);letter-spacing:.02em;color:#6e675a;font-variant-numeric:tabular-nums;opacity:0;transform:translateY(-4px);transition:opacity .5s ease .1s,transform .6s cubic-bezier(.16,1,.3,1) .1s}
 .kt-ready .cnt{opacity:1;transform:none}
 .kt .cnt b{color:var(--brick,#9c3d24);font-weight:600}
 .kt a{color:#6e675a}
