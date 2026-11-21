@@ -23,3 +23,8 @@
 @media (max-width:640px){.rds-loop__toggle{bottom:var(--space-2);right:var(--rv-gutter,20px)}}
 @media print,(prefers-reduced-motion:reduce){.rds-loop__toggle{display:none}}
 @media print{.rds-loop{display:none}}
+/* fit=top: the art fills only the top part of a tall host (a section header above a card grid) */
+.rds-loop-host[data-loop-fit=top]>.rds-loop{bottom:auto;height:38%}
+/* on the ink footer: lighter lines, calmer */
+.rds-footer>.rds-loop{opacity:.5}
+@media (max-width:959px){.rds-footer>.rds-loop{opacity:.34}}

@@ -63,7 +63,7 @@
     for (var i = 0; i < n; i++) { var t = i / n * 6.2832, rr = r * (1 + am[0] * Math.sin(2 * t + ph[0]) + am[1] * Math.sin(3 * t + ph[1]) + am[2] * Math.sin(5 * t + ph[2])); pts.push(pt(cx + rr * Math.cos(t), cy + rr * .86 * Math.sin(t))); }
     return 'M' + pts.join('L') + 'Z';
   }
-  function paperGrid(defs, id, size, op) { var p = S('pattern', { id: id, width: size, height: size, patternUnits: 'userSpaceOnUse' }, defs); S('path', { d: 'M' + size + ' 0H0V' + size, fill: 'none', stroke: 'var(--ink)', 'stroke-opacity': op, 'stroke-width': 1 }, p); }
+  function paperGrid(defs, id, size, op, col) { var p = S('pattern', { id: id, width: size, height: size, patternUnits: 'userSpaceOnUse' }, defs); S('path', { d: 'M' + size + ' 0H0V' + size, fill: 'none', stroke: col || 'var(--ink)', 'stroke-opacity': op, 'stroke-width': 1 }, p); }
 
   /* ---------- kinds: (svg, W, H, rnd, c, uid) ---------- */
   var K = {};
@@ -142,7 +142,8 @@
   /* Survey contours around a hill (moss) and a basin (slate) draw themselves outward in, with a slow-turning dashed arc. */
   K.contour = function (svg, W, H, rnd, c, id) {
     var defs = S('defs', {}, svg), wide = W >= 900;
-    paperGrid(defs, id + 'g', 32, .11);
+    var ink = c.tone === 'ink' ? 'var(--on-ink-muted)' : 'var(--ink)';
+    paperGrid(defs, id + 'g', 32, .11, ink);
     S('rect', { width: W, height: H, fill: 'url(#' + id + 'g)' }, svg);
     var spin = S('circle', { cx: f(W * (wide ? .78 : .7)), cy: f(H * (wide ? .46 : .62)), r: f(Math.min(W, H) * (wide ? .46 : .4)), fill: 'none', stroke: 'var(--brick)', 'stroke-width': 1.5, 'stroke-dasharray': '3 9', 'stroke-linecap': 'round' }, svg);
     c.tl(spin, [[0, { transform: 'rotate(0deg)' }], [1, { transform: 'rotate(360deg)' }]]);
@@ -150,14 +151,14 @@
     hills.forEach(function (h, hi) {
       var n = hi ? 7 : 10, t0 = .03 + hi * .1, col = h[2];
       for (k = n; k >= 1; k--) {
-        var heavy = k % 4 === 0, p = line(root, ringPath(h[0], h[1], unit * k * (hi ? .9 : 1), rnd, k), 'var(--' + col + ')', heavy ? 2 : 1.2, { 'stroke-opacity': heavy ? 1 : .75 });
+        var heavy = k % 4 === 0, p = line(root, ringPath(h[0], h[1], unit * k * (hi ? .9 : 1), rnd, k), c.tone === 'ink' ? ink : 'var(--' + col + ')', heavy ? 2 : 1.2, { 'stroke-opacity': heavy ? 1 : .75 });
         var s = t0 + (n - k) * (.34 / n); c.draw(p, s, s + .13);
       }
-      var m = line(root, 'M' + pt(h[0] - 6, h[1]) + 'h12M' + pt(h[0], h[1] - 6) + 'v12', 'var(--' + col + ')', 1.8); c.fade(m, .5 + hi * .06, .56 + hi * .06);
+      var m = line(root, 'M' + pt(h[0] - 6, h[1]) + 'h12M' + pt(h[0], h[1] - 6) + 'v12', c.tone === 'ink' ? ink : 'var(--' + col + ')', 1.8); c.fade(m, .5 + hi * .06, .56 + hi * .06);
     });
     /* survey points */
     for (k = 0; k < 14; k++) {
-      var sx = rnd.range(W * (wide ? .45 : .06), W * .96), sy = rnd.range(H * .1, H * .92), mk = line(root, 'M' + pt(sx - 3.5, sy) + 'h7M' + pt(sx, sy - 3.5) + 'v7', 'var(--ink)', 1.3, { 'stroke-opacity': .7 });
+      var sx = rnd.range(W * (wide ? .45 : .06), W * .96), sy = rnd.range(H * .1, H * .92), mk = line(root, 'M' + pt(sx - 3.5, sy) + 'h7M' + pt(sx, sy - 3.5) + 'v7', ink, 1.3, { 'stroke-opacity': .7 });
       c.fade(mk, .52 + k * .012, .56 + k * .012);
     }
     return root;
@@ -201,8 +202,8 @@
 
   function build(m) {
     teardown(m);
-    var host = m.host, W = Math.max(280, Math.round(host.clientWidth)), H = Math.max(240, Math.round(host.clientHeight)), still = stillMode(host);
-    var kind = K[m.kind] ? m.kind : 'plan', rnd = Rng(m.seed + '|loop|' + kind), c = Ctx(!still), id = 'l' + (++uid);
+    var host = m.host, W = Math.max(280, Math.round(host.clientWidth)), H = Math.max(240, Math.round(host.clientHeight * (host.getAttribute('data-loop-fit') === 'top' ? .38 : 1))), still = stillMode(host);
+    var kind = K[m.kind] ? m.kind : 'plan', rnd = Rng(m.seed + '|loop|' + kind), c = Ctx(!still), id = 'l' + (++uid); c.tone = host.getAttribute('data-loop-tone') || '';
     var layer = doc.createElement('div'); layer.className = 'rds-loop rds-loop--' + kind + (still ? ' is-still' : ''); layer.setAttribute('aria-hidden', 'true'); layer.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:-1';
     var svg = S('svg', { width: '100%', height: '100%', viewBox: '0 0 ' + W + ' ' + H, preserveAspectRatio: 'xMidYMid slice', focusable: 'false', role: 'presentation' });
     var root = K[kind](svg, W, H, rnd, c, id);
@@ -231,7 +232,7 @@
   var ro = window.ResizeObserver ? new ResizeObserver(function (es) {
     es.forEach(function (e) {
       var m = e.target.__loop; if (!m) return; clearTimeout(m.t);
-      m.t = setTimeout(function () { var W = e.target.clientWidth, H = e.target.clientHeight; if (Math.abs(W - m.W) / m.W > .12 || Math.abs(H - m.H) / m.H > .25 || (W >= 900) !== (m.W >= 900)) build(m); }, 300);
+      m.t = setTimeout(function () { var W = e.target.clientWidth, H = e.target.clientHeight; if (Math.abs(W - m.W) / m.W > .12 || Math.abs(H * (e.target.getAttribute('data-loop-fit') === 'top' ? .38 : 1) - m.H) / m.H > .25 || (W >= 900) !== (m.W >= 900)) build(m); }, 300);
     });
   }) : null;
 
@@ -245,6 +246,8 @@
   }
   function init() {
     doc.documentElement.classList.toggle('rv-loops-paused', userPaused);
+    var ft = doc.querySelector('.rds-footer:not([data-rds-loop]):not([data-loop-none])');
+    if (ft && ft.children.length) { ft.setAttribute('data-rds-loop', 'contour'); ft.setAttribute('data-loop-tone', 'ink'); ft.setAttribute('data-seed', 'foot:' + slug()); }
     [].slice.call(doc.querySelectorAll('[data-rds-loop]')).forEach(function (h) { mount(h); });
   }
   function onMotion() { mounts.forEach(build); }
