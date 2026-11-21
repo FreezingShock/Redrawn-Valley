@@ -30,7 +30,7 @@
   var btn = doc.querySelector('[data-rv-copy]'), note = doc.querySelector('[data-rv-copied]');
   if (btn) btn.addEventListener('click', function () {
     var url = new URL(btn.getAttribute('data-rv-copy'), location.href).href;
-    var done = function (ok) { if (note) { note.textContent = ok ? 'Copied. Paste it into a feed reader.' : url; setTimeout(function () { note.textContent = ''; }, 4000); } };
+    var done = function (ok) { if (ok && window.RVCozy) window.RVCozy.tag(btn, 'Copied'); if (note) { note.textContent = ok ? 'Copied. Paste it into a feed reader.' : url; setTimeout(function () { note.textContent = ''; }, 4000); } };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); }); else done(false);
   });
 })();

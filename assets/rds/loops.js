@@ -257,9 +257,9 @@
   /* stylesheet: loaded here so a page only needs the one script tag */
   var cssReady = !(script && script.src), cssCbs = [];
   function whenCSS(cb) { if (cssReady) cb(); else cssCbs.push(cb); }
-  if (!cssReady) { var l = doc.createElement('link'); l.rel = 'stylesheet'; l.href = script.src.replace(/loops\.js.*$/, 'loops.css'); l.onload = l.onerror = function () { cssReady = true; cssCbs.splice(0).forEach(function (cb) { cb(); }); }; doc.head.appendChild(l); }
+  if (!cssReady) { var l = doc.createElement('link'); l.rel = 'stylesheet'; l.href = script.src.replace(/loops\.js/, 'loops.css'); l.onload = l.onerror = function () { cssReady = true; cssCbs.splice(0).forEach(function (cb) { cb(); }); }; doc.head.appendChild(l); }
   /* margin sketches ride along: every page that loads loops.js also gets the big side-margin drawings */
-  if (script && script.src && !window.RDSMargins && !doc.querySelector('script[data-rds-margins]')) { var ms = doc.createElement('script'); ms.src = script.src.replace(/loops\.js.*$/, 'margins.js'); ms.defer = true; ms.setAttribute('data-rds-margins', ''); doc.head.appendChild(ms); }
+  if (script && script.src && !window.RDSMargins && !doc.querySelector('script[data-rds-margins]')) { var ms = doc.createElement('script'); ms.src = script.src.replace(/loops\.js/, 'margins.js'); ms.defer = true; ms.setAttribute('data-rds-margins', ''); doc.head.appendChild(ms); }
   window.RDSLoops = { mount: mount, pause: function () { setPaused(true); }, play: function () { setPaused(false); }, kinds: Object.keys(K) };
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', function () { whenCSS(init); }); else whenCSS(init);
 })();

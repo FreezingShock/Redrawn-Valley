@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="../../../assets/rds/theme.js"></script>
+<script src="../../../assets/rds/theme.js?v=00e11d694d"></script>
 <meta name="robots" content="noindex">
 <title>Moonlit palette sheet (demo) | Redrawn Valley</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM@400..700,-100..100,0..100&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="../../../assets/rds/tokens.css">
+<link rel="stylesheet" href="../../../assets/rds/tokens.css?v=8532258544">
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--font-sans);font-variation-settings:"INFM" 15}
@@ -47,10 +47,11 @@ th{font:600 12px/1.2 var(--font-sans);letter-spacing:.06em;text-transform:upperc
 .pass{color:var(--moss);font-weight:600}.fail{color:var(--rust);font-weight:600}
 .tw{overflow-x:auto}
 </style>
-<link rel="stylesheet" href="../../../assets/rds/theme.css">
+<link rel="stylesheet" href="../../../assets/rds/theme.css?v=c67cd45343">
+<link rel="stylesheet" href="../../../assets/rds/cozy.css?v=307a9fe285">
 </head>
 <body>
-<div class="wrap">
+<main class="wrap">
 <h1>Paper by day, moonlight by night</h1>
 <p>Both palettes drawn at once, so you can compare them whichever theme the page is in. The table below computes every contrast ratio live from the hex values using the WCAG 2.x formula.</p>
 <div class="bar"><button class="go" id="replay" type="button">Replay the circle reveal</button><span class="mono">Flips the site theme; the swatches below stay put.</span></div>
@@ -67,7 +68,7 @@ th{font:600 12px/1.2 var(--font-sans);letter-spacing:.06em;text-transform:upperc
 <p>Text needs 4.5 to 1, large text and UI lines 3 to 1. Each pair is a real pairing on the site.</p>
 <div class="tw"><table id="con"><thead><tr><th>Pair</th><th>Paper</th><th>Moonlit</th></tr></thead><tbody></tbody></table></div>
 <p class="mono" style="margin-top:var(--space-4)" id="sum"></p>
-</div>
+</main>
 <script>
 (function () {
   var L = { paper: '#f6f1e7', raised: '#fbf8f1', sunk: '#ece5d6', ink: '#1f1d1a', muted: '#5c564c', faint: '#655e51', acc: '#9c3d24', accd: '#7d2f1a', moss: '#2f4a3a', slate: '#35506b', rust: '#8c1c2e', onacc: '#fbf8f1', onmoss: '#f6f1e7', band: '#1f1d1a', onband: '#f6f1e7', bandm: '#b8b0a0', strong: '#8a8170', edge: '#1f1d1a' };

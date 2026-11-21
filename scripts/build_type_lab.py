@@ -449,6 +449,7 @@ PAGE = '''<!DOCTYPE html>
 <link rel="stylesheet" href="lab.css">
 <link rel="stylesheet" href="directions.css">
 <link rel="stylesheet" href="../assets/rds/theme.css">
+<link rel="stylesheet" href="../assets/rds/cozy.css">
 </head>
 <body class="rds-page">
 <header class="rds-nav" data-rds-nav data-rv-shell="nav"></header>

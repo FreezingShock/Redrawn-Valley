@@ -215,7 +215,7 @@
     matchMedia('(prefers-reduced-motion: reduce)').addEventListener && matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', function (e) { layer.classList.toggle('is-still', e.matches); });
   }
 
-  var l = doc.createElement('link'); l.rel = 'stylesheet'; l.href = (script && script.src ? script.src : 'assets/rds/margins.js').replace(/margins\.js.*$/, 'margins.css');
+  var l = doc.createElement('link'); l.rel = 'stylesheet'; l.href = (script && script.src ? script.src : 'assets/rds/margins.js').replace(/margins\.js/, 'margins.css');
   var go = function () { /* wait for fonts/layout so page height is final */ var run = function () { init(); }; (doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve()).then(run, run); };
   l.onload = l.onerror = function () { if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', go); else go(); };
   doc.head.appendChild(l);
