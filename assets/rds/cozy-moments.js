@@ -1,5 +1,5 @@
 /* Redrawn Design System: cozy layer. Plain script, no dependencies; every page reads the same without it.
-   site-shell.js loads this on every page and it loads cozy.css itself. What it does:
+   site-shell.js loads this on every page and it loads cozy-moments.css itself. What it does:
      1. data-tod        <html data-tod="dawn|day|dusk|night"> from the visitor's clock (?tod=night previews one). At dusk, in the light
                         theme, a faint warm wash sits over the page; at night the light-theme switch nods now and then.
      2. the lamp        when the theme changes to dark because the switch was pressed, a warm glow blooms from the switch and flickers on.
@@ -12,8 +12,8 @@
   var reduceMQ = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
   function el(tag, cls) { var n = doc.createElement(tag); if (cls) n.className = cls; return n; }
 
-  if (!doc.querySelector('link[href*="cozy.css"]')) {
-    var l = el('link'); l.rel = 'stylesheet'; l.href = SRC.replace(/cozy\.js.*$/, 'cozy.css') + Q; doc.head.appendChild(l);
+  if (!doc.querySelector('link[href*="cozy-moments.css"]')) {
+    var l = el('link'); l.rel = 'stylesheet'; l.href = SRC.replace(/cozy-moments\.js.*$/, 'cozy-moments.css') + Q; doc.head.appendChild(l);
   }
 
   /* ---------- 1. time of day ---------- */

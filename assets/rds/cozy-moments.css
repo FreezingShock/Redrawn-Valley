@@ -1,4 +1,4 @@
-/* Redrawn Design System: cozy layer. Small warm moments, loaded by cozy.js (which site-shell.js loads on every page).
+/* Redrawn Design System: cozy layer. Small warm moments, loaded by cozy-moments.js (which site-shell.js loads on every page).
    Every value is a token (tokens.css > "cozy layer"). Nothing here carries meaning through motion alone, and the
    prefers-reduced-motion catch-all in skin.css makes every transition instant; the rules that would end invisible say so below.
    Documented in DESIGN.md > Cozy layer. */
@@ -20,7 +20,7 @@
 @media (hover:hover){:is(.rv-lookup,.rvs-chip,.rv-lib-seg,.rv-reroll button,.rv-stages__btn,.rv-src__link):hover{translate:var(--lift-x) var(--lift);box-shadow:var(--shadow-pencil)}}
 :is(.rv-lookup,.rvs-chip,.rv-lib-seg,.rv-reroll button,.rv-stages__btn,.rv-src__link):active{translate:var(--press) calc(var(--press)*2);box-shadow:none}
 
-/* ---------- filter chips pop when they switch on (cozy.js adds .cz-ready after load so pressed chips do not pop on arrival) ---------- */
+/* ---------- filter chips pop when they switch on (cozy-moments.js adds .cz-ready after load so pressed chips do not pop on arrival) ---------- */
 .cz-ready :is(.rds-chip,.rv-chip,.rv-seg button,.rv-lib-seg,.rvs-chip)[aria-pressed="true"]{animation:cz-pop var(--dur-pop) var(--ease-spring)}
 @keyframes cz-pop{40%{scale:1.08;rotate:var(--tilt)}}
 
@@ -45,7 +45,7 @@
 .cz-dots i:nth-child(3){animation-delay:calc(var(--stagger)*4)}
 @keyframes cz-dot{30%{translate:0 calc(var(--space-1)*-1);opacity:1}60%{translate:0 0}}
 
-/* ---------- time of day (cozy.js sets <html data-tod="dawn|day|dusk|night">; ?tod=night previews it) ---------- */
+/* ---------- time of day (cozy-moments.js sets <html data-tod="dawn|day|dusk|night">; ?tod=night previews it) ---------- */
 .cz-wash{position:fixed;inset:0;z-index:var(--z-grain);pointer-events:none;background:radial-gradient(120% 70% at 100% 0,var(--dusk-wash),transparent 70%);mix-blend-mode:multiply}
 :root[data-theme="dark"] .cz-wash{display:none}
 /* late and still in the light theme: the switch nods now and then, like a hand reaching for the lamp */

@@ -30,8 +30,8 @@
   /* scroll effects: progress bar, drawing figures, counters, parallax art (off under prefers-reduced-motion) */
   if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href + Q; fx.defer = true; doc.head.appendChild(fx); }
 
-  /* cozy layer: time of day, the lamp clicking on, copy stamp (assets/rds/cozy.js loads cozy.css) */
-  if (!doc.querySelector('script[src*="cozy.js"]')) { var cz = doc.createElement('script'); cz.src = new URL('assets/rds/cozy.js', siteRoot).href + Q; cz.defer = true; doc.head.appendChild(cz); }
+  /* cozy layer: time of day, the lamp clicking on, copy stamp (assets/rds/cozy-moments.js loads cozy-moments.css) */
+  if (!doc.querySelector('script[src*="cozy-moments.js"]')) { var cz = doc.createElement('script'); cz.src = new URL('assets/rds/cozy-moments.js', siteRoot).href + Q; cz.defer = true; doc.head.appendChild(cz); }
 
   /* citation jump links from the Sources library (#cite=ID.N): scroll to the marker and highlight the sentence */
   if (!doc.querySelector('script[src*="cite-jump.js"]') && /cite=/.test(location.hash)) { var cj = doc.createElement('script'); cj.src = new URL('assets/rds/cite-jump.js', siteRoot).href + Q; cj.defer = true; doc.head.appendChild(cj); }

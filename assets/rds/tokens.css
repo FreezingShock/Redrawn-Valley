@@ -139,7 +139,7 @@
   --rv-pencil: 2px 3px 0 0 var(--edge);
   --rv-pencil-lift: 3px 5px 0 0 var(--edge);
   --shadow-pencil: var(--rv-pencil); --shadow-pencil-lift: var(--rv-pencil-lift);
-  /* cozy layer (assets/rds/cozy.css): paper lift, pencil progress line, lamp glow, copy stamp */
+  /* cozy layer (assets/rds/cozy-moments.css): paper lift, pencil progress line, lamp glow, copy stamp */
   --lift: -2px; --lift-x: -1px; --press: 1px; --tilt: -.5deg;
   --progress-h: 6px; --progress-tip: 14px;
   --dur-lamp: 1500ms; --dur-stamp: 1700ms; --dur-pop: 360ms;
