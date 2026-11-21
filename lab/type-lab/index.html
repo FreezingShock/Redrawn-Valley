@@ -26,14 +26,14 @@
 <header class="rv-ehead"><div class="rds-container"><div class="rv-ehead__inner">
 <div class="rv-ehead__kicker"><a class="rds-link rds-link--quiet" href="../index.html">&larr; Lab notes</a><span class="rds-tag rds-tag--brick">Type</span></div>
 <h1 class="rds-display" data-rds-reveal>Choosing a hand for the type</h1>
-<p class="rds-lead" data-rds-reveal style="--i:1">Forty-six font entries screened for license, accents, size and legibility, six type directions built from them, and three ways to write text in. The research, my verdict and the live lab are all here.</p>
+<p class="rds-lead" data-rds-reveal style="--i:1">Forty-six font entries screened for license, accents, size and legibility, six type directions built from them, and three ways to write text in. The research, the decision (Wobble, now live site-wide) and the live lab are all here.</p>
 <p class="rv-byline"><span>By <b>Nathan</b></span><span>Nov. 21, 2026</span><span>7 min read</span><span>5 sources</span><span>Lab 3 of 4</span></p>
 </div></div></header>
 <div class="rds-container"><div class="rv-tiles rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="lab/type-lab" data-topic="type-lab" aria-hidden="true"></div></div>
 <div class="rv-body" data-rv-body><div class="rds-container">
 <section id="why" aria-labelledby="why-h">
 <h2 id="why-h"><span class="rv-num">01</span>The question</h2>
-<p>The site speaks in a serif, sets its interface in a sans, and uses a hand font for eyebrows, tags and notes. I wanted to find out whether a hand-drawn face could carry more of the site, and which one, without breaking three things I care about: free licenses, Spanish place names with accents, and text that stays readable at caption size on a phone.</p>
+<p>The site speaks in a serif, sets its interface in a sans, and uses a hand font for eyebrows, tags and notes. I wanted to find out whether a hand-drawn face could carry the site, and which one, without breaking three things I care about: free licenses, Spanish place names with accents, and text that stays readable at caption size on a phone.</p>
 <dl class="rds-facts rv-wide"><div><dt>entries in the research table</dt><dd>46</dd></div><div><dt>under the OFL, 7 Apache 2.0</dt><dd>38</dd></div><div><dt>directions built and compared</dt><dd>6</dd></div><div><dt>ways to write text in</dt><dd>3</dd></div></dl>
 <p>The table counts entries, and some entries group two or three related families, so the number of families screened is a little higher. The lab itself says about sixty.</p>
 </section>
@@ -53,15 +53,14 @@
 <h2 id="decisions-h"><span class="rv-num">04</span>The decisions I made</h2>
 <div class="rds-decisions rv-wide">
 <article class="rds-decision"><h3>Treat accents as a hard requirement</h3><p>The Valley has Cañada, Topanga and Tujunga on its maps, and a font that drops the ñ is a font that fails on the first page. Missing glyphs are a rejection, not a footnote.</p><p class="rds-decision__cost"><b>Cost</b>It removed three otherwise attractive fonts from the shortlist.</p></article>
-<article class="rds-decision"><h3>Recommend Hand-cut Serif for the site, with Field Notebook for the home page and study titles</h3><p>This is my recommendation in the lab, and it follows from the reading finding above. It keeps long text comfortable and still looks hand-drawn.</p><p class="rds-decision__cost"><b>Cost</b>It is my judgment from my own screens. Nobody else has read these pages in the new fonts.</p></article>
-<article class="rds-decision"><h3>Keep Wobble as the one direction that can move</h3><p>Shantell Sans is a variable font with axes for how informal it is (INFM) and how much each letter bounces off the baseline (BNCE), so letters can wobble with no stroke data. I set informality low for reading and high for titles.</p><p class="rds-decision__cost"><b>Cost</b>At about 170 KB with all axes it is the heaviest option. Trimming axes would cut it.</p></article>
+<article class="rds-decision"><h3>Choose Wobble (Shantell Sans) for the whole site</h3><p>My recommendation in the lab was Hand-cut Serif, with Field Notebook for titles, and I ended up choosing Wobble instead. It is one variable font that covers every role, so the site reads as one hand, and its INFM and BNCE axes let titles be looser while body text stays calmer. IBM Plex Mono stays for citations, captions and numbers, so evidence still looks like evidence. The font tokens now all point at Shantell Sans.</p><p class="rds-decision__cost"><b>Cost</b>Hand fonts read slower over long text, which is why the body setting is deliberately calm. At about 170 KB with all axes it is the heaviest option, trimming axes would cut it, and Shantell has no italic file, so italics are synthesized.</p></article>
 <article class="rds-decision"><h3>Add three writing effects with two speeds each</h3><p>A pen write-on from single-stroke Hershey data, a typewriter that strikes keys at irregular times, and a sweep that works on any font. Each has a fast and a slow speed, and under reduced motion nothing plays by itself, though a button you press still plays.</p><p class="rds-decision__cost"><b>Cost</b>The pen effect needs its own letterform data, so accents there are added by code and are approximate.</p></article>
-<article class="rds-decision"><h3>Mark the lab noindex and keep the live fonts unchanged until a choice is made</h3><p>The lab is a candidate sheet. The site&rsquo;s fonts do not change until a direction is chosen and moved into the design tokens, which is being done separately; <a class="rds-link" href="https://github.com/FreezingShock/Redrawn-Valley/blob/main/DESIGN.md">DESIGN.md</a> says what is live.</p><p class="rds-decision__cost"><b>Cost</b>Until then this article describes a lab, not the site as it reads today.</p></article>
+<article class="rds-decision"><h3>Keep the lab as the record, marked noindex</h3><p>The lab stays on the site as the candidate sheet behind the choice, so the research and the five directions I did not pick remain visible. It is noindex because it is a working page; this article is the readable version.</p><p class="rds-decision__cost"><b>Cost</b>The lab shows six directions but only one is live, so the lab no longer matches the site.</p></article>
 </div>
 </section>
 <section id="lab" aria-labelledby="lab-h">
 <h2 id="lab-h"><span class="rv-num">05</span>The live lab</h2>
-<p>The full lab, embedded. Switch the body text between each direction&rsquo;s own font and today&rsquo;s Newsreader, press Replay on any writing effect, and scroll to the bottom for the research table. The frame scrolls on its own; the link opens it full page.</p>
+<p>The full lab, embedded. Wobble is Direction 6 and is what the site now uses. Switch the body text between each direction&rsquo;s own font and the earlier Newsreader, press Replay on any writing effect, and scroll to the bottom for the research table. The frame scrolls on its own; the link opens it full page.</p>
 <figure class="rds-demo rv-wide" data-rds-reveal>
 <div class="rds-demo__bar"><span class="rds-tag rds-tag--brick">Live demo</span><a href="../../fonts/index.html">Open it as its own page <span class="rds-arrow">&rarr;</span></a></div>
 <iframe class="rds-demo__frame" src="../../fonts/index.html?embed=1" title="The Redrawn type lab, embedded" loading="lazy" style="--demo-h:820px;--demo-h-m:720px"></iframe>
@@ -70,7 +69,7 @@
 </section>
 
 <section id="limits" aria-labelledby="limits-h"><h2 id="limits-h"><span class="rv-num">06</span>What I could not verify</h2>
-<aside class="rds-callout rds-callout--plain" role="note"><div><p class="rds-callout__title">Limits of this lab</p><ul><li>I did not read every license file. I used the license Google Fonts lists for each family and cross-checked it against Fontsource, which agreed for every font here.</li><li>Glyph coverage was tested on the default weight, not every weight. Playwrite&rsquo;s download size could not be measured from the CSS API.</li><li>I judged legibility by eye at 375 and 1280 pixels, not with readers, so every &ldquo;rejected&rdquo; note is my opinion.</li></ul></div></aside>
+<aside class="rds-callout rds-callout--plain" role="note"><div><p class="rds-callout__title">Limits of this lab</p><ul><li>I did not read every license file. I used the license Google Fonts lists for each family and cross-checked it against Fontsource, which agreed for every font here.</li><li>Glyph coverage was tested on the default weight, not every weight. Playwrite&rsquo;s download size could not be measured from the CSS API.</li><li>I judged legibility by eye at 375 and 1280 pixels, not with readers, so every &ldquo;rejected&rdquo; note is my opinion. I have not tested the calmer Wobble body setting with readers either.</li></ul></div></aside>
 </section>
 <div class="rv-divider" aria-hidden="true"></div>
 <footer class="rv-sources" id="sources"><h2>Sources</h2>
