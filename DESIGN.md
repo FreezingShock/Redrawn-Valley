@@ -253,7 +253,8 @@ Big original pencil drawings that fill empty page margins. Loaded automatically 
 - **Phones**: one big fragment every ~1.7 screen heights at 20% opacity, behind the text, bleeding off a side.
 - **Motion**: lines draw on when a fragment first scrolls in; then it drifts a few pixels, canopies pulse, flow lines run, the ruler slides, the compass swings, tile colours swap. Only while on screen. Reduced motion, Save-Data, 2g and print show the finished still; the Pause background button (`rv-loops-paused`) stops it.
 - **Layering**: the layer is `z-index:-1` inside `<main>` (which becomes an isolated stacking context). `.rds-band-sunk` turns 62% opaque inside `main` so the art shows through. Skips areas covered by a hero loop.
-- **Study rail**: pages with a section rail (`[data-toc]`) keep sketches on the right only. The rail itself (`.kt`, `studies.css`) has a feathered paper wash behind it (`nav::before`, blurred, so it reads over any art), ticks that draw in one by one (`--i` set by `studies.js`), a pulsing accent tick, and brick-coloured active label and counter against muted inactive items. Reduced motion shows it still.
+- **Band seams**: on wide screens the layer sits above section backgrounds (z-index 6; the gutters hold no text), so one drawing is continuous across a wavy `rds-band-sunk` edge. On narrow screens it stays behind the text and fragments are placed only outside tinted bands (plus 34px for the wave). Fragments overlap the content column by only 24px and fade out before it.
+- **Study rail**: pages with a section rail (`[data-toc]`) keep sketches on the right only. The rail itself (`.kt`, `studies.css`) sits on a slim paper strip with a crisp edge and a small pencil shadow (the nav's own `::before`, so it hugs the ticks and grows with the labels on hover), ticks on a scale (10px, 16px at a group start, 26px for the current one), ticks that draw in one by one (`--i` set by `studies.js`), a pulsing accent tick, brick active label and counter against muted inactive items. Reduced motion shows it still.
 - **API**: `RDSMargins.relayout()`, `RDSMargins.kinds`. Add a kind as `K.name = function (d, r, c)` using `d.line`, `d.fill`, `d.hatch`, `d.grid`.
 
 ## Known issues
@@ -324,6 +325,23 @@ One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>`
 - **Nav**: `rds-nav` is a hand-washed paper band: brick and moss tints over paper with a deckled hairline lower edge (`::before` and `::after` in `skin.css` Part 4). The page-wide "no shadows" rule has one more exception here: a soft `drop-shadow` under the deckled edge once the page scrolls. The active section keeps the brick hand rule and goes bold. Search is the header's main action: ink fill with the pencil offset.
 - **Hero buttons**: primary `rv-cta` draws its outline, fills brick, then its arrow draws, flies off and a new one settles in (hover repeats it). Secondary `rv-textlink` is ink text with a drawn rule and arrow. Brick appears once, on the primary. All of it is CSS only and skipped under reduced motion.
 
+## Sketchbook log (`log/`, `scripts/build_log.py`, `assets/rds/log.css`, `log.js`)
+
+A dated feed of everything new, built from git history, never edited by hand. `log/index.html` is a normal page with three generated regions (`<!--log:stats-->`, `<!--log:chips-->`, `<!--log:timeline-->`); `python3 scripts/build_log.py` rewrites them plus `log/feed.xml` (Atom, newest 40) and `assets/log.json` (entries, and a first-added and last-updated date for every page; other features can read it). `.github/workflows/log.yml` reruns it after each push to integration.
+- **Entry**: one commit (squash-merged PR). Type is study / note / guide / lab (a new page in that section), else redraw, design or site by subject and files. Pages show as New (added) or Updated (changed), titles read from the pages.
+- **Words**: PR-description trailers `Log: sentence`, `Log-Title:`, `Log-Type:`, `Log: skip` win; then `scripts/log-notes.json` (keyed by PR number); then the commit subject. Commits touching only generated files are never entries.
+- **Components**: `rv-log` timeline (sticky date column on desktop, sticky date bar on phones, dashed rail, icon dot per type, `rv-log__card` per entry, `rv-log__page` pills), type filter chips (`data-rv-topic`, kept in `?type=`), `rds-facts` stats. Under reduced motion it stands still.
+
+
+## A-Z index (`a-z/`, `scripts/build_atlas.py`, `assets/rds/atlas.css`, `atlas.js`)
+
+One alphabetical list of every term, place, source and drawing, each with links to every page (and section) that uses it. The list is **generated**, never hand-edited: `python3 scripts/build_index.py` (or `build_atlas.py` alone) rewrites the region between the `atlas:start` / `atlas:end` comments in `a-z/index.html`, and `scripts/check.py` warns when it is stale. A new article needs no edit: its title, figure captions, source list and any mention of an existing term or place are picked up on the next run. To add a term or place, add it to `scripts/data/atlas.json` (aliases, "see" cross-references, place notes) or mark it up with `data-term="..."` / `data-place="..."`.
+
+- **Components**: `rv-az__tools` (filter input `rds-guide-search`, kind chips `rds-chip`), sticky `rv-az__jump` letter strip with scroll spy, `rv-az__group` per letter, `rv-az__entry` rows (headword, kind tag, gloss, uses list; two columns from 1000px). The list is `data-rv-noindex` so search does not index every entry twice.
+- **Behavior**: kind chips and live filter share `?q=` and `?k=` in the URL; letters with no matches are hidden; "See" rows jump to their target; back-to-top button; smooth scrolling only when motion is allowed. Everything is readable without JS.
+- **Sources** merge across pages by URL; the numbered circles link to each in-text use. Drawings are every `<figure>` with a caption plus infobox sketch captions (pages with more than 12, like the icon gallery, are skipped).
+- Limits: mentions are word matches, so unnamed ideas are missed and a name in another sense can be listed.
+
 ## Keep reading rail and Random page (`assets/rds/rail.js`, `rail.css`)
 
 Every page ends with a "Keep reading" rail: a horizontally scrolling row of cards (seeded `card` art, type, read time, title, three-line blurb, matched topics). Loaded by `site-shell.js`; opt out with `<body data-no-rail>`. It is skipped in embed mode.
@@ -342,3 +360,4 @@ Topics are the subject threads that run across studies, field guide entries, not
 - **Index fields.** `scripts/build_index.py` copies the tags into `assets/search-index.json` as `k` (topic slugs, primary first), `pl` (place) and `g` ([lat, lon]) on each page entry. Read those, not the HTML.
 - **Hubs.** `topics/index.html` and `topics/<slug>/index.html` are generated. After tagging or adding a page run `python3 scripts/regen.py` (all generators in order: log, index, topics, index; CI runs it after each merge to `integration`, so forgetting is harmless) and commit the outputs (`check.py` warns when they are stale). Never hand-edit a hub.
 - **Hub anatomy.** Tiles banner seeded `topics/<slug>`, the lead and the question line (`rv-thead`), count pills that jump to each list (`rv-tstat`), then one section per kind: studies as `rds-card` cards (`rv-tcard`), everything else as `rds-row` rows (`rv-trow`) listing the page's other topics, then the other-topic chips (`rv-tchip`). The index page adds a coverage table (`rv-tmatrix`) so gaps are visible.
+

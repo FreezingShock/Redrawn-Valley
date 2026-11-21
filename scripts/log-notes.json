@@ -1,0 +1,210 @@
+{
+ "1": {
+  "title": "Fixed the logo highlight",
+  "summary": "Cleaned a stray artifact out of the mark's highlighter path and kept the tagline.",
+  "type": "site"
+ },
+ "2": {
+  "title": "Shared header, footer, search and sitemap",
+  "summary": "Every page now gets the same header, footer and breadcrumbs from one script, with site search, a 404 page and a sitemap.",
+  "type": "site"
+ },
+ "3": {
+  "title": "Studies index and the study template",
+  "summary": "Added the Studies index, a template for new studies, the infobox and the shared study styles.",
+  "type": "site"
+ },
+ "4": {
+  "title": "Studies moved onto the shared shell",
+  "summary": "The studies index, the template and the Topanga study now use the same header and footer as everything else.",
+  "type": "site"
+ },
+ "5": {
+  "title": "Field guide opens with 11 entries",
+  "summary": "A wiki-style index of terms with 11 sourced entries, from bioswale to urban heat island.",
+  "type": "guide"
+ },
+ "6": {
+  "title": "Notes section opens with five essays",
+  "summary": "The Notes index and five sourced essays on heat, shade, soil, sidewalks and walking.",
+  "type": "note"
+ },
+ "7": {
+  "title": "Topanga infobox links into the field guide",
+  "summary": "Terms in the study's infobox now link to their guide entries.",
+  "type": "site"
+ },
+ "9": {
+  "title": "Sitemap points at the live domain",
+  "summary": "Sitemap and robots.txt now use redrawnvalley.vercel.app.",
+  "type": "site"
+ },
+ "11": {
+  "title": "Mobile overhaul",
+  "summary": "A bottom tab bar, a contents sheet, tap-to-open footnotes, a collapsible infobox and a study tab bar for phones.",
+  "type": "site"
+ },
+ "12": {
+  "title": "Hand-drawn icon set and logo",
+  "summary": "A set of hand-drawn icons, a logo mark and a favicon, swapped into the header, tab bar and indexes.",
+  "type": "design"
+ },
+ "13": {
+  "title": "Sketchbook layer",
+  "summary": "Hand lettering, wobbly borders, pencil offsets, hand-drawn rules, paper grain, tape and a pencil filter, plus a new 404 drawing.",
+  "type": "design"
+ },
+ "14": {
+  "title": "Hero contour collage",
+  "summary": "A new contour collage behind the home hero, and crisper chart text.",
+  "type": "redraw"
+ },
+ "15": {
+  "title": "Simpler icons and logo",
+  "summary": "Redrew the icon set and logo mark with fewer strokes.",
+  "type": "redraw"
+ },
+ "16": {
+  "title": "Guide art and study figures redrawn",
+  "summary": "Redrew the guide art, restyled the essay figures and the Topanga study, and added tile banners.",
+  "type": "redraw"
+ },
+ "17": {
+  "title": "Icon, mobile and sketch CSS folded together",
+  "summary": "Moved the icon, mobile and sketch styles into two files and fixed a mobile overflow on the 404 page and the grain over sticky UI.",
+  "type": "site"
+ },
+ "18": {
+  "title": "Seeded motif system",
+  "summary": "Generated art made of grid-filled shapes, drafting tools and plan symbols, seeded per page, with live colour and shape drift.",
+  "type": "redraw"
+ },
+ "19": {
+  "title": "Pattern sheet and art cards",
+  "summary": "Added the pattern sheet page and art cards on the home page, fixed contrast on faint text and kept the pencil filter off generated art.",
+  "type": "redraw"
+ },
+ "21": {
+  "title": "Study styles cleaned up",
+  "summary": "Moved inline study styles into one stylesheet and removed every !important.",
+  "type": "site"
+ },
+ "22": {
+  "title": "Mobile pass",
+  "summary": "A taller footer strip, footer clearance above the tab bar, row icon alignment, a figure swipe hint and tweaks to the 404 and pattern sheet.",
+  "type": "site"
+ },
+ "23": {
+  "title": "Four new motifs",
+  "summary": "Added the pill diagram, section, ledger and crosshatch motifs.",
+  "type": "redraw"
+ },
+ "24": {
+  "title": "Topanga drawings use design tokens",
+  "summary": "Replaced inline SVG styles and hex colours with token classes. Geometry and labels did not change.",
+  "type": "redraw"
+ },
+ "25": {
+  "title": "Topanga plan and perspective redrawn",
+  "summary": "The plan and perspective drawings now come from a generator driven by the cited dimensions.",
+  "type": "redraw"
+ },
+ "26": {
+  "title": "Scroll effects",
+  "summary": "Drawing figures, a layered plan build-up, counters, parallax motif tiles, section rise and a progress line; trees grow with each plan stage.",
+  "type": "site"
+ },
+ "27": {
+  "title": "New navigation",
+  "summary": "A studies-first header with page flyouts, and a phone tab bar with a More sheet.",
+  "type": "site"
+ },
+ "29": {
+  "title": "Interaction layer",
+  "summary": "Redraw art on demand, entry previews, a compare slider, plan stages and drawing zoom.",
+  "type": "site"
+ },
+ "30": {
+  "title": "Looping backgrounds",
+  "summary": "A looping background layer (plan, ridge, contour, tiles) behind the home, guide, studies and notes heroes.",
+  "type": "redraw"
+ },
+ "31": {
+  "title": "Loops on footers and study heads",
+  "summary": "Extended the loops to footers, the home Browse header and study heads, with ink tone and fit-top options.",
+  "type": "redraw"
+ },
+ "32": {
+  "title": "Type lab opens",
+  "summary": "Six hand-drawn type directions, a font research table and three writing-on animations.",
+  "type": "lab"
+ },
+ "33": {
+  "title": "Wobble type across the site",
+  "summary": "Switched the whole site to Wobble (Shantell Sans).",
+  "type": "design"
+ },
+ "34": {
+  "title": "Labs become articles",
+  "summary": "Lab notes index, four lab articles, an embed mode for demos and the lab article components.",
+  "type": "lab"
+ },
+ "35": {
+  "title": "Type lab records the Wobble decision",
+  "summary": "The type lab article now explains why Wobble won.",
+  "type": "lab"
+ },
+ "36": {
+  "title": "Margin sketches",
+  "summary": "Large seeded live drawings in the page margins on desktop, and faint ones on phones.",
+  "type": "redraw"
+ },
+ "37": {
+  "title": "Page-to-page motion",
+  "summary": "An opening drawing, a tile wipe between pages, handwritten headings, a pencil dab and small interactions, with a motion lab article.",
+  "type": "lab"
+ },
+ "38": {
+  "title": "Search rebuilt",
+  "summary": "A sketched animated dialog with instant, typo-tolerant results, previews and drawn empty states.",
+  "type": "site"
+ },
+ "39": {
+  "title": "Study 03: Ventura & Topanga corner",
+  "summary": "A new site study of the corner at 22001 Ventura Blvd.",
+  "type": "study"
+ },
+ "40": {
+  "title": "Study 02: Fallbrook Edge",
+  "summary": "A new site study drawn from City parcel lines.",
+  "type": "study"
+ },
+ "41": {
+  "title": "Compare slider follows the mouse",
+  "summary": "The before/after slider now tracks the pointer without a click.",
+  "type": "site"
+ },
+ "42": {
+  "title": "Nav wash and drawn hero buttons",
+  "summary": "A paper-wash header, a calmer hero, drawn hero buttons and a hover compare.",
+  "type": "design"
+ },
+ "43": {
+  "title": "Opening sheet never blocks clicks",
+  "summary": "The opening animation no longer takes pointer input; it runs 1.5 s with a 3 s failsafe.",
+  "type": "site"
+ },
+ "44": {
+  "title": "Study rail polish",
+  "summary": "A paper wash behind the study rail, sketches kept off the left edge, items that draw in and an accent tick for the active one; margins now load on the Ventura study.",
+  "type": "site"
+ },
+ "4c59055": {
+  "title": "Redrawn Valley begins",
+  "summary": "The first version of the site: the Topanga Willows study, the Redrawn Design System write-up and the branch and deploy workflows.",
+  "type": "site"
+ },
+ "68da951": {
+  "skip": true
+ }
+}
