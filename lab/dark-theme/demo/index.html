@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../../assets/rds/theme.js"></script>
+<meta name="robots" content="noindex">
+<title>Moonlit palette sheet (demo) | Redrawn Valley</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM@400..700,-100..100,0..100&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../../../assets/rds/tokens.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--font-sans);font-variation-settings:"INFM" 15}
+.wrap{max-width:1040px;margin:0 auto;padding:var(--space-6) var(--space-4) var(--space-12)}
+h1,h2{font-variation-settings:"INFM" 100;font-weight:600;line-height:1.1;margin:0}
+h1{font-size:clamp(28px,5vw,40px);margin-bottom:var(--space-2)}h2{font-size:22px;margin:var(--space-8) 0 var(--space-3)}
+p{margin:0 0 var(--space-3);max-width:62ch;color:var(--ink-muted)}
+.bar{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center;margin:var(--space-4) 0}
+button.go{font:600 15px/1 var(--font-sans);height:44px;padding:0 var(--space-6);border:1.5px solid var(--edge);border-radius:8px;background:var(--brick);color:var(--on-brick);cursor:pointer;box-shadow:2px 3px 0 0 var(--edge)}
+button.go:active{transform:translate(2px,3px);box-shadow:none}
+button.go:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.mono{font:400 13px/1.4 var(--font-mono);color:var(--ink-faint)}
+/* the two samples carry their own palettes, so both show at once whatever the page theme is */
+.pair{display:grid;gap:var(--space-4);grid-template-columns:1fr 1fr}
+@media (max-width:720px){.pair{grid-template-columns:1fr}}
+.s{--s-paper:#f6f1e7;--s-raised:#fbf8f1;--s-ink:#1f1d1a;--s-muted:#5c564c;--s-acc:#9c3d24;--s-on-acc:#fbf8f1;--s-moss:#2f4a3a;--s-line:#d9d0bd;--s-edge:#1f1d1a;--s-tint:#f0d9cc;--s-band:#1f1d1a;--s-on-band:#f6f1e7;--s-field:#9c3d24;--s-field2:#2f4a3a;--s-field3:#35506b;
+ background:var(--s-paper);color:var(--s-ink);border:1.5px solid var(--s-edge);border-radius:16px;overflow:hidden}
+.s.dark{--s-paper:#17120d;--s-raised:#211a13;--s-ink:#f3e8d4;--s-muted:#cdbfa7;--s-acc:#66c3c0;--s-on-acc:#0b1a1a;--s-moss:#9cc3a8;--s-line:#3a2e22;--s-edge:#a99a82;--s-tint:#12302f;--s-band:#0b0806;--s-on-band:#f3e8d4;--s-field:#246867;--s-field2:#3a6a50;--s-field3:#3c6286}
+.s .art{display:grid;grid-template-columns:1.2fr 1fr 1fr;height:96px}
+.s .art i{display:block;position:relative}.s .art i:nth-child(1){background:var(--s-field)}.s .art i:nth-child(2){background:var(--s-field2)}.s .art i:nth-child(3){background:var(--s-field3)}
+.s .art i::after{content:"";position:absolute;inset:26%;border:2px solid var(--s-on-band);border-radius:50%;opacity:.85}
+.s .body{padding:var(--space-4)}
+.s .tag{display:inline-block;font:600 12px/1 var(--font-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--s-acc);margin-bottom:var(--space-2)}
+.s h3{font:600 24px/1.15 var(--font-sans);font-variation-settings:"INFM" 100;margin:0 0 var(--space-2)}
+.s p{color:var(--s-muted);font-size:15px;margin-bottom:var(--space-3)}
+.s a{color:var(--s-moss);font-weight:600}
+.s .btn{display:inline-block;padding:11px 18px;border:1.5px solid var(--s-edge);border-radius:8px;background:var(--s-acc);color:var(--s-on-acc);font:600 15px/1 var(--font-sans);box-shadow:2px 3px 0 0 var(--s-edge)}
+.s .note{margin-top:var(--space-3);padding:var(--space-3);background:var(--s-tint);border-radius:8px;font-size:14px;color:var(--s-ink)}
+.s .foot{padding:var(--space-3) var(--space-4);background:var(--s-band);color:var(--s-on-band);font:400 13px/1.4 var(--font-mono)}
+.s .lbl{display:flex;justify-content:space-between;padding:var(--space-2) var(--space-4);background:var(--s-raised);border-bottom:1px solid var(--s-line);font:500 12px/1 var(--font-mono);color:var(--s-muted)}
+table{width:100%;border-collapse:collapse;font:400 14px/1.35 var(--font-mono)}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font:600 12px/1.2 var(--font-sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+.sw{display:inline-block;width:28px;height:20px;border:1.5px solid var(--edge);border-radius:4px;vertical-align:middle;margin-right:8px}
+.pass{color:var(--moss);font-weight:600}.fail{color:var(--rust);font-weight:600}
+.tw{overflow-x:auto}
+</style>
+<link rel="stylesheet" href="../../../assets/rds/theme.css">
+</head>
+<body>
+<div class="wrap">
+<h1>Paper by day, moonlight by night</h1>
+<p>Both palettes drawn at once, so you can compare them whichever theme the page is in. The table below computes every contrast ratio live from the hex values using the WCAG 2.x formula.</p>
+<div class="bar"><button class="go" id="replay" type="button">Replay the circle reveal</button><span class="mono">Flips the site theme; the swatches below stay put.</span></div>
+
+<div class="pair">
+<div class="s"><div class="lbl"><span>PAPER</span><span>#f6f1e7</span></div><div class="art"><i></i><i></i><i></i></div><div class="body"><span class="tag">Study 01 · Woodland Hills</span><h3>Shade for a block that faces the sun</h3><p>Warm paper, ink and brick. Every number has a source and every estimate is labeled.</p><span class="btn">Read the study</span> &nbsp;<a href="#" onclick="return false">How it works</a><div class="note">What is estimated: stall count, within ten percent.</div></div><div class="foot">Redrawn Valley · the footer band</div></div>
+<div class="s dark"><div class="lbl"><span>MOONLIT</span><span>#17120d</span></div><div class="art"><i></i><i></i><i></i></div><div class="body"><span class="tag">Study 01 · Woodland Hills</span><h3>Shade for a block that faces the sun</h3><p>Orange-black paper, cream ink, brick turned moonlit turquoise. Same page, same hierarchy.</p><span class="btn">Read the study</span> &nbsp;<a href="#" onclick="return false">How it works</a><div class="note">What is estimated: stall count, within ten percent.</div></div><div class="foot">Redrawn Valley · the footer band</div></div>
+</div>
+
+<h2>Tokens, side by side</h2>
+<div class="tw"><table id="tok"><thead><tr><th>Role</th><th>Paper</th><th>Moonlit</th></tr></thead><tbody></tbody></table></div>
+
+<h2>Contrast, WCAG AA</h2>
+<p>Text needs 4.5 to 1, large text and UI lines 3 to 1. Each pair is a real pairing on the site.</p>
+<div class="tw"><table id="con"><thead><tr><th>Pair</th><th>Paper</th><th>Moonlit</th></tr></thead><tbody></tbody></table></div>
+<p class="mono" style="margin-top:var(--space-4)" id="sum"></p>
+</div>
+<script>
+(function () {
+  var L = { paper: '#f6f1e7', raised: '#fbf8f1', sunk: '#ece5d6', ink: '#1f1d1a', muted: '#5c564c', faint: '#655e51', acc: '#9c3d24', accd: '#7d2f1a', moss: '#2f4a3a', slate: '#35506b', rust: '#8c1c2e', onacc: '#fbf8f1', onmoss: '#f6f1e7', band: '#1f1d1a', onband: '#f6f1e7', bandm: '#b8b0a0', strong: '#8a8170', edge: '#1f1d1a' };
+  var D = { paper: '#17120d', raised: '#211a13', sunk: '#100c08', ink: '#f3e8d4', muted: '#cdbfa7', faint: '#ad9f88', acc: '#66c3c0', accd: '#8fdad6', moss: '#9cc3a8', slate: '#86aed2', rust: '#f08a98', onacc: '#0b1a1a', onmoss: '#0d1a12', band: '#0b0806', onband: '#f3e8d4', bandm: '#b8aa92', strong: '#857663', edge: '#a99a82' };
+  var names = [['paper', 'Page (--paper)'], ['raised', 'Raised (--paper-raised)'], ['sunk', 'Sunk band (--paper-sunk)'], ['ink', 'Text (--ink)'], ['muted', 'Muted text (--ink-muted)'], ['faint', 'Faint text (--ink-faint)'], ['acc', 'Brick / turquoise (--brick)'], ['accd', 'Brick deep, hover (--brick-deep)'], ['moss', 'Moss (--moss)'], ['slate', 'Slate, water (--slate)'], ['rust', 'Error (--rust)'], ['band', 'Footer band (--band)'], ['strong', 'Input border (--line-strong)']];
+  function lum(h) { h = h.slice(1); var c = [0, 2, 4].map(function (i) { var v = parseInt(h.substr(i, 2), 16) / 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
+  function cr(a, b) { var x = lum(a), y = lum(b); if (x < y) { var t = x; x = y; y = t; } return (x + .05) / (y + .05); }
+  function sw(h) { return '<span class="sw" style="background:' + h + '"></span>' + h; }
+  document.querySelector('#tok tbody').innerHTML = names.map(function (n) { return '<tr><td>' + n[1] + '</td><td>' + sw(L[n[0]]) + '</td><td>' + sw(D[n[0]]) + '</td></tr>'; }).join('');
+  var pairs = [['ink', 'paper', 4.5, 'Body text on page'], ['ink', 'raised', 4.5, 'Body text on cards'], ['muted', 'paper', 4.5, 'Muted text on page'], ['faint', 'paper', 4.5, 'Captions and meta on page'], ['faint', 'sunk', 4.5, 'Captions on sunk band'], ['acc', 'paper', 4.5, 'Accent text and links on page'], ['moss', 'paper', 4.5, 'Moss links on page'], ['slate', 'paper', 4.5, 'Slate text on page'], ['rust', 'paper', 4.5, 'Form errors on page'], ['onacc', 'acc', 4.5, 'Button label on brick / turquoise'], ['onmoss', 'moss', 4.5, 'Label on moss'], ['onband', 'band', 4.5, 'Footer text'], ['bandm', 'band', 4.5, 'Footer muted text'], ['strong', 'paper', 3, 'Input borders (UI, 3 to 1)'], ['edge', 'paper', 3, 'Frame lines (UI, 3 to 1)']];
+  var fails = 0, total = 0;
+  document.querySelector('#con tbody').innerHTML = pairs.map(function (p) {
+    function cell(P) { var r = cr(P[p[0]], P[p[1]]), ok = r >= p[2]; total++; if (!ok) fails++; return '<span class="' + (ok ? 'pass' : 'fail') + '">' + r.toFixed(2) + ' : 1 ' + (ok ? 'AA' : 'below ' + p[2]) + '</span>'; }
+    return '<tr><td>' + p[3] + '</td><td>' + cell(L) + '</td><td>' + cell(D) + '</td></tr>';
+  }).join('');
+  document.getElementById('sum').textContent = (total - fails) + ' of ' + total + ' pairings meet their AA threshold.';
+  document.getElementById('replay').addEventListener('click', function (e) { window.RVTheme.toggle(e.currentTarget); });
+  var emb = /[?&]embed=1(&|$)/.test(location.search);
+  function post() { if (emb && parent !== window) parent.postMessage({ rvEmbedHeight: document.documentElement.scrollHeight }, '*'); }
+  addEventListener('load', post); addEventListener('resize', post);
+})();
+</script>
+</body>
+</html>

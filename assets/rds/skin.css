@@ -24,7 +24,7 @@
 }
 
 /* ---------- shared sheet (contents list + footnote reader) ---------- */
-.rv-sheet{position:fixed;inset:auto 0 0 0;margin:0;width:100%;max-width:none;max-height:80dvh;padding:0;border:0;border-top:1px solid var(--ink);border-radius:var(--radius-lg) var(--radius-lg) 0 0;background:var(--paper-raised);color:var(--ink);overflow:hidden}
+.rv-sheet{position:fixed;inset:auto 0 0 0;margin:0;width:100%;max-width:none;max-height:80dvh;padding:0;border:0;border-top:1px solid var(--edge);border-radius:var(--radius-lg) var(--radius-lg) 0 0;background:var(--paper-raised);color:var(--ink);overflow:hidden}
 .rv-sheet[open]{display:flex;flex-direction:column;animation:rv-sheet-up var(--dur-base) var(--ease-out)}
 .rv-sheet::backdrop{background:rgba(31,29,26,.5)}
 @keyframes rv-sheet-up{from{transform:translateY(24px);opacity:0}}
@@ -241,22 +241,22 @@
   .rv-sources a,.rv-note-read a{overflow-wrap:anywhere}
 
   /* study part-tab bar: ONE 48px row. Back arrow, then Site / Evidence / Design / Delivery / Sources scroll sideways. */
-  .rv-study header#top{position:sticky;top:0;z-index:20}
+  .rv-study{--rv-sub:var(--rv-bar)}
+  .rv-study:has(.rds-nav.is-hidden){--rv-sub:0px}
+  .rv-study header#top{position:sticky;top:var(--rv-sub);z-index:19}
   .rv-study header#top nav.ktabs{flex-wrap:nowrap;gap:0;min-height:48px;padding-block:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;width:100%;margin:0;padding-inline:var(--rv-gutter);scroll-padding-inline:var(--rv-gutter)}
   .rv-study header#top nav.ktabs::-webkit-scrollbar{display:none}
   .rv-study header#top nav.ktabs>a{flex:none;display:inline-flex;align-items:center;min-height:48px;padding:0 var(--space-3);margin:0;position:relative;white-space:nowrap}
-  /* brand becomes the first, quiet item; back link keeps its arrow */
+  /* the study name moves to the page title; only the five parts scroll */
   .rv-study header#top nav.ktabs>a:first-child{display:none}
-  .rv-study header#top nav.ktabs>a:nth-child(2){padding-left:0;padding-right:var(--space-4);font-size:15px;color:var(--ink)}
-  .rv-study header#top nav.ktabs>a:nth-child(n+3)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:3px;background:var(--brick);transform:scaleX(0);transition:transform var(--dur-base) var(--ease-out)}
+  .rv-study header#top nav.ktabs>a:nth-child(n+2)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:3px;background:var(--brick);transform:scaleX(0);transition:transform var(--dur-base) var(--ease-out)}
   .rv-study header#top nav.ktabs>a[aria-current=true]{color:var(--brick)}
   .rv-study header#top nav.ktabs>a[aria-current=true]::after{transform:none}
-  .rv-study header#top nav.ktabs>a:last-child{display:none} /* the in-bar Search link: the tab bar already has Search */
   .ktabs a,.ktabs a:hover,.ktabs a[aria-current="true"]{background-size:0 0}
 
   /* scroll-driven figure: pinned just under the tab bar, steps flow beneath it */
   .rv-study [data-scrolly]{gap:var(--space-4);display:block}
-  .rv-study [data-scrolly]>figure{position:sticky;top:48px;z-index:5;margin:0 calc(-1*var(--rv-gutter));padding:var(--space-2) var(--rv-gutter) var(--space-2);background:var(--paper);border-bottom:1px solid var(--line)}
+  .rv-study [data-scrolly]>figure{position:sticky;top:calc(var(--rv-sub) + 48px);z-index:5;margin:0 calc(-1*var(--rv-gutter));padding:var(--space-2) var(--rv-gutter) var(--space-2);background:var(--paper);border-bottom:1px solid var(--line)}
   .rv-study [data-scrolly]>figure figcaption{margin-top:var(--space-2);font-size:12px;line-height:18px}
   .rv-study [data-scrolly] .kstep{min-height:0;padding-block:var(--space-6) var(--space-12)}
   .rv-study [data-scrolly] .kstep h3{font-size:24px}
@@ -286,8 +286,8 @@
   --rv-r-lg:22px 9px 24px 10px/10px 24px 9px 22px;
   --rv-r-md:10px 5px 12px 6px/6px 12px 5px 10px;
   --rv-r-sm:5px 3px 6px 3px/3px 6px 3px 5px;
-  --rv-pencil:2px 3px 0 0 var(--ink);
-  --rv-pencil-lift:3px 5px 0 0 var(--ink);
+  --rv-pencil:2px 3px 0 0 var(--edge);
+  --rv-pencil-lift:3px 5px 0 0 var(--edge);
   --rv-hand:var(--font-hand,"Shantell Sans",system-ui,sans-serif);
   --rv-stroke:1.5px;
   --rv-grain:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22220%22 height=%22220%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.85%22 numOctaves=%222%22 seed=%227%22/%3E%3CfeColorMatrix values=%220 0 0 0 .25  0 0 0 0 .2  0 0 0 0 .12  0 0 0 .22 0%22/%3E%3C/filter%3E%3Crect width=%22220%22 height=%22220%22 filter=%22url(%23n)%22 opacity=%22.5%22/%3E%3C/svg%3E");
@@ -321,21 +321,21 @@
 .rds-card,.rv-feature,.rds-figure__art,.rv-compare__stage,.rv-about__art,.rds-infobox,.rv-infobox,.rds-card__media{border-radius:var(--rv-r-lg)}
 .rds-callout,.rds-input,.rv-seg,.rds-contents,.rds-hero__art{border-radius:var(--rv-r-md)}
 .rds-tag--solid,.rds-notes li:target,.rv-sources li:target{border-radius:var(--rv-r-sm)}
-.rds-card,.rv-feature,.rv-compare__stage,.rds-infobox,.rv-infobox,.rds-figure__art,.rv-fig .rds-figure__art{border:var(--rv-stroke) solid var(--ink)}
-.rds-input,.rv-seg{border-width:var(--rv-stroke);border-color:var(--ink)}
-.rv-seg button+button{border-left:var(--rv-stroke) solid var(--ink)}
+.rds-card,.rv-feature,.rv-compare__stage,.rds-infobox,.rv-infobox,.rds-figure__art,.rv-fig .rds-figure__art{border:var(--rv-stroke) solid var(--edge)}
+.rds-input,.rv-seg{border-width:var(--rv-stroke);border-color:var(--edge)}
+.rv-seg button+button{border-left:var(--rv-stroke) solid var(--edge)}
 .rds-chip{border-width:var(--rv-stroke);border-radius:255px 18px 225px 18px/18px 225px 18px 255px}
-.rds-callout{border:var(--rv-stroke) solid var(--ink)}
+.rds-callout{border:var(--rv-stroke) solid var(--edge)}
 .rds-callout--plain{background:var(--paper-raised);border-style:dashed}
 .rds-callout--moss{border-color:var(--moss)}
 
 /* ---------- buttons: marker outline + pencil offset ---------- */
-.rds-btn{border-width:var(--rv-stroke);border-color:var(--ink);border-radius:var(--rv-r-md);box-shadow:var(--rv-pencil);transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background-color var(--dur-fast) ease,color var(--dur-fast) ease}
+.rds-btn{border-width:var(--rv-stroke);border-color:var(--edge);border-radius:var(--rv-r-md);box-shadow:var(--rv-pencil);transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background-color var(--dur-fast) ease,color var(--dur-fast) ease}
 .rds-btn:hover{transform:translate(-1px,-2px) rotate(-.6deg);box-shadow:var(--rv-pencil-lift)}
-.rds-btn:active{transform:translate(2px,3px);box-shadow:0 0 0 0 var(--ink)}
+.rds-btn:active{transform:translate(2px,3px);box-shadow:0 0 0 0 var(--edge)}
 .rds-btn--ghost{box-shadow:none;background:transparent}
 .rds-btn--ghost:hover{box-shadow:var(--rv-pencil);background:var(--paper-raised)}
-.rds-btn--sm{box-shadow:1px 2px 0 0 var(--ink)}
+.rds-btn--sm{box-shadow:1px 2px 0 0 var(--edge)}
 .rds-band-ink .rds-btn{box-shadow:2px 3px 0 0 var(--brick)}
 .rds-btn .rds-arrow{display:inline-block;transition:transform var(--dur-fast) var(--ease-out)}
 .rds-btn:hover .rds-arrow{transform:translateX(4px) rotate(-8deg)}
@@ -343,11 +343,11 @@
 
 /* ---------- focus: a dashed marker ring, not a browser outline ---------- */
 :where(a,button,input,summary,[tabindex]):focus-visible{outline:2px dashed var(--brick);outline-offset:4px;border-radius:var(--rv-r-sm)}
-.rds-input:focus,.rds-input:focus-visible{outline:2px dashed var(--brick);outline-offset:3px;border-color:var(--ink);box-shadow:var(--rv-pencil)}
+.rds-input:focus,.rds-input:focus-visible{outline:2px dashed var(--brick);outline-offset:3px;border-color:var(--edge);box-shadow:var(--rv-pencil)}
 
 /* ---------- cards and rows ---------- */
 a.rds-card,.rv-feature{box-shadow:var(--rv-pencil)}
-a.rds-card:hover,.rv-feature:hover{transform:translate(-1px,-3px) rotate(-.35deg);box-shadow:var(--rv-pencil-lift);border-color:var(--ink)}
+a.rds-card:hover,.rv-feature:hover{transform:translate(-1px,-3px) rotate(-.35deg);box-shadow:var(--rv-pencil-lift);border-color:var(--edge)}
 .rv-feature{transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
 .rds-row,.rds-rows .rds-row{border-top:0;padding-top:calc(var(--space-6) + 6px);background:var(--rv-rule) 0 0/240px 10px repeat-x}
 a.rds-row:hover{background-image:var(--rv-rule-brick)}
@@ -432,21 +432,21 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 @media print{.rds-page::before{display:none}.rds-band-sunk::before,.rds-band-sunk::after,.rds-footer::before{display:none}.rv-compare::before,.rv-compare::after,.rds-infobox::before,.rv-infobox::before,.rv-sun{display:none}}
 
 /* ---------- Topanga study: structural rules (its colours, rules and frames are baked into studies/topanga-willows/study.css) ---------- */
-.rv-study [data-scrolly]>figure>div{border:var(--rv-stroke) solid var(--ink);box-shadow:var(--rv-pencil)}
+.rv-study [data-scrolly]>figure>div{border:var(--rv-stroke) solid var(--edge);box-shadow:var(--rv-pencil)}
 .rv-study [data-scrolly]>figure{position:sticky}
 .rv-study .kstep>div:first-child{font-family:var(--rv-hand);font-size:17px}
-.rv-study .ts-taped{border:var(--rv-stroke) solid var(--ink);position:relative}
+.rv-study .ts-taped{border:var(--rv-stroke) solid var(--edge);position:relative}
 .rv-study .ts-taped::before{content:"";position:absolute;width:84px;height:24px;top:-12px;left:28px;background:var(--moss-tint);transform:rotate(-3deg);border-left:2px dotted rgba(138,129,112,.55);border-right:2px dotted rgba(138,129,112,.55)}
 .rv-study .ktab{font-family:var(--rv-hand);font-size:17px}
 .rv-study .kt{font-family:var(--rv-hand)}
 
 /* ---------- flat-tile collage banner (scripts/tiles_art.py) ---------- */
-.rv-tiles{margin:var(--space-8) 0 var(--space-12);border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-lg);overflow:hidden;box-shadow:var(--rv-pencil);aspect-ratio:1120/220;background:var(--paper-sunk)}
+.rv-tiles{margin:var(--space-8) 0 var(--space-12);border:var(--rv-stroke) solid var(--edge);border-radius:var(--rv-r-lg);overflow:hidden;box-shadow:var(--rv-pencil);aspect-ratio:1120/220;background:var(--paper-sunk)}
 .rv-tiles svg{display:block;width:100%;height:100%}
 @media (max-width:640px){.rv-tiles{aspect-ratio:16/10}}
 
 /* ---------- motif strips and banners (motifs.js) ---------- */
-.rv-footstrip{margin:var(--space-16) 0 0;border-top:var(--rv-stroke) solid var(--ink);border-bottom:var(--rv-stroke) solid var(--ink);background:var(--paper-sunk)}
+.rv-footstrip{margin:var(--space-16) 0 0;border-top:var(--rv-stroke) solid var(--edge);border-bottom:var(--rv-stroke) solid var(--edge);background:var(--paper-sunk)}
 .rds-footer{margin-top:0}
 .rds-footer::before{display:none}
 .rv-tiles.rds-art{background:var(--paper-sunk)}
@@ -458,7 +458,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 
 /* ---------- home: three ways in, as art cards ---------- */
 .rv-ways{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.rv-way .rds-card__media{aspect-ratio:8/5;border-radius:0;border-bottom:var(--rv-stroke) solid var(--ink)}
+.rv-way .rds-card__media{aspect-ratio:8/5;border-radius:0;border-bottom:var(--rv-stroke) solid var(--edge)}
 .rv-way .rds-card__media>.rds-art{height:100%;aspect-ratio:auto;background:none}
 .rv-way .rds-card__title{font-size:26px}
 .rv-way .rds-card__foot{justify-content:flex-start}
@@ -471,7 +471,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-nav__caret:hover{color:var(--ink)}
 .rv-nav__caret:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .is-open>.rv-nav__caret .rds-icon{transform:rotate(180deg);--icon-accent:var(--brick)}
-.rv-nav__panel{position:absolute;top:calc(100% + 10px);left:-18px;z-index:40;width:19rem;padding:var(--space-4);background:var(--paper-raised);border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--radius-md);visibility:hidden;opacity:0;transform:translateY(-6px);transition:opacity var(--dur-fast) ease,transform var(--dur-base) var(--ease-out),visibility 0s linear var(--dur-base)}
+.rv-nav__panel{position:absolute;top:calc(100% + 10px);left:-18px;z-index:40;width:19rem;padding:var(--space-4);background:var(--paper-raised);border:var(--rv-stroke,1.5px) solid var(--edge);border-radius:var(--radius-md);visibility:hidden;opacity:0;transform:translateY(-6px);transition:opacity var(--dur-fast) ease,transform var(--dur-base) var(--ease-out),visibility 0s linear var(--dur-base)}
 .rv-nav__panel::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:12px} /* hover bridge between link and panel */
 .is-open>.rv-nav__panel{visibility:visible;opacity:1;transform:none;transition-delay:0s}
 .rv-nav__intro{display:flex;gap:var(--space-3);align-items:flex-start;margin:0 0 var(--space-3);padding-bottom:var(--space-3);border-bottom:1px solid var(--line);font:400 15px/20px var(--rv-hand);color:var(--ink-muted)}
@@ -548,7 +548,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 /* Nav: a hand-washed paper band instead of a bare bar. Two soft tints (brick left, moss right) over paper, a deckled lower edge drawn in a hairline, and a soft shadow once the page moves. Replaces the flat bar and the 1px rule. */
 .rds-nav,.rds-nav.is-scrolled{background:transparent;border-bottom-color:transparent}
 .rds-nav::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(55% 160% at 10% 0,rgba(240,217,204,.55),transparent 70%),radial-gradient(45% 160% at 92% 0,rgba(214,226,214,.5),transparent 70%),rgba(246,241,231,.93);
+  background:radial-gradient(55% 160% at 10% 0,rgba(240,217,204,.55),transparent 70%),radial-gradient(45% 160% at 92% 0,rgba(214,226,214,.5),transparent 70%),rgba(var(--paper-rgb),.93);
   -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .rds-nav::after{content:"";position:absolute;left:0;right:0;top:calc(100% - 1px);height:14px;z-index:-1;pointer-events:none;transition:filter var(--dur-base) ease,opacity var(--dur-fast) ease;
   background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22420%22 height=%2214%22 viewBox=%220 0 420 14%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 0V5C22 8 40 4 66 6S112 10 140 6 190 3 224 7 270 11 300 6 350 4 380 7 410 6 420 5V0Z%22 fill=%22%23f6f1e7%22 fill-opacity=%22.93%22/%3E%3Cpath d=%22M0 5C22 8 40 4 66 6S112 10 140 6 190 3 224 7 270 11 300 6 350 4 380 7 410 6 420 5%22 fill=%22none%22 stroke=%22%238a8170%22 stroke-width=%221.2%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3C/svg%3E") 0 0/420px 14px repeat-x}
@@ -558,7 +558,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rds-nav__links a[aria-current=page]{font-weight:700;background-size:100% 8px}
 /* Search is the main action in the header: ink fill with the pencil offset */
 @media (min-width:641px){
-  .rds-nav__search{height:38px;padding:0 var(--space-4);margin-left:var(--space-6);background:var(--ink);border:1.5px solid var(--ink);color:var(--on-ink);box-shadow:var(--rv-pencil);transition:transform var(--dur-fast) ease,box-shadow var(--dur-fast) ease}
+  .rds-nav__search{height:38px;padding:0 var(--space-4);margin-left:var(--space-6);background:var(--ink);border:1.5px solid var(--edge);color:var(--on-ink);box-shadow:var(--rv-pencil);transition:transform var(--dur-fast) ease,box-shadow var(--dur-fast) ease}
   .rds-nav__search:hover{background:var(--ink);color:var(--on-ink);transform:translate(-1px,-1px);box-shadow:3px 4px 0 0 var(--brick)}
   .rds-nav__search:active{transform:translate(2px,3px);box-shadow:none}
   .rds-nav__search .rds-icon{--icon-accent:var(--brick-tint)}
@@ -572,7 +572,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
   -webkit-mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 100%),linear-gradient(90deg,rgba(0,0,0,.04) 0,rgba(0,0,0,.06) 46%,#000 78%);
   mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 100%),linear-gradient(90deg,rgba(0,0,0,.04) 0,rgba(0,0,0,.06) 46%,#000 78%)}
 @media (min-width:960px){.rv-collage{opacity:.55}}
-.rv-hero__copy::before{content:"";position:absolute;z-index:-1;inset:-40px -56px -40px -48px;pointer-events:none;background:radial-gradient(closest-side,rgba(246,241,231,.88) 55%,rgba(246,241,231,0))}
+.rv-hero__copy::before{content:"";position:absolute;z-index:-1;inset:-40px -56px -40px -48px;pointer-events:none;background:radial-gradient(closest-side,rgba(var(--paper-rgb),.88) 55%,rgba(var(--paper-rgb),0))}
 /* the lower search box now opens the same dialog as the header */
 .rv-lookup{appearance:none;display:grid;gap:var(--space-2);margin-top:var(--space-2);padding:0;border:0;background:none;text-align:left;cursor:pointer;width:100%;max-width:440px;color:inherit}
 .rv-lookup__lab{font:400 17px/20px var(--rv-hand);color:var(--ink-muted)}
@@ -580,7 +580,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rv-lookup__box .rds-icon{flex:none;--icon-accent:currentColor;--icon-tint:transparent}
 .rv-lookup__box span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rv-lookup__box kbd{font:400 12px/1 var(--rds-mono);border:1px solid var(--line);border-radius:var(--radius-sm);padding:3px 6px;background:var(--paper)}
-.rv-lookup:hover .rv-lookup__box{border-color:var(--ink)}
+.rv-lookup:hover .rv-lookup__box{border-color:var(--edge)}
 .rv-lookup:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:var(--radius-md)}
 @media (hover:none){.rv-lookup__box kbd{display:none}}
 /* figure caption: hand lettering, no underline */

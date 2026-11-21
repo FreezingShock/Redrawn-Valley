@@ -2,7 +2,7 @@
 
 The design system behind Redrawn Valley. Warm paper, ink, brick and moss; a serif for ideas, a sans for interface, mono for evidence. Plain CSS and a small plain script, no build step, no dependencies. **Read this before changing any page.** If a component exists here, use it; if you need a new one, add it to the system (`assets/rds/rds.css`) and document it here, not as a one-off.
 
-Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index), `assets/rds/skin.css` (responsive layer then sketchbook layer, always last) with `mobile.js` and `sketch.js`.
+Files: `assets/rds/tokens.css` (variables, light and dark), `assets/rds/theme.js` + `theme.css` (dark theme switch and baked-color fixes), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index), `assets/rds/skin.css` (responsive layer then sketchbook layer, always last) with `mobile.js` and `sketch.js`.
 
 ## Character
 
@@ -303,6 +303,34 @@ A hand-drawn, pannable, zoomable map of the San Fernando Valley with a pin for e
 - **Motion**: pins drop in staggered, flights ease in log-zoom space (0.7 s to a page, 1.5 s on first load), and the selected ring crawls. Under `prefers-reduced-motion` the camera jumps, there is no inertia and nothing animates.
 - **API**: `element.__rvm.select(url)`, `.flyTo(view, ms)`, `.home()`, `.fit()`.
 
+## Dark theme (`tokens.css`, `theme.js`, `theme.css`, `scripts/build_theme.py`; lab `lab/dark-theme/`)
+
+A second palette, "moonlit", that is a token swap: `<html data-theme="dark">` re-points the same variables, so no page needs per-page dark rules. **Use tokens, never hex, in new CSS and markup**; a hex in a style will not follow the theme.
+
+| Role | Paper | Moonlit |
+|---|---|---|
+| `--paper` / `--paper-raised` / `--paper-sunk` | `#f6f1e7` / `#fbf8f1` / `#ece5d6` | `#17120d` / `#211a13` / `#100c08` (warm, orange-tinted near-blacks) |
+| `--ink` / `--ink-muted` / `--ink-faint` | `#1f1d1a` / `#5c564c` / `#655e51` | `#f3e8d4` / `#cdbfa7` / `#ad9f88` (warm cream) |
+| `--brick` / `-deep` / `-tint` / `--on-brick` | `#9c3d24` / `#7d2f1a` / `#f0d9cc` / `#fbf8f1` | `#66c3c0` / `#8fdad6` / `#12302f` / `#0b1a1a` (moonlit turquoise) |
+| `--moss` / `-deep` / `-tint` / `--on-moss` | `#2f4a3a` / `#213529` / `#dfe6d8` / `#f6f1e7` | `#9cc3a8` / `#bbdcc5` / `#1a2a21` / `#0d1a12` |
+| `--slate`, `--rust` | `#35506b`, `#8c1c2e` | `#86aed2`, `#f08a98` |
+| `--line` / `--line-strong` | `#d9d0bd` / `#8a8170` | `#3a2e22` / `#857663` |
+
+Extra tokens the swap needs (all defined in both themes):
+- `--band`, `--on-band`, `--on-band-muted`, `--band-line`: the footer and `rds-band-ink`. They stay dark in both themes, so never use `--ink` as a band background; ink becomes cream in the dark theme.
+- `--brick-fill`, `--moss-fill`, `--slate-fill`, `--ink-field`: solid art fields (motif tiles, infobox titles). Same as the accent in light, muted deep versions in dark so cream linework reads on them.
+- `--edge`: hand-drawn frame lines and the pencil offset. Full ink in light, a softer `#a99a82` in dark.
+- `--paper-rgb`, `--sunk-rgb`: for translucent washes, `rgba(var(--paper-rgb),.9)`.
+- Art accents (`--sky`, `--ochre`, `--rose`, `--kelly`, `--peri`) are dimmed a step in dark.
+
+Contrast: every text pairing is at least 4.5 to 1 and every UI line at least 3 to 1 in both themes (the lab sheet computes them live). When you change a dark token, rerun the check in `lab/dark-theme/demo/`.
+
+**Switch.** One `rv-theme` button (hand-drawn `sun` and `moon` icons from `build_icons.py`), built by `site-shell.js`: left of Search in the header, first row of the phone More sheet, and in the study top bar. Any element with `data-rv-theme-toggle` works. `theme.js` loads in `<head>` right after the viewport meta (before first paint, so no flash), picks the saved choice (`localStorage` key `rv-theme`) or `prefers-color-scheme`, sets `data-theme`, `color-scheme` and `theme-color`, and follows the system until a choice is saved. API: `RVTheme.get()`, `.set(theme, originEl)`, `.toggle(originEl)`. Every page needs `<script src="…/assets/rds/theme.js"></script>` in the head and `<link rel="stylesheet" href="…/assets/rds/theme.css">` last; the page generators already emit both.
+
+**Transition.** The new theme grows from the button as a circle until it covers the page (View Transitions API with an animated `clip-path` on `::view-transition-new(root)`, 0.7 to 1.1 s by distance). No API: a disc of the new paper color grows, then the theme swaps and the disc fades. Reduced motion: instant.
+
+**Baked colors.** CSS `data:` URI art (rules, band edges, highlighter) cannot read variables, so `python3 scripts/build_theme.py` redraws each in dark colors between the BEGIN/END markers in `theme.css`; rerun it after changing any such URI. Older inline SVG with hex `fill`/`stroke` attributes is re-mapped by attribute selectors at the end of `theme.css`. Standalone demo pages load `theme.js` and read the same saved choice; changes sync across tabs and frames through the `storage` event.
+
 ## Lab articles (`lab/`, `assets/rds/lab.css`, `lab.js`)
 
 Standing rule: every lab, demo or exploration page (pattern sheet, icon set, type lab, motif sheet, and any future one) is published as a styled article under `lab/<slug>/index.html`, listed on `lab/index.html` (Lab notes, linked from the More sheet and the footer). The demo page itself stays at its own URL and is linked from the article. Build the article from the Notes layout (`rv-ehead`, `rv-body`, `rds-toc`, `rv-sources`) and these parts, in this order: an **intro** (lead plus `rds-facts` key numbers), **process and research** (what I studied, with cited sources), **decisions** (`rds-decisions`: each choice, why, and its cost), the **live demo** embedded, then **What I could not verify** and **Sources**. Copy `lab/icon-set/index.html` to start one and add a row to `lab/index.html` and a "Keep reading" row on its siblings.
@@ -337,6 +365,17 @@ One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>`
 - **Nav**: `rds-nav` is a hand-washed paper band: brick and moss tints over paper with a deckled hairline lower edge (`::before` and `::after` in `skin.css` Part 4). The page-wide "no shadows" rule has one more exception here: a soft `drop-shadow` under the deckled edge once the page scrolls. The active section keeps the brick hand rule and goes bold. Search is the header's main action: ink fill with the pencil offset.
 - **Hero buttons**: primary `rv-cta` draws its outline, fills brick, then its arrow draws, flies off and a new one settles in (hover repeats it). Secondary `rv-textlink` is ink text with a drawn rule and arrow. Brick appears once, on the primary. All of it is CSS only and skipped under reduced motion.
 
+
+## Sources library
+
+`/sources/` lists every source cited anywhere on the site. It is generated, never hand-kept: `python3 scripts/build_sources.py` reads every page and writes `assets/sources.json` (`scripts/regen.py` rebuilds it after every merge to `integration`; `scripts/check.py` warns when it is stale). Use `--report` to see counts and sources that are listed but never cited.
+
+- **What counts as a citation.** A link to an in-page `#id` inside `<sup>` or a `.rds-fn`, `.rv-fn`, `.rv-cite` wrapper, where the `#id` is an `<li>` in a notes list (`.rds-notes`, `.rv-sources`, or `#sources`). Pull quotes with a plain-text `[n]` inside `blockquote > cite` count as quoted uses. New article formats work without changes as long as they follow this pattern, so keep using the footnote components.
+- **Merging.** Sources merge by canonical URL (scheme, `www`, `utm_*`, fragment and trailing slash ignored). A source with no URL merges on its citation text. A `rds-kind` label or an `rv-src-note` beside a source is carried into the library (type and caveat).
+- **Types** are rule-based (`DOMAIN_RULES` in the script, or the `rds-kind` label if present). **Topics** are the topic hubs' own: a source gets every topic of the pages that cite it, read from each page's `<meta name="rv-topics">` and `assets/topics.json`. `scripts/regen.py` runs `build_sources.py`, so the data file refreshes after every merge to `integration`.
+- **Jump links.** Each use has `page/#cite=<listItemId>.<n>&src=<sourceId>`: the nth marker on that page for that list item. `assets/rds/cite-jump.js` (loaded by `site-shell.js` when a `#cite=` hash is present) scrolls there, pulses the marker, highlights the sentence with the CSS Custom Highlight API (whole-paragraph tint as the fallback) and shows `rv-cite-bar` with previous/next use, the entry and a way back. The marker rules in JS and Python must stay identical; change them together.
+- **Components.** `rv-lib-*` (stats, type bar, sticky search, filter rows), `rv-src` (source card; `--c` is its type color), `rv-use` (a page and its uses). Styles in `assets/rds/sources.css`, behavior in `assets/rds/sources.js`. Search matches title, publisher, type, topic, caveat, citing page and the sentence each use backs; state is kept in the URL (`?q=&type=&topic=&in=&caveat=1&sort=`); `/` focuses the search on this page.
+- Motion: cards rise in, the use list opens with a grid-row transition, counters count up. All of it stops under `prefers-reduced-motion`.
 ## Sketchbook log (`log/`, `scripts/build_log.py`, `assets/rds/log.css`, `log.js`)
 
 A dated feed of everything new, built from git history, never edited by hand. `log/index.html` is a normal page with three generated regions (`<!--log:stats-->`, `<!--log:chips-->`, `<!--log:timeline-->`); `python3 scripts/build_log.py` rewrites them plus `log/feed.xml` (Atom, newest 40) and `assets/log.json` (entries, and a first-added and last-updated date for every page; other features can read it). `.github/workflows/log.yml` reruns it after each push to integration.
@@ -351,7 +390,7 @@ One alphabetical list of every term, place, source and drawing, each with links 
 
 - **Components**: `rv-az__tools` (filter input `rds-guide-search`, kind chips `rds-chip`), sticky `rv-az__jump` letter strip with scroll spy, `rv-az__group` per letter, `rv-az__entry` rows (headword, kind tag, gloss, uses list; two columns from 1000px). The list is `data-rv-noindex` so search does not index every entry twice.
 - **Behavior**: kind chips and live filter share `?q=` and `?k=` in the URL; letters with no matches are hidden; "See" rows jump to their target; back-to-top button; smooth scrolling only when motion is allowed. Everything is readable without JS.
-- **Sources** merge across pages by URL; the numbered circles link to each in-text use. Drawings are every `<figure>` with a caption plus infobox sketch captions (pages with more than 12, like the icon gallery, are skipped).
+- **Sources** merge across pages by URL; the numbered circles link to each in-text use. Drawings come from `assets/drawings.json` (the drawings gallery, `scripts/build_drawings.py`) and link to `/drawings/#id`; until that file exists, the A-Z falls back to every `<figure>` caption plus infobox sketch captions.
 - Limits: mentions are word matches, so unnamed ideas are missed and a name in another sense can be listed.
 
 ## Keep reading rail and Random page (`assets/rds/rail.js`, `rail.css`)
@@ -359,7 +398,7 @@ One alphabetical list of every term, place, source and drawing, each with links 
 Every page ends with a "Keep reading" rail: a horizontally scrolling row of cards (seeded `card` art, type, read time, title, three-line blurb, matched topics). Loaded by `site-shell.js`; opt out with `<body data-no-rail>`. It is skipped in embed mode.
 
 - **Ranking**: pages share topics via the search-index field `k` (from `<meta name="rv-topics" content="heat, trees">`, first = primary). Primary and secondary matches score, pages from other sections get a small bonus, a per-page seeded jitter varies rails between pages, and no more than 4 of one section appear. Pages without `k` get topics derived from their title and blurb. Section front pages are never cards.
-- **Scrolling**: native scroll-snap, momentum and `overscroll-behavior-x:contain` on touch and trackpads; arrow buttons (desktop), keyboard on the focused track (arrows, Home, End, PageUp/PageDown), mouse drag that glides to the nearest card on release, edge fades, and a progress line. Listeners are passive and batched in one rAF; card art renders only when it nears the viewport. Reduced motion turns smooth scrolling off.
+- **Scrolling**: touch keeps native momentum with `scroll-snap-type:x mandatory`. On fine pointers there is no CSS snap (it fights a gesture); trackpads scroll natively with their own momentum, and once a gesture has been quiet for 150 ms a critically damped spring settles the rail on the nearest card. Mouse drag follows the pointer 1:1, releases with the speed you let go at and lands softly on a card. Arrows, keys, a notched Shift+wheel and clicks on the progress bar move by an eased page or card (repeat presses accumulate). The progress bar's thumb is draggable and keyboard operable (`role=slider`). Landing on a new card plays a small tick (card lifts, thumb flashes; a 6 ms buzz on phones that support it). Edge fades, passive listeners, reduced motion jumps without animation.
 - **Random page**: the Random page button, or any element with `data-rv-random`, goes to a random article, avoiding pages seen this session. `RVRelated.random()` does the same from script.
 - **Site-wide scroll tuning** (top of `rail.css`): `scroll-padding-top` for anchors under the sticky bar, `touch-action:manipulation` on controls, paint containment on art. `scrollfx.js` no longer watches rail art for parallax and debounces its DOM observer.
 
@@ -373,3 +412,7 @@ Topics are the subject threads that run across studies, field guide entries, not
 - **Hubs.** `topics/index.html` and `topics/<slug>/index.html` are generated. After tagging or adding a page run `python3 scripts/regen.py` (all generators in order: log, index, topics, index; CI runs it after each merge to `integration`, so forgetting is harmless) and commit the outputs (`check.py` warns when they are stale). Never hand-edit a hub.
 - **Hub anatomy.** Tiles banner seeded `topics/<slug>`, the lead and the question line (`rv-thead`), count pills that jump to each list (`rv-tstat`), then one section per kind: studies as `rds-card` cards (`rv-tcard`), everything else as `rds-row` rows (`rv-trow`) listing the page's other topics, then the other-topic chips (`rv-tchip`). The index page adds a coverage table (`rv-tmatrix`) so gaps are visible.
 
+
+## Study page header
+
+Study pages use the shared site header (`rds-nav`, from `site-shell.js`, held at 72px because study pages do not load `rds.js`) and, directly under it, a sticky part bar `rv-study-bar` with `id="top"`: the study name at left, then Site / Evidence / Design / Delivery / Sources, driven by `data-toc`. The old stand-alone study header, its "All studies" link and its Search link are gone (the header and breadcrumbs cover them). On phones the bar is one scrolling row that tracks the header as it hides (`--rv-sub`). The scroll-driven figure pins under both bars.

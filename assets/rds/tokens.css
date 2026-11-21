@@ -1,6 +1,9 @@
 /* Redrawn Design System tokens. Generated from the Redrawn Design System; edit there, not here. */
 :root{
+  color-scheme: light;
   --paper: #f6f1e7;
+  --paper-rgb: 246,241,231;
+  --sunk-rgb: 236,229,214;
   --paper-raised: #fbf8f1;
   --paper-sunk: #ece5d6;
   --line: #d9d0bd;
@@ -19,6 +22,11 @@
   --moss-tint: #dfe6d8;
   --on-moss: #f6f1e7;
   --rust: #8c1c2e;
+  /* solid art fields: same as the accents in light; muted deep versions in dark so cream linework reads on them */
+  --brick-fill: #9c3d24;
+  --moss-fill: #2f4a3a;
+  --slate-fill: #35506b;
+  --ink-field: #1f1d1a;
   --slate: #35506b;
   /* art accents: decorative fields for the motif system only (assets/rds/motifs.js). Never for text or UI state. */
   --sky: #7ba3c0;
@@ -30,6 +38,13 @@
   --pencil: #4a4743;
   --blueprint: #1e3a5f;
   --draft-line: #e8eef5;
+  /* dark bands (footer, ink sections) keep their own tokens so they stay dark in both themes */
+  --band: #1f1d1a;
+  --on-band: #f6f1e7;
+  --on-band-muted: #b8b0a0;
+  --band-line: rgba(246,241,231,.18);
+  --veil: rgba(31,29,26,.5);
+  --edge: var(--ink); /* hand-drawn frame lines: full ink on paper, softer in the dark theme */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -48,4 +63,50 @@
   --font-sans: Shantell Sans, Comic Neue, system-ui, sans-serif;
   --font-mono: IBM Plex Mono, ui-monospace, monospace;
   --font-hand: Shantell Sans, Comic Neue, system-ui, sans-serif;
+}
+
+/* Moonlit dark theme: a token swap. Warm orange-black paper, cream ink, brick becomes moonlit turquoise.
+   theme.js sets data-theme on <html> before first paint. Contrast checked to WCAG AA (see /lab/dark-theme/). */
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper: #17120d;
+  --paper-rgb: 23,18,13;
+  --sunk-rgb: 16,12,8;
+  --paper-raised: #211a13;
+  --paper-sunk: #100c08;
+  --line: #3a2e22;
+  --line-strong: #857663;
+  --ink: #f3e8d4;
+  --ink-muted: #cdbfa7;
+  --ink-faint: #ad9f88;
+  --on-ink: #17120d;
+  --on-ink-muted: #5c5142;
+  --brick: #66c3c0;
+  --brick-deep: #8fdad6;
+  --brick-tint: #12302f;
+  --on-brick: #0b1a1a;
+  --moss: #9cc3a8;
+  --moss-deep: #bbdcc5;
+  --moss-tint: #1a2a21;
+  --on-moss: #0d1a12;
+  --rust: #f08a98;
+  --brick-fill: #246867;
+  --moss-fill: #3a6a50;
+  --slate-fill: #3c6286;
+  --ink-field: #0b0806;
+  --slate: #86aed2;
+  --sky: #4f7ea3;
+  --ochre: #a07c4a;
+  --rose: #96666f;
+  --kelly: #3f8350;
+  --peri: #6b7391;
+  --pencil: #b9ad98;
+  --blueprint: #16304f;
+  --draft-line: #e8eef5;
+  --band: #0b0806;
+  --on-band: #f3e8d4;
+  --on-band-muted: #b8aa92;
+  --band-line: rgba(243,232,212,.16);
+  --veil: rgba(5,3,2,.66);
+  --edge: #a99a82;
 }

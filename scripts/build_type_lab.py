@@ -435,6 +435,7 @@ PAGE = '''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../assets/rds/theme.js"></script>
 <meta name="robots" content="noindex">
 <title>Type lab | Redrawn Valley</title>
 <meta name="description" content="Six hand-drawn type directions with full hierarchies, a font research table with licenses, and writing-on animations at fast and slow speeds.">
@@ -447,6 +448,7 @@ PAGE = '''<!DOCTYPE html>
 <link rel="stylesheet" href="../assets/rds/skin.css">
 <link rel="stylesheet" href="lab.css">
 <link rel="stylesheet" href="directions.css">
+<link rel="stylesheet" href="../assets/rds/theme.css">
 </head>
 <body class="rds-page">
 <header class="rds-nav" data-rds-nav data-rv-shell="nav"></header>

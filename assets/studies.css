@@ -18,25 +18,25 @@
 [data-rds-js] .rds-draw:not([data-in]) .f{opacity:0;transform:scale(.8)}
 .rds-u{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .32s cubic-bezier(.16,1,.3,1)}
 .rds-u:hover{background-size:100% 1px}
-.rv-study a:focus-visible,.rv-study button:focus-visible,.rv-study input:focus-visible{outline:2px solid #1f1d1a;outline-offset:3px}
+.rv-study a:focus-visible,.rv-study button:focus-visible,.rv-study input:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 
 /* --- table of contents rail: ticks, the current one thick with its label pinned; hover opens the rest. No background. --- */
 .kt{position:sticky;top:0;height:0;z-index:15}
 .kt nav{position:absolute;left:8px;top:76px;display:flex;flex-direction:column;padding:8px 16px 12px 10px;background:none}
-.kt .cnt{font-family:'IBM Plex Mono', ui-monospace, monospace;font-size:11px;line-height:16px;color:#655e51;margin-bottom:6px;white-space:nowrap}
-.kt .cnt b{color:#1f1d1a;font-weight:500}
-.kt a{display:flex;align-items:center;gap:10px;height:8px;text-decoration:none;color:#5c564c;transition:height .3s cubic-bezier(.16,1,.3,1),margin-top .3s cubic-bezier(.16,1,.3,1)}
+.kt .cnt{font-family:'IBM Plex Mono', ui-monospace, monospace;font-size:11px;line-height:16px;color:var(--ink-faint);margin-bottom:6px;white-space:nowrap}
+.kt .cnt b{color:var(--ink);font-weight:500}
+.kt a{display:flex;align-items:center;gap:10px;height:8px;text-decoration:none;color:var(--ink-muted);transition:height .3s cubic-bezier(.16,1,.3,1),margin-top .3s cubic-bezier(.16,1,.3,1)}
 .kt a[data-g]{margin-top:5px}
 .kt nav:hover a,.kt nav:focus-within a{height:20px}
 .kt nav:hover a[data-g],.kt nav:focus-within a[data-g]{margin-top:10px}
-.kt a i{display:block;flex:none;width:12px;height:2px;border-radius:1px;background:#8a8170;transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background-color .2s ease}
-.kt a span{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;line-height:18px;text-shadow:0 0 3px #f6f1e7,0 0 8px #f6f1e7,0 0 14px #f6f1e7;transition:max-width .35s cubic-bezier(.16,1,.3,1),opacity .2s ease}
+.kt a i{display:block;flex:none;width:12px;height:2px;border-radius:1px;background:var(--line-strong);transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background-color .2s ease}
+.kt a span{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;line-height:18px;text-shadow:0 0 3px var(--paper),0 0 8px var(--paper),0 0 14px var(--paper);transition:max-width .35s cubic-bezier(.16,1,.3,1),opacity .2s ease}
 .kt nav:hover a span,.kt nav:focus-within a span{max-width:240px;opacity:1}
-.kt a:hover{color:#9c3d24}
-.kt a:hover i{width:22px;background:#9c3d24}
-.kt a[aria-current="true"]{color:#1f1d1a;height:18px}
+.kt a:hover{color:var(--brick)}
+.kt a:hover i{width:22px;background:var(--brick)}
+.kt a[aria-current="true"]{color:var(--ink);height:18px}
 .kt nav:hover a[aria-current="true"],.kt nav:focus-within a[aria-current="true"]{height:20px}
-.kt a[aria-current="true"] i{width:24px;height:4px;border-radius:2px;background:#9c3d24}
+.kt a[aria-current="true"] i{width:24px;height:4px;border-radius:2px;background:var(--brick)}
 .kt a[aria-current="true"] span{font-weight:600;max-width:240px;opacity:1}
 @media (max-width:1479px){.kt nav:not(:hover):not(:focus-within) a[aria-current="true"] span{max-width:0;opacity:0}}
 @media (max-width:1240px){.kt{display:none}}
@@ -44,9 +44,9 @@
 .ktabs a{background:linear-gradient(currentColor,currentColor) 0 100%/0 2px no-repeat;transition:background-size .32s cubic-bezier(.16,1,.3,1)}
 .ktabs a:hover,.ktabs a[aria-current="true"]{background-size:100% 2px}
 /* --- click tabs --- */
-.ktab{appearance:none;border:0;background:none;padding:10px 0;margin:0;font:500 15px/1 var(--font-sans);color:#5c564c;cursor:pointer;border-bottom:3px solid rgba(0,0,0,0);transition:color .16s ease,border-color .16s ease}
-.ktab:hover{color:#1f1d1a}
-.ktab[aria-selected="true"]{color:#1f1d1a;border-bottom-color:#1f1d1a}
+.ktab{appearance:none;border:0;background:none;padding:10px 0;margin:0;font:500 15px/1 var(--font-sans);color:var(--ink-muted);cursor:pointer;border-bottom:3px solid rgba(0,0,0,0);transition:color .16s ease,border-color .16s ease}
+.ktab:hover{color:var(--ink)}
+.ktab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
 /* --- scroll stages --- */
 .lyr{opacity:0;transition:opacity .7s ease}
 .heat,.exo{transition:opacity .7s ease}
@@ -58,7 +58,7 @@
 [data-st="1"] .pv0{opacity:0}
 .kstep{opacity:.38;transition:opacity .3s ease}
 .kstep[data-on]{opacity:1}
-.kstage b{font-weight:500;color:#1f1d1a}
+.kstage b{font-weight:500;color:var(--ink)}
 @media (prefers-reduced-motion:reduce){.rds-view,.rds-w>span,.rds-draw .s,.rds-draw .f,}
 
 /* =====================================================================
@@ -130,9 +130,9 @@ span.rv-term{color:var(--ink-muted)}
 .rv-sources li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--line);scroll-margin-top:96px}
 .rv-sources li>b{font:400 13px/22px var(--rds-mono);color:var(--ink-faint)}
 .rv-sources a{overflow-wrap:anywhere}
-.rv-study-bar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
-.rv-study-bar nav{width:min(1120px,100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 32px;min-height:64px;padding-block:8px}
-.rv-study-bar__brand{font:500 24px/1 var(--rds-serif);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.rv-study-bar{position:sticky;top:72px;z-index:19;background:var(--paper);border-bottom:1px solid var(--line);transition:top var(--dur-base,.25s) ease}
+.rv-study-bar nav{width:min(1120px,100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;gap:4px 28px;min-height:44px;padding-block:0}
+.rv-study-bar__brand{margin-right:auto;font:500 19px/1 var(--rds-serif);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
 .rv-study-bar__back{color:var(--ink-muted);text-decoration:none;font-size:14px;margin-right:auto;padding:8px 0}
 .rv-study-bar nav>a:not(.rv-study-bar__brand):not(.rv-study-bar__back){color:var(--ink);text-decoration:none;font-size:15px;font-weight:500;padding:8px 0}
 .rv-infobox dd a{color:var(--moss)}
@@ -200,21 +200,25 @@ span.rv-term{color:var(--ink-muted)}
 /* Section rail: a slim paper strip that hugs the ticks (it is the nav's own box, so it grows with the labels on hover),
    ticks on a deliberate scale (small, group start, current), ticks draw in one by one, current item in the accent colour */
 .kt nav{isolation:isolate;padding:10px 16px 12px 12px;gap:0}
-.kt nav::before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:rgba(251,248,241,.96);border:1px solid rgba(31,29,26,.22);border-radius:3px 7px 4px 8px/7px 3px 8px 4px;box-shadow:2px 3px 0 rgba(31,29,26,.1);opacity:0;transform:translateX(-8px) rotate(-.4deg);transform-origin:0 0;transition:opacity .5s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+.kt nav::before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:color-mix(in srgb,var(--paper-raised) 96%,transparent);border:1px solid color-mix(in srgb,var(--ink) 22%,transparent);border-radius:3px 7px 4px 8px/7px 3px 8px 4px;box-shadow:2px 3px 0 rgba(31,29,26,.1);opacity:0;transform:translateX(-8px) rotate(-.4deg);transform-origin:0 0;transition:opacity .5s ease,transform .7s cubic-bezier(.16,1,.3,1)}
 .kt nav.kt-ready::before{opacity:1;transform:rotate(-.4deg)}
 @media (min-width:1480px){.kt nav{min-width:176px}}
-.kt .cnt{display:flex;align-items:baseline;gap:4px;margin:0 0 8px;padding-bottom:7px;border-bottom:1px dashed rgba(31,29,26,.25);font:400 11px/14px var(--rds-mono,'IBM Plex Mono',monospace);letter-spacing:.02em;color:#6e675a;font-variant-numeric:tabular-nums;opacity:0;transform:translateY(-4px);transition:opacity .5s ease .1s,transform .6s cubic-bezier(.16,1,.3,1) .1s}
+.kt .cnt{display:flex;align-items:baseline;gap:4px;margin:0 0 8px;padding-bottom:7px;border-bottom:1px dashed color-mix(in srgb,var(--ink) 25%,transparent);font:400 11px/14px var(--rds-mono,'IBM Plex Mono',monospace);letter-spacing:.02em;color:var(--ink-faint);font-variant-numeric:tabular-nums;opacity:0;transform:translateY(-4px);transition:opacity .5s ease .1s,transform .6s cubic-bezier(.16,1,.3,1) .1s}
 .kt-ready .cnt{opacity:1;transform:none}
-.kt .cnt b{color:var(--brick,#9c3d24);font-weight:600}
-.kt a{color:#6e675a}
-.kt a i{width:10px;height:2px;background:#a79f8e;transform-origin:0 50%}
-.kt a[data-g] i{width:16px;background:#8a8170}
-.kt a:hover i{width:22px;background:var(--brick,#9c3d24)}
-.kt a[aria-current="true"],.kt a[aria-current="true"] span{color:var(--brick,#9c3d24)}
-.kt a[aria-current="true"] i{width:26px;height:4px;background:var(--brick,#9c3d24);box-shadow:0 0 0 3px rgba(156,61,36,.14)}
+.kt .cnt b{color:var(--brick);font-weight:600}
+.kt a{color:var(--ink-faint)}
+.kt a i{width:10px;height:2px;background:var(--line-strong);transform-origin:0 50%}
+.kt a[data-g] i{width:16px;background:var(--line-strong)}
+.kt a:hover i{width:22px;background:var(--brick)}
+.kt a[aria-current="true"],.kt a[aria-current="true"] span{color:var(--brick)}
+.kt a[aria-current="true"] i{width:26px;height:4px;background:var(--brick);box-shadow:0 0 0 3px color-mix(in srgb,var(--brick) 16%,transparent)}
 .kt a span{text-shadow:none}
 .kt-ready a i{animation:kt-tick .7s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(.25s + var(--i,0)*55ms)}
 @keyframes kt-tick{from{transform:scaleX(0);opacity:0}60%{opacity:1}to{transform:scaleX(1);opacity:1}}
 .kt a[aria-current="true"] i{animation:kt-tick .7s cubic-bezier(.16,1,.3,1) both,kt-beat 2.8s ease-in-out 1s infinite}
 @keyframes kt-beat{50%{box-shadow:0 0 0 6px rgba(156,61,36,0)}}
 @media (prefers-reduced-motion:reduce){.kt nav::before,.kt .cnt{transition:none;opacity:1;transform:none}.kt-ready a i,.kt a[aria-current="true"] i{animation:none}}
+
+/* study pages do not load rds.js, so the shared header never shrinks: hold it at its full 72px so the part bar can stick right under it */
+.rv-study .rds-nav,.rv-study .rds-nav.is-scrolled{height:72px}
+@media (max-width:640px){.rv-study .rds-nav,.rv-study .rds-nav.is-scrolled{height:var(--rv-bar)}}

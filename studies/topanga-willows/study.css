@@ -25,7 +25,7 @@
 .rv-study .ts-23,.rv-study.ts-23{font-size:20px;line-height:30px;color:var(--ink-muted);margin:0;max-width:52ch;font-size:22px;line-height:32px;max-width:52ch;transition-delay:600ms}
 .rv-study .ts-24,.rv-study.ts-24{transition-delay:700ms}
 .rv-study .ts-25,.rv-study.ts-25{width:min(1120px, 100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;gap:32px 56px;align-items:flex-start}
-.rv-study .ts-26,.rv-study.ts-26{flex:2.2 1 520px;min-width:0;margin:0;position:sticky;top:88px}
+.rv-study .ts-26,.rv-study.ts-26{flex:2.2 1 520px;min-width:0;margin:0;position:sticky;top:128px}
 .rv-study .ts-27,.rv-study.ts-27{position:relative;aspect-ratio:1000 / 640;border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-lg);background:var(--paper-raised);overflow:hidden}
 .rv-study .ts-28,.rv-study.ts-28{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 24px;margin-top:12px;font-family:'IBM Plex Mono', ui-monospace, monospace;font-size:13px;line-height:20px;color:var(--ink-faint)}
 .rv-study .ts-29,.rv-study.ts-29{flex:1 1 260px;min-width:0}
@@ -99,7 +99,7 @@
 .rv-study .ts-97,.rv-study.ts-97{display:grid;grid-template-columns:44px minmax(0, 2fr) minmax(0, 4fr);gap:8px 20px;align-items:baseline;padding-block:22px;border-top:0;background:var(--rv-rule-ink) repeat-x 0 0/240px 10px;padding-top:28px;transition-delay:120ms}
 .rv-study .ts-98,.rv-study.ts-98{height:56px}
 .rv-study .ts-99,.rv-study.ts-99{display:flex;flex-wrap:wrap;gap:32px 64px;align-items:flex-start}
-.rv-study .ts-100,.rv-study.ts-100{flex:1.1 1 420px;min-width:0;max-width:620px;margin:0;position:sticky;top:80px}
+.rv-study .ts-100,.rv-study.ts-100{flex:1.1 1 420px;min-width:0;max-width:620px;margin:0;position:sticky;top:120px}
 .rv-study .ts-101,.rv-study.ts-101{flex:1 1 360px;min-width:0;border-bottom:0;background:var(--rv-rule) repeat-x 0 100%/240px 10px}
 .rv-study .ts-102,.rv-study.ts-102{display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:40px 48px;margin-top:64px}
 .rv-study .ts-103,.rv-study.ts-103{font-family:var(--font-serif);font-size:clamp(44px, 5vw, 68px);line-height:1;letter-spacing:-.02em;color:var(--moss)}
@@ -120,16 +120,16 @@
 .rv-study .ts-118,.rv-study.ts-118{max-width:760px}
 .rv-study .ts-119,.rv-study.ts-119{border:var(--rv-stroke) solid var(--ink);border-radius:var(--rv-r-lg);background:var(--blueprint);overflow:hidden;padding:0px}
 .rv-study .ts-120,.rv-study.ts-120{background:var(--ink);color:var(--paper)}
-.rv-study .ts-121,.rv-study.ts-121{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#b8b0a0;transition-delay:0ms}
+.rv-study .ts-121,.rv-study.ts-121{font-size:12px;line-height:16px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--on-band-muted);transition-delay:0ms}
 .rv-study .ts-122,.rv-study.ts-122{font-family:var(--font-serif);font-weight:400;font-size:clamp(34px, 4.4vw, 56px);line-height:1.05;letter-spacing:-.02em;margin:0;max-width:18ch}
 .rv-study .ts-123,.rv-study.ts-123{transition-delay:0ms}
 .rv-study .ts-124,.rv-study.ts-124{display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:32px 40px}
-.rv-study .ts-125,.rv-study.ts-125{padding-top:20px;border-top:1px solid #b8b0a0}
+.rv-study .ts-125,.rv-study.ts-125{padding-top:20px;border-top:1px solid var(--on-band-muted)}
 .rv-study .ts-126,.rv-study.ts-126{font-family:var(--font-serif);font-weight:500;font-size:22px;line-height:1.3;margin:0;margin-bottom:8px}
-.rv-study .ts-127,.rv-study.ts-127{margin:0;color:#b8b0a0}
-.rv-study .ts-128,.rv-study.ts-128{padding-top:20px;border-top:1px solid #b8b0a0;transition-delay:70ms}
-.rv-study .ts-129,.rv-study.ts-129{padding-top:20px;border-top:1px solid #b8b0a0;transition-delay:140ms}
-.rv-study .ts-130,.rv-study.ts-130{padding-top:20px;border-top:1px solid #b8b0a0;transition-delay:210ms}
+.rv-study .ts-127,.rv-study.ts-127{margin:0;color:var(--on-band-muted)}
+.rv-study .ts-128,.rv-study.ts-128{padding-top:20px;border-top:1px solid var(--on-band-muted);transition-delay:70ms}
+.rv-study .ts-129,.rv-study.ts-129{padding-top:20px;border-top:1px solid var(--on-band-muted);transition-delay:140ms}
+.rv-study .ts-130,.rv-study.ts-130{padding-top:20px;border-top:1px solid var(--on-band-muted);transition-delay:210ms}
 .rv-study .ts-131,.rv-study.ts-131{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:12px 64px;max-width:1000px}
 .rv-study .ts-132,.rv-study.ts-132{margin:0;padding-block:14px;border-top:0;background:var(--rv-rule-ink) repeat-x 0 0/240px 10px;padding-top:28px}
 .rv-study .ts-133,.rv-study.ts-133{border-top:0;background:var(--rv-rule-soft) repeat-x 0 0/240px 10px;scroll-margin-top:72px}

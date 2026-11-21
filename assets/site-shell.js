@@ -29,6 +29,9 @@
   /* scroll effects: progress bar, drawing figures, counters, parallax art (off under prefers-reduced-motion) */
   if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href; fx.defer = true; doc.head.appendChild(fx); }
 
+  /* citation jump links from the Sources library (#cite=ID.N): scroll to the marker and highlight the sentence */
+  if (!doc.querySelector('script[src*="cite-jump.js"]') && /cite=/.test(location.hash)) { var cj = doc.createElement('script'); cj.src = new URL('assets/rds/cite-jump.js', siteRoot).href; cj.defer = true; doc.head.appendChild(cj); }
+  else if (!doc.querySelector('script[src*="cite-jump.js"]')) { window.addEventListener('hashchange', function once() { if (/cite=/.test(location.hash)) { window.removeEventListener('hashchange', once); var c2 = doc.createElement('script'); c2.src = new URL('assets/rds/cite-jump.js', siteRoot).href; doc.head.appendChild(c2); } }); }
   /* related-pages rail ("Keep reading") and the Random page links: assets/rds/rail.js */
   if (!doc.querySelector('script[src*="rail.js"]')) { var rl = doc.createElement('script'); rl.src = new URL('assets/rds/rail.js', siteRoot).href; rl.defer = true; doc.head.appendChild(rl); }
 
@@ -60,6 +63,8 @@
   function icon(name, cls, size) { return '<svg class="rds-icon' + (cls ? ' ' + cls : '') + '" width="' + (size || 24) + '" height="' + (size || 24) + '" aria-hidden="true" focusable="false"><use href="' + SPRITE + '#i-' + name + '"/></svg>'; }
   function logoMark(size) { return '<svg class="rds-logo" width="' + (size || 34) + '" height="' + (size || 34) + '" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><use href="' + SPRITE + '#i-logo"/></svg>'; }
   var SEARCH_ICON = icon('search', 'rds-icon--sm', 18);
+  /* sun and moon share one button; CSS shows the one for the current theme (assets/rds/theme.css, assets/rds/theme.js) */
+  function themeIcons(size) { return '<span class="rv-theme__ico">' + icon('sun', 'rv-theme__sun', size) + icon('moon', 'rv-theme__moon', size) + '</span>'; }
   if (!doc.querySelector('link[rel~="icon"]')) {
     [['icon', 'assets/rds/icons/favicon.svg', 'image/svg+xml'], ['apple-touch-icon', 'assets/rds/icons/apple-touch-icon.png']].forEach(function (a) {
       var k = doc.createElement('link'); k.rel = a[0]; k.href = new URL(a[1], siteRoot).href; if (a[2]) k.type = a[2]; doc.head.appendChild(k);
@@ -80,6 +85,7 @@
     el.innerHTML = '<a class="rds-skip" href="#main">Skip to content</a>' +
       '<a class="rds-nav__brand" href="' + esc(href('')) + '">' + logoMark() + '<span>Redrawn Valley</span></a>' +
       '<ul class="rds-nav__links" id="rv-menu">' + links + '</ul>' +
+      '<button class="rv-theme" type="button" data-rv-theme-toggle aria-pressed="false" aria-label="Switch to the dark theme" title="Dark theme">' + themeIcons(22) + '</button>' +
       '<button class="rds-nav__search" type="button" data-rv-search-open aria-label="Search the site">' + SEARCH_ICON + '<span>Search</span><kbd>/</kbd></button>' +
       '<button class="rds-nav__menu" type="button" aria-expanded="false" aria-controls="rv-menu">Menu</button>';
     var btn = el.querySelector('.rds-nav__menu'), ul = el.querySelector('.rds-nav__links');
@@ -134,6 +140,7 @@
       ['Topics', 'topics/', 'tree', 'Heat, trees, water and more, across every page'],
       ['Method', 'index.html#method', 'ruler', 'How a study is made'],
       ['About', 'index.html#about', 'info', 'Who draws this, and why'],
+      ['Sources', 'sources/', 'footnote', 'Every citation, and where it is used'],
       ['Sketchbook log', 'log/', 'contents', 'Everything new, by date'],
       ['A–Z index', 'a-z/', 'contents', 'Every term, place, source and drawing'],
       ['Lab notes', 'lab/', 'thermometer', 'How the patterns, icons and type were made'],
@@ -145,7 +152,9 @@
       if (!sheet) {
         sheet = doc.createElement('dialog'); sheet.className = 'rv-sheet rv-menusheet'; sheet.setAttribute('aria-labelledby', 'rv-more-title');
         sheet.innerHTML = '<div class="rv-sheet__grab" aria-hidden="true"></div><div class="rv-sheet__head"><h2 class="rv-sheet__title" id="rv-more-title">More</h2><button type="button" class="rv-sheet__close">Close</button></div><div class="rv-sheet__body"><ul class="rv-moreList">' +
+          '<li><button type="button" class="rv-moreList__theme" data-rv-theme-toggle aria-pressed="false">' + themeIcons(24) + '<span><b>Theme</b><i data-rv-theme-name>Light</i></span><span class="rv-moreList__switch" aria-hidden="true"></span></button></li>' +
           M.map(function (m) { return '<li><a href="' + esc(m[1] === 'sitemap.xml' ? new URL(m[1], siteRoot).href : href(m[1])) + '">' + icon(m[2], '', 24) + '<span><b>' + m[0] + '</b>' + m[3] + '</span>' + icon('chevron-right', 'rv-moreList__go', 18) + '</a></li>'; }).join('') + '</ul></div>';
+        if (window.RVTheme) window.RVTheme.set(window.RVTheme.get(), null, true);
         doc.body.appendChild(sheet);
         sheet.querySelector('.rv-sheet__close').addEventListener('click', function () { sheet.close(); });
         sheet.addEventListener('click', function (e) { if (e.target === sheet || e.target.closest('a')) sheet.close(); });
@@ -160,10 +169,10 @@
     var site = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['Topics', 'topics/'], ['About', 'index.html#about']]
       .map(function (n) { return '<li><a href="' + esc(href(n[1])) + '">' + n[0] + '</a></li>'; }).join('');
     el.innerHTML = '<div class="rds-footer__grid">' +
-      '<div><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
+      '<div><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-band-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
       '<div><h4>Site</h4><ul>' + site + '</ul></div>' +
       '<div><h4>Studies</h4><ul data-rv-footer-studies><li><a href="' + esc(href('studies/')) + '">All studies</a></li></ul></div>' +
-      '<div><h4>Find things</h4><ul><li><a href="#" data-rv-search-open>Search the site</a></li><li><a href="' + esc(new URL('map/', siteRoot).href) + '">Valley map</a></li><li><a href="' + esc(new URL('a-z/', siteRoot).href) + '">A–Z index</a></li><li><a href="' + esc(new URL('log/', siteRoot).href) + '">Sketchbook log</a></li><li><a href="' + esc(new URL('sitemap.xml', siteRoot).href) + '">Sitemap</a></li></ul></div>' +
+      '<div><h4>Find things</h4><ul><li><a href="#" data-rv-search-open>Search the site</a></li><li><a href="' + esc(new URL('map/', siteRoot).href) + '">Valley map</a></li><li><a href="' + esc(href('sources/')) + '">Sources library</a></li><li><a href="' + esc(new URL('a-z/', siteRoot).href) + '">A–Z index</a></li><li><a href="' + esc(new URL('log/', siteRoot).href) + '">Sketchbook log</a></li><li><a href="' + esc(new URL('sitemap.xml', siteRoot).href) + '">Sitemap</a></li></ul></div>' +
       '<div><h4>Design</h4><ul><li><a href="' + esc(new URL('lab/', siteRoot).href) + '">Lab notes</a></li><li><a href="' + esc(new URL('patterns/', siteRoot).href) + '">Pattern sheet</a></li><li><a href="' + esc(new URL('icons/', siteRoot).href) + '">Icon set</a></li></ul></div>' +
       '</div><div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>';
     loadIndex().then(function (d) {
@@ -213,6 +222,14 @@
     all('[data-rv-shell="footer"]').forEach(footer);
     all('[data-rv-crumbs]').forEach(crumbs);
     tabbar();
+    /* the standalone study bar has no site header, so it gets the theme switch beside its Search link */
+    all('nav.ktabs').forEach(function (k) {
+      var srch = k.querySelector('[data-rv-search-open]');
+      if (!srch || k.querySelector('.rv-theme')) return;
+      var b = doc.createElement('button'); b.type = 'button'; b.className = 'rv-theme rv-theme--bar'; b.setAttribute('data-rv-theme-toggle', ''); b.setAttribute('aria-pressed', 'false');
+      b.innerHTML = themeIcons(20); k.insertBefore(b, srch);
+      if (window.RVTheme) window.RVTheme.set(window.RVTheme.get(), null, true);
+    });
     doc.addEventListener('click', function (e) {
       var b = e.target.closest && e.target.closest('[data-rv-search-open]'); if (!b) return;
       e.preventDefault(); open(b.getAttribute('data-rv-search-open') || '');

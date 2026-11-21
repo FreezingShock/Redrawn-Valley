@@ -25,12 +25,17 @@ a,button,summary,label,[role=button]{touch-action:manipulation}
 .rv-rail :focus-visible{outline:2px solid var(--brick);outline-offset:3px}
 
 .rv-rail__view{position:relative}
-.rv-rail__track{list-style:none;margin:0;padding:var(--space-2) max(var(--space-6),calc((100vw - var(--container,1120px))/2)) var(--space-6);display:flex;gap:var(--space-6);overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:max(var(--space-6),calc((100vw - var(--container,1120px))/2));scrollbar-width:none;-webkit-overflow-scrolling:touch;cursor:grab;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%)}
+.rv-rail__track{list-style:none;margin:0;padding:var(--space-2) max(var(--space-6),calc((100vw - var(--container,1120px))/2)) var(--space-6);display:flex;gap:var(--space-6);overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;overscroll-behavior-y:auto;scroll-padding-inline:max(var(--space-6),calc((100vw - var(--container,1120px))/2));scrollbar-width:none;-webkit-overflow-scrolling:touch;cursor:grab;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%)}
 .rv-rail__track::-webkit-scrollbar{display:none}
 .rv-rail__view:not(.can-prev) .rv-rail__track{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent 100%);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent 100%)}
 .rv-rail__view:not(.can-next) .rv-rail__track{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 28px);mask-image:linear-gradient(90deg,transparent 0,#000 28px)}
 .rv-rail__view:not(.can-prev):not(.can-next) .rv-rail__track{-webkit-mask-image:none;mask-image:none}
 .rv-rail__track.is-drag{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto;user-select:none}
+@media (hover:hover) and (pointer:fine){.rv-rail__track{scroll-snap-type:none}}
+.rv-rail__card.is-tick{animation:rv-tick .34s var(--ease-out)}
+@keyframes rv-tick{0%{transform:translateY(0)}35%{transform:translateY(-6px);box-shadow:var(--rv-pencil-lift)}100%{transform:translateY(0)}}
+.rv-rail__card:hover .rv-rail__art svg{transform:scale(1.04)}
+.rv-rail__art svg{transition:transform .5s var(--ease-out)}
 .rv-rail__track.is-drag a{pointer-events:none}
 .rv-rail__item{flex:0 0 clamp(260px,26vw,312px);scroll-snap-align:start;display:flex}
 .rv-rail__card{display:flex;flex-direction:column;width:100%;color:var(--ink);text-decoration:none;background:var(--paper-raised);border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-lg);overflow:hidden;box-shadow:var(--rv-pencil);transition:transform .22s var(--ease-out),box-shadow .22s var(--ease-out)}
@@ -53,8 +58,13 @@ a,button,summary,label,[role=button]{touch-action:manipulation}
 .rv-rail__go{display:inline-flex;align-items:center;gap:var(--space-1);font:600 13px/1 var(--rv-hand);color:var(--ink)}
 .rv-rail__go svg{transition:transform .2s var(--ease-out)}
 .rv-rail__card:hover .rv-rail__go svg{transform:translateX(4px)}
-.rv-rail__meter{height:3px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:var(--space-2)}
-.rv-rail__meter i{display:block;height:100%;background:var(--brick);transform-origin:left;transform:scaleX(.3);transition:transform .15s linear;will-change:transform}
+.rv-rail__meter{position:relative;height:24px;margin-top:var(--space-2);cursor:pointer;touch-action:none;user-select:none}
+.rv-rail__meter::before{content:"";position:absolute;left:0;right:0;top:10px;height:4px;border-radius:3px;background:var(--line)}
+.rv-rail__meter i{position:absolute;left:0;top:7px;height:10px;min-width:48px;border-radius:6px;background:var(--brick);border:var(--rv-stroke,1.5px) solid var(--ink);box-shadow:1px 1px 0 var(--ink);cursor:grab;will-change:transform;transition:height .15s var(--ease-out),top .15s var(--ease-out)}
+.rv-rail__meter:hover i,.rv-rail__meter.is-grab i{top:5px;height:14px}
+.rv-rail__meter.is-grab,.rv-rail__meter.is-grab i{cursor:grabbing}
+.rv-rail__meter i.is-tick{animation:rv-nub .28s var(--ease-out)}
+@keyframes rv-nub{0%{filter:brightness(1)}40%{filter:brightness(1.3) saturate(1.2);box-shadow:2px 2px 0 var(--ink),0 0 0 4px rgba(156,61,36,.25)}100%{filter:none}}
 @media (max-width:640px){
   .rv-rail{margin-top:var(--space-12);padding-top:var(--space-8)}
   .rv-rail__head{align-items:flex-start}
