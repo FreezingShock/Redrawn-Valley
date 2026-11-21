@@ -323,3 +323,12 @@ One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>`
 
 - **Nav**: `rds-nav` is a hand-washed paper band: brick and moss tints over paper with a deckled hairline lower edge (`::before` and `::after` in `skin.css` Part 4). The page-wide "no shadows" rule has one more exception here: a soft `drop-shadow` under the deckled edge once the page scrolls. The active section keeps the brick hand rule and goes bold. Search is the header's main action: ink fill with the pencil offset.
 - **Hero buttons**: primary `rv-cta` draws its outline, fills brick, then its arrow draws, flies off and a new one settles in (hover repeats it). Secondary `rv-textlink` is ink text with a drawn rule and arrow. Brick appears once, on the primary. All of it is CSS only and skipped under reduced motion.
+
+## Keep reading rail and Random page (`assets/rds/rail.js`, `rail.css`)
+
+Every page ends with a "Keep reading" rail: a horizontally scrolling row of cards (seeded `card` art, type, read time, title, three-line blurb, matched topics). Loaded by `site-shell.js`; opt out with `<body data-no-rail>`. It is skipped in embed mode.
+
+- **Ranking**: pages share topics via the search-index field `k` (from `<meta name="rv-topics" content="heat, trees">`, first = primary). Primary and secondary matches score, pages from other sections get a small bonus, a per-page seeded jitter varies rails between pages, and no more than 4 of one section appear. Pages without `k` get topics derived from their title and blurb. Section front pages are never cards.
+- **Scrolling**: native scroll-snap, momentum and `overscroll-behavior-x:contain` on touch and trackpads; arrow buttons (desktop), keyboard on the focused track (arrows, Home, End, PageUp/PageDown), mouse drag that glides to the nearest card on release, edge fades, and a progress line. Listeners are passive and batched in one rAF; card art renders only when it nears the viewport. Reduced motion turns smooth scrolling off.
+- **Random page**: the Random page button, or any element with `data-rv-random`, goes to a random article, avoiding pages seen this session. `RVRelated.random()` does the same from script.
+- **Site-wide scroll tuning** (top of `rail.css`): `scroll-padding-top` for anchors under the sticky bar, `touch-action:manipulation` on controls, paint containment on art. `scrollfx.js` no longer watches rail art for parallax and debounces its DOM observer.

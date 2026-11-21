@@ -29,6 +29,9 @@
   /* scroll effects: progress bar, drawing figures, counters, parallax art (off under prefers-reduced-motion) */
   if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href; fx.defer = true; doc.head.appendChild(fx); }
 
+  /* related-pages rail ("Keep reading") and the Random page links: assets/rds/rail.js */
+  if (!doc.querySelector('script[src*="rail.js"]')) { var rl = doc.createElement('script'); rl.src = new URL('assets/rds/rail.js', siteRoot).href; rl.defer = true; doc.head.appendChild(rl); }
+
   /* Header order follows what the site is for: the studies first, then the reference and writing that support them.
      Entries with a `kind` open a flyout listing their pages (read from the search index); About is a plain link. */
   var NAV = [
