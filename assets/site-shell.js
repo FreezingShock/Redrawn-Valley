@@ -29,6 +29,9 @@
   /* scroll effects: progress bar, drawing figures, counters, parallax art (off under prefers-reduced-motion) */
   if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href; fx.defer = true; doc.head.appendChild(fx); }
 
+  /* citation jump links from the Sources library (#cite=ID.N): scroll to the marker and highlight the sentence */
+  if (!doc.querySelector('script[src*="cite-jump.js"]') && /cite=/.test(location.hash)) { var cj = doc.createElement('script'); cj.src = new URL('assets/rds/cite-jump.js', siteRoot).href; cj.defer = true; doc.head.appendChild(cj); }
+  else if (!doc.querySelector('script[src*="cite-jump.js"]')) { window.addEventListener('hashchange', function once() { if (/cite=/.test(location.hash)) { window.removeEventListener('hashchange', once); var c2 = doc.createElement('script'); c2.src = new URL('assets/rds/cite-jump.js', siteRoot).href; doc.head.appendChild(c2); } }); }
   /* related-pages rail ("Keep reading") and the Random page links: assets/rds/rail.js */
   if (!doc.querySelector('script[src*="rail.js"]')) { var rl = doc.createElement('script'); rl.src = new URL('assets/rds/rail.js', siteRoot).href; rl.defer = true; doc.head.appendChild(rl); }
 
@@ -132,6 +135,7 @@
       ['Topics', 'topics/', 'tree', 'Heat, trees, water and more, across every page'],
       ['Method', 'index.html#method', 'ruler', 'How a study is made'],
       ['About', 'index.html#about', 'info', 'Who draws this, and why'],
+      ['Sources', 'sources/', 'footnote', 'Every citation, and where it is used'],
       ['Sketchbook log', 'log/', 'contents', 'Everything new, by date'],
       ['A–Z index', 'a-z/', 'contents', 'Every term, place, source and drawing'],
       ['Lab notes', 'lab/', 'thermometer', 'How the patterns, icons and type were made'],
@@ -161,7 +165,7 @@
       '<div><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p><p class="rds-small" style="margin:0;color:var(--on-ink-muted)">Small places in the San Fernando Valley, studied and redrawn.</p></div>' +
       '<div><h4>Site</h4><ul>' + site + '</ul></div>' +
       '<div><h4>Studies</h4><ul data-rv-footer-studies><li><a href="' + esc(href('studies/')) + '">All studies</a></li></ul></div>' +
-      '<div><h4>Find things</h4><ul><li><a href="#" data-rv-search-open>Search the site</a></li><li><a href="' + esc(new URL('a-z/', siteRoot).href) + '">A–Z index</a></li><li><a href="' + esc(new URL('log/', siteRoot).href) + '">Sketchbook log</a></li><li><a href="' + esc(new URL('sitemap.xml', siteRoot).href) + '">Sitemap</a></li></ul></div>' +
+      '<div><h4>Find things</h4><ul><li><a href="#" data-rv-search-open>Search the site</a></li><li><a href="' + esc(href('sources/')) + '">Sources library</a></li><li><a href="' + esc(new URL('a-z/', siteRoot).href) + '">A–Z index</a></li><li><a href="' + esc(new URL('log/', siteRoot).href) + '">Sketchbook log</a></li><li><a href="' + esc(new URL('sitemap.xml', siteRoot).href) + '">Sitemap</a></li></ul></div>' +
       '<div><h4>Design</h4><ul><li><a href="' + esc(new URL('lab/', siteRoot).href) + '">Lab notes</a></li><li><a href="' + esc(new URL('patterns/', siteRoot).href) + '">Pattern sheet</a></li><li><a href="' + esc(new URL('icons/', siteRoot).href) + '">Icon set</a></li></ul></div>' +
       '</div><div class="rds-footer__base">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</div>';
     loadIndex().then(function (d) {
