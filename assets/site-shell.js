@@ -29,6 +29,9 @@
   /* scroll effects: progress bar, drawing figures, counters, parallax art (off under prefers-reduced-motion) */
   if (!doc.querySelector('script[src*="scrollfx.js"]')) { var fx = doc.createElement('script'); fx.src = new URL('assets/rds/scrollfx.js', siteRoot).href; fx.defer = true; doc.head.appendChild(fx); }
 
+  /* related-pages rail ("Keep reading") and the Random page links: assets/rds/rail.js */
+  if (!doc.querySelector('script[src*="rail.js"]')) { var rl = doc.createElement('script'); rl.src = new URL('assets/rds/rail.js', siteRoot).href; rl.defer = true; doc.head.appendChild(rl); }
+
   /* Header order follows what the site is for: the studies first, then the reference and writing that support them.
      Entries with a `kind` open a flyout listing their pages (read from the search index); About is a plain link. */
   var NAV = [
@@ -37,7 +40,7 @@
     { label: 'Notes', url: 'notes/', kind: 'notes', icon: 'notes', blurb: 'Short essays with the evidence shown.', max: 5, all: 'All notes' },
     { label: 'About', url: 'index.html#about' }
   ];
-  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', about: 'About' };
+  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', topics: 'Topics', about: 'About' };
   var sitePath = new URL(siteRoot).pathname;
   var rel = decodeURIComponent(location.pathname.slice(sitePath.length)).replace(/index\.html$/, '');
   var section = rel.split('/')[0];
@@ -126,8 +129,10 @@
     var more = nav.querySelector('.rv-tab-more'), sheet;
     var M = [
       ['Home', '', 'home', 'Front page'],
+      ['Topics', 'topics/', 'tree', 'Heat, trees, water and more, across every page'],
       ['Method', 'index.html#method', 'ruler', 'How a study is made'],
       ['About', 'index.html#about', 'info', 'Who draws this, and why'],
+      ['A–Z index', 'a-z/', 'contents', 'Every term, place, source and drawing'],
       ['Lab notes', 'lab/', 'thermometer', 'How the patterns, icons and type were made'],
       ['Pattern sheet', 'patterns/', 'leaf', 'Every motif and the palette'],
       ['Icon set', 'icons/', 'pin', 'The hand-drawn icons'],
@@ -159,7 +164,7 @@
   function footer(el) {
     function li(label, u) { return '<li><a href="' + esc(href(u)) + '">' + esc(label) + '</a></li>'; }
     function col(title, attr, items) { return '<nav class="rds-footer__col" aria-label="' + esc(title) + '"><h4>' + esc(title) + '</h4><ul' + (attr ? ' data-rv-footer-' + attr : '') + '>' + items + '</ul></nav>'; }
-    var explore = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['Lab notes', 'lab/'], ['About', 'index.html#about']].map(function (n) { return li(n[0], n[1]); }).join('') +
+    var explore = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['Lab notes', 'lab/'], ['Topics', 'topics/'], ['A–Z index', 'a-z/'], ['About', 'index.html#about']].map(function (n) { return li(n[0], n[1]); }).join('') +
       '<li><a href="#" data-rv-search-open>Search the site</a></li>';
     el.innerHTML = '<div class="rds-footer__grid">' +
       '<div class="rds-footer__about"><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p>' +

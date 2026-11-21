@@ -569,3 +569,91 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
   .rds-footer__base{padding-bottom:var(--space-12)}
 }
 @media print{.rds-footer__top{display:none}}
+/* ########## PART 4: nav wash, hero hierarchy ########## */
+/* Nav: a hand-washed paper band instead of a bare bar. Two soft tints (brick left, moss right) over paper, a deckled lower edge drawn in a hairline, and a soft shadow once the page moves. Replaces the flat bar and the 1px rule. */
+.rds-nav,.rds-nav.is-scrolled{background:transparent;border-bottom-color:transparent}
+.rds-nav::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(55% 160% at 10% 0,rgba(240,217,204,.55),transparent 70%),radial-gradient(45% 160% at 92% 0,rgba(214,226,214,.5),transparent 70%),rgba(246,241,231,.93);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.rds-nav::after{content:"";position:absolute;left:0;right:0;top:calc(100% - 1px);height:14px;z-index:-1;pointer-events:none;transition:filter var(--dur-base) ease,opacity var(--dur-fast) ease;
+  background:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22420%22 height=%2214%22 viewBox=%220 0 420 14%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 0V5C22 8 40 4 66 6S112 10 140 6 190 3 224 7 270 11 300 6 350 4 380 7 410 6 420 5V0Z%22 fill=%22%23f6f1e7%22 fill-opacity=%22.93%22/%3E%3Cpath d=%22M0 5C22 8 40 4 66 6S112 10 140 6 190 3 224 7 270 11 300 6 350 4 380 7 410 6 420 5%22 fill=%22none%22 stroke=%22%238a8170%22 stroke-width=%221.2%22 stroke-linecap=%22round%22 opacity=%22.7%22/%3E%3C/svg%3E") 0 0/420px 14px repeat-x}
+.rds-nav.is-scrolled::after{filter:drop-shadow(0 3px 3px rgba(31,29,26,.13))}
+.rds-nav.is-hidden::after{opacity:0}
+/* active section: heavier word plus the brick hand rule, which stays drawn */
+.rds-nav__links a[aria-current=page]{font-weight:700;background-size:100% 8px}
+/* Search is the main action in the header: ink fill with the pencil offset */
+@media (min-width:641px){
+  .rds-nav__search{height:38px;padding:0 var(--space-4);margin-left:var(--space-6);background:var(--ink);border:1.5px solid var(--ink);color:var(--on-ink);box-shadow:var(--rv-pencil);transition:transform var(--dur-fast) ease,box-shadow var(--dur-fast) ease}
+  .rds-nav__search:hover{background:var(--ink);color:var(--on-ink);transform:translate(-1px,-1px);box-shadow:3px 4px 0 0 var(--brick)}
+  .rds-nav__search:active{transform:translate(2px,3px);box-shadow:none}
+  .rds-nav__search .rds-icon{--icon-accent:var(--brick-tint)}
+  .rds-nav__search kbd{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:var(--on-ink-muted)}
+}
+
+/* Hero: one voice at a time. Headline narrower in size, contours pushed back behind the copy, one primary action. */
+@media (min-width:641px){.rv-hero .rds-display-xl{font-size:clamp(36px,4.5vw,56px);line-height:1.06;text-wrap:balance}}
+@media (min-width:960px){.rv-hero{grid-template-columns:.95fr 1.05fr;padding-block:var(--space-16) var(--space-24)}}
+.rds-loop-host[data-rds-loop=ridge][data-seed=home]>.rds-loop{opacity:.42;
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 100%),linear-gradient(90deg,rgba(0,0,0,.04) 0,rgba(0,0,0,.06) 46%,#000 78%);
+  mask-image:linear-gradient(180deg,#000 0,#000 78%,transparent 100%),linear-gradient(90deg,rgba(0,0,0,.04) 0,rgba(0,0,0,.06) 46%,#000 78%)}
+@media (min-width:960px){.rv-collage{opacity:.55}}
+.rv-hero__copy::before{content:"";position:absolute;z-index:-1;inset:-40px -56px -40px -48px;pointer-events:none;background:radial-gradient(closest-side,rgba(246,241,231,.88) 55%,rgba(246,241,231,0))}
+/* the lower search box now opens the same dialog as the header */
+.rv-lookup{appearance:none;display:grid;gap:var(--space-2);margin-top:var(--space-2);padding:0;border:0;background:none;text-align:left;cursor:pointer;width:100%;max-width:440px;color:inherit}
+.rv-lookup__lab{font:400 17px/20px var(--rv-hand);color:var(--ink-muted)}
+.rv-lookup__box{display:flex;align-items:center;gap:var(--space-3);height:44px;padding:0 var(--space-3);border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--paper-raised);color:var(--ink-faint);font:400 16px/1 var(--rds-sans);transition:border-color var(--dur-fast) ease}
+.rv-lookup__box .rds-icon{flex:none;--icon-accent:currentColor;--icon-tint:transparent}
+.rv-lookup__box span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rv-lookup__box kbd{font:400 12px/1 var(--rds-mono);border:1px solid var(--line);border-radius:var(--radius-sm);padding:3px 6px;background:var(--paper)}
+.rv-lookup:hover .rv-lookup__box{border-color:var(--ink)}
+.rv-lookup:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:var(--radius-md)}
+@media (hover:none){.rv-lookup__box kbd{display:none}}
+/* figure caption: hand lettering, no underline */
+.rv-compare__bar span{font:400 17px/22px var(--rv-hand);color:var(--ink-muted)}
+.rv-compare__bar span b{font:inherit;font-weight:400;color:var(--brick);text-decoration:none;background:none;border:0}
+/* drawn labels inside inline SVG still name the retired hand font; use the site's */
+svg text[style*="Architects Daughter"]{font-family:var(--rv-hand)!important}
+
+/* ---------- hero buttons: drawn in on load ---------- */
+/* Primary: the outline is pencilled in, the brick fills, then the arrow draws and flies off and a new one settles in. Secondary: ink text with a drawn rule. Brick appears once, on the primary. */
+.rv-ctas{align-items:center;gap:var(--space-5)}
+.rv-cta{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:var(--space-3);height:52px;padding:0 var(--space-6) 0 var(--space-6);color:var(--on-ink);font:700 18px/1 var(--rv-hand);letter-spacing:.01em;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.rv-cta__frame{position:absolute;inset:0;z-index:-1;width:100%;height:100%;overflow:visible}
+.rv-cta__shadow{fill:var(--ink);opacity:0;animation:rv-cta-in .3s ease 1.15s forwards}
+.rv-cta__fill{fill:var(--brick);opacity:0;animation:rv-cta-in .35s ease .95s forwards;transition:fill var(--dur-fast) ease}
+.rv-cta__line{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .85s cubic-bezier(.5,.1,.3,1) .15s forwards}
+.rv-cta__label{color:var(--ink);animation:rv-cta-ink .3s ease 1s forwards}
+.rv-cta__arrow{flex:none;width:24px;height:16px;color:var(--on-ink)}
+.rv-cta__arrow path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .35s ease-out 1.25s forwards}
+.rv-cta__arrow{animation:rv-fly .9s cubic-bezier(.55,0,.4,1) 2.05s both}
+.rv-cta:hover .rv-cta__fill{fill:var(--brick-deep)}
+.rv-cta:hover .rv-cta__arrow,.rv-cta:focus-visible .rv-cta__arrow{animation:rv-fly .9s cubic-bezier(.55,0,.4,1) both}
+.rv-cta:active{transform:translate(2px,3px)}
+.rv-cta:focus-visible{outline:2px solid var(--ink);outline-offset:5px;border-radius:var(--radius-sm)}
+.rv-cta:active .rv-cta__shadow{opacity:0}
+@keyframes rv-draw{to{stroke-dashoffset:0}}
+@keyframes rv-cta-in{to{opacity:1}}
+@keyframes rv-cta-ink{to{color:var(--on-ink)}}
+@keyframes rv-fly{
+  0%{transform:none;opacity:1}
+  45%{transform:translate(52px,-14px) rotate(-14deg);opacity:0}
+  46%{transform:translate(-30px,0);opacity:0}
+  100%{transform:none;opacity:1}}
+.rv-textlink{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) 2px var(--space-3);color:var(--ink);font:400 18px/24px var(--rv-hand);text-decoration:none;opacity:0;animation:rv-cta-in .4s ease 1.3s forwards}
+.rv-textlink__down{flex:none;width:12px;height:16px;color:var(--ink-muted)}
+.rv-textlink__down path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .35s ease-out 1.7s forwards}
+.rv-textlink__rule{position:absolute;left:0;right:0;bottom:0;width:100%;height:8px;overflow:visible}
+.rv-textlink__rule path{fill:none;stroke:var(--ink-muted);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .6s ease-out 1.5s forwards;transition:stroke var(--dur-fast) ease}
+.rv-textlink:hover .rv-textlink__rule path,.rv-textlink:focus-visible .rv-textlink__rule path{stroke:var(--ink);stroke-width:2}
+.rv-textlink:hover .rv-textlink__down{transform:translateY(3px)}
+.rv-textlink__down{transition:transform var(--dur-base) var(--ease-out)}
+.rv-textlink:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:var(--radius-sm)}
+@media (max-width:640px){.rv-ctas{align-items:stretch;gap:var(--space-2)}.rv-cta{justify-content:center}.rv-textlink{justify-content:center;align-self:center}}
+@media (prefers-reduced-motion:reduce){
+  .rv-cta__shadow,.rv-cta__fill,.rv-textlink{animation:none;opacity:1}
+  .rv-cta__line,.rv-cta__arrow path,.rv-textlink__down path,.rv-textlink__rule path{animation:none;stroke-dashoffset:0}
+  .rv-cta__line{opacity:0}
+  .rv-cta__label{animation:none;color:var(--on-ink)}
+  .rv-cta__arrow,.rv-cta:hover .rv-cta__arrow{animation:none}
+  .rv-cta:active{transform:none}
+}

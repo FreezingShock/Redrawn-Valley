@@ -7,7 +7,7 @@
      write-on headings: the page title is written in letter by letter on the Wobble axes; section headings write in as they arrive,
               each with a pencil squiggle that draws underneath.
    Also: a pencil dab where you click, and hand-drawn rules that draw on. Styles are in flow.css (loaded by this script).
-   Off for prefers-reduced-motion, embed frames (?embed=1, iframes), print and ?noflow. Nothing breaks without it; a 5 second
+   Off for prefers-reduced-motion, embed frames (?embed=1, iframes), print and ?noflow. Nothing breaks without it; a 3 second
    failsafe always removes the sheet. API: window.RVFlow = { intro(), wipe(url?), write(el), enabled, speed }. See DESIGN.md "Flow". */
 (function () {
   'use strict';
@@ -49,7 +49,7 @@
   store.set(SEENKEY, '1');
   root.classList.add('fl-on');
   if (mode !== 'none') root.classList.add('fl-cover');
-  var failsafe = setTimeout(function () { root.classList.remove('fl-cover'); var s = doc.getElementById('fl-stage'); if (s) kill(s); }, 5200);
+  var failsafe = setTimeout(function () { root.classList.remove('fl-cover'); var s = doc.getElementById('fl-stage'); if (s) kill(s); }, 3000);
 
   /* ---------- helpers ---------- */
   function el(tag, cls, html) { var n = doc.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; }
@@ -183,12 +183,18 @@
     var p = plate('Redrawn Valley', 'seeing the valley anew', true); s.appendChild(p);
     var A = p.querySelector('.fl-plate__a'), skip = false;
     p.querySelector('.fl-logo').classList.add('is-drawn');
-    setTimeout(function () { writeNow(A); }, T(380));
-    setTimeout(function () { p.classList.add('has-sub'); }, T(1000));
-    function finish() { p.classList.add('is-out'); var ms = T(760); lift(); tiles(s, 'reveal', .5, .46, ms).then(function () { kill(s); clearTimeout(failsafe); }); }
-    var t = setTimeout(finish, T(1500));
-    s.style.pointerEvents = 'auto'; s.style.cursor = 'pointer';
-    s.addEventListener('click', function once() { s.removeEventListener('click', once); clearTimeout(t); finish(); });
+    setTimeout(function () { writeNow(A); }, T(260));
+    setTimeout(function () { p.classList.add('has-sub'); }, T(620));
+    var done = false;
+    /* the sheet never takes pointer input (the page underneath stays usable); a tap anywhere skips ahead instead */
+    function finish() {
+      if (done) return; done = true; clearTimeout(t); doc.removeEventListener('pointerdown', finish, true);
+      p.classList.add('is-out'); var ms = T(620); lift();
+      tiles(s, 'reveal', .5, .46, ms).then(function () { kill(s); clearTimeout(failsafe); });
+      setTimeout(function () { kill(s); }, ms + T(300));   // animations can stall in a hidden tab; never leave the sheet up
+    }
+    var t = setTimeout(finish, T(880));
+    doc.addEventListener('pointerdown', finish, true);
     return s;
   }
   function runReveal(s) {
@@ -201,6 +207,7 @@
       setTimeout(function () { p.classList.add('is-out'); }, T(60));
       setTimeout(lift, T(240));
       tiles(s, 'reveal', ox, oy, T(780)).then(function () { kill(s); clearTimeout(failsafe); });
+      setTimeout(function () { kill(s); }, T(1100));
     }); });
   }
 
@@ -253,7 +260,7 @@
     var s = buildStage('intro-' + Date.now() % 97); s._tiles.forEach(function (t) { t.style.transform = 'scale(1.03)'; });
     requestAnimationFrame(function () { root.classList.remove('fl-cover'); runIntro(s); });
     all('.fl-title').forEach(function (h) { h.classList.remove('fl-go'); after.push(h); });
-    failsafe = setTimeout(function () { kill(s); }, 5200);
+    failsafe = setTimeout(function () { kill(s); }, 3000);
   };
 
   /* ---------- pencil dab on click ---------- */
