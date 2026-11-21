@@ -23,7 +23,7 @@ SITE_URL = 'https://redrawnvalley.vercel.app'
 REPO = 'https://github.com/FreezingShock/Redrawn-Valley'
 AUTHOR = 'Nate Anderson'
 FEED_MAX = 40
-GENERATED = ('log/', 'assets/log.json', 'assets/search-index.json', 'sitemap.xml', 'robots.txt')
+GENERATED = ('log/', 'topics/', 'assets/log.json', 'assets/search-index.json', 'sitemap.xml', 'robots.txt')
 
 TYPES = {  # key: (label, tag class, icon id)
     'study': ('Study', 'brick', 'studies'), 'note': ('Note', 'brick', 'notes'), 'guide': ('Field guide', 'moss', 'guide'),

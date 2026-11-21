@@ -330,3 +330,22 @@ A dated feed of everything new, built from git history, never edited by hand. `l
 - **Entry**: one commit (squash-merged PR). Type is study / note / guide / lab (a new page in that section), else redraw, design or site by subject and files. Pages show as New (added) or Updated (changed), titles read from the pages.
 - **Words**: PR-description trailers `Log: sentence`, `Log-Title:`, `Log-Type:`, `Log: skip` win; then `scripts/log-notes.json` (keyed by PR number); then the commit subject. Commits touching only generated files are never entries.
 - **Components**: `rv-log` timeline (sticky date column on desktop, sticky date bar on phones, dashed rail, icon dot per type, `rv-log__card` per entry, `rv-log__page` pills), type filter chips (`data-rv-topic`, kept in `?type=`), `rds-facts` stats. Under reduced motion it stands still.
+
+## Keep reading rail and Random page (`assets/rds/rail.js`, `rail.css`)
+
+Every page ends with a "Keep reading" rail: a horizontally scrolling row of cards (seeded `card` art, type, read time, title, three-line blurb, matched topics). Loaded by `site-shell.js`; opt out with `<body data-no-rail>`. It is skipped in embed mode.
+
+- **Ranking**: pages share topics via the search-index field `k` (from `<meta name="rv-topics" content="heat, trees">`, first = primary). Primary and secondary matches score, pages from other sections get a small bonus, a per-page seeded jitter varies rails between pages, and no more than 4 of one section appear. Pages without `k` get topics derived from their title and blurb. Section front pages are never cards.
+- **Scrolling**: native scroll-snap, momentum and `overscroll-behavior-x:contain` on touch and trackpads; arrow buttons (desktop), keyboard on the focused track (arrows, Home, End, PageUp/PageDown), mouse drag that glides to the nearest card on release, edge fades, and a progress line. Listeners are passive and batched in one rAF; card art renders only when it nears the viewport. Reduced motion turns smooth scrolling off.
+- **Random page**: the Random page button, or any element with `data-rv-random`, goes to a random article, avoiding pages seen this session. `RVRelated.random()` does the same from script.
+- **Site-wide scroll tuning** (top of `rail.css`): `scroll-padding-top` for anchors under the sticky bar, `touch-action:manipulation` on controls, paint containment on art. `scrollfx.js` no longer watches rail art for parallax and debounces its DOM observer.
+
+## Topics (`assets/topics.json`, `scripts/build_topics.py`, `assets/rds/topics.css`)
+
+Topics are the subject threads that run across studies, field guide entries, notes and lab articles. They are the shared page metadata that the topic hubs, related rails, the map and the index read, so define them here and nowhere else.
+
+- **Tagging a page.** In `<head>`, after the description: `<meta name="rv-topics" content="heat, trees">`. Lowercase slugs from `assets/topics.json`, comma separated, **first is the primary topic** (use two to four tags). Optional: `<meta name="rv-place" content="Woodland Hills">` (a neighborhood or place name) and `<meta name="rv-geo" content="34.17,-118.60">` (lat,lon, only with a source). Studies, guide entries and notes should always carry `rv-topics`; `scripts/check.py` warns when one does not.
+- **Slugs.** `heat`, `trees`, `water`, `parking`, `streets`, `valley`, `making` (lab articles). A new topic is one object in `assets/topics.json` (slug, title, short, icon from the sprite, accent `moss|slate|brick|ochre|rose`, `art` = the words passed to `data-topic` so motifs pick the right palette, blurb, question). Add one only when at least three pages would use it.
+- **Index fields.** `scripts/build_index.py` copies the tags into `assets/search-index.json` as `k` (topic slugs, primary first), `pl` (place) and `g` ([lat, lon]) on each page entry. Read those, not the HTML.
+- **Hubs.** `topics/index.html` and `topics/<slug>/index.html` are generated. After tagging or adding a page run `python3 scripts/build_index.py` then `python3 scripts/build_topics.py` and commit both outputs (`check.py` warns when they are stale). Never hand-edit a hub.
+- **Hub anatomy.** Tiles banner seeded `topics/<slug>`, the lead and the question line (`rv-thead`), count pills that jump to each list (`rv-tstat`), then one section per kind: studies as `rds-card` cards (`rv-tcard`), everything else as `rds-row` rows (`rv-trow`) listing the page's other topics, then the other-topic chips (`rv-tchip`). The index page adds a coverage table (`rv-tmatrix`) so gaps are visible.

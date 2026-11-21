@@ -17,6 +17,21 @@
     <content type="html">&lt;p&gt;Adds the Sketchbook log, a dated feed of everything new on the site, with an Atom feed.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/&quot;&gt;Redrawn Valley&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
   <entry>
+    <title>Search footer: vertically centered row, cleaner result count and key hints</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-47</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-47"/>
+    <updated>2026-11-21T00:13:05-08:00</updated>
+    <category term="site" label="Site"/>
+  </entry>
+  <entry>
+    <title>Page metadata scheme: rv-topics, rv-place, rv-geo; topic definitions; tag all pages</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-46</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-46"/>
+    <updated>2026-11-21T00:12:10-08:00</updated>
+    <category term="site" label="Site"/>
+    <content type="html">&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/san-fernando-valley/&quot;&gt;San Fernando Valley&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/shade-equity/&quot;&gt;Shade equity&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
     <title>Study rail polish</title>
     <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-44</id>
     <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-44"/>
@@ -348,23 +363,5 @@
     <category term="guide" label="Field guide"/>
     <summary>A wiki-style index of terms with 11 sourced entries, from bioswale to urban heat island.</summary>
     <content type="html">&lt;p&gt;A wiki-style index of terms with 11 sourced entries, from bioswale to urban heat island.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/&quot;&gt;Field guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/san-fernando-valley/&quot;&gt;San Fernando Valley&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Studies moved onto the shared shell</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-4</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-4"/>
-    <updated>2026-11-20T11:58:02-08:00</updated>
-    <category term="site" label="Site"/>
-    <summary>The studies index, the template and the Topanga study now use the same header and footer as everything else.</summary>
-    <content type="html">&lt;p&gt;The studies index, the template and the Topanga study now use the same header and footer as everything else.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/&quot;&gt;Studies&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Studies index and the study template</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-3</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-3"/>
-    <updated>2026-11-20T11:56:51-08:00</updated>
-    <category term="site" label="Site"/>
-    <summary>Added the Studies index, a template for new studies, the infobox and the shared study styles.</summary>
-    <content type="html">&lt;p&gt;Added the Studies index, a template for new studies, the infobox and the shared study styles.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/&quot;&gt;Studies&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
 </feed>
