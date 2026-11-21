@@ -311,9 +311,9 @@ The search dialog is its own module, loaded on idle by `site-shell.js` (which ke
 
 One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>` of every page (right after the viewport meta; it loads `flow.css` itself). It paints paper over the first frame, then plays:
 
-- **Opening** (first visit of a session, every reload): a sheet of paper tiles; the logo draws, "Redrawn Valley" writes in, the tiles shrink away from the center. About 1.5 s then a 0.8 s lift. Tap to skip.
+- **Opening** (first visit of a session, every reload): a sheet of paper tiles; the logo draws, "Redrawn Valley" writes in, the tiles shrink away from the center. 1.5 s in all (0.9 s drawing, 0.6 s lift). The sheet never takes pointer input, so the page underneath works at once; a tap anywhere skips ahead.
 - **Wipe** (clicking any same-site link): tiles grow from the click point with the destination section written on them (0.5 s), then the next page lifts them from the same point. Back/forward skip it. Tiles are a manual popover (top layer), so the search dialog is covered too. Opt a link out with `data-no-flow`.
 - **Write-on headings**: `h1`, `.rds-display` and section `h2`s are split into letters that ink in on the Wobble axes (`BNCE`, `INFM`) with a pencil squiggle drawn under (`.fl-ul`). Replaces `data-rds-split` on page titles. Section headings play when 60% visible.
 - **Micro-interactions**: pencil dab on click (`.fl-dab`), wavy link underline, spring buttons, tilting cards and rows, logo hop, rules that draw on and figure crop marks (`.fl-sk`).
-- **Off** under `prefers-reduced-motion`, in `?embed=1` frames, print, and with `?noflow`. A 5 s failsafe always removes the sheet.
+- **Off** under `prefers-reduced-motion`, in `?embed=1` frames, print, and with `?noflow`. A 3 s failsafe always removes the sheet.
 - **API**: `RVFlow.intro()`, `RVFlow.preview(a, b, x, y)`, `RVFlow.wipe(url)`, `RVFlow.write(el)`, `RVFlow.speed`. Tile colors are the art accents; tile art is the grid circle and hatched square from the motif system.
