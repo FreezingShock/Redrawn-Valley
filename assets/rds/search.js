@@ -134,13 +134,6 @@
       pts.push([x0 + r + 22, y0 + (R() - .5) * jit]); // overshoot
       return 'M' + pts.map(function (p) { return f1(p[0]) + ' ' + f1(p[1]); }).join(' L');
     }
-    function boxPath(seed) { // row selection box, drawn in a 100 x 40 box that stretches to the row
-      var R = rnd(seed), j = function (n) { return f1(n + (R() - .5) * 3); };
-      return 'M' + j(3) + ' ' + j(6) + ' C' + j(30) + ' ' + j(2) + ' ' + j(70) + ' ' + j(5) + ' ' + j(97) + ' ' + j(3) +
-        ' C' + j(98) + ' ' + j(14) + ' ' + j(97) + ' ' + j(26) + ' ' + j(98) + ' ' + j(36) +
-        ' C' + j(70) + ' ' + j(39) + ' ' + j(30) + ' ' + j(36) + ' ' + j(3) + ' ' + j(38) +
-        ' C' + j(2) + ' ' + j(26) + ' ' + j(3) + ' ' + j(14) + ' ' + j(4) + ' ' + j(4);
-    }
     var UL = 'M2 5 C 60 1, 120 8, 180 4 S 300 7, 398 3';
     var DOODLE_HERO = '<svg class="rvs-doodle" viewBox="0 0 150 84" aria-hidden="true">' +
       '<circle class="rvs-st" pathLength="1" cx="46" cy="36" r="21" style="--d:.1s"/><path class="rvs-st" pathLength="1" d="M61 51 L84 74" style="--d:.45s" stroke-width="5"/>' +

@@ -125,7 +125,6 @@
 .rds-empty.is-on{display:block}
 [hidden].rds-row,.rds-row[hidden]{display:none}
 .rds-article .rds-row__meta,[data-rds-guide] .rds-row__meta{white-space:normal}
-.rds-row__sub{display:block;margin-top:2px;font:400 var(--fs-13)/20px var(--rds-mono);color:var(--ink-faint)}
 
 /* Print: drop chrome, keep the article and its notes */
 @media print{

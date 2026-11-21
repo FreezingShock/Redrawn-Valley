@@ -98,4 +98,4 @@
 .rv-theme--bar .rv-theme__ico,.rv-theme--bar .rv-theme__ico>.rds-icon{width:20px;height:20px}
 @media (max-width:640px){.rv-theme--bar{display:none}}
 :root[data-theme="dark"] .rv-svg .f-sky{fill:#1d2b38}
-:root[data-theme="dark"] :is(.rds-icon--slate,.rds-row__icon--slate,.rv-gal--slate .rds-icon){--icon-tint:#1d2b38}
+:root[data-theme="dark"] :is(.rds-icon--slate,.rds-row__icon--slate){--icon-tint:#1d2b38}
