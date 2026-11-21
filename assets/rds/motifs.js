@@ -144,7 +144,7 @@
   };
   M.icon = function (w, h, rnd, c) {
     var names = c.icons, a = rnd.pick(names), b = rnd.pick(names.filter(function (n) { return n !== a; }).concat([a])), sz = Math.min(w, h) * .52;
-    function u(n, cls) { return '<svg class="m-ico ' + cls + '" x="' + f(w / 2 - sz / 2) + '" y="' + f(h / 2 - sz / 2) + '" width="' + f(sz) + '" height="' + f(sz) + '" viewBox="0 0 24 24" style="color:var(--ink);--icon-accent:var(--paper);--icon-tint:rgba(var(--paper-rgb),.4);overflow:visible" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="' + SPRITE + '#i-' + n + '"/></svg>'; }
+    function u(n, cls) { return '<svg class="m-ico ' + cls + '" x="' + f(w / 2 - sz / 2) + '" y="' + f(h / 2 - sz / 2) + '" width="' + f(sz) + '" height="' + f(sz) + '" viewBox="0 0 24 24" style="color:var(--ink);--icon-accent:var(--paper);--icon-tint:color-mix(in srgb,var(--paper) 40%,transparent);overflow:visible" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="' + SPRITE + '#i-' + n + '"/></svg>'; }
     return { svg: u(a, 'm-ico-a') + u(b, 'm-ico-b'), uses: [], shift: function (el) { el.classList.toggle('is-alt'); } };
   };
 

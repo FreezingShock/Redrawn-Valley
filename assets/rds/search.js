@@ -159,7 +159,7 @@
       '<clipPath id="rvs-clip"><circle cx="0" cy="0" r="70"/></clipPath></defs>' +
       '<rect width="640" height="420" fill="url(#rvs-dots)" opacity=".55"/>' +
       '<g class="rvs-f rvs-f1"><g transform="translate(530 330)"><g clip-path="url(#rvs-clip)"><rect x="-80" y="-80" width="160" height="160" fill="url(#rvs-grid)"/></g><circle r="70" fill="none" stroke="var(--moss)" stroke-width="1.4"/></g></g>' +
-      '<g class="rvs-f rvs-f2"><circle cx="110" cy="340" r="54" fill="var(--brick)" opacity=".16"/><circle cx="154" cy="356" r="54" fill="var(--slate)" opacity=".16"/><circle cx="132" cy="312" r="54" fill="#be9661" opacity=".2"/></g>' +
+      '<g class="rvs-f rvs-f2"><circle cx="110" cy="340" r="54" fill="var(--brick)" opacity=".16"/><circle cx="154" cy="356" r="54" fill="var(--slate)" opacity=".16"/><circle cx="132" cy="312" r="54" fill="var(--ochre)" opacity=".2"/></g>' +
       '<g class="rvs-f rvs-f3"><g transform="translate(470 78)"><rect x="-46" y="-46" width="92" height="92" fill="url(#rvs-grid)" stroke="var(--moss)" stroke-width="1.4"/></g></g>' +
       '<g class="rvs-spin"><g transform="translate(70 70)" fill="none" stroke="var(--line-strong)" stroke-width="1.3"><circle r="30"/><path d="M-42 0H42M0-42V42"/><path d="M-21-21L21 21" stroke-dasharray="3 4"/></g></g>' +
       '<path class="rvs-wave" d="M230 380 q20-26 40 0 t40 0 t40 0 t40 0 t40 0" fill="none" stroke="var(--slate)" stroke-width="1.4" opacity=".5"/></svg>';
