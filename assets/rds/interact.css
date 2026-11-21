@@ -1,0 +1,108 @@
+/* Redrawn Design System: interaction layer (loaded by interact.js). Prefix rv-. Tokens only. Documented in DESIGN.md > Interaction layer. */
+
+.rv-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.rv-show-touch{display:none}
+@media (hover:none){.rv-hide-touch{display:none}.rv-show-touch{display:inline}}
+
+/* shared small pencil button */
+.rv-reroll button,.rv-zoombtn,.rv-lightbox__tools button,.rv-stages__btn{
+  appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  font:400 15px/1 var(--rv-hand,var(--rds-sans));color:var(--ink);background:var(--paper-raised);
+  border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-md,8px);box-shadow:var(--rv-pencil,2px 3px 0 0 var(--ink));
+  cursor:pointer;transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background-color var(--dur-fast) ease}
+.rv-reroll button:hover,.rv-zoombtn:hover,.rv-lightbox__tools button:hover,.rv-stages__btn:hover{transform:translate(-1px,-1px);box-shadow:3px 4px 0 0 var(--ink);background:var(--paper)}
+.rv-reroll button:active,.rv-zoombtn:active,.rv-lightbox__tools button:active,.rv-stages__btn:active{transform:translate(1px,1px);box-shadow:0 0 0 0 var(--ink)}
+.rv-reroll button:focus-visible,.rv-zoombtn:focus-visible,.rv-lightbox__tools button:focus-visible,.rv-stages__btn:focus-visible,.rv-slider:focus-visible,.rv-lightbox__stage:focus-visible{outline:2px solid var(--brick);outline-offset:3px}
+.rv-reroll svg,.rv-zoombtn svg,.rv-lightbox__tools svg{width:20px;height:20px;flex:none}
+
+/* 1. art you can play with */
+.rds-art[data-rv-play] .m-tile{cursor:pointer}
+.rv-reroll{position:absolute;right:var(--space-3);bottom:var(--space-3);z-index:3;display:flex;gap:var(--space-2);line-height:1;
+  opacity:0;transform:translateY(6px);transition:opacity var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out)}
+.rds-art:hover .rv-reroll,.rds-art:focus-within .rv-reroll,.rv-reroll:focus-within{opacity:1;transform:none}
+.rv-reroll button{height:36px;padding:0 var(--space-3)}
+.rv-reroll__back{display:none!important;width:36px;padding:0!important}
+.rv-reroll.is-changed .rv-reroll__back{display:inline-flex!important}
+@media (hover:none){.rv-reroll{opacity:1;transform:none}.rv-reroll button{height:44px;min-width:44px}}
+.rds-art.rv-redrawn>svg:not(.rv-keep){animation:rv-redraw .6s var(--ease-out)}
+@keyframes rv-redraw{0%{opacity:.15;transform:scale(1.025)}100%{opacity:1;transform:none}}
+
+/* 2. entry previews */
+.rv-tip{position:fixed;z-index:60;width:min(21rem,calc(100vw - 24px));padding:var(--space-3) var(--space-4);display:flex;flex-direction:column;gap:var(--space-1);
+  background:var(--paper-raised);color:var(--ink);border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-md,8px);box-shadow:var(--rv-pencil,2px 3px 0 0 var(--ink));
+  font:400 14px/21px var(--rds-sans);opacity:0;visibility:hidden;transform:translateY(4px);pointer-events:none;
+  transition:opacity var(--dur-fast) ease,transform var(--dur-base) var(--ease-out),visibility 0s linear var(--dur-fast)}
+.rv-tip.is-on{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition-delay:0s}
+.rv-tip__kind{font:400 12px/16px var(--rv-hand,var(--rds-sans));letter-spacing:.06em;text-transform:uppercase;color:var(--brick)}
+.rv-tip__title{font:500 19px/1.25 var(--rds-serif,Georgia,serif)}
+.rv-tip__sec{font:400 12px/18px var(--rds-mono);color:var(--ink-faint)}
+.rv-tip__text{color:var(--ink-muted)}
+.rv-tip__go{margin-top:var(--space-1);font:400 13px/18px var(--rv-hand,var(--rds-sans));color:var(--moss)}
+.rv-tip::after{content:"";position:absolute;left:calc(var(--nub,24px) - 6px);width:10px;height:10px;background:var(--paper-raised);transform:rotate(45deg)}
+.rv-tip[data-side="below"]::after{top:-6px;border-left:var(--rv-stroke,1.5px) solid var(--ink);border-top:var(--rv-stroke,1.5px) solid var(--ink)}
+.rv-tip[data-side="above"]::after{bottom:-6px;border-right:var(--rv-stroke,1.5px) solid var(--ink);border-bottom:var(--rv-stroke,1.5px) solid var(--ink)}
+@media (hover:none){.rv-tip{display:none}}
+
+/* 3. draggable compare */
+.rv-compare__stage{touch-action:pan-y}
+.rv-compare[data-view="slide"] .rv-before,.rv-compare[data-view="slide"] .rv-after{opacity:1}
+.rv-compare[data-view="slide"] .rv-after{background:var(--paper-raised);clip-path:inset(0 0 0 calc(var(--pos,50) * 1%));transition:none}
+.rv-compare__stage>.rv-slider{position:absolute;top:0;bottom:0;left:calc(var(--pos,50) * 1%);width:44px;margin-left:-22px;z-index:4;display:none;cursor:ew-resize;touch-action:none;color:var(--ink)}
+.rv-compare[data-view="slide"] .rv-slider{display:block}
+.rv-slider__line{position:absolute;left:50%;top:0;bottom:0;width:0;border-left:var(--rv-stroke,1.5px) dashed var(--ink);margin-left:-1px}
+.rv-slider__grip{position:absolute;left:50%;top:50%;width:44px;height:30px;margin:-15px 0 0 -22px;display:flex;align-items:center;justify-content:center;
+  background:var(--brick);color:var(--on-brick);border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-md,8px);box-shadow:var(--rv-pencil,2px 3px 0 0 var(--ink));transition:transform var(--dur-fast) var(--ease-out)}
+.rv-slider__grip svg{width:24px;height:14px}
+.rv-compare.is-dragging .rv-slider__grip,.rv-slider:hover .rv-slider__grip{transform:scale(1.08)}
+.rv-slider__tag{position:absolute;top:var(--space-3);padding:2px var(--space-2);font:400 14px/20px var(--rv-hand,var(--rds-sans));background:var(--paper-raised);border:1px solid var(--ink);border-radius:var(--radius-sm);white-space:nowrap;pointer-events:none}
+.rv-slider__tag--l{right:calc(50% + 8px)}
+.rv-slider__tag--r{left:calc(50% + 8px)}
+.rv-compare.is-dragging{cursor:ew-resize;user-select:none}
+
+/* 4. explorable plans */
+.rv-stages{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);margin-top:var(--space-3)}
+.rv-stages__lab{font:400 14px/1 var(--rv-hand,var(--rds-sans));color:var(--ink-faint);margin-right:var(--space-1)}
+.rv-stages__btn{min-height:36px;padding:var(--space-1) var(--space-3);font-size:14px;white-space:nowrap}
+.rv-stages__btn[aria-pressed="true"]{background:var(--brick);color:var(--on-brick)}
+.rv-stages__auto{margin-left:auto}
+.rv-stages__auto[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+@media (max-width:640px){
+  .rv-stages{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:calc(var(--rv-gutter,20px) * -1);padding:0 var(--rv-gutter,20px) var(--space-2) 0}
+  .rv-stages::-webkit-scrollbar{display:none}
+  .rv-stages__btn{min-height:44px;flex:none}
+  .rv-stages__lab{display:none}
+  .rv-stages__auto{margin-left:0}
+}
+
+/* 5. zoomable drawings */
+.rv-zoomhost{position:relative}
+.rv-zoombtn{position:absolute;top:var(--space-3);right:var(--space-3);z-index:5;height:36px;padding:0 var(--space-3);opacity:0;transform:translateY(-4px);
+  transition:opacity var(--dur-base) var(--ease-out),transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background-color var(--dur-fast) ease}
+:hover>.rv-zoombtn,.rv-zoombtn:focus-visible{opacity:1;transform:none}
+@media (hover:none){.rv-zoombtn{opacity:1;transform:none;height:44px;min-width:44px;padding:0 var(--space-2)}.rv-zoombtn span{display:none}}
+.rv-lightbox{width:min(1280px,96vw);height:min(92vh,92dvh);max-width:none;max-height:none;padding:0;margin:auto;border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-lg,16px);
+  background:var(--paper-raised);color:var(--ink);box-shadow:var(--rv-pencil,2px 3px 0 0 var(--ink));overflow:hidden}
+.rv-lightbox[open]{display:flex;flex-direction:column;animation:rv-lb-in var(--dur-base) var(--ease-out)}
+.rv-lightbox::backdrop{background:rgba(31,29,26,.55)}
+@keyframes rv-lb-in{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.rv-lightbox__bar{display:flex;align-items:center;gap:var(--space-4);padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--line-strong)}
+.rv-lightbox__cap{margin:0;flex:1;min-width:0;font:400 13px/20px var(--rds-mono);color:var(--ink-faint);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rv-lightbox__tools{display:flex;gap:var(--space-2);flex:none}
+.rv-lightbox__tools button{width:44px;height:44px;padding:0}
+.rv-lightbox__stage{position:relative;flex:1;min-height:0;overflow:hidden;cursor:grab;touch-action:none;background:var(--paper)}
+.rv-lightbox__stage.is-grab{cursor:grabbing}
+.rv-lightbox__inner{position:absolute;inset:0;transform-origin:0 0;will-change:transform}
+.rv-lightbox__inner>svg{display:block;width:100%;height:100%;max-width:none;max-height:none;user-select:none}
+.rv-lightbox__hint{margin:0;padding:var(--space-2) var(--space-4);border-top:1px solid var(--line-strong);font:400 14px/20px var(--rv-hand,var(--rds-sans));color:var(--ink-faint)}
+.rv-lb-open{overflow:hidden}
+@media (max-width:640px){.rv-lightbox{width:100vw;height:100dvh;border-radius:0;border-width:0}.rv-lightbox__bar{padding:var(--space-2) var(--space-3)}}
+
+@media (prefers-reduced-motion:reduce){
+  .rv-reroll,.rv-zoombtn,.rv-tip,.rv-lightbox[open]{animation:none;transition:none}
+  .rds-art.rv-redrawn>svg{animation:none}
+  .rv-compare .rv-slider__grip{transition:none}
+}
+@media print{.rv-reroll,.rv-zoombtn,.rv-stages,.rv-slider,.rv-tip,.rv-lightbox{display:none!important}}
+
+/* three-way segmented control (Today / Proposed / Slide) on phones */
+@media (max-width:640px){.rv-seg:has([data-rv-slide]){grid-template-columns:repeat(3,1fr)}}
