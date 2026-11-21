@@ -1,0 +1,25 @@
+/* Redrawn Design System: the Continue block (topic chips, related pages, previous/next). Script: continue.js. Tokens only (tokens.css).
+   Sits above the Keep reading rail, so it takes the rail's top rule only when no rail follows. */
+.rv-cont{margin:var(--space-16) 0 0;padding-top:var(--space-12);border-top:var(--rv-stroke,1.5px) solid var(--ink)}
+.rv-cont__title{margin:var(--space-2) 0 var(--space-6);font:600 clamp(26px,4vw,36px)/1.15 var(--rv-hand)}
+.rv-cont__topics{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3) var(--space-4);margin-bottom:var(--space-8)}
+.rv-cont__lab{font:600 var(--fs-12)/16px var(--rds-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.rv-cont__chips{display:flex;flex-wrap:wrap;gap:var(--space-2);list-style:none;margin:0;padding:0}
+.rv-cont__chips a{text-decoration:none}
+.rv-cont__groups{display:grid;gap:var(--space-8) var(--space-12);grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));margin-bottom:var(--space-8)}
+.rv-cont__h{margin:0 0 var(--space-2);padding-bottom:var(--space-2);border-bottom:1px solid var(--line);font:600 var(--fs-12)/16px var(--rds-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.rv-cont__list{list-style:none;margin:0;padding:0}
+.rv-cont__list li{display:grid;gap:2px;padding:var(--space-3) 0;border-bottom:1px solid var(--line)}
+.rv-cont__list a{font:600 var(--fs-19)/1.3 var(--rds-serif);color:var(--moss);text-decoration:none;overflow-wrap:anywhere}
+.rv-cont__list a:hover{color:var(--brick)}
+.rv-cont__list span{font:400 var(--fs-14)/22px var(--rds-sans);color:var(--ink-muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}
+.rv-cont__pager{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)}
+.rv-cont__side{display:grid;gap:var(--space-1);align-content:center;min-height:var(--tap-min);padding:var(--space-4);border:1px solid var(--line-strong);border-radius:var(--radius-lg);background:var(--paper-raised);color:var(--ink);text-decoration:none;transition:border-color var(--dur-fast) var(--ease-std),transform var(--dur-base) var(--ease-out)}
+.rv-cont__side--next{text-align:right;grid-column:2}
+.rv-cont__side:hover{border-color:var(--brick);transform:translateY(-1px)}
+.rv-cont__side small{font:400 var(--fs-14)/1.2 var(--rv-hand);color:var(--ink-muted)}
+.rv-cont__side b{font:600 var(--fs-19)/1.3 var(--rds-serif);overflow-wrap:anywhere}
+.rv-cont a:focus-visible{outline:2px solid var(--ink);outline-offset:var(--focus-gap)}
+@media (max-width:640px){.rv-cont{margin-top:var(--space-12);padding-top:var(--space-8)}.rv-cont__pager{grid-template-columns:1fr}.rv-cont__side--next{grid-column:auto;text-align:left}}
+@media (prefers-reduced-motion:reduce){.rv-cont__side{transition:none}.rv-cont__side:hover{transform:none}}
+@media print{.rv-cont{display:none}}
