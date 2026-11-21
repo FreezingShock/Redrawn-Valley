@@ -1,13 +1,13 @@
 """Tiny hand-drawn SVG helper used to (re)generate the Field Guide infobox art and other sketches.
 Deterministic: each drawing seeds its own RNG, so re-running gives identical files. Palette tokens only.
-Usage: from sketchlib import *; d=Draw(seed); d.line(...); svg=d.svg(300,150)"""
-import math, random
+Usage: from art_lib import *; d=Draw(seed); d.line(...); svg=d.svg(300,150)"""
+import math, random, zlib
 INK='#1f1d1a'; MOSS='#2f4a3a'; BRICK='#9c3d24'; SLATE='#35506b'; LINE='#d9d0bd'; STRONG='#8a8170'
 MOSST='#dfe6d8'; BRICKT='#f0d9cc'; SUNK='#ece5d6'; RAISED='#fbf8f1'; SKY='#e8eef5'
 
 class Draw:
     def __init__(s, seed=1, jitter=1.1):
-        s.r=random.Random(seed); s.j=jitter; s.o=[]; s.defs=[]; s.n=0
+        s.r=random.Random(seed); s.sid=zlib.crc32(str(seed).encode())%9973; s.j=jitter; s.o=[]; s.defs=[]; s.n=0
     def J(s,a=None): a=s.j if a is None else a; return s.r.uniform(-a,a)
     def _smooth(s,pts,closed=False):
         n=len(pts)
@@ -45,7 +45,7 @@ class Draw:
         if tint: s.o.append('<path d="%s" fill="%s" transform="translate(2.2 2.2)"/>'%(s._smooth(pts,True),tint))
         s.o.append('<path d="%s" stroke="%s" stroke-width="%s" fill="none" stroke-linecap="round"/>'%(s._smooth(pts,True),stroke,w))
     def hatch(s,x,y,w,h,gap=6,angle=45,color=STRONG,sw=1.1,op=.8,poly=None):
-        s.n+=1; cid='c%d_%d'%(id(s)%9973,s.n)
+        s.n+=1; cid='c%d_%d'%(s.sid,s.n)
         if poly: s.defs.append('<clipPath id="%s"><path d="%s"/></clipPath>'%(cid,'M'+'L'.join('%s %s'%p for p in poly)+'Z'))
         else: s.defs.append('<clipPath id="%s"><rect x="%s" y="%s" width="%s" height="%s"/></clipPath>'%(cid,x,y,w,h))
         t=math.tan(math.radians(angle)); L=[]

@@ -1,9 +1,9 @@
 """Flat-tile collage banners for the guide, notes and studies index pages: 3 tinted fields side by side, each with one
 drafting object (compass, ruler, scale bar), one plan/section fragment and one texture (grid, halftone, contour).
-Run: python3 scripts/tiles_art.py   (rewrites the <figure class="rv-tiles"> block in each index page)"""
+Run: python3 scripts/art_tiles.py   (rewrites the <figure class="rv-tiles"> block in each index page)"""
 import math, pathlib, re, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from sketchlib import *
+from art_lib import *
 H=220
 def grid(d,x,y,w,h,gap=14,color=MOSS,op=.35,sw=1):
     p=''.join('M%d %dV%d'%(x+i,y,y+h) for i in range(0,int(w)+1,gap))+''.join('M%d %dH%d'%(x,y+j,x+w) for j in range(0,int(h)+1,gap))
@@ -84,9 +84,8 @@ if __name__=='__main__':
     # (file, anchor: first closing tag after which to insert)
     for slug,variant,seed in (('guide','guide',31),('notes','notes',32),('studies','studies',33)):
         f=root/slug/'index.html'; t=f.read_text(); new=banner(variant,seed)
-        if 'class="rv-tiles"' in t: t=re.sub(r'<figure class="rv-tiles".*?</figure>',lambda m:new,t,count=1,flags=re.S)
-        else:
-            m=re.search(r'(<h1 class="rds-display(?:-xl)?"[^>]*>.*?</h1>.*?</div>\s*)',t,re.S)
-            # insert after the closing of the first sechead div
-            i=m.end(); t=t[:i]+new+'\n'+t[i:]
+        # The live banner (assets/rds/motifs.js) replaced this static one. Only refresh a static figure that is already
+        # on the page; never insert one, so a run reproduces the committed pages exactly.
+        if 'class="rv-tiles"' not in t: print(slug, 'no static banner, left alone'); continue
+        t=re.sub(r'<figure class="rv-tiles".*?</figure>',lambda m:new,t,count=1,flags=re.S)
         f.write_text(t); print(slug,len(new))

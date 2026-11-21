@@ -6,7 +6,7 @@ go down: a count above the baseline is an error, so new code has to use tokens. 
 change with the theme, with the reason beside it). Files not in the baseline must be clean.
 Run: python3 scripts/check_tokens.py [--update-baseline]  (check.py runs it)"""
 import re, sys, json, pathlib
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root
 BASE = root / 'scripts' / 'token-baseline.json'
 SKIP = {'assets/rds/tokens.css', 'assets/rds/theme.css'}   # tokens live in tokens.css; theme.css holds generated dark data-URI art  # assets/fonts/ holds generated @font-face rules, which must name the family
 URL = re.compile(r'url\((?:"[^"]*"|\'[^\']*\'|[^)]*)\)')

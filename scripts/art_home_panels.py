@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Plan drawings for the home page study panels (studies 02 and 03).
 
-Run:  python3 scripts/home_panels.py     (rewrites the marked drawings in index.html and studies/index.html)
+Run:  python3 scripts/art_home_panels.py     (rewrites the marked drawings in index.html and studies/index.html)
 
 Study 02 is drawn from the City parcel outlines (scripts/data/fallbrook_parcels.py) and the design numbers in
-scripts/fallbrook_art.py. Study 03 is drawn from the dimensions in scripts/ventura_corner_art.py (all estimates there:
+scripts/art_fallbrook.py. Study 03 is drawn from the dimensions in scripts/art_ventura_corner.py (all estimates there:
 100 x 96 ft lot, 78 x 70 ft building, 10 ft sidewalks, 24 x 22 ft plaza notch). Linework is seeded pencil wobble; colours come
 from CSS classes (dk, df-*, dt in assets/site.css, token-based, so the drawings follow the theme).
 """
@@ -12,7 +12,7 @@ import math, os, re, sys, random
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
-import fallbrook_art as fb  # noqa: E402
+import art_fallbrook as fb  # noqa: E402
 
 PAGES = [os.path.join(ROOT, 'index.html'), os.path.join(ROOT, 'studies/index.html')]
 fb.R.seed(5)

@@ -8,9 +8,9 @@ See DESIGN.md > Topics."""
 import sys, json, html, pathlib, importlib.util
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from build_fonts import block_for as fonts_head  # self-hosted font links, one source of truth
-import sys as _sys, pathlib as _pl; _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent)); import assetver as _av
+import assetver as _av
 
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root
 spec = importlib.util.spec_from_file_location('build_index', root / 'scripts' / 'build_index.py')
 bi = importlib.util.module_from_spec(spec); spec.loader.exec_module(bi)
 
