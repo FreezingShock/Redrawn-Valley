@@ -363,11 +363,24 @@ The search dialog is its own module, loaded on idle by `site-shell.js` (which ke
 One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>` of every page (right after the viewport meta; it loads `flow.css` itself). It paints paper over the first frame, then plays:
 
 - **Opening** (first visit of a session, every reload): a sheet of paper tiles; the logo draws, "Redrawn Valley" writes in, the tiles shrink away from the center. 1.5 s in all (0.9 s drawing, 0.6 s lift). The sheet never takes pointer input, so the page underneath works at once; a tap anywhere skips ahead.
-- **Wipe** (clicking any same-site link): tiles grow from the click point with the destination section written on them (0.5 s), then the next page lifts them from the same point. Back/forward skip it. Tiles are a manual popover (top layer), so the search dialog is covered too. Opt a link out with `data-no-flow`.
+- **Link transitions** (clicking any same-site link): the page you leave covers itself with paper (`make` + `cover`), stores the context in `sessionStorage` (`rv-flow-nav`: kind, direction, click point, seed, destination name) and navigates; the next page rebuilds the same layers fully covering (`make` + `hold`), drops its flat paper cover, and lifts (`lift`). Back/forward skip it. The sheet is a manual popover (top layer), so the search dialog is covered too. Six kinds, each in `K` in `flow.js` with its styles in `flow.css`:
+
+  | Kind | Plays for | Cover | Lift |
+  |---|---|---|---|
+  | `turn` | `rel="prev"`/`rel="next"` (Continue pager, guide A–Z pager); `data-flow="turn:-1"` forces direction | a lined page with margin rule slides in from the side of the arrow | keeps going out the other side |
+  | `shuffle` | list rows, index pages (one path segment deep) | 4 taped cards drop in with a seeded tilt and offset, 70 ms apart | thrown off in turn, seeded left, right or up |
+  | `sketch` | `.rds-card`, `.rv-way`, panels, any large link block outside a list | the pressed card is cloned and its paper grows to the page | an even-odd polygon hole opens from the new page's title |
+  | `bloom` | header, footer, tab bar, breadcrumbs | tinted rim, then paper, as circles growing from the click (or the link's centre for keyboard use) | shrinks back to the same point |
+  | `tiles` | jumps to another section | the original grid of tiles from the click point | tiles shrink from the same point |
+  | `fade` | small hops inside a section, arrivals with no stored context (search results) | paper opacity 0 to 1 | 1 to 0 |
+
+  **Choosing:** `choose()` in `flow.js` reads the link (markup, closest container, section of the current and the destination path) and gets a pool. A generator seeded from the destination path and a session click counter picks from the pool and leaves out the kind that played last (`rv-flow-last`), so repeats differ and the same kind never plays twice in a row. A link can force one with `data-flow="kind[:dir]"` and opt out with `data-no-flow`. The destination name is written on the paper in every kind but `fade`.
+  **Speed:** lengths are tokens (`--flow-cover` 440 ms, `--flow-lift` 580 ms, `--flow-fade-in/out`, `--flow-cards`, `--flow-tilt`, `--flow-edge`, `--flow-margin`, `--flow-bleed`); the page starts loading the moment the cover finishes, and links are prefetched on hover, focus and touch (skipped for Save-Data and 2g).
+  **Adding a kind:** add `K.name = { make(s,c), hold(s,c), cover(s,c,ms), lift(s,c,ms), plate? }` (each animation returns a promise; put the plate host in `s._host`), its layer styles in `flow.css` (tokens only), a row in the table above and a button in the motion lab demo.
 - **Write-on headings**: `h1`, `.rds-display` and section `h2`s are split into letters that ink in on the Wobble axes (`BNCE`, `INFM`) with a pencil squiggle drawn under (`.fl-ul`). Replaces `data-rds-split` on page titles. Section headings play when 60% visible.
 - **Micro-interactions**: pencil dab on click (`.fl-dab`), wavy link underline, spring buttons, tilting cards and rows, logo hop, rules that draw on and figure crop marks (`.fl-sk`).
 - **Off** under `prefers-reduced-motion`, in `?embed=1` frames, print, and with `?noflow`. A 3 s failsafe always removes the sheet.
-- **API**: `RVFlow.intro()`, `RVFlow.preview(a, b, x, y)`, `RVFlow.wipe(url)`, `RVFlow.write(el)`, `RVFlow.speed`. Tile colors are the art accents; tile art is the grid circle and hatched square from the motif system.
+- **API**: `RVFlow.intro()`, `RVFlow.preview(kind, a, b, x, y, dir)`, `RVFlow.wipe(url, kind?)`, `RVFlow.kinds`, `RVFlow.write(el)`, `RVFlow.speed`. Tile colors are the art accents; tile art is the grid circle and hatched square from the motif system.
 
 ## Nav wash and hero buttons
 
