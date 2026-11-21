@@ -28,7 +28,7 @@
 
   /* ---------- critical style and stylesheet ---------- */
   var cs = doc.createElement('style');
-  cs.textContent = 'html.fl-cover::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#f6f1e7;pointer-events:none}' +
+  cs.textContent = 'html.fl-cover::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#f6f1e7;pointer-events:none}html[data-theme=dark].fl-cover::before{background:#17120d}' +
     '@media print{html.fl-cover::before{display:none}}';
   (doc.head || root).appendChild(cs);
   var css = doc.createElement('link'); css.rel = 'stylesheet'; css.href = BASE + 'flow.css';

@@ -38,7 +38,7 @@
 
 /* Infobox: the fact table at the top right of an entry */
 .rds-infobox{margin:0 0 var(--space-6);background:var(--paper-raised);border:1px solid var(--line-strong);border-radius:var(--radius-md);overflow:hidden;font:400 14px/21px var(--rds-sans)}
-.rds-infobox__title{margin:0;padding:var(--space-3) var(--space-4);background:var(--moss);color:var(--on-moss);font:500 18px/1.25 var(--rds-serif);text-align:center}
+.rds-infobox__title{margin:0;padding:var(--space-3) var(--space-4);background:var(--moss-fill);color:var(--on-band);font:500 18px/1.25 var(--rds-serif);text-align:center}
 .rds-infobox__art{display:block;width:100%;height:auto;background:var(--moss-tint);border-bottom:1px solid var(--line)}
 .rds-infobox__cap{margin:0;padding:var(--space-2) var(--space-4);border-bottom:1px solid var(--line);font:400 12px/18px var(--rds-mono);color:var(--ink-faint);text-align:center}
 .rds-infobox dl{margin:0}
