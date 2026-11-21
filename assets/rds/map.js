@@ -154,7 +154,7 @@
       var r = stage.getBoundingClientRect(); sw = Math.max(200, r.width); sh = Math.max(200, r.height);
       svg.setAttribute('viewBox', '0 0 ' + sw + ' ' + sh); kFit = Math.min(sw / WW, sh / WH); kMin = kFit * .9; kMax = kFit * 14;
     }
-    function bound(c) { c.k = clamp(c.k, kMin, kMax); var mx = WW * .06, my = WH * .06; c.cx = clamp(c.cx, -mx + sw / 2 / c.k * .3, WW + mx - sw / 2 / c.k * .3); c.cy = clamp(c.cy, -my + sh / 2 / c.k * .3, WH + my - sh / 2 / c.k * .3); return c; }
+    function bound(c) { if (!(c.k > 0)) c.k = kFit || 1; c.k = clamp(c.k, kMin, kMax); var mx = WW * .06, my = WH * .06; c.cx = clamp(c.cx, -mx + sw / 2 / c.k * .3, WW + mx - sw / 2 / c.k * .3); c.cy = clamp(c.cy, -my + sh / 2 / c.k * .3, WH + my - sh / 2 / c.k * .3); return c; }
     function scr_(wx, wy) { return [sw / 2 + (wx - cur.cx) * cur.k, sh / 2 + (wy - cur.cy) * cur.k]; }
     function world_(sx, sy, v) { v = v || cur; return [v.cx + (sx - sw / 2) / v.k, v.cy + (sy - sh / 2) / v.k]; }
     function fitBox(x0, y0, x1, y1, pad) {
@@ -239,16 +239,16 @@
     function kick() { dirty = true; if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } }
     function flyTo(v, ms) {
       v = bound(v); if (reduce || !ms) { cur = { cx: v.cx, cy: v.cy, k: v.k }; tgt = { cx: v.cx, cy: v.cy, k: v.k }; anim = null; kick(); return; }
-      anim = { t0: performance.now(), ms: ms, a: { cx: cur.cx, cy: cur.cy, k: cur.k }, b: v }; vel.x = vel.y = 0; kick();
+      tgt = { cx: v.cx, cy: v.cy, k: v.k }; anim = { t0: performance.now(), ms: ms, a: { cx: cur.cx, cy: cur.cy, k: cur.k }, b: v }; vel.x = vel.y = 0; kick();
     }
     function ease(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
-    function frame(now) {
-      raf = 0; var dt = Math.min(.05, (now - last) / 1000); last = now; var busy = false;
+    function frame() {
+      raf = 0; var now = performance.now(); /* not the rAF timestamp: in an iframe it runs on a different clock */ var dt = Math.min(.05, (now - last) / 1000); last = now; var busy = false;
       if (anim) {
         var t = clamp((now - anim.t0) / anim.ms, 0, 1), e = ease(t), a = anim.a, b = anim.b;
         /* zoom in log space, and move the centre along the arc that keeps the flight smooth */
         var lk = Math.log(a.k) + (Math.log(b.k) - Math.log(a.k)) * e, k = Math.exp(lk), u = (k - a.k) / ((b.k - a.k) || 1);
-        var w = Math.abs(b.k - a.k) < 1e-6 ? e : (1 / a.k - 1 / k) / ((1 / a.k - 1 / b.k) || 1);
+        var w = Math.abs(Math.log(b.k / a.k)) < .02 ? e : (1 / a.k - 1 / k) / (1 / a.k - 1 / b.k);
         cur.k = k; cur.cx = a.cx + (b.cx - a.cx) * w; cur.cy = a.cy + (b.cy - a.cy) * w; tgt = { cx: cur.cx, cy: cur.cy, k: cur.k };
         if (t >= 1) anim = null; else busy = true;
       } else if (dragging) { busy = true; }
@@ -256,6 +256,7 @@
         if (Math.abs(vel.x) + Math.abs(vel.y) > 8) { /* inertia (px/s) */
           cur.cx -= vel.x * dt / cur.k; cur.cy -= vel.y * dt / cur.k; var fr = Math.exp(-dt * 5.5); vel.x *= fr; vel.y *= fr; tgt.cx = cur.cx; tgt.cy = cur.cy; bound(cur); busy = true;
         } else { vel.x = vel.y = 0; }
+        if (!(tgt.k > 0) || !isFinite(tgt.cx) || !isFinite(tgt.cy)) tgt = { cx: cur.cx, cy: cur.cy, k: cur.k };
         var ez = 1 - Math.exp(-dt * 13);
         if (Math.abs(Math.log(tgt.k / cur.k)) > .0006 || Math.hypot(tgt.cx - cur.cx, tgt.cy - cur.cy) * cur.k > .15) {
           cur.k = Math.exp(Math.log(cur.k) + (Math.log(tgt.k) - Math.log(cur.k)) * ez); cur.cx += (tgt.cx - cur.cx) * ez; cur.cy += (tgt.cy - cur.cy) * ez; busy = true;
@@ -330,6 +331,7 @@
 
     /* ---- per-frame draw ---- */
     function draw() {
+      if (!isFinite(cur.k) || !isFinite(cur.cx) || !isFinite(cur.cy) || cur.k <= 0) { cur = bound({ cx: WW / 2, cy: WH / 2, k: kFit }); tgt = { cx: cur.cx, cy: cur.cy, k: cur.k }; anim = null; }
       var k = cur.k, z = k / kFit;
       world.setAttribute('transform', 'translate(' + (sw / 2 - cur.cx * k).toFixed(2) + ' ' + (sh / 2 - cur.cy * k).toFixed(2) + ') scale(' + k.toFixed(4) + ')');
       fdots.style.opacity = clamp(1.6 - z * .3, 0, 1); var mop = clamp(1.25 - z * .28, 0, 1); mo.style.opacity = mop; mo.style.display = mop < .02 ? 'none' : '';
@@ -450,7 +452,7 @@
       if (tl.length) chips(topicsEl, [['all', 'All topics']].concat(tl.map(function (c) { return [c, TOPIC_NAME[c] || c, tc[c]]; })), 'topic'); else topicsEl.hidden = true;
       size(); var hv = homeView(); cur = { cx: hv.cx, cy: hv.cy, k: hv.k }; tgt = { cx: hv.cx, cy: hv.cy, k: hv.k };
       /* open on the zoomed-out valley, then glide in to the pins */
-      if (!reduce) { cur = bound({ cx: WW / 2, cy: WH / 2, k: kFit }); anim = null; setTimeout(function () { flyTo(hv, 1500); }, 350); }
+      if (!reduce) { cur = bound({ cx: WW / 2, cy: WH / 2, k: kFit }); tgt = { cx: cur.cx, cy: cur.cy, k: cur.k }; anim = null; setTimeout(function () { size(); flyTo(homeView(), 1500); }, 450); }
       renderList(); draw(); kick();
       var m = decodeURIComponent(location.hash.slice(1)); if (m) { var hit = places.concat(wide).filter(function (p) { return p.u.replace(/\/$/, '') === m; })[0]; if (hit) setTimeout(function () { select(hit, { fly: true }); }, reduce ? 0 : 900); }
     }
