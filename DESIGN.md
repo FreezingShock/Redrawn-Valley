@@ -372,3 +372,7 @@ Topics are the subject threads that run across studies, field guide entries, not
 - **Hubs.** `topics/index.html` and `topics/<slug>/index.html` are generated. After tagging or adding a page run `python3 scripts/regen.py` (all generators in order: log, index, topics, index; CI runs it after each merge to `integration`, so forgetting is harmless) and commit the outputs (`check.py` warns when they are stale). Never hand-edit a hub.
 - **Hub anatomy.** Tiles banner seeded `topics/<slug>`, the lead and the question line (`rv-thead`), count pills that jump to each list (`rv-tstat`), then one section per kind: studies as `rds-card` cards (`rv-tcard`), everything else as `rds-row` rows (`rv-trow`) listing the page's other topics, then the other-topic chips (`rv-tchip`). The index page adds a coverage table (`rv-tmatrix`) so gaps are visible.
 
+
+## Study page header
+
+Study pages use the shared site header (`rds-nav`, from `site-shell.js`, held at 72px because study pages do not load `rds.js`) and, directly under it, a sticky part bar `rv-study-bar` with `id="top"`: the study name at left, then Site / Evidence / Design / Delivery / Sources, driven by `data-toc`. The old stand-alone study header, its "All studies" link and its Search link are gone (the header and breadcrumbs cover them). On phones the bar is one scrolling row that tracks the header as it hides (`--rv-sub`). The scroll-driven figure pins under both bars.
