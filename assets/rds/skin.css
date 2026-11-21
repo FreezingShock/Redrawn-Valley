@@ -591,7 +591,7 @@ svg text[style*="Architects Daughter"]{font-family:var(--rv-hand)!important}
 
 /* ---------- hero buttons: drawn in on load ---------- */
 /* Primary: the outline is pencilled in, the brick fills, then the arrow draws and flies off and a new one settles in. Secondary: ink text with a drawn rule. Brick appears once, on the primary. */
-.rv-ctas{align-items:center;gap:var(--space-5)}
+.rv-ctas{align-items:center;column-gap:var(--space-8);row-gap:var(--space-3)}
 .rv-cta{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:var(--space-3);height:52px;padding:0 var(--space-6) 0 var(--space-6);color:var(--on-ink);font:700 18px/1 var(--rv-hand);letter-spacing:.01em;text-decoration:none;-webkit-tap-highlight-color:transparent}
 .rv-cta__frame{position:absolute;inset:0;z-index:-1;width:100%;height:100%;overflow:visible}
 .rv-cta__shadow{fill:var(--ink);opacity:0;animation:rv-cta-in .3s ease 1.15s forwards}
@@ -614,10 +614,10 @@ svg text[style*="Architects Daughter"]{font-family:var(--rv-hand)!important}
   45%{transform:translate(52px,-14px) rotate(-14deg);opacity:0}
   46%{transform:translate(-30px,0);opacity:0}
   100%{transform:none;opacity:1}}
-.rv-textlink{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) 2px var(--space-3);color:var(--ink);font:400 18px/24px var(--rv-hand);text-decoration:none;opacity:0;animation:rv-cta-in .4s ease 1.3s forwards}
+.rv-textlink{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);height:52px;padding:0 2px;color:var(--ink);font:400 18px/24px var(--rv-hand);text-decoration:none;opacity:0;animation:rv-cta-in .4s ease 1.3s forwards}
 .rv-textlink__down{flex:none;width:12px;height:16px;color:var(--ink-muted)}
 .rv-textlink__down path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .35s ease-out 1.7s forwards}
-.rv-textlink__rule{position:absolute;left:0;right:0;bottom:0;width:100%;height:8px;overflow:visible}
+.rv-textlink__rule{position:absolute;left:0;right:0;bottom:11px;width:100%;height:8px;overflow:visible}
 .rv-textlink__rule path{fill:none;stroke:var(--ink-muted);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .6s ease-out 1.5s forwards;transition:stroke var(--dur-fast) ease}
 .rv-textlink:hover .rv-textlink__rule path,.rv-textlink:focus-visible .rv-textlink__rule path{stroke:var(--ink);stroke-width:2}
 .rv-textlink:hover .rv-textlink__down{transform:translateY(3px)}

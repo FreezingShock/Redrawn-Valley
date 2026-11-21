@@ -5,8 +5,17 @@
   <link rel="self" type="application/atom+xml" href="https://redrawnvalley.vercel.app/log/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/"/>
   <id>https://redrawnvalley.vercel.app/log/</id>
-  <updated>2026-11-21T08:18:05+00:00</updated>
+  <updated>2026-11-21T08:22:36+00:00</updated>
   <author><name>Nate Anderson</name></author>
+  <entry>
+    <title>Drawings gallery: /drawings/ with filters, zoom and stage stepper; figure manifest; lab note; docs</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-064344f</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-064344f"/>
+    <updated>2026-11-21T08:22:36+00:00</updated>
+    <category term="lab" label="Lab note"/>
+    <summary>How one script and one page collect every labeled figure from the studies and notes into a filterable, zoomable sheet, without a list anyone has to keep up to date.</summary>
+    <content type="html">&lt;p&gt;How one script and one page collect every labeled figure from the studies and notes into a filterable, zoomable sheet, without a list anyone has to keep up to date.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/drawings-gallery/&quot;&gt;How the drawings gallery finds every figure&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/a-z/&quot;&gt;A–Z index&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/&quot;&gt;Lab notes&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
   <entry>
     <title>Gallery page, styles, script</title>
     <id>tag:redrawnvalley.vercel.app,2026-11-21:c-8fe7632</id>
@@ -343,14 +352,5 @@
     <category term="redraw" label="Redraw"/>
     <summary>Redrew the guide art, restyled the essay figures and the Topanga study, and added tile banners.</summary>
     <content type="html">&lt;p&gt;Redrew the guide art, restyled the essay figures and the Topanga study, and added tile banners.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/&quot;&gt;Field guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/notes/&quot;&gt;Notes&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/&quot;&gt;Studies&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Simpler icons and logo</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-15</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-15"/>
-    <updated>2026-11-20T13:29:36-08:00</updated>
-    <category term="redraw" label="Redraw"/>
-    <summary>Redrew the icon set and logo mark with fewer strokes.</summary>
-    <content type="html">&lt;p&gt;Redrew the icon set and logo mark with fewer strokes.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/icons/&quot;&gt;Icon set&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
 </feed>
