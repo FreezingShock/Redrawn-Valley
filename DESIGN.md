@@ -134,6 +134,8 @@ Components (prefix `rv-`, tokens only):
 - **Sections** `rv-part` > `rv-part__bar` (Part N of 4) and `rv-sec` > `rv-sec__head` (eyebrow, h2 headline, summary) + `rv-sec__body` (64ch). Citations `rv-cite`; source list `rv-sources` with `<li id="sN">`; page bar `rv-study-bar`.
 - Legacy study-script hooks (keep as is): `rds-view` (reveal), `rds-split`/`rds-w` (headline words), `rds-draw` with `.s`/`.f`, `kt` rail, `kstep`/`data-scrolly`, `data-toc`.
 
+- **Study 02 drawings are generated from public parcel data**: `python3 scripts/fallbrook_art.py` redraws the parcel plan, the staged frontage plan and the section from `scripts/data/fallbrook_parcels.py` (City of Los Angeles parcel outlines) and the design numbers at the top of the script, with asserts. Study-specific styles live in `studies/<slug>/study.css` (`fb-` prefix); drawing classes (`dk`, `df-*`, `dt`) are the same as study 01.
+
 **Adding a study**
 1. Copy `studies/_template/index.html` to `studies/<slug>/index.html` (same depth, so paths stay valid). Delete the noindex meta and the instruction comment.
 2. Replace every `[BRACKETED CAPS]` placeholder; fill every infobox row. Keep the real/estimated callout, Measuring, Limits and Sources. Headlines state findings; every number is cited; no invented sources.
