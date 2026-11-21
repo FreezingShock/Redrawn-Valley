@@ -128,7 +128,7 @@
       '<div class="rv-rail__tools"><button class="rv-rail__random" type="button" data-rv-random>' + DICE + '<span>Random page</span></button>' +
       '<div class="rv-rail__arrows"><button class="rv-rail__arrow" type="button" data-dir="-1" aria-label="Previous cards">' + icon('chevron-right', 20) + '</button><button class="rv-rail__arrow" type="button" data-dir="1" aria-label="Next cards">' + icon('chevron-right', 20) + '</button></div></div></header></div>' +
       '<div class="rv-rail__view"><ul class="rv-rail__track" tabindex="0" role="region" aria-label="Related pages, scroll sideways">' + items.map(card).join('') + '</ul></div>' +
-      '<div class="rds-container"><div class="rv-rail__meter" aria-hidden="true"><i></i></div></div>';
+      '<div class="rds-container"><div class="rv-rail__meter" role="slider" tabindex="0" aria-label="Position in the rail" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div></div>';
     var foot = main.querySelector('.rv-footstrip'); main.appendChild(sec);
     behave(sec);
     var arts = [].slice.call(sec.querySelectorAll('.rds-art'));
@@ -139,66 +139,150 @@
     });
   }
 
-  /* ---------- scrolling behaviour ---------- */
+  /* ---------- scrolling behaviour ----------
+     Native scrolling does the work wherever it already feels right (touch, trackpad momentum, shift-wheel is handled below).
+     On fine pointers there is no CSS snap (it fights a gesture mid-flight); instead, once a gesture has been quiet for a moment, a
+     critically damped spring settles the rail on the nearest card. Drag, arrows, keys and the progress bar share that spring. */
   function behave(sec) {
-    var track = sec.querySelector('.rv-rail__track'), view = sec.querySelector('.rv-rail__view'), prev = sec.querySelector('[data-dir="-1"]'), next = sec.querySelector('[data-dir="1"]'), bar = sec.querySelector('.rv-rail__meter i');
-    var cards = [].slice.call(track.children), ticking = false;
-    function smooth() { return reduceMQ.matches ? 'auto' : 'smooth'; }
+    var track = sec.querySelector('.rv-rail__track'), view = sec.querySelector('.rv-rail__view'), prev = sec.querySelector('[data-dir="-1"]'), next = sec.querySelector('[data-dir="1"]');
+    var bar = sec.querySelector('.rv-rail__meter'), thumb = bar.firstChild, cards = [].slice.call(track.children);
+    var fine = window.matchMedia ? matchMedia('(hover:hover) and (pointer:fine)') : { matches: true };
+    var x = track.scrollLeft, target = null, vel = 0, raf = 0, last = 0, dragging = false, down = 0, quiet = 0, tickIdx = -1, barDrag = null, ticking = false;
+    function max() { return Math.max(0, track.scrollWidth - track.clientWidth); }
+    function clamp(v) { return Math.max(0, Math.min(max(), v)); }
+    function snaps() { var pad = cards[0].offsetLeft; return cards.map(function (c) { return clamp(c.offsetLeft - pad); }); }
+    function nearest(pos) { var S = snaps(), bi = 0, bd = 1e9; S.forEach(function (v, i) { var d = Math.abs(v - pos); if (d < bd) { bd = d; bi = i; } }); return { i: bi, x: S[bi] }; }
     function step() { return cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth; }
+    function set(v) { track.scrollLeft = v; x = track.scrollLeft; }
+
+    /* ---- the spring: critically damped, so it never overshoots and always arrives softly ---- */
+    function frame(t) {
+      var dt = Math.min(.034, (t - last) / 1000 || .016); last = t;
+      var k = 230, c = 2 * Math.sqrt(k);
+      var a = -k * (x - target) - c * vel; vel += a * dt; x += vel * dt;
+      if (Math.abs(x - target) < .35 && Math.abs(vel) < 6) { x = target; vel = 0; track.scrollLeft = x; raf = 0; target = null; arrived(); return; }
+      track.scrollLeft = x; raf = requestAnimationFrame(frame);        // x stays a float: the browser rounds scrollLeft, which would eat slow sub-pixel steps
+    }
+    function go(to, v0) {
+      to = clamp(to);
+      if (reduceMQ.matches) { target = null; set(to); arrived(); return; }
+      target = to; if (v0 !== undefined) vel = v0;
+      if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+    }
+    function halt() { if (raf) { cancelAnimationFrame(raf); raf = 0; } target = null; vel = 0; }
+    function settle(v) { var n = nearest(x + (v || 0) * .18); go(n.x, v || 0); }
+
+    /* ---- feedback: a small tick on the card the rail lands on, plus a buzz on phones that support it ---- */
+    function arrived() {
+      var n = nearest(x);
+      if (n.i !== tickIdx) {
+        if (tickIdx >= 0) { var el = cards[n.i].firstChild; el.classList.remove('is-tick'); void el.offsetWidth; el.classList.add('is-tick'); thumb.classList.remove('is-tick'); void thumb.offsetWidth; thumb.classList.add('is-tick'); if (navigator.vibrate && matchMedia('(pointer:coarse)').matches) navigator.vibrate(6); }
+        tickIdx = n.i;
+      }
+    }
+
+    /* ---- state: arrows, edge fades, thumb ---- */
     function update() {
       ticking = false;
-      var max = track.scrollWidth - track.clientWidth, x = track.scrollLeft;
-      view.classList.toggle('can-prev', x > 4); view.classList.toggle('can-next', x < max - 4);
-      prev.setAttribute('aria-disabled', x <= 4); next.setAttribute('aria-disabled', x >= max - 4);
-      bar.style.transform = 'scaleX(' + (max > 0 ? Math.max(.08, Math.min(1, (x + track.clientWidth * .0) / (max + track.clientWidth) + track.clientWidth / (max + track.clientWidth))) : 1).toFixed(3) + ')';
+      var m = max(), cw = track.clientWidth, sw = track.scrollWidth, left = track.scrollLeft;
+      view.classList.toggle('can-prev', left > 4); view.classList.toggle('can-next', left < m - 4);
+      prev.setAttribute('aria-disabled', left <= 4); next.setAttribute('aria-disabled', left >= m - 4);
+      var bw = bar.clientWidth, tw = Math.max(48, bw * cw / sw), tx = m > 0 ? (bw - tw) * left / m : 0;
+      thumb.style.width = tw + 'px'; thumb.style.transform = 'translateX(' + tx.toFixed(1) + 'px)';
+      bar.setAttribute('aria-valuenow', m > 0 ? Math.round(left / m * 100) : 0);
     }
     function queue() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
-    track.addEventListener('scroll', queue, { passive: true });
+    track.addEventListener('scroll', function () {
+      queue();
+      if (Math.abs(track.scrollLeft - x) < 1.01) return;          // our own write: x already matches
+      if (raf) { halt(); }                                      // the user took over (touch, trackpad, keys): the spring steps aside
+      x = track.scrollLeft; vel = 0;
+      clearTimeout(quiet); if (fine.matches && !dragging && !down) quiet = setTimeout(function () { if (!dragging && !down && !raf) settle(0); }, 150);
+    }, { passive: true });
     window.addEventListener('resize', queue, { passive: true });
     if (window.ResizeObserver) new ResizeObserver(queue).observe(track);
     update();
-    function page(dir) { var n = Math.max(1, Math.floor(track.clientWidth / step())); track.scrollBy({ left: dir * n * step(), behavior: smooth() }); }
-    [prev, next].forEach(function (b) { b.addEventListener('click', function () { page(+b.getAttribute('data-dir')); }); });
 
-    /* keyboard: when the track itself has focus; links inside keep their own Tab order and scroll into view natively */
+    /* ---- arrows and keys: one page, eased; pressing again keeps going from where the last press will land ---- */
+    function page(dir) {
+      var per = Math.max(1, Math.floor(track.clientWidth / step())), from = target !== null ? target : x;
+      var n = nearest(from), S = snaps(), i = Math.max(0, Math.min(cards.length - 1, n.i + dir * per));
+      go(dir > 0 && i === n.i ? max() : (dir < 0 && i === n.i ? 0 : S[i]));
+    }
+    [prev, next].forEach(function (b) { b.addEventListener('click', function () { page(+b.getAttribute('data-dir')); }); });
     track.addEventListener('keydown', function (e) {
       if (e.target !== track || e.altKey || e.ctrlKey || e.metaKey) return;
-      var k = e.key;
-      if (k === 'ArrowRight') { e.preventDefault(); track.scrollBy({ left: step(), behavior: smooth() }); }
-      else if (k === 'ArrowLeft') { e.preventDefault(); track.scrollBy({ left: -step(), behavior: smooth() }); }
-      else if (k === 'Home') { e.preventDefault(); track.scrollTo({ left: 0, behavior: smooth() }); }
-      else if (k === 'End') { e.preventDefault(); track.scrollTo({ left: track.scrollWidth, behavior: smooth() }); }
+      var k = e.key, S = snaps(), n = nearest(target !== null ? target : x);
+      if (k === 'ArrowRight') { e.preventDefault(); go(S[Math.min(cards.length - 1, n.i + 1)]); }
+      else if (k === 'ArrowLeft') { e.preventDefault(); go(S[Math.max(0, n.i - 1)]); }
+      else if (k === 'Home') { e.preventDefault(); go(0); } else if (k === 'End') { e.preventDefault(); go(max()); }
       else if (k === 'PageDown') { e.preventDefault(); page(1); } else if (k === 'PageUp') { e.preventDefault(); page(-1); }
     });
-    track.addEventListener('focusin', function (e) { var li = e.target.closest && e.target.closest('.rv-rail__item'); if (li) { var l = li.offsetLeft - track.clientWidth * .05; if (li.offsetLeft < track.scrollLeft || li.offsetLeft + li.offsetWidth > track.scrollLeft + track.clientWidth) track.scrollTo({ left: l, behavior: smooth() }); } });
+    track.addEventListener('focusin', function (e) { var li = e.target.closest && e.target.closest('.rv-rail__item'); if (li && !dragging) { var i = cards.indexOf(li), S = snaps(); if (li.offsetLeft - cards[0].offsetLeft < x - 2 || li.offsetLeft + li.offsetWidth > x + track.clientWidth + 2 - cards[0].offsetLeft) go(S[i]); } });
 
-    /* mouse drag with a glide on release (touch and trackpads already have native momentum) */
-    var drag = null, moved = false;
+    /* ---- wheel: trackpads scroll natively (their own momentum); a notched mouse wheel with Shift, or sideways, glides a card per notch ---- */
+    track.addEventListener('wheel', function (e) {
+      var dx = e.deltaX, dy = e.deltaY, d = Math.abs(dx) > Math.abs(dy) ? dx : (e.shiftKey ? dy : 0);
+      if (!d) return;                                                    // plain vertical wheel belongs to the page
+      var notched = e.deltaMode === 1 || (Math.abs(d) >= 50 && Math.abs(d) % 1 === 0 && !(dx && dy));
+      clearTimeout(quiet);
+      if (!notched) { if (raf) halt(); x = track.scrollLeft; quiet = setTimeout(function () { if (!dragging && !down && !raf && fine.matches) settle(0); }, 150); return; }
+      e.preventDefault();
+      var dir = d > 0 ? 1 : -1, S = snaps(), n = nearest(target !== null ? target : x);
+      var i = Math.max(0, Math.min(cards.length - 1, n.i + (Math.abs(S[n.i] - (target !== null ? target : x)) < 2 || (S[n.i] - (target !== null ? target : x)) * dir > 0 ? dir : 0)));
+      go(S[i]);
+    }, { passive: false });
+
+    /* ---- grab and drag: 1:1 with the pointer, then it carries on with the speed you let go at and settles on a card ---- */
+    var drag = null, moved = false, samples = [];
     track.addEventListener('pointerdown', function (e) {
       if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      drag = { x: e.clientX, left: track.scrollLeft, t: performance.now(), lx: e.clientX, lt: performance.now(), v: 0, id: e.pointerId }; moved = false;
+      halt(); drag = { x: e.clientX, left: track.scrollLeft, id: e.pointerId }; moved = false; down = 1; samples = [[performance.now(), e.clientX]];
     });
     track.addEventListener('pointermove', function (e) {
       if (!drag || e.pointerId !== drag.id) return;
       var dx = e.clientX - drag.x;
-      if (!moved && Math.abs(dx) > 6) { moved = true; track.classList.add('is-drag'); try { track.setPointerCapture(e.pointerId); } catch (er) { } }
+      if (!moved && Math.abs(dx) > 5) { moved = true; dragging = true; track.classList.add('is-drag'); try { track.setPointerCapture(e.pointerId); } catch (er) { } }
       if (!moved) return;
-      track.scrollLeft = drag.left - dx;
-      var now = performance.now(), dt = now - drag.lt; if (dt > 0) { drag.v = .8 * drag.v + .2 * ((drag.lx - e.clientX) / dt); drag.lx = e.clientX; drag.lt = now; }
+      var v = drag.left - dx, m = max();
+      if (v < 0) v = v * .35; else if (v > m) v = m + (v - m) * .35;      // a little give at the ends
+      track.scrollLeft = Math.max(0, Math.min(m, v)); x = track.scrollLeft;
+      track.style.setProperty('--pull', (v < 0 ? -v : v > m ? m - v : 0).toFixed(1) + 'px');
+      var now = performance.now(); samples.push([now, e.clientX]); while (samples.length > 2 && now - samples[0][0] > 110) samples.shift();
     });
     function end(e) {
       if (!drag || (e && e.pointerId !== drag.id)) return;
-      var d = drag; drag = null;
+      drag = null; down = 0;
       if (!moved) return;
-      var glide = Math.max(-900, Math.min(900, d.v * 260));
-      track.classList.remove('is-drag');
-      var target = track.scrollLeft + glide, best = 0, bd = 1e9;
-      cards.forEach(function (c) { var dd = Math.abs(c.offsetLeft - target); if (dd < bd) { bd = dd; best = c.offsetLeft; } });
-      track.scrollTo({ left: Math.max(0, Math.min(best, track.scrollWidth - track.clientWidth)), behavior: smooth() });
+      dragging = false; track.classList.remove('is-drag'); track.style.removeProperty('--pull');
+      var a = samples[0], b = samples[samples.length - 1], v = b[0] > a[0] ? -(b[1] - a[1]) / (b[0] - a[0]) * 1000 : 0;   // px per second, content direction
+      x = Math.max(0, Math.min(max(), x));
+      settle(Math.max(-3500, Math.min(3500, v)));
     }
     track.addEventListener('pointerup', end); track.addEventListener('pointercancel', end);
     track.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
     track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    track.addEventListener('touchstart', function () { down = 1; halt(); }, { passive: true });
+    track.addEventListener('touchend', function () { down = 0; if (fine.matches) { clearTimeout(quiet); quiet = setTimeout(function () { if (!raf) settle(0); }, 160); } else setTimeout(arrived, 200); }, { passive: true });
+    if ('onscrollend' in window) track.addEventListener('scrollend', function () { if (!fine.matches && !raf) { x = track.scrollLeft; arrived(); } });
+
+    /* ---- progress bar: drag the thumb, click the track to jump a page, arrow keys when focused ---- */
+    bar.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      var r = bar.getBoundingClientRect(), t = thumb.getBoundingClientRect();
+      halt();
+      if (e.target === thumb || (e.clientX >= t.left && e.clientX <= t.right)) {
+        barDrag = { x: e.clientX, left: track.scrollLeft, id: e.pointerId, k: max() / Math.max(1, r.width - t.width) }; down = 1; bar.classList.add('is-grab'); try { bar.setPointerCapture(e.pointerId); } catch (er) { }
+      } else page(e.clientX > t.right ? 1 : -1);
+      e.preventDefault();
+    });
+    bar.addEventListener('pointermove', function (e) { if (barDrag && e.pointerId === barDrag.id) { var v = clamp(barDrag.left + (e.clientX - barDrag.x) * barDrag.k); set(v); queue(); } });
+    function barEnd(e) { if (barDrag && (!e || e.pointerId === barDrag.id)) { barDrag = null; down = 0; bar.classList.remove('is-grab'); settle(0); } }
+    bar.addEventListener('pointerup', barEnd); bar.addEventListener('pointercancel', barEnd);
+    bar.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); page(1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); page(-1); } else if (e.key === 'Home') { e.preventDefault(); go(0); } else if (e.key === 'End') { e.preventDefault(); go(max()); } });
+
+    tickIdx = nearest(x).i;
+    sec.__rail = { go: go, settle: settle, state: function () { return { x: x, target: target, raf: !!raf, tick: tickIdx }; } };
   }
 
   /* ---------- go ---------- */
