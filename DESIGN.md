@@ -298,6 +298,15 @@ Standing rule: every lab, demo or exploration page (pattern sheet, icon set, typ
 - **Framed demo**: `<iframe class="rds-demo__frame" src="../../x/index.html?embed=1" style="--demo-h:760px;--demo-h-m:640px">`. `?embed=1` makes `site-shell.js` hide the header, footer, breadcrumbs, tab bar and the page's own h1 and eyebrow (add `data-rv-embed-skip` to anything else to hide), and post its height. Add `data-fit="auto"` to the iframe to grow to that height; omit it for a long page (the type lab) so the frame scrolls on its own. Pages that are only demos should be `noindex` (see `lab/motif-sheet/demo/`).
 - Lab articles are indexed under the section "Lab notes".
 
+## Search (`assets/rds/search.js`, `search.css`)
+The search dialog is its own module, loaded on idle by `site-shell.js` (which keeps `window.RVSearch.open/search`). Classes are `rvs-*` on `.rds-search.rvs`.
+- **Open/close:** the box grows out of the button that opened it, a two-pass pencil frame draws itself (stroke-dashoffset on `pathLength=1` paths), bar, chips and footer rise in turn; close plays a 190 ms exit before `dialog.close()`. Phones get a full-screen sheet.
+- **Matching:** instant on every keystroke, no debounce. Substring scoring over title, headings, description and full text; typo tolerance (Levenshtein, 1 edit, 2 for words of 8+ letters) only when fewer than three pages match exactly. Matches are highlighted with a marker stroke that sweeps in. "Did you mean" comes from the site's own vocabulary.
+- **Rows:** icon per type and topic (from the icon sprite), titles write on, the selected row gets a hand-drawn box and a return arrow. Mouse move, arrows, PageUp/Down, Ctrl+N/P and Ctrl/Cmd+Home/End select; Enter opens, Cmd/Ctrl+Enter opens a new tab, Alt+Left/Right changes the filter, Esc clears then closes. Opening plays a pencil wipe (skipped for same-page links).
+- **Preview (wide screens):** seeded `RDSArt` card keyed to the page slug, description, headings (matching ones marked) and an Open button.
+- **States:** browse (hero doodle, try-chips, recents from `localStorage` key `rv-search-recent`, pages grouped by section), no results (drawn magnifier, suggestions), none under a filter.
+- **Motion:** everything stands still under `prefers-reduced-motion`; the frame, underline and doodles show in their finished state.
+
 ## Flow: page-to-page motion (`assets/rds/flow.js`, `flow.css`, lab `lab/motion-lab/`)
 
 One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>` of every page (right after the viewport meta; it loads `flow.css` itself). It paints paper over the first frame, then plays:

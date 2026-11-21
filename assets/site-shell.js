@@ -186,93 +186,18 @@
   }
 
   /* ---------- search ---------- */
-  var dlg, input, list, status, active = -1, current = [];
-  function build() {
-    dlg = doc.createElement('dialog'); dlg.className = 'rds-search'; dlg.setAttribute('aria-label', 'Search the site');
-    dlg.innerHTML = '<form class="rds-search__bar" role="search" method="dialog">' + SEARCH_ICON +
-      '<input type="search" class="rds-search__input" placeholder="Search studies, guide, notes" autocomplete="off" spellcheck="false" aria-label="Search" role="combobox" aria-expanded="true" aria-controls="rv-results" aria-autocomplete="list">' +
-      '<button type="button" class="rds-search__close" aria-label="Close search"><span class="rv-k-desk">Esc</span><span class="rv-k-mob">Cancel</span></button></form>' +
-      '<ul class="rds-search__list" id="rv-results" role="listbox"></ul><p class="rds-search__status rds-mono" aria-live="polite"></p>';
-    doc.body.appendChild(dlg);
-    input = dlg.querySelector('input'); list = dlg.querySelector('ul'); status = dlg.querySelector('.rds-search__status');
-    input.addEventListener('input', function () { run(input.value); });
-    dlg.querySelector('.rds-search__close').addEventListener('click', function () { dlg.close(); });
-    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
-    dlg.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); move(e.key === 'ArrowDown' ? 1 : -1); }
-      else if (e.key === 'Escape') { e.preventDefault(); dlg.close(); }
-      else if (e.key === 'Enter') { var r = current[active < 0 ? 0 : active]; if (r) { e.preventDefault(); location.href = r.href; } }
-    });
-    dlg.addEventListener('close', function () { doc.documentElement.classList.remove('rds-lock'); });
+  /* The dialog lives in assets/rds/search.js (+ search.css), loaded on idle and on first open. See DESIGN.md > Search. */
+  var searchImpl = null, searchP = null;
+  function loadSearch() {
+    if (!searchP) searchP = new Promise(function (res) {
+      var s = doc.createElement('script'); s.src = new URL('assets/rds/search.js', siteRoot).href;
+      s.onload = function () { res(window.RVSearchBoot({ esc: esc, all: all, href: href, icon: icon, siteRoot: siteRoot, labels: LABELS, loadIndex: loadIndex, data: function () { return DATA; } })); };
+      s.onerror = function () { res(null); }; doc.head.appendChild(s);
+    }).then(function (i) { searchImpl = i; return i; });
+    return searchP;
   }
-  function move(d) {
-    if (!current.length) return; active = (active + d + current.length) % current.length;
-    all('li', list).forEach(function (li, i) { li.setAttribute('aria-selected', i === active); if (i === active) { li.scrollIntoView({ block: 'nearest' }); input.setAttribute('aria-activedescendant', li.id); } });
-  }
-  function terms(q) { return q.toLowerCase().split(/[^a-z0-9À-ɏ]+/).filter(Boolean); }
-  function mark(text, ts) {
-    var s = esc(text); if (!ts.length) return s;
-    return s.replace(new RegExp('(' + ts.map(function (t) { return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('|') + ')', 'ig'), '<mark>$1</mark>');
-  }
-  function snippet(text, ts) {
-    var low = text.toLowerCase(), at = -1; ts.forEach(function (t) { var i = low.indexOf(t); if (i >= 0 && (at < 0 || i < at)) at = i; });
-    if (at < 0) return text.slice(0, 140);
-    var from = Math.max(0, at - 50), s = text.slice(from, from + 150);
-    return (from > 0 ? '…' : '') + s + (from + 150 < text.length ? '…' : '');
-  }
-  function search(q) {
-    var ts = terms(q), res = []; if (!ts.length || !DATA) return res;
-    DATA.pages.forEach(function (p) {
-      var t = p.t.toLowerCase(), d = (p.d || '').toLowerCase(), x = (p.x || '').toLowerCase(), hs = p.h.map(function (h) { return h[0].toLowerCase(); });
-      var score = 0, ok = true;
-      ts.forEach(function (w) {
-        var s = 0, ti = t.indexOf(w);
-        if (ti >= 0) s += ti === 0 || t[ti - 1] === ' ' ? 12 : 6;
-        if (hs.some(function (h) { return h.indexOf(w) >= 0; })) s += 5;
-        if (d.indexOf(w) >= 0) s += 3;
-        var xi = x.indexOf(w); if (xi >= 0) s += 1 + Math.min(2, (x.split(w).length - 1) / 5);
-        if (!s) ok = false; score += s;
-      });
-      if (!ok) return;
-      if (t.indexOf(q.toLowerCase().trim()) >= 0) score += 10;
-      if (p.u === '') score -= 2;
-      res.push({ score: score, p: p });
-      // headings that match every term become their own rows when they have an anchor
-      p.h.forEach(function (h) {
-        var hl = h[0].toLowerCase(); if (!h[1] || !ts.every(function (w) { return hl.indexOf(w) >= 0; })) return;
-        res.push({ score: score - 1 + 4, p: p, h: h });
-      });
-    });
-    return res.sort(function (a, b) { return b.score - a.score; }).slice(0, 10);
-  }
-  function row(r, i, ts) {
-    var p = r.p, h = r.h, url = href(p.u) + (h ? '#' + h[1] : '');
-    var dl = (p.d || '').toLowerCase(), body = r.snip != null ? r.snip : (ts.some(function (t) { return dl.indexOf(t) >= 0; }) || !p.x ? p.d || '' : p.x);
-    current.push({ href: url });
-    return '<li role="option" id="rv-r' + i + '" aria-selected="false"><a href="' + esc(url) + '" tabindex="-1">' +
-      '<span class="rds-tag">' + esc((DATA.sections || LABELS)[p.s] || p.s) + '</span>' +
-      '<span class="rds-search__title">' + mark(h ? h[0] : p.t, ts) + '</span>' +
-      (h ? '<span class="rds-search__crumb">in ' + esc(p.t) + '</span>' : '<span class="rds-search__text">' + mark(snippet(body, ts), ts) + '</span>') + '</a></li>';
-  }
-  function run(q) {
-    current = []; active = -1; input.removeAttribute('aria-activedescendant');
-    var ts = terms(q);
-    if (!ts.length) {
-      var pages = DATA ? DATA.pages.filter(function (p) { return p.u !== ''; }).slice(0, 8) : [];
-      list.innerHTML = pages.length ? '<li class="rds-search__label" role="presentation">Browse</li>' + pages.map(function (p, i) { return row({ p: p, snip: p.d || '' }, i, []); }).join('') : '';
-      status.textContent = pages.length ? '' : 'Type to search.'; return;
-    }
-    var res = search(q);
-    list.innerHTML = res.map(function (r, i) { return row(r, i, ts); }).join('');
-    status.textContent = res.length ? res.length + (res.length === 1 ? ' result' : ' results') + ' (↑ ↓ to move, Enter to open)' : 'Nothing for “' + q.trim() + '”. Try a shorter word, or browse Field guide, Studies and Notes from the menu.';
-  }
-  function open(q) {
-    if (!dlg) build(); if (dlg.open) { input.focus(); return; }
-    dlg.showModal(); doc.documentElement.classList.add('rds-lock');
-    input.value = q || ''; run(input.value); input.focus(); input.select();
-    loadIndex().then(function () { run(input.value); });
-  }
-  window.RVSearch = { open: open, search: function (q) { return loadIndex().then(function () { return search(q); }); } };
+  function open(q) { var opener = doc.activeElement; if (searchImpl) return searchImpl.open(q, opener); loadSearch().then(function (i) { if (i) i.open(q, opener); else location.href = href('guide/'); }); }
+  window.RVSearch = { open: open, search: function (q) { return Promise.all([loadIndex(), loadSearch()]).then(function () { return searchImpl ? searchImpl.search(q) : []; }); } };
 
   /* ---------- wire up ---------- */
   function init() {
@@ -291,7 +216,7 @@
       var t = e.target, typing = t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable);
       if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey)) { e.preventDefault(); open(''); }
     });
-    if (all('[data-rv-search-open],[data-rv-search-form]').length) { var idle = window.requestIdleCallback || setTimeout; idle(loadIndex); }
+    if (all('[data-rv-search-open],[data-rv-search-form]').length) { var idle = window.requestIdleCallback || setTimeout; idle(function () { loadIndex(); loadSearch(); }); }
   }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
 })();

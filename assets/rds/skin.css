@@ -265,16 +265,6 @@
   /* wide drawings pan sideways with a hint instead of shrinking labels */
   .rv-study figure:not([data-scrolly]>figure) svg[viewBox]{min-width:0}
 
-  /* ---- search: full screen sheet ---- */
-  .rds-search{width:100%;max-width:none;height:100dvh;max-height:none;margin:0;border:0;border-radius:0}
-  .rds-search__bar{padding:var(--space-2) var(--space-2) var(--space-2) var(--space-4);border-bottom-color:var(--line-strong)}
-  .rds-search__input{height:48px;font-size:18px}
-  .rv-k-desk{display:none}.rv-k-mob{display:inline}
-  .rds-search__close{height:44px;min-width:64px;font:500 15px/1 var(--rds-sans);color:var(--ink);border:0;background:none}
-  .rds-search__list{padding:0}
-  .rds-search__list a{padding:var(--space-4) var(--space-4);min-height:56px}
-  .rds-search__list li{border-radius:0;border-bottom:1px solid var(--line)}
-  .rds-search__status{padding-bottom:calc(var(--space-3) + var(--rv-safe))}
 }
 
 /* small phones (360) */
@@ -328,7 +318,7 @@
 .rds-row__meta{font-size:15px}
 
 /* ---------- wobbly borders ---------- */
-.rds-card,.rv-feature,.rds-figure__art,.rv-compare__stage,.rv-about__art,.rds-infobox,.rv-infobox,.rds-search,.rds-card__media{border-radius:var(--rv-r-lg)}
+.rds-card,.rv-feature,.rds-figure__art,.rv-compare__stage,.rv-about__art,.rds-infobox,.rv-infobox,.rds-card__media{border-radius:var(--rv-r-lg)}
 .rds-callout,.rds-input,.rv-seg,.rds-contents,.rds-hero__art{border-radius:var(--rv-r-md)}
 .rds-tag--solid,.rds-notes li:target,.rv-sources li:target{border-radius:var(--rv-r-sm)}
 .rds-card,.rv-feature,.rv-compare__stage,.rds-infobox,.rv-infobox,.rds-figure__art,.rv-fig .rds-figure__art{border:var(--rv-stroke) solid var(--ink)}
@@ -535,7 +525,6 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 .rds-quote p,.rds-prose blockquote{font-size:26px}
 .rv-pull p{font-size:clamp(22px,3vw,28px)}
 .rds-article__body blockquote{font-size:18px}
-.rds-search__input{font-size:18px}
 /* hand lettering for UI: the most informal setting */
 .rds-eyebrow,.rds-tag,.rds-nav__links a,.rds-nav__search,.rds-row__meta,.rds-btn,.rds-chip,.rv-seg button,.rds-note,.rv-tabbar a,.rv-tabbar button{font-variation-settings:"INFM" 100,"BNCE" 0}
 .rds-eyebrow{font-size:15px}
