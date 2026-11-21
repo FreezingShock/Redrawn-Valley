@@ -360,3 +360,16 @@ Topics are the subject threads that run across studies, field guide entries, not
 - **Hubs.** `topics/index.html` and `topics/<slug>/index.html` are generated. After tagging or adding a page run `python3 scripts/regen.py` (all generators in order: log, index, topics, index; CI runs it after each merge to `integration`, so forgetting is harmless) and commit the outputs (`check.py` warns when they are stale). Never hand-edit a hub.
 - **Hub anatomy.** Tiles banner seeded `topics/<slug>`, the lead and the question line (`rv-thead`), count pills that jump to each list (`rv-tstat`), then one section per kind: studies as `rds-card` cards (`rv-tcard`), everything else as `rds-row` rows (`rv-trow`) listing the page's other topics, then the other-topic chips (`rv-tchip`). The index page adds a coverage table (`rv-tmatrix`) so gaps are visible.
 
+
+## Drawings gallery (`drawings/`, `scripts/build_drawings.py`, `assets/drawings.json`, `assets/rds/drawings.css`, `drawings.js`)
+
+One sheet of every figure from the studies, notes and field guide. Nothing is listed by hand and no artwork is copied.
+
+- **What counts as a drawing**: an inline `<svg>` inside `<main>` with `role="img"`, an `aria-label`, a `viewBox` at least 360 wide and no `aria-hidden` (the same test as the zoom button in `interact.js`). Decorative art (banners, infobox sketches, icons) is `aria-hidden` and never listed. To keep a figure out, add `data-fig-skip`.
+- **Manifest**: `scripts/build_drawings.py` writes metadata only (page, order on the page, label, caption, note, figure number, nearest section anchor and heading, type, topics, staged-plan step labels). It is step one of `scripts/regen.py`, so CI refreshes it after each merge; `check.py` warns when it is stale. Other generators may read `assets/drawings.json`.
+- **Guesses and overrides**: type (`plan`, `section`, `perspective`, `chart`, `diagram`) is guessed from the label, then caption, then note. Topics use the slugs in `assets/topics.json`, limited to the page's `rv-topics`. Override on the `<svg>` or its `<figure>`: `data-fig-type="plan"`, `data-fig-topics="heat trees"`.
+- **Rendering**: `drawings.js` fetches the source page, lifts the figure by order (checked against its label) and mounts it in a shadow root together with that page's stylesheets, so per-study class names do not clash. Staged plans (one svg in a `[data-scrolly]` with two or more `[data-step]`s) start on their last stage and get a stage stepper in the lightbox.
+- **Components**: `dg-toolbar` (search, count, size toggle; sticky), `dg-filters` (Source, Type, Topic `dg-chip` rows with live counts; a collapsible panel under 640px), `dg-grid` of `dg-card` (frame and offset hover shadow from the sketchbook layer, hatched `is-loading` state), and `dg-lbx` (previous/next, stages, "View on page") placed in the shared `.rv-lightbox` through `RDSInteract.zoom(null, opts)`.
+- **URL state**: `?source=&type=&topic=&q=&size=l` and `#<drawing id>`. Keys `[` and `]` step through drawings in the lightbox.
+- **Embedding**: `drawings/index.html?embed=1&limit=6` is the live demo in `lab/drawings-gallery/`.
+- Limits: type and topic are guesses; a figure whose stages are not marked with `data-scrolly` shows only its last state.

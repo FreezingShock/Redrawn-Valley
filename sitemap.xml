@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://redrawnvalley.vercel.app/a-z/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/drawings/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/guide/bioswale/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/guide/cool-pavement/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/guide/impervious-surface/</loc></url>
@@ -15,6 +16,7 @@
   <url><loc>https://redrawnvalley.vercel.app/guide/urban-heat-island/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/icons/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/</loc></url>
+  <url><loc>https://redrawnvalley.vercel.app/lab/drawings-gallery/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/lab/icon-set/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/lab/</loc></url>
   <url><loc>https://redrawnvalley.vercel.app/lab/motif-sheet/</loc></url>

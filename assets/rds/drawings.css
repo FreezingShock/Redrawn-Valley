@@ -68,6 +68,8 @@
 .dg-lbx button:hover,.dg-lbx a:hover{background:var(--paper-sunk)}
 .dg-lbx button[aria-pressed=true]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
 .dg-lbx button:focus-visible,.dg-lbx a:focus-visible{outline:2px solid var(--brick);outline-offset:3px}
+.dg-lbx__short{display:none}
+@media (max-width:640px){.dg-lbx__short{display:inline}}
 .dg-lbx__pos{font:400 12px/16px var(--rds-mono);color:var(--ink-faint);padding:0 var(--space-1);flex:none}
 .dg-lbx__stages{display:flex;gap:var(--space-1);flex-wrap:wrap}
 .dg-big{display:block;width:100%;height:100%}
@@ -94,12 +96,13 @@
   .rv-lightbox:has(.dg-lbx) .rv-lightbox__bar{flex-wrap:wrap;gap:var(--space-2)}
   .rv-lightbox:has(.dg-lbx) .rv-lightbox__cap{order:1;flex:1 1 100%}
   .rv-lightbox:has(.dg-lbx) [data-z="in"],.rv-lightbox:has(.dg-lbx) [data-z="out"]{display:none}
-  .rv-lightbox:has(.dg-lbx) .rv-lightbox__tools{order:4;margin-left:auto}
+  .rv-lightbox:has(.dg-lbx) .rv-lightbox__tools{order:3;margin-left:auto}
+  .dg-lbx__pos{display:none}
+  .dg-lbx__full{display:none}
   .dg-lbx{display:contents}
   .dg-lbx__stages{order:2;flex:1 1 100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
   .dg-lbx__stages button{flex:none}
   .dg-lbx>button,.dg-lbx>.dg-lbx__pos,.dg-lbx>a{order:3}
-  .dg-lbx .dg-lbx__view span{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .dg-card{opacity:1;transform:none;transition:box-shadow var(--dur-fast)}
@@ -107,3 +110,7 @@
   .dg-card__art.is-loading::before{animation:none}
 }
 @media print{.dg-bar,.dg-zoom{display:none}.dg-card{opacity:1;transform:none;break-inside:avoid}}
+
+/* embedded in the lab note (?embed=1) */
+.rv-embed .rv-nhead,.rv-embed .dg-section~.rds-section{display:none}
+.rv-embed .dg-section{padding-block:var(--space-3) var(--space-6)}

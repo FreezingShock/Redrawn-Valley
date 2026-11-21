@@ -33,16 +33,18 @@ TYPES = [
     ('chart', r'degrees|readings?\b|reductions?\b|\bpercent|\bchart\b|\bgraph\b|canopy at planting|\byear \d+|\bbars?\b'),
 ]
 TYPE_LABELS = {'plan': 'Plan', 'section': 'Section', 'perspective': 'Perspective', 'chart': 'Chart', 'diagram': 'Diagram'}
-# Topics are guessed the same way. These match the topic hubs: Heat, Trees, Water, Parking, plus Soil and Streets.
-TOPICS = {
-    'heat': r'\bheat|\bhot\b|temperature|degrees|thermometer|\bsun\b|\bwarm|cool(?:er|ing)?\b',
+# Topics use the shared slugs in assets/topics.json (see DESIGN.md > Topics). A figure's topics are guessed from its words,
+# limited to the topics its page is tagged with (<meta name="rv-topics">); if no word matches, it takes the page's primary topic.
+TOPIC_RX = {
+    'heat': r'\bheat|\bhot\b|temperature|degrees|thermometer|\bsun\b|\bwarm|\bcool(?:er|ing)?\b',
     'trees': r'\btrees?\b|canopy|willow|shade|planting|\bgrove|\bsycamore|\boak',
-    'water': r'\bwater|stormwater|bioswale|runoff|\brain|\briver|drain|\bflow|swale|infiltrat',
-    'soil': r'\bsoil|\broots?\b|planter|\bcells?\b|\bwell\b|compact',
-    'parking': r'parking|\bstalls?\b|\blots?\b|asphalt|\bcars?\b|drive aisle',
+    'water': r'\bwater|stormwater|bioswale|runoff|\brain|\briver|drain|\bflow|swale|infiltrat|\bsoil|\broots?\b|planter|compact',
+    'parking': r'parking|\bstalls?\b|\blots?\b|asphalt|\bcars?\b|drive aisle|paving|pavers?',
     'streets': r'sidewalk|crosswalk|\bstreets?\b|curb|\bwalk|\bblock\b|\broute|frontage|signal|pedestrian|\bboulevard|\bavenue',
+    'valley': r'\bvalley\b|county|los angeles|\bl\.?a\.?\b',
 }
-TOPIC_LABELS = {'heat': 'Heat', 'trees': 'Trees', 'water': 'Water', 'soil': 'Soil', 'parking': 'Parking', 'streets': 'Streets'}
+try: TOPIC_DEFS = {x['slug']: x['title'] for x in json.loads((root / 'assets' / 'topics.json').read_text(encoding='utf-8'))['topics']}
+except Exception: TOPIC_DEFS = {k: k.title() for k in TOPIC_RX}
 
 def clean(s):
     return re.sub(r'\s+', ' ', s or '').strip()
@@ -67,7 +69,7 @@ class Page(HTMLParser):
         s.scrollies = []        # {'steps': [(n,label)], 'svgs': [drawing indexes]}
         s.cur_h = None; s.text_seen = []
         s.svg_depth = 0; s.skip = 0
-        s.study_no = ''
+        s.study_no = ''; s.topics = []
     def _scrolly(s):
         for _, i in reversed(s.stack):
             if i.get('scrolly'): return s.scrollies[i['scrolly'] - 1]
@@ -76,6 +78,8 @@ class Page(HTMLParser):
         a = dict(attrs)
         if tag == 'title': s.in_title = True
         if tag in SKIP: s.skip += 1
+        if tag == 'meta' and (a.get('name') or '') == 'rv-topics':
+            s.topics = [x.strip() for x in (a.get('content') or '').split(',') if x.strip()]
         if tag == 'main': s.in_main += 1
         if tag in VOID: return
         info = {}
@@ -171,11 +175,12 @@ def classify(texts, rules):
             if re.search(rx, text, re.I): return name
     return 'diagram'
 
-def topics_for(label, cap):
+def topics_for(label, cap, page_topics):
     txt = label + ' ' + cap
-    scores = {k: len(re.findall(rx, txt, re.I)) for k, rx in TOPICS.items()}
-    ranked = [k for k, v in sorted(scores.items(), key=lambda kv: -kv[1]) if v > 0]
-    return ranked[:3]
+    pool = [k for k in TOPIC_RX if not page_topics or k in page_topics]
+    scores = {k: len(re.findall(TOPIC_RX[k], txt, re.I)) for k in pool}
+    ranked = [k for k, v in sorted(scores.items(), key=lambda kv: -kv[1]) if v > 0][:2]
+    return ranked or page_topics[:1] or []
 
 def build():
     pages, drawings = [], []
@@ -206,7 +211,7 @@ def build():
                 if m and m.group(2): caption = m.group(2)
                 text = g['label'] + ' ' + caption + ' ' + note
                 typ = g['type'] or fa.get('data-fig-type', '') or classify([g['label'], caption, note], TYPES)
-                tps = (g['topics'] or fa.get('data-fig-topics', '')).split() or topics_for(g['label'], caption)
+                tps = (g['topics'] or fa.get('data-fig-topics', '')).split() or topics_for(g['label'], caption, p.topics)
                 base = g['id'] or slug(g['label'])
                 k = used.get(base, 0); used[base] = k + 1
                 did = f'{slg}-{base}' + (f'-{k + 1}' if k else '')
@@ -222,7 +227,7 @@ def build():
         sections.append({'id': sec, 'label': label, 'noun': noun, 'count': found})
     # stage info: second pass is cheap but needs scrolly data, so it is attached above via a re-parse below
     return {'version': 1, 'rule': f'inline svg in main, role=img, aria-label, viewBox width >= {MIN_WIDTH}, not aria-hidden',
-            'types': TYPE_LABELS, 'topics': TOPIC_LABELS, 'sections': [s for s in sections if s['count']],
+            'types': TYPE_LABELS, 'topics': {k: v for k, v in TOPIC_DEFS.items() if k != 'making'}, 'sections': [s for s in sections if s['count']],
             'pages': pages, 'drawings': drawings}
 
 def attach_stages(data):

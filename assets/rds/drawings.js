@@ -234,7 +234,7 @@
       var stages = '';
       if (x.stages) stages = '<div class="dg-lbx__stages" role="group" aria-label="Stage">' + x.stages.map(function (s, i) { return '<button type="button" data-stage="' + i + '" aria-pressed="' + (i === x.stages.length - 1) + '">' + esc(short(s, 22)) + '</button>'; }).join('') + '</div>';
       ex.innerHTML = stages + '<button type="button" data-step="-1" aria-label="Previous drawing" title="Previous ( [ )">&larr;</button><span class="dg-lbx__pos">' + pos + ' / ' + list.length + '</span><button type="button" data-step="1" aria-label="Next drawing" title="Next ( ] )">&rarr;</button>' +
-        '<a class="dg-lbx__view" href="' + href(x, true) + '">View on page <span aria-hidden="true">&rarr;</span></a>';
+        '<a class="dg-lbx__view" href="' + href(x, true) + '"><span class="dg-lbx__full">View on page</span><span class="dg-lbx__short">Page</span> <span aria-hidden="true">&rarr;</span></a>';
       ex.addEventListener('click', function (e) {
         var s = e.target.closest('[data-step]'); if (s) { step(+s.getAttribute('data-step')); return; }
         var b = e.target.closest('[data-stage]'); if (b && host.shadowRoot) {

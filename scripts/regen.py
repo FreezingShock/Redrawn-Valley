@@ -7,7 +7,7 @@ To add a generator, append it to STEPS (skipped if the script does not exist yet
 import sys, subprocess, pathlib
 
 root = pathlib.Path(__file__).resolve().parent
-STEPS = ['build_log.py', 'build_index.py', 'build_topics.py', 'build_index.py']
+STEPS = ['build_drawings.py', 'build_log.py', 'build_index.py', 'build_topics.py', 'build_index.py']
 check = '--check' in sys.argv
 if check:
     # --check cannot chain (the hubs are judged against a fresh index), so regenerate in a temp copy of the state: just report staleness per step
