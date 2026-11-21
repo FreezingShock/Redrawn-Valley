@@ -96,6 +96,11 @@
       ['width', 'height', 'style', 'data-rds-draw'].forEach(function (a) { c.removeAttribute(a); });
       c.setAttribute('data-in', ''); all('.rds-draw,.rds-view', c).forEach(function (n) { n.setAttribute('data-in', ''); });
       w.appendChild(c); sr.appendChild(w);
+      /* pages keep big drawings in cached art files (scripts/extract_art.py): put the shapes back into this copy */
+      var art = src.getAttribute('data-art');
+      if (art) waits.push(fetch(new URL(art, new URL(d.page + 'index.html', siteRoot))).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (t) {
+        c.innerHTML = t.slice(t.indexOf('>') + 1, t.lastIndexOf('</svg>')); c.removeAttribute('data-art');
+      }).catch(function () {}));
       return Promise.race([Promise.all(waits), new Promise(function (res) { setTimeout(res, 4000); })]);
     });
   }

@@ -11,7 +11,8 @@
   'use strict';
   var doc = document, NS = 'http://www.w3.org/2000/svg', T = 28000, STORE = 'rv-loops-paused';
   var script = doc.currentScript, reduceMQ = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
-  var EASE = 'cubic-bezier(.45,0,.2,1)', POP = 'cubic-bezier(.34,1.4,.5,1)';
+  var TOKS = getComputedStyle(doc.documentElement);
+  var EASE = TOKS.getPropertyValue('--ease-glide-2').trim() || 'ease-in-out', POP = TOKS.getPropertyValue('--ease-spring').trim() || 'ease-out';
 
   /* ---------- seeded random (same recipe as motifs.js) ---------- */
   function hash(s) { var h = 1779033703 ^ s.length; for (var i = 0; i < s.length; i++) { h = Math.imul(h ^ s.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; } return function () { h = Math.imul(h ^ h >>> 16, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909); return (h ^= h >>> 16) >>> 0; }; }
