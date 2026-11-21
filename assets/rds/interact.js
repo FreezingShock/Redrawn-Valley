@@ -194,30 +194,19 @@
       var on = fig.getAttribute('data-view') === 'slide';
       slide.setAttribute('aria-pressed', on ? 'true' : 'false');
       if (on) all('[data-rv-view]', fig).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
-      if (on && name) name.textContent = 'compared, move across it';
+      if (on && name) name.textContent = 'compared, move across the picture';
     }).observe(fig, { attributes: true, attributeFilter: ['data-view'] });
     slide.addEventListener('click', function () { enter(50); });
-    /* a mouse over the picture moves the line with no click needed; leaving puts the chosen view back */
-    var hoverPrev = null;
-    stage.addEventListener('pointermove', function (e) {
-      if (e.pointerType !== 'mouse' || drag) return;
-      if (fig.getAttribute('data-view') !== 'slide') { hoverPrev = fig.getAttribute('data-view') || 'proposed'; enter(fromEvent(e)); }
-      else if (hoverPrev !== null) set(fromEvent(e));
-    });
-    stage.addEventListener('pointerleave', function (e) {
-      if (e.pointerType !== 'mouse' || hoverPrev === null || drag) return;
-      var b = fig.querySelector('[data-rv-view="' + hoverPrev + '"]'); hoverPrev = null; if (b) b.click();
-    });
-    slide.addEventListener('click', function () { hoverPrev = null; });
     var drag = null;
     stage.addEventListener('pointerdown', function (e) {
       if (e.button) return;
-      hoverPrev = null;
       var sliding = fig.getAttribute('data-view') === 'slide';
       drag = { id: e.pointerId, x: e.clientX, y: e.clientY, sliding: sliding, live: sliding };
       if (sliding) { stage.setPointerCapture(e.pointerId); set(fromEvent(e)); fig.classList.add('is-dragging'); }
     });
     stage.addEventListener('pointermove', function (e) {
+      /* a mouse needs no click: moving over the picture wipes between today and proposed */
+      if (e.pointerType === 'mouse' && (!drag || e.pointerId !== drag.id || drag.live)) { enter(fromEvent(e)); return; }
       if (!drag || e.pointerId !== drag.id) return;
       if (!drag.live) {
         /* a sideways swipe on the picture starts the slide, a vertical one is still a scroll */
