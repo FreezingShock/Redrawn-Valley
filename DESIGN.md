@@ -294,3 +294,14 @@ Standing rule: every lab, demo or exploration page (pattern sheet, icon set, typ
 - **Inline demo**: put the controls in `rds-demo__body` (the pattern sheet article does this with `data-lab`).
 - **Framed demo**: `<iframe class="rds-demo__frame" src="../../x/index.html?embed=1" style="--demo-h:760px;--demo-h-m:640px">`. `?embed=1` makes `site-shell.js` hide the header, footer, breadcrumbs, tab bar and the page's own h1 and eyebrow (add `data-rv-embed-skip` to anything else to hide), and post its height. Add `data-fit="auto"` to the iframe to grow to that height; omit it for a long page (the type lab) so the frame scrolls on its own. Pages that are only demos should be `noindex` (see `lab/motif-sheet/demo/`).
 - Lab articles are indexed under the section "Lab notes".
+
+## Flow: page-to-page motion (`assets/rds/flow.js`, `flow.css`, lab `lab/motion-lab/`)
+
+One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>` of every page (right after the viewport meta; it loads `flow.css` itself). It paints paper over the first frame, then plays:
+
+- **Opening** (first visit of a session, every reload): a sheet of paper tiles; the logo draws, "Redrawn Valley" writes in, the tiles shrink away from the center. About 1.5 s then a 0.8 s lift. Tap to skip.
+- **Wipe** (clicking any same-site link): tiles grow from the click point with the destination section written on them (0.5 s), then the next page lifts them from the same point. Back/forward skip it. Tiles are a manual popover (top layer), so the search dialog is covered too. Opt a link out with `data-no-flow`.
+- **Write-on headings**: `h1`, `.rds-display` and section `h2`s are split into letters that ink in on the Wobble axes (`BNCE`, `INFM`) with a pencil squiggle drawn under (`.fl-ul`). Replaces `data-rds-split` on page titles. Section headings play when 60% visible.
+- **Micro-interactions**: pencil dab on click (`.fl-dab`), wavy link underline, spring buttons, tilting cards and rows, logo hop, rules that draw on and figure crop marks (`.fl-sk`).
+- **Off** under `prefers-reduced-motion`, in `?embed=1` frames, print, and with `?noflow`. A 5 s failsafe always removes the sheet.
+- **API**: `RVFlow.intro()`, `RVFlow.preview(a, b, x, y)`, `RVFlow.wipe(url)`, `RVFlow.write(el)`, `RVFlow.speed`. Tile colors are the art accents; tile art is the grid circle and hatched square from the motif system.
