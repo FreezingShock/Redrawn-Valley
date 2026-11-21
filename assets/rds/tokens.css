@@ -125,6 +125,7 @@
   --z-flow-under: 2147482000; --z-flow-cover: 2147483000; --z-flow-top: 2147483001;
   /* layout */
   --measure: 68ch; --container: 1120px;
+  --cv-block: 900px;   /* placeholder height for off-screen sections (content-visibility, see rds.css) until the browser has drawn them once */
   --rv-gutter: 20px; --rv-bar: 52px; --rv-tab: 56px; --rv-safe: env(safe-area-inset-bottom,0px);
   /* phone tab bar (assets/rds/tabbar.css) */
   --tab-icon: 26px; --tab-mark-w: 52px; --tab-mark-h: 34px; --tab-stroke: 1.9; --tab-edge-stroke: 1.5px;
@@ -184,4 +185,40 @@
   --band-line: rgba(243,232,212,.16);
   --veil: rgba(5,3,2,.66);
   --edge: #a99a82;
+}
+
+/* Fonts: self-hosted, latin + latin-ext only (Shantell Sans variable incl. the BNCE and INFM wobble axes; IBM Plex Mono 400/500).
+   Replaces the render-blocking Google Fonts stylesheet and its two extra connections. Files live in assets/rds/fonts/ and are served
+   immutable (vercel.json), so rename a file if its content ever changes. font-display: swap keeps text visible while they load; the
+   latin Shantell file is preloaded in <head> of every page. The family names are the ones the --font-* tokens below point at.
+   Family names here are @font-face descriptors, not font stacks. See DESIGN.md > Fonts. */
+@font-face {
+  font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url(fonts/plex-mono-400-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url(fonts/plex-mono-400-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url(fonts/plex-mono-500-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url(fonts/plex-mono-500-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Shantell Sans'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(fonts/shantell-sans-var-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Shantell Sans'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(fonts/shantell-sans-var-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }

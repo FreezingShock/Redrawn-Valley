@@ -46,9 +46,7 @@ def head(depth, title, desc, extra_css='', slug=''):
 <script src="{up}assets/rds/flow.js"></script>
 <title>{e(title)} | Redrawn Valley</title>
 <meta name="description" content="{e(desc)}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM@400..700,-100..100,0..100&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preload" href="{up}assets/rds/fonts/shantell-sans-var-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{up}assets/rds/tokens.css">
 <link rel="stylesheet" href="{up}assets/rds/rds.css">
 <link rel="stylesheet" href="{up}assets/rds/topics.css">
