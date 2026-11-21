@@ -76,7 +76,7 @@
     '.rv-cite-bar__pen{flex:none;width:14px;height:14px;border-radius:50%;background:var(--brick)}',
     '.rv-cite-bar__txt{display:flex;flex-direction:column;min-width:0;font:600 14px/1.25 var(--font-sans,system-ui)}',
     '.rv-cite-bar__txt b{font:600 var(--rv-label-size,13.5px)/1.2 var(--font-label,var(--font-sans,system-ui));color:var(--brick)}',
-    '.rv-cite-bar__txt i{font-style:normal;font-weight:500;color:var(--ink-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+    '.rv-cite-bar__txt i{font-style:normal;font-weight:500;color:var(--ink-muted);overflow-wrap:anywhere}',
     '.rv-cite-bar a,.rv-cite-bar button{flex:none;font:600 14px/1 var(--font-sans,system-ui);color:var(--ink);text-decoration:none;padding:10px 12px;min-height:40px;display:inline-flex;align-items:center;border:1px solid var(--ink);border-radius:999px;background:transparent;cursor:pointer}',
     '.rv-cite-bar a:hover,.rv-cite-bar button:hover{background:var(--paper-sunk)}',
     '.rv-cite-bar a:focus-visible,.rv-cite-bar button:focus-visible{outline:2px solid var(--brick);outline-offset:2px}',

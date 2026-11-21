@@ -95,7 +95,7 @@
 .tl-form{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-bottom:var(--space-6)}
 .tl-form label{display:flex;flex-direction:column;gap:6px;font:600 13px/16px var(--rds-sans)}
 .tl-form input,.tl-form select{height:44px;padding:0 14px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--paper-raised);color:var(--ink);font:400 16px/1 var(--rds-sans)}
-.tl-form input{min-width:min(26rem,100%)}
+.tl-form label{flex:1 1 16rem;min-width:0;max-width:100%}.tl-form input,.tl-form select{width:100%;min-width:0}
 .tl-pair{display:grid;gap:var(--space-6);grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))}
 .tl-demo{border:1px solid var(--line-strong);border-radius:var(--radius-lg);background:var(--paper-raised);padding:var(--space-4) var(--space-6);display:flex;flex-direction:column;gap:var(--space-3);align-items:flex-start;min-width:0}
 .tl-demo__h{margin:0;display:flex;gap:var(--space-3);align-items:center;flex-wrap:wrap}

@@ -154,7 +154,7 @@ def render_item(e, rel='../'):
     return (f'<li class="rv-log__item" id="{e["id"]}" data-rv-row="{e["type"]}" data-rds-reveal>'
             f'<span class="rv-log__dot" aria-hidden="true"><svg class="rds-icon"><use href="{rel}assets/rds/icons/icons.svg#i-{icon}"/></svg></span>'
             f'<div class="rv-log__card"><p class="rv-log__meta">{"".join(meta)}</p>'
-            f'<h4 class="rv-log__title">{esc(e["title"])}</h4>{summary}{pages}</div></li>')
+            f'<h3 class="rv-log__title">{esc(e["title"])}</h3>{summary}{pages}</div></li>')
 
 def render_timeline(entries):
     days = {}
@@ -163,8 +163,8 @@ def render_timeline(entries):
     for d, items in days.items():
         wd = datetime.date.fromisoformat(d).strftime('%A')
         n = len(items)
-        out.append(f'<section class="rv-log__day" data-rv-day aria-labelledby="day-{d}"><h3 class="rv-log__date" id="day-{d}">'
-                   f'<time datetime="{d}">{human(d)}</time><span>{wd}, <b data-rv-day-count>{n}</b> {"entries" if n != 1 else "entry"}</span></h3>'
+        out.append(f'<section class="rv-log__day" data-rv-day aria-labelledby="day-{d}"><h2 class="rv-log__date" id="day-{d}">'
+                   f'<time datetime="{d}">{human(d)}</time><span>{wd}, <b data-rv-day-count>{n}</b> {"entries" if n != 1 else "entry"}</span></h2>'
                    f'<ol class="rv-log__list">{"".join(render_item(e) for e in items)}</ol></section>')
     return '\n'.join(out)
 

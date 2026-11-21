@@ -128,7 +128,7 @@
     sec.innerHTML = '<div class="rds-container"><header class="rv-rail__head"><div><p class="rds-eyebrow">Keep reading</p><h2 class="rv-rail__h" id="rv-rail-h">More from the valley</h2><p class="rv-rail__sub">' + esc(sub) + '</p></div>' +
       '<div class="rv-rail__tools"><button class="rv-rail__random" type="button" data-rv-random>' + DICE + '<span>Random page</span></button>' +
       '<div class="rv-rail__arrows"><button class="rv-rail__arrow" type="button" data-dir="-1" aria-label="Previous cards">' + icon('chevron-right', 20) + '</button><button class="rv-rail__arrow" type="button" data-dir="1" aria-label="Next cards">' + icon('chevron-right', 20) + '</button></div></div></header></div>' +
-      '<div class="rv-rail__view"><ul class="rv-rail__track" tabindex="0" role="region" aria-label="Related pages, scroll sideways">' + items.map(card).join('') + '</ul></div>' +
+      '<div class="rv-rail__view"><ul class="rv-rail__track" tabindex="0" role="list" aria-label="Related pages, scroll sideways">' + items.map(card).join('') + '</ul></div>' +
       '<div class="rds-container"><div class="rv-rail__meter" role="slider" tabindex="0" aria-label="Position in the rail" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div></div>';
     var foot = main.querySelector('.rv-footstrip'); main.appendChild(sec);
     behave(sec);

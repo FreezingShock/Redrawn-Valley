@@ -139,10 +139,10 @@ def hub(t, items):
 <p class="rv-thead__q" data-rds-reveal style="--i:2"><span>The question I keep asking</span>{e(t['question'])}</p>
 </div>
 {banner('topics/' + t['slug'], t['art'])}
-<div class="rv-tstats" role="list" aria-label="What is in this topic">'''
+<div class="rv-tstats" role="group" aria-label="What is in this topic">'''
     for key, one, many, _ in KINDS:
         if c[key]:
-            o += f'<a class="rv-tstat" role="listitem" href="#{key}"><b>{c[key]}</b><span>{one if c[key] == 1 else many}</span></a>'
+            o += f'<a class="rv-tstat" href="#{key}"><b>{c[key]}</b><span>{one if c[key] == 1 else many}</span></a>'
     o += '</div></div></section>\n'
     sec = 0
     for key, one, many, _ in KINDS:
@@ -158,8 +158,8 @@ def hub(t, items):
         o += '</div></section>\n'
     band = ' rds-band-sunk' if sec % 2 == 0 else ''
     o += f'<section class="rds-section{band}"><div class="rds-container">\n<div class="rds-sechead"><p class="rds-eyebrow">Keep going</p><h2 class="rds-display">Other topics</h2><p class="rds-lead">Most pages belong to more than one topic. These are the other ways in.</p></div>\n'
-    o += '<div class="rv-tchips" role="list">' + ''.join(
-        f'<a class="rv-tchip rv-tchip--{x["accent"]}" role="listitem" href="../{x["slug"]}/index.html">{icon(x["icon"], up, "rds-icon rds-icon--sm")}<span>{e(x["title"])}</span></a>' for x in others) + '</div>\n'
+    o += '<div class="rv-tchips">' + ''.join(
+        f'<a class="rv-tchip rv-tchip--{x["accent"]}" href="../{x["slug"]}/index.html">{icon(x["icon"], up, "rds-icon rds-icon--sm")}<span>{e(x["title"])}</span></a>' for x in others) + '</div>\n'
     if places:
         o += '<p class="rds-small rv-tplaces"><b>Places in this topic</b> ' + ' · '.join(e(x) for x in places) + '. <a class="rds-link" href="../index.html">All topics</a></p>\n'
     else:

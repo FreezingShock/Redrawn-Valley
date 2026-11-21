@@ -81,7 +81,7 @@ li[data-tone=ochre] .rvs-ico{background:color-mix(in srgb,var(--ochre) 28%,var(-
 .rvs-main{display:grid;gap:2px;min-width:0}
 .rvs-title{font:500 var(--fs-18)/26px var(--rds-serif);font-variation-settings:"INFM" 100,"BNCE" 0}
 .rvs-title>span{display:inline}
-.rvs-sub{font:400 var(--fs-14)/21px var(--rds-sans);color:var(--ink-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rvs-sub{font:400 var(--fs-14)/21px var(--rds-sans);color:var(--ink-muted);}
 .rvs-tag{white-space:nowrap}
 .rvs-go{font:500 var(--fs-14)/1 var(--rds-mono);color:var(--brick);opacity:0;transform:translateX(-8px);transition:opacity var(--dur-fast),transform var(--dur-quick) var(--rvs-ease);width:16px}
 .rvs-list li[aria-selected=true] .rvs-go{opacity:1;transform:none}
