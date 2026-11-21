@@ -114,3 +114,36 @@ return {};
 }
 }
 (function () { var page = new Component(); page.props = {}; page.componentDidMount(); })();
+
+/* Part bar behaviour: compacts once you have scrolled, shows the study name only after the page title has gone,
+   and slides one underline between the part links as the current part changes. */
+(function () {
+  var bar = document.getElementById('top'), nav = bar && bar.querySelector('nav[data-toc]');
+  if (!bar || !nav || !bar.classList.contains('rv-study-bar')) return;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var h1 = document.querySelector('.rv-article-head h1'), ink = document.createElement('span');
+  ink.className = 'rv-study-bar__ink'; ink.setAttribute('aria-hidden', 'true'); nav.appendChild(ink);
+  function place() {
+    var cur = nav.querySelector('a[aria-current="true"]:not(.rv-study-bar__brand)');
+    if (!cur) { ink.style.opacity = '0'; return; }
+    ink.style.opacity = '1';
+    ink.style.transform = 'translateX(' + (cur.offsetLeft + (cur.offsetWidth - Math.min(cur.offsetWidth, 40)) / 2) + 'px)';
+    ink.style.width = Math.min(cur.offsetWidth, 40) + 'px';
+    if (nav.scrollWidth > nav.clientWidth) { var want = cur.offsetLeft - (nav.clientWidth - cur.offsetWidth) / 2; nav.scrollTo({ left: want, behavior: reduce ? 'auto' : 'smooth' }); }
+  }
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () {
+      ticking = false;
+      bar.classList.toggle('is-compact', window.pageYOffset > 80);
+      var gone = h1 ? h1.getBoundingClientRect().bottom < 120 : window.pageYOffset > 300;
+      bar.classList.toggle('has-title', gone);
+    });
+  }
+  new MutationObserver(place).observe(nav, { attributes: true, attributeFilter: ['aria-current'], subtree: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  place(); onScroll();
+})();
