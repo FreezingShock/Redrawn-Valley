@@ -224,6 +224,22 @@ Seeded generative art in the recipe of the reference contact sheets (kept in the
 - **Pencil filter**: `sketch.js` skips anything inside `.rds-art`; the filter breaks blended and oversized shapes.
 - The old pre-rendered banners (`scripts/tiles_art.py`) remain as the fallback on the three index pages.
 
+## Looping backgrounds (`assets/rds/loops.js`, `loops.css`)
+
+Constantly playing, muted, seamless "video" behind hero sections, drawn in code from our own motifs. It is SVG driven by the Web Animations API, so it is a few KB, sharp at any size, in our tokens, and needs no video files.
+
+```html
+<section data-rds-loop="plan" data-seed="studies"> ... hero content ... </section>
+```
+Load `<script src="…/assets/rds/loops.js" defer>` (it pulls in `loops.css` itself). The host gets `rds-loop-host` (relative, isolated); the layer sits behind its content and fades toward the text side, so type stays readable.
+- **Kinds**: `plan` (lot, building, stalls, trees and a flow line build up), `ridge` (ridgelines drawn in ink, redrawn in brick, low sun; the logo grown up), `contour` (survey contours draw around a hill and a basin, slow dashed arc), `tiles` (flat tiles shift colour and shape in a diagonal wave). Now on: home `ridge`, guide `plan`, studies `contour`, notes `tiles`.
+- **Seamless**: one 28s cycle. It starts empty, builds, holds, fades back to empty, so the loop point is invisible. Keyframes are per element, so delays survive every repeat.
+- **Seeded and size-aware**: same `data-seed`, same drawing; the layout is generated for the box it sits in (wide and phone layouts differ) and rebuilt on large resizes.
+- **Fallbacks**: `prefers-reduced-motion`, `Save-Data` and 2g connections show the finished drawing as a still (no animation, no pause button). It pauses when offscreen and in hidden tabs.
+- **Pause control**: `rds-loop__toggle` (44px, bottom right of the host) pauses every loop on the page and remembers the choice (`localStorage`, `rv-loops-paused` class on `<html>`). Needed because motion over 5 seconds must be stoppable.
+- **Rules**: tokens only; 2 to 4 flat colours; no text except the decorative scale bar; keep the host's own text legible at 375 and 1280px; do not put a loop on pages that already have a moving figure at the same spot. Use `data-loop-still` to force the still.
+- **API**: `RDSLoops.mount(host, kind, seed)`, `RDSLoops.pause()`, `RDSLoops.play()`, `RDSLoops.kinds`. The `scripts/check.py` and search index are unaffected.
+
 ## Known issues
 
 - The Topanga study's text and layout styles are now in `study.css` using tokens, so token changes reach them. Its SVG drawings still carry inline `style` attributes and hex colours (they are redrawn separately).
