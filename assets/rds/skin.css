@@ -432,7 +432,7 @@ a.rds-row:hover{background-image:var(--rv-rule-brick)}
 @media print{.rds-page::before{display:none}.rds-band-sunk::before,.rds-band-sunk::after,.rds-footer::before{display:none}.rv-compare::before,.rv-compare::after,.rds-infobox::before,.rv-infobox::before,.rv-sun{display:none}}
 
 /* ---------- Topanga study: structural rules (its colours, rules and frames are baked into studies/topanga-willows/study.css) ---------- */
-.rv-study [data-scrolly]>figure>div{border:var(--rv-stroke) solid var(--ink);box-shadow:var(--rv-pencil)}
+.rv-study [data-scrolly]>figure>div:not(.rv-stages){border:var(--rv-stroke) solid var(--ink);box-shadow:var(--rv-pencil)}
 .rv-study [data-scrolly]>figure{position:sticky}
 .rv-study .kstep>div:first-child{font-family:var(--rv-hand);font-size:17px}
 .rv-study .ts-taped{border:var(--rv-stroke) solid var(--ink);position:relative}

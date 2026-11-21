@@ -232,33 +232,88 @@
   /* ================================================================
      4. Explorable plans: jump to a stage and keep it
      ================================================================ */
+  /* Stage picker: a one-line stepper. Each stage is a small icon node on a progress line; the label shows in a tooltip
+     and in the "now" text. Follow scroll is a switch inside the frame. Arrow keys move between nodes. */
+  var SPRITE = (function () { var s = doc.querySelector('script[src*="interact.js"]'); return s ? s.src.replace(/interact\.js.*$/, 'icons/icons.svg') : ''; })();
+  var STAGE_INLINE = {
+    patio: '<path d="M4 9h16M12 9v10M8 19h8M7 9l-1-4M17 9l1-4"/>',
+    plaza: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 12h16M12 4v16"/><circle cx="8" cy="8" r="1.4"/>',
+    cross: '<path d="M3 8h18M3 16h18M6 8v8M10 8v8M14 8v8M18 8v8"/>',
+    bus: '<rect x="5" y="4" width="14" height="13" rx="2"/><path d="M5 11h14M8 20v-3M16 20v-3"/><circle cx="8.5" cy="14" r=".6"/><circle cx="15.5" cy="14" r=".6"/>',
+    door: '<path d="M7 20V5l10-1.5v16.5M7 20h10"/><circle cx="14" cy="12" r=".8"/>',
+    all: '<path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="1.4"/><circle cx="15" cy="12" r="1.4"/><circle cx="10" cy="17" r="1.4"/>'
+  };
+  var STAGE_SPRITE = [[/canopy over|shade/i, 'shade'], [/tree|canopy/i, 'tree'], [/edge/i, 'bioswale'], [/paver/i, 'permeable'], [/patio/i, '+patio'], [/walk|sidewalk/i, 'sidewalk'], [/plaza/i, '+plaza'], [/shop/i, 'building'], [/cross/i, '+cross'], [/bus|bike/i, '+bus'], [/soil/i, 'soil'], [/entr/i, '+door'],
+    [/^all|seven|every/i, '+all'], [/proposed/i, 'leaf'], [/today|now|before/i, 'pin']];
+  function stageIcon(step, label) {
+    var k = step.getAttribute('data-icon');
+    if (!k) { for (var i = 0; i < STAGE_SPRITE.length; i++) if (STAGE_SPRITE[i][0].test(label)) { k = STAGE_SPRITE[i][1]; break; } }
+    k = k || 'pin';
+    if (k.charAt(0) === '+') return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + STAGE_INLINE[k.slice(1)] + '</svg>';
+    return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="' + SPRITE + '#i-' + k + '"/></svg>';
+  }
+  function stageName(t) { return t.replace(/^Stage\s+(\d+):\s*/i, 'Stage $1 · ').replace(/^(\d+):\s*/, 'Move $1 · ').replace(/^./, function (c) { return c.toUpperCase(); }); }
   function stagesInit(box) {
     var steps = all('[data-step]', box); if (steps.length < 2) return;
     var fc = box.querySelector('figcaption'), host = fc ? fc.parentNode : box.querySelector('figure');
     if (!host) return;
     var row = el('div', 'rv-stages'); row.setAttribute('role', 'group'); row.setAttribute('aria-label', 'Explore the stages');
-    var lab = el('span', 'rv-stages__lab', 'Jump to'); row.appendChild(lab);
-    var btns = [];
-    steps.forEach(function (s) {
-      var n = s.getAttribute('data-step'), t = s.getAttribute('data-label') || ('Step ' + n);
-      var short = t.replace(/^Stage\s+(\d+):\s*/i, '$1 · ').replace(/^All seven moves$/i, 'All');
-      var b = el('button', 'rv-stages__btn', ''); b.type = 'button'; b.textContent = short; b.title = t; b.setAttribute('aria-label', t);
-      b.setAttribute('data-rv-stage', n); b.setAttribute('aria-pressed', 'false'); row.appendChild(b); btns.push(b);
+    var now = el('span', 'rv-stages__now', ''); now.setAttribute('aria-hidden', 'true'); row.appendChild(now);
+    var track = el('div', 'rv-stages__track'), rail = el('div', 'rv-stages__rail');
+    var line = el('span', 'rv-stages__line'), fill = el('span', 'rv-stages__fill'); line.appendChild(fill); rail.appendChild(line);
+    var btns = [], names = [];
+    steps.forEach(function (s, i) {
+      var n = s.getAttribute('data-step'), t = s.getAttribute('data-label') || ('Step ' + n), nm = stageName(t);
+      var b = el('button', 'rv-stages__btn', stageIcon(s, t)); b.type = 'button'; b.setAttribute('aria-label', nm);
+      b.setAttribute('data-rv-stage', n); b.setAttribute('aria-pressed', 'false'); rail.appendChild(b); btns.push(b); names.push(nm);
     });
-    var auto = el('button', 'rv-stages__btn rv-stages__auto', 'Follow scroll'); auto.type = 'button'; auto.setAttribute('aria-pressed', 'true'); row.appendChild(auto);
+    track.appendChild(rail); row.appendChild(track);
+    var auto = el('button', 'rv-stages__auto', '<span class="rv-stages__knob" aria-hidden="true"></span><span>Follow scroll</span>'); auto.type = 'button';
+    auto.setAttribute('role', 'switch'); auto.setAttribute('aria-checked', 'true'); auto.title = 'Follow scroll: the drawing changes as you read. Turn off to hold the stage you pick.'; row.appendChild(auto);
+    var tip = el('span', 'rv-stages__tip', ''); tip.setAttribute('role', 'tooltip'); tip.hidden = true; row.appendChild(tip);
     host.appendChild(row);
+    var tipT = 0;
+    function showTip(b, ms) {
+      var i = btns.indexOf(b); tip.textContent = names[i]; tip.hidden = false;
+      var fr = row.getBoundingClientRect(), br = b.getBoundingClientRect(), w = tip.offsetWidth;
+      var x = br.left - fr.left + br.width / 2 - w / 2; x = Math.max(0, Math.min(x, fr.width - w));
+      tip.style.left = x.toFixed(0) + 'px'; tip.style.setProperty('--arrow', (br.left - fr.left + br.width / 2 - x).toFixed(0) + 'px');
+      clearTimeout(tipT); if (ms) tipT = setTimeout(hideTip, ms);
+    }
+    function hideTip() { clearTimeout(tipT); tip.hidden = true; }
     function ping() { window.dispatchEvent(new Event('scroll')); }
-    function mark(pin) {
-      btns.forEach(function (b) { b.setAttribute('aria-pressed', pin !== null && b.getAttribute('data-rv-stage') === String(pin) ? 'true' : 'false'); });
-      auto.setAttribute('aria-pressed', pin === null ? 'true' : 'false'); row.classList.toggle('is-pinned', pin !== null);
+    function current() { var p = box.getAttribute('data-pin'); var v = p !== null ? p : box.getAttribute('data-st'); return +v || 0; }
+    function sync() {
+      var a = current(), pinned = box.hasAttribute('data-pin');
+      btns.forEach(function (b, i) {
+        var n = +b.getAttribute('data-rv-stage');
+        b.toggleAttribute('data-reached', n <= a); b.setAttribute('aria-pressed', pinned && n === a ? 'true' : 'false');
+        if (n === a) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+        if (n === a) { now.textContent = names[i]; var tl = b.offsetLeft - 12, tr = b.offsetLeft + b.offsetWidth + 12; if (tl < track.scrollLeft) track.scrollLeft = tl; else if (tr > track.scrollLeft + track.clientWidth) track.scrollLeft = tr - track.clientWidth; }
+      });
+      var idx = 0; btns.forEach(function (b, i) { if (+b.getAttribute('data-rv-stage') === a) idx = i; });
+      fill.style.width = (btns.length > 1 ? idx / (btns.length - 1) * 100 : 0) + '%';
+      auto.setAttribute('aria-checked', pinned ? 'false' : 'true'); row.classList.toggle('is-pinned', pinned);
     }
     row.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
-      if (b === auto) { box.removeAttribute('data-pin'); mark(null); }
-      else { var n = b.getAttribute('data-rv-stage'); box.setAttribute('data-pin', n); mark(n); }
-      ping();
+      if (b === auto) { if (box.hasAttribute('data-pin')) box.removeAttribute('data-pin'); else box.setAttribute('data-pin', String(current())); }
+      else { box.setAttribute('data-pin', b.getAttribute('data-rv-stage')); if (e.pointerType === 'touch' || !matchMedia('(hover:hover)').matches) showTip(b, 1400); }
+      sync(); ping();
     });
-    mark(null);
+    row.addEventListener('keydown', function (e) {
+      var b = e.target.closest ? e.target.closest('.rv-stages__btn') : null; if (!b) return;
+      var i = btns.indexOf(b), k = e.key, j = -1;
+      if (k === 'ArrowRight' || k === 'ArrowDown') j = Math.min(btns.length - 1, i + 1); else if (k === 'ArrowLeft' || k === 'ArrowUp') j = Math.max(0, i - 1);
+      else if (k === 'Home') j = 0; else if (k === 'End') j = btns.length - 1; else if (k === 'Escape') { hideTip(); return; }
+      if (j < 0) return; e.preventDefault(); btns[j].focus();
+    });
+    btns.forEach(function (b) {
+      b.addEventListener('mouseenter', function () { showTip(b); }); b.addEventListener('mouseleave', hideTip);
+      b.addEventListener('focus', function () { showTip(b); }); b.addEventListener('blur', hideTip);
+    });
+    if ('MutationObserver' in window) new MutationObserver(sync).observe(box, { attributes: true, attributeFilter: ['data-st', 'data-pin'] });
+    sync();
   }
 
   /* ================================================================
