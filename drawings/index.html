@@ -29,12 +29,12 @@
 <div class="dg" data-dg>
 <div class="dg-bar" data-dg-bar>
 <div class="dg-toolbar">
-<label class="dg-search"><span class="dg-sr">Search drawings</span><svg class="rds-icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="../assets/rds/icons/icons.svg#i-search"/></svg><input type="search" class="rds-input" placeholder="Search drawings, e.g. soil, crosswalk" autocomplete="off" data-dg-q></label>
-<p class="dg-count" role="status" aria-live="polite" data-dg-count>Loading drawings&hellip;</p>
+<label class="dg-search"><span class="dg-sr">Search drawings</span><svg class="rds-icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="../assets/rds/icons/icons.svg#i-search"/></svg><input type="search" class="rds-input" placeholder="Search, e.g. soil" autocomplete="off" data-dg-q></label>
+<p class="dg-count" role="status" aria-live="polite"><span data-dg-count>Loading drawings&hellip;</span><button type="button" class="dg-reset dg-reset--m" data-dg-reset hidden>Clear</button></p>
 <div class="dg-tools">
 <div class="dg-seg" role="group" aria-label="Sheet size"><button type="button" aria-pressed="true" data-dg-size="s">Contact sheet</button><button type="button" aria-pressed="false" data-dg-size="l">Large</button></div>
 <button type="button" class="dg-toggle" aria-expanded="false" aria-controls="dg-filters" data-dg-toggle>Filters<b data-dg-active hidden>0</b></button>
-<button type="button" class="dg-reset" data-dg-reset hidden>Clear</button>
+<button type="button" class="dg-reset dg-reset--d" data-dg-reset hidden>Clear</button>
 </div>
 </div>
 <div class="dg-filters" id="dg-filters" data-dg-filters></div>

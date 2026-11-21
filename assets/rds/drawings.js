@@ -15,7 +15,7 @@
   var ZOOM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 4.2c3.5-.2 6.3 2.6 6.2 6.2-.1 3.5-2.9 6.1-6.3 6-3.4-.1-6-2.8-5.9-6.2.1-3.3 2.7-5.8 6-6Z"/><path d="m15.6 15.8 4.4 4.4"/><path d="M10.5 8v5M8 10.5h5"/></svg>';
 
   var data, items = [], byId = {}, pages = {}, state = { q: '', source: '', type: '', topic: '', size: 's' };
-  var grid = $('[data-dg-grid]'), filtersEl = $('[data-dg-filters]'), countEl = $('[data-dg-count]'), emptyEl = $('[data-dg-empty]'),
+  var grid = $('[data-dg-grid]'), filtersEl = $('[data-dg-filters]'), countEl = $('[data-dg-count]', doc.body), emptyEl = $('[data-dg-empty]'),
       bar = $('[data-dg-bar]'), qInput = $('[data-dg-q]'), limit = embed ? (+(/[?&]limit=(\d+)/.exec(location.search) || [])[1] || 6) : 0;
 
   /* ---------- data ---------- */
@@ -33,7 +33,7 @@
     var secs = {}; d.sections.forEach(function (s) { secs[s.id] = s; });
     items = d.drawings.map(function (x) {
       var p = pages[x.page], sec = secs[x.section] || { label: x.section, noun: '' };
-      var title = cap1(short(sentence(x.caption || x.label).replace(/[.]+$/, ''), 110));
+      var first = sentence(x.caption || x.label).replace(/[.]+$/, ''), title = cap1(short(first.length < 14 && x.caption ? x.caption : first, 110));
       x.title = title; x.p = p; x.sec = sec;
       x.src = x.section === 'studies' ? x.page : x.section;
       x.srcLabel = x.section === 'studies' ? (p.no ? p.no + ' ' : '') + p.title : sec.label;
@@ -41,6 +41,9 @@
       x.hay = [x.label, x.caption, x.note, x.heading, p.title, x.tag, x.topics.map(function (t) { return d.topics[t] || t; }).join(' ')].join(' ').toLowerCase();
       byId[x.id] = x; return x;
     });
+    /* two drawings on a page can share a caption (Today / Proposed): fall back to their own descriptions to tell them apart */
+    var seenT = {}; items.forEach(function (x) { var k = x.page + '|' + x.title; (seenT[k] = seenT[k] || []).push(x); });
+    Object.keys(seenT).forEach(function (k) { if (seenT[k].length > 1) seenT[k].forEach(function (x) { x.title = cap1(short(sentence(x.label).replace(/[.]+$/, ''), 110)); }); });
     var lead = $('[data-dg-lead]', doc.body);
     if (lead) lead.textContent = items.length + ' drawings from ' + d.pages.length + ' pages: every labeled plan, section, sketch and chart in the studies and notes.';
     readUrl(); buildFilters(); buildCards(); bind(); apply(true);
@@ -139,7 +142,7 @@
   function href(x, anchor) { return '../' + x.page + 'index.html' + (anchor && x.anchor ? '#' + encodeURIComponent(x.anchor) : ''); }
   function buildCards() {
     grid.innerHTML = items.map(function (x) {
-      var ar = Math.max(.85, Math.min(1.7, x.vb[0] / x.vb[1])).toFixed(3);
+      var ar = Math.max(.95, Math.min(1.6, x.vb[0] / x.vb[1])).toFixed(3);
       var where = '<a href="' + href(x) + '">' + esc(x.sec.noun + (x.p.no ? ' ' + x.p.no : '') + ' · ' + short(x.p.title, 44)) + '</a>' +
         (x.heading ? '<a href="' + href(x, true) + '">' + esc('§ ' + short(x.heading, 46)) + '</a>' : '');
       return '<li class="dg-card" id="d-' + esc(x.id) + '" data-id="' + esc(x.id) + '"><button type="button" class="dg-card__art is-loading" style="--ar:' + ar + '" aria-label="Enlarge: ' + esc(x.label) + '">' +
