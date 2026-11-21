@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script src="../../../assets/rds/theme.js?v=82e41f1560"></script>
+<title>Redrawn motion lab (demo)</title>
+<meta name="robots" content="noindex">
+<script src="../../../assets/rds/flow.js?v=9739b5e536"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM@400..700,-100..100,0..100&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../../../assets/rds/tokens.css?v=cb3bdaa5eb">
+<style>
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--font-sans);font-variation-settings:"INFM" 15,"BNCE" 0}
+main{max-width:1000px;margin:0 auto;padding:24px 20px 48px;display:grid;gap:20px}
+.panel{border:1px solid var(--line);border-radius:16px;background:var(--paper-raised);padding:20px}
+.panel h2{margin:0 0 4px;font:600 20px/1.2 var(--font-sans);font-variation-settings:"INFM" 100,"BNCE" 0}
+.panel p{margin:0 0 14px;color:var(--ink-muted);font-size:15px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,select{font:600 14px var(--font-sans);font-variation-settings:"INFM" 100,"BNCE" 0;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:10px 14px;border-radius:8px;cursor:pointer;min-height:44px}
+button.go{background:var(--brick);border-color:var(--brick);color:var(--on-brick)}
+label{font:500 13px var(--font-mono);color:var(--ink-muted)}
+.sample{font:700 clamp(30px,6vw,48px)/1.1 var(--font-sans);font-variation-settings:"INFM" 100,"BNCE" 0;margin:8px 0 22px;padding-bottom:6px}
+.pad{height:150px;border:1.5px dashed var(--line-strong);border-radius:12px;display:grid;place-items:center;font:500 14px var(--font-mono);color:var(--ink-muted);background:repeating-linear-gradient(0deg,transparent 0 19px,var(--line) 19px 20px),repeating-linear-gradient(90deg,transparent 0 19px,var(--line) 19px 20px);cursor:crosshair;touch-action:manipulation}
+.stats{display:flex;gap:18px;flex-wrap:wrap;font:500 13px var(--font-mono);color:var(--ink-muted)}.stats b{color:var(--ink)}
+</style><link rel="stylesheet" href="../../../assets/rds/theme.css?v=6e447b0843">
+</head><body>
+<main>
+<h1 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Motion lab demo</h1>
+<section class="panel"><h2>1. Opening drawing</h2><p>What plays on a first visit and every reload: the logo draws, the wordmark writes, the sheet lifts in tiles. A tap skips ahead.</p><div class="bar"><button class="go" id="intro">Replay opening</button></div></section>
+<section class="panel"><h2>2. Page wipe</h2><p>What plays when you follow a link. Pick where you &ldquo;click&rdquo;; the tiles grow from that point and lift from it on the next page.</p><div class="bar"><button class="go" data-w="Studies|Topanga Willows|.5|.5">From the middle</button><button data-w="Field guide|Bioswale|.1|.1">From top left</button><button data-w="Notes||.9|.85">From bottom right</button></div></section>
+<section class="panel"><h2>3. Heading write-on</h2><p>Letters ink in one by one, bouncing on the Wobble axes, then a pencil line draws under the title.</p><div class="sample" id="sample">Shade for a block that faces the sun</div><div class="bar"><button class="go" id="again">Write it again</button></div></section>
+<section class="panel"><h2>4. Pencil dab</h2><p>Every click or tap on the site leaves a quick hand-drawn burst. Try the grid.</p><div class="pad" id="pad">click or tap anywhere here</div></section>
+<section class="panel"><h2>Speed</h2><div class="bar"><label for="sp">Playback speed</label><select id="sp"><option value="0.5">Half (0.5x)</option><option value="1" selected>Normal (1x)</option><option value="2">Double (2x)</option></select></div><p style="margin:12px 0 0" class="stats"><span>Opening <b id="s1">1.5 s</b></span><span>Wipe <b id="s2">0.5 s cover + 0.8 s lift</b></span><span>Headline <b>0.9 s</b></span></p></section>
+</main>
+<script>
+var F=window.RVFlow||{};
+function ok(){return F.enabled}
+document.getElementById('intro').onclick=function(){ok()&&F.intro()};
+[].forEach.call(document.querySelectorAll('[data-w]'),function(b){b.onclick=function(){var a=b.dataset.w.split('|');ok()&&F.preview(a[0],a[1],parseFloat(a[2]),parseFloat(a[3]))}});
+var s=document.getElementById('sample');document.getElementById('again').onclick=function(){ok()&&F.write(s)};
+document.getElementById('sp').onchange=function(e){F.speed=parseFloat(e.target.value)};
+if(!ok()){document.querySelector('main').insertAdjacentHTML('afterbegin','<section class="panel"><h2>Motion is off</h2><p>Your device asks for reduced motion, so the page plays none of this by itself. The opening, wipe and write-on are skipped everywhere on the site.</p></section>')}
+else setTimeout(function(){F.write(s)},2200);
+</script></body></html>

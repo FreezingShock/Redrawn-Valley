@@ -2,7 +2,7 @@
 
 The design system behind Redrawn Valley. Warm paper, ink, brick and moss; a serif for ideas, a sans for interface, mono for evidence. Plain CSS and a small plain script, no build step, no dependencies. **Read this before changing any page.** If a component exists here, use it; if you need a new one, add it to the system (`assets/rds/rds.css`) and document it here, not as a one-off.
 
-Files: `assets/rds/tokens.css` (variables), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index), `assets/rds/skin.css` (responsive layer then sketchbook layer, always last) with `mobile.js` and `sketch.js`.
+Files: `assets/rds/tokens.css` (variables, light and dark), `assets/rds/theme.js` + `theme.css` (dark theme switch and baked-color fixes), `assets/rds/rds.css` (components, prefix `rds-`), `assets/rds/rds.js` (motion), `assets/rds/article.css` + `article.js` (article/Field Guide components), `assets/site.css` (site-only rules, prefix `rv-`), `assets/site.js` (home before/after toggle), `assets/site-shell.js` (shared header, footer, breadcrumbs, search), `assets/studies.css` + `assets/studies.js` (study pages and the studies index), `assets/rds/skin.css` (responsive layer then sketchbook layer, always last) with `mobile.js` and `sketch.js`.
 
 ## Character
 
@@ -31,7 +31,7 @@ Rules: brick = do something / look here; moss = links, trees, proposed changes; 
 
 ## Typography
 
-Fonts (Google Fonts, loaded in the page `<head>` and by `rds.css`): **Newsreader** (serif, display/prose/titles), **Hanken Grotesk** (sans, UI/body/lead), **IBM Plex Mono** (captions, figure labels, meta, numbers), **Architects Daughter** (hand notes only).
+Fonts (Google Fonts, loaded in the page `<head>`): **Shantell Sans** (variable; the `--font-serif`, `--font-sans` and `--font-hand` tokens all point at it, chosen from the type lab at `/fonts/`) and **IBM Plex Mono** (captions, figure labels, meta, citations, numbers). Shantell has no italic file, so italics are medium-weight roman. Roles are told apart by weight and the `INFM` axis (informality): 100 for titles, headings and UI lettering, 15 for reading text (set on `.rds-page`). The `BNCE` axis makes the wordmark wobble on hover. The type layer is the last block of `skin.css`; the size column below is the pre-Wobble spec, the layer shrinks reading text to 17.5/30 and display sizes by about 10 to 15%.
 
 | Class | Spec |
 |---|---|
@@ -89,7 +89,7 @@ Every page uses one script for the header, footer, breadcrumbs and search, so th
 <script src="../assets/site-shell.js"></script>
 ```
 
-- **Nav** `rds-nav` + search button `rds-nav__search` (shortcut `/` or Ctrl/Cmd+K) and, under 640px, a `rds-nav__menu` toggle that opens the links as a panel. Items live in the `NAV` array in `site-shell.js`. `rds-skip` is the skip link; give `<main>` `id="main"`.
+- **Nav** `rds-nav` + search button `rds-nav__search` (shortcut `/` or Ctrl/Cmd+K) and, under 640px, a `rds-nav__menu` toggle that opens the links as a panel. Items live in the `NAV` array in `site-shell.js`, ordered Studies, Field guide, Notes, About. Studies, Field guide and Notes carry a caret that opens a flyout (`rv-nav__panel`: icon, one-line blurb, first pages from the search index, "All N …" link); it opens on hover or focus, the caret toggles it for keyboard and touch, Esc and outside click close it. `rds-skip` is the skip link; give `<main>` `id="main"`.
 - **Breadcrumbs** `rds-crumbs`: Home / section / page, built from the URL and the search index (the last crumb is the page `<h1>`). Hidden on the home page.
 - **Search** `rds-search` dialog (`<dialog>`, keyboard: arrows, Enter, Esc). Reads `assets/search-index.json`. Open it from anything with `data-rv-search-open`; an inline `<form data-rv-search-form>` with an input opens it prefilled (home and 404 use `rv-search`). Ranking: title > headings > description > body text; every word must match; headings with an `id` also appear as their own result.
 - **Index** `python3 scripts/build_index.py` crawls every `*.html` (skips `404.html` and `<meta name="robots" content="noindex">`) and writes `assets/search-index.json`, `sitemap.xml` and `robots.txt`. Give pages a `<title>` (`Page | Redrawn Valley`), a `<meta name="description">`, and ids on `h2`/`h3` so headings are searchable and deep-linkable. Mark chrome you do not want indexed with `data-rv-noindex`.
@@ -134,6 +134,9 @@ Components (prefix `rv-`, tokens only):
 - **Sections** `rv-part` > `rv-part__bar` (Part N of 4) and `rv-sec` > `rv-sec__head` (eyebrow, h2 headline, summary) + `rv-sec__body` (64ch). Citations `rv-cite`; source list `rv-sources` with `<li id="sN">`; page bar `rv-study-bar`.
 - Legacy study-script hooks (keep as is): `rds-view` (reveal), `rds-split`/`rds-w` (headline words), `rds-draw` with `.s`/`.f`, `kt` rail, `kstep`/`data-scrolly`, `data-toc`.
 
+- **Study 02 drawings are generated from public parcel data**: `python3 scripts/fallbrook_art.py` redraws the parcel plan, the staged frontage plan and the section from `scripts/data/fallbrook_parcels.py` (City of Los Angeles parcel outlines) and the design numbers at the top of the script, with asserts. Study-specific styles live in `studies/<slug>/study.css` (`fb-` prefix); drawing classes (`dk`, `df-*`, `dt`) are the same as study 01.
+- **Study 03 pieces** (`studies/ventura-topanga-corner`, drawings from `scripts/ventura_corner_art.py`): staged layers `.stg-fN` (appear at stage N) and `.stg-uN` (shown until stage N), driven by `data-st` on `[data-scrolly]`; distance bars `vt-bars` (rows on a mile axis with a quarter-mile rule); `vt-ledger` (two-number table); `vt-loop` (two panels animated on a 12 s loop, static under reduced motion); `vt-rows` (study rows with a fixed meta column). Plan drawings are generated from dimensions in feet.
+
 **Adding a study**
 1. Copy `studies/_template/index.html` to `studies/<slug>/index.html` (same depth, so paths stay valid). Delete the noindex meta and the instruction comment.
 2. Replace every `[BRACKETED CAPS]` placeholder; fill every infobox row. Keep the real/estimated callout, Measuring, Limits and Sources. Headlines state findings; every number is cited; no invented sources.
@@ -165,7 +168,13 @@ One layer, loaded **last** on every page, scoped to phones (max 640px) and table
 
 - **Gutter** 20px (18px under 375px) via `--rv-gutter`; it overrides the 48px container maths, inline-styled study sections included. Prose 18/29 serif (lead paragraph 20/31), headlines clamp down (`rds-display-xl` 36–44px).
 - **Top bar** `rds-nav`: 52px, solid paper, brand left, 44px search icon right. It slides away when you scroll down and returns on scroll up (`.is-hidden`). The Menu button and link list are hidden on phones; navigation is the tab bar.
-- **Tab bar** `rv-tabbar`: fixed bottom, five 56px targets (Home, Guide, Studies, Notes, Search), current section in brick with a top tick, safe-area aware. The page gets matching bottom padding. This is the only persistent bottom bar.
+- **Tab bar** `rv-tabbar` (`assets/rds/tabbar.css` + `tabbar.js`; markup from `site-shell.js`): fixed bottom, five targets at `--rv-tab` (56px) high (Studies, Guide, Notes, Search, More; Home is the brand in the top bar; More opens a bottom sheet `rv-menusheet`), safe-area aware, page gets matching bottom padding. This is the only persistent bottom bar. Phones only; without JS it is five plain links.
+  - **Look:** a hand-drawn wobbly ink line for the top edge (`rv-tabbar__edge`), line icons (the sprite's strokes, inlined so they can draw), 11px labels. Current tab: ink icon with brick accent stroke, brick semibold label, icon lifts `--tab-lift`.
+  - **Sketched indicator** `rv-tabbar__mark`: one brick pencil loop with a `--brick-tint` wash, slid under the current tab with `--ease-spring` and redrawn (`stroke-dashoffset`, `--dur-medium`). On a new page it starts under the tab you came from (kept in `sessionStorage` key `rv-tab`) and glides across; opening More moves it to More, closing returns it. Pages within the same section just show it in place.
+  - **Line-draw icons:** each icon is two `pathLength="1"` strokes (ink, then accent a beat later) that draw on whenever their tab becomes current.
+  - **Press feedback:** pointer-down squashes the icon (`--tab-press-scale`, `--tab-press-tilt`), nudges the label, spreads a pencil ring (`rv-tab__dab`, `--tab-dab`) from the touch point and buzzes 6ms where `navigator.vibrate` exists (not iOS); it springs back on release. Keyboard Enter/Space gets the squash; focus shows a 2px ink outline.
+  - **Reduced motion:** all transitions and animations are off, the ring is hidden, pressed cells just take the `--paper-sunk` background. Light and dark themes come from the role tokens (`--brick` turns turquoise).
+  - **Tokens:** `--tab-icon`, `--tab-mark-w/h`, `--tab-stroke`, `--tab-edge-stroke`, `--tab-press-scale`, `--tab-press-tilt`, `--tab-lift`, `--tab-dab` in `tokens.css`; motion uses `--dur-*` and `--ease-spring/--ease-reveal/--ease-out`. If an icon changes in `icons.svg`, update `TAB_ICONS` in `site-shell.js` to match.
 - **Contents pill + sheet** `rv-jump`, `rv-sheet`: on articles, essays and studies a floating pill ("03 / 07 Heading ⌃") appears after the first section and opens a bottom sheet listing every section (current one in brick). It replaces the desktop contents rail. Source list: `.rds-contents`, else `.rds-toc`, else the study's `.kt` rail. It hides near the footer.
 - **Footnotes by tap** `rv-note-read`: tapping a `[n]` marker (or any `sup a` pointing at an `<li>`) opens the note in the sheet with a "Jump to the list" button instead of leaving the line. Markers get a 44px invisible hit area; the hover popover is off on touch.
 - **Collapsible infobox** `.is-collapsible` + `rv-more`: under 900px the infobox shows its title and first three facts, hides the sketch and the rest behind "Show all N facts" / "Show sketch and all facts". `rds-contents` starts closed with a 52px summary.
@@ -198,7 +207,8 @@ Makes the whole site feel drawn instead of printed. Load `assets/rds/skin.css` l
 - **Hero collage** `rv-collage`: contour lines (moss), drafting grid, halftone dots (brick), compass and scale bar behind the home figure. Reuse it as the art for new section heads: one tinted field, single-weight ink on top.
 - **Generated art** `scripts/sketchlib.py` (tiny hand-drawn SVG helper: wobbly lines, offset tint, hatching, trees, sun, rain) and `scripts/guide_art.py` regenerate every Field Guide infobox drawing (300x150, one tinted field, single-weight ink line, hand labels). Add a new entry's art there, then run `python3 scripts/guide_art.py`.
 - **Essay figures** (`.rv-svg`): flat tints become hatched fills (patterns `#rv-h-*` injected by `sketch.js`), shapes get a 1.6px ink outline, gridlines are dotted, labels get a paper halo so they stay legible over hatching.
-- **Topanga study**: its inline styles are overridden by attribute selectors at the end of `skin.css` (rules, frames, callout tape). New studies should use the `rv-` components instead.
+- **Study pages** (`studies/<slug>/`): their former inline styles now live in a co-located `study.css` (classes `ts-N`, tokenised, with the sketchbook rules and the phone rules baked in), linked after `studies.css` and before `skin.css`. The attribute-selector overrides and nearly all `!important` are gone from `skin.css`. Structural study rules (tab bar, scroll figure) stay in `skin.css`. New studies should compose `rv-`/`rds-` components; `studies/_template` shows the pattern.
+- **Topanga drawings are generated**: `python3 scripts/topanga_art.py` redraws both perspectives, the existing plan, the six-stage plan and sheets L-1 and L-2 from the study's dimensions (210 by 50 ft building, 113 ft lot, 4 rows of 17 stalls, 68 to 61 stalls, 17 trees by species) with asserts on every count. Classes: `dk` pencil line (`dk-b` heavy, `dk-f` fine, `dk-m/r/s` moss/brick/slate), `df-*` fills, `dt` hand lettering; the blueprint sheets re-map the same classes to chalk via `.ts-fig--bp`. The older utility classes (`kmo`, `kpc`, `kbp`, `w1_6`, `op5`, `z11`, `tx`) remain only for the section and detail drawings. Colours come from tokens `--pencil`, `--blueprint`, `--draft-line`. The SVGs carry no inline styles or hex. Geometry and labels (every cited dimension) are unchanged, checked by diffing path data and text against the previous version.
 - **Tile banner** `rv-tiles` (`scripts/tiles_art.py`): three flat tinted tiles side by side, each mixing a drafting object (compass, ruler, scale bar), a plan or section fragment and a texture (grid, halftone, contour). Used under the headline of the guide, notes and studies indexes. Borrowed from the collage recipe in the reference library; the art itself is original.
 - **Marker highlight**: `rds-mark` is now a tilted brick-tint block that wipes in.
 - **Focus**: dashed brick marker ring on every focusable element.
@@ -207,7 +217,7 @@ Makes the whole site feel drawn instead of printed. Load `assets/rds/skin.css` l
 
 ## Motifs (`assets/rds/motifs.js`, styles in `rds.css`)
 
-Seeded generative art in the recipe of the reference contact sheets (kept in the project Library, never in the repo): flat tiles, each one thing, on one saturated or pale field; grid-filled circles and squares; overlapping translucent circles; drafting tools (compass, protractor, set square, scale ruler); contour rings; halftone; plan symbols (tree canopies, flow line, scale bar, north arrow); bars on ink; crossing lines on dotted paper; a big sprite icon. Everything is drawn in code, original, in our tokens plus the five art accents.
+Seeded generative art in the recipe of the reference contact sheets (kept in the project Library, never in the repo): flat tiles, each one thing, on one saturated or pale field; grid-filled circles and squares; overlapping translucent circles; drafting tools (compass, protractor, set square, scale ruler); contour rings; halftone; plan symbols (tree canopies, flow line, scale bar, north arrow); bars on ink; crossing lines on dotted paper; a big sprite icon; pill process diagram (SITE, MEASURE, PLAN); section with ground hatch, tree and scale figure; ledger page with a circled entry; crosshatch tone. Everything is drawn in code, original, in our tokens plus the five art accents.
 
 ```html
 <div class="rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="guide/tree-canopy" data-topic="shade trees" aria-hidden="true"></div>
@@ -223,8 +233,219 @@ Seeded generative art in the recipe of the reference contact sheets (kept in the
 - **Pencil filter**: `sketch.js` skips anything inside `.rds-art`; the filter breaks blended and oversized shapes.
 - The old pre-rendered banners (`scripts/tiles_art.py`) remain as the fallback on the three index pages.
 
+## Looping backgrounds (`assets/rds/loops.js`, `loops.css`)
+
+Constantly playing, muted, seamless "video" behind hero sections, drawn in code from our own motifs. It is SVG driven by the Web Animations API, so it is a few KB, sharp at any size, in our tokens, and needs no video files.
+
+```html
+<section data-rds-loop="plan" data-seed="studies"> ... hero content ... </section>
+```
+Load `<script src="…/assets/rds/loops.js" defer>` (it pulls in `loops.css` itself). The host gets `rds-loop-host` (relative, isolated); the layer sits behind its content and fades toward the text side, so type stays readable.
+- **Kinds**: `plan` (lot, building, stalls, trees and a flow line build up), `ridge` (ridgelines drawn in ink, redrawn in brick, low sun; the logo grown up), `contour` (survey contours draw around a hill and a basin, slow dashed arc), `tiles` (flat tiles shift colour and shape in a diagonal wave). Now on: home `ridge`, guide `plan`, studies `contour`, notes `tiles`, study heads `ridge` (wrap the `rv-article-head` in a `rds-loop-host`; the study template has it), the home Browse section `tiles` with `data-loop-fit="top"` (art fills only the top 38% so it never sits behind the cards), and every footer.
+- **Seamless**: one 28s cycle. It starts empty, builds, holds, fades back to empty, so the loop point is invisible. Keyframes are per element, so delays survive every repeat.
+- **Seeded and size-aware**: same `data-seed`, same drawing; the layout is generated for the box it sits in (wide and phone layouts differ) and rebuilt on large resizes.
+- **Fallbacks**: `prefers-reduced-motion`, `Save-Data` and 2g connections show the finished drawing as a still (no animation, no pause button). It pauses when offscreen and in hidden tabs.
+- **Footer**: `loops.js` adds a `contour` loop to the `.rds-footer` of every page that loads it, in `data-loop-tone="ink"` (lines in `--on-ink-muted`, calmer opacity). Opt out with `data-loop-none`. The load line `<script src="…/assets/rds/loops.js" defer>` sits after `motifs.js` on every page.
+- **Pause control**: `rds-loop__toggle` (44px, bottom right of the host) pauses every loop on the page and remembers the choice (`localStorage`, `rv-loops-paused` class on `<html>`). Needed because motion over 5 seconds must be stoppable.
+- **Rules**: tokens only; 2 to 4 flat colours; no text except the decorative scale bar; keep the host's own text legible at 375 and 1280px; do not put a loop on pages that already have a moving figure at the same spot. Use `data-loop-still` to force the still.
+- **API**: `RDSLoops.mount(host, kind, seed)`, `RDSLoops.pause()`, `RDSLoops.play()`, `RDSLoops.kinds`. The `scripts/check.py` and search index are unaffected.
+
+## Margin sketches (`assets/rds/margins.js`, `margins.css`)
+
+Big original pencil drawings that fill empty page margins. Loaded automatically by `loops.js`, so every page with a `<main>` gets them; opt out with `<main data-margins-none>`. Not mounted inside iframes (lab demos).
+
+- **Kinds**: `plan` (lot, building, stalls, tree canopies, dashed flow line, scale bar, north arrow), `section` (ground hatch, tree, swale, scale figure), `contour`, `compass` (draws a brick arc), `tools` (set square and sliding scale ruler), `protractor` (a measured angle), `tiles` (2 x 3 flat tiles whose colours slowly swap). Seeded by the page slug; kinds and sides alternate down the page.
+- **Desktop (1000px and up)**: fragments sit in the side gutters, 420 to 620px wide, bleeding off the window edge, and fade out before the text column (mask), so type is never crossed. Narrow gutters (under 150px) draw fainter.
+- **Phones**: one big fragment every ~1.7 screen heights at 20% opacity, behind the text, bleeding off a side.
+- **Motion**: lines draw on when a fragment first scrolls in; then it drifts a few pixels, canopies pulse, flow lines run, the ruler slides, the compass swings, tile colours swap. Only while on screen. Reduced motion, Save-Data, 2g and print show the finished still; the Pause background button (`rv-loops-paused`) stops it.
+- **Layering**: the layer is `z-index:-1` inside `<main>` (which becomes an isolated stacking context). `.rds-band-sunk` turns 62% opaque inside `main` so the art shows through. Skips areas covered by a hero loop.
+- **Band seams**: on wide screens the layer sits above section backgrounds (z-index 6; the gutters hold no text), so one drawing is continuous across a wavy `rds-band-sunk` edge. On narrow screens it stays behind the text and fragments are placed only outside tinted bands (plus 34px for the wave). Fragments overlap the content column by only 24px and fade out before it.
+- **Study rail**: pages with a section rail (`[data-toc]`) keep sketches on the right only. The rail itself (`.kt`, `studies.css`) sits on a slim paper strip with a crisp edge and a small pencil shadow (the nav's own `::before`, so it hugs the ticks and grows with the labels on hover), ticks on a scale (10px, 16px at a group start, 26px for the current one), ticks that draw in one by one (`--i` set by `studies.js`), a pulsing accent tick, brick active label and counter against muted inactive items. Reduced motion shows it still.
+- **API**: `RDSMargins.relayout()`, `RDSMargins.kinds`. Add a kind as `K.name = function (d, r, c)` using `d.line`, `d.fill`, `d.hatch`, `d.grid`.
+
 ## Known issues
 
-- The Topanga study body is still inline-styled with hex values (only its head uses `rv-` classes), so token changes do not reach most of it.
+- The Topanga study's text and layout styles are now in `study.css` using tokens, so token changes reach them. Its SVG drawings still carry inline `style` attributes and hex colours (they are redrawn separately).
 - Infobox field-guide terms link to `guide/<slug>/index.html` when an entry exists; terms without one (e.g. right-of-way) stay plain `rv-term` spans.
 - Home and study still contain placeholders: `[Last name]`, `[YOUR EMAIL]`, `[YOUR GITHUB]`, `[DATE]`, `[NEXT SITE ...]`.
+
+## Scroll effects
+
+`assets/rds/scrollfx.js` (loaded by `site-shell.js`, styles in the last block of `rds.css`) makes pages progress as you scroll. It adds `<html class="fx-on">` only when `prefers-reduced-motion` is not set, and every rule is scoped to `.fx-on`, so with reduced motion (or no JS) nothing moves and every figure shows in its final state. Turning the setting on while a page is open switches the effects off live.
+
+- **Progress line**: a 3px brick bar under the nav fills with the page (`.fx-progress`); skipped on notes, which have their own (`data-rv-progress`).
+- **Figures draw themselves**: pencil paths (`.dw`, `pathLength=1`) in `svg.ts-fig` and `svg.rds-draw` draw in, staggered by order, as the figure crosses the lower part of the screen (scrubbed by scroll, so scrolling back un-draws). Fills and labels fade in over the last half. The generated Topanga drawings tag their lines; older hand-drawn figures are tagged at runtime (stroke-only paths, no dashes, capped).
+- **Plans build layer by layer**: staged figures (`.lyr .l1` to `.l6`) draw each layer and grow its trees (`.tg`) when its step arrives; `studies.js` toggles `.is-on`. Layer progress is a registered custom property (`--ld`) so it animates in CSS.
+- **Dimension lines extend**: on the blueprint sheets the dimension strings are ordinary `.dw` paths and draw with the sheet.
+- **Counters**: put `data-count` on a number such as `68 → 61`, `1,500+` or `11,200 gal`; each figure counts up from zero once, when 60% visible, then restores the exact text.
+- **Parallax art**: each motif tile's drawing sits in a `.m-par` group that slides against its field by a seeded amount (up to 10 units) as `.rds-art` crosses the screen (`--py` from -1 to 1).
+- **Rise**: headings, quotes and figures below the fold settle in (`.fx-rise`). Anything already on screen, inside a scrolly figure, or using `data-rds-*` reveals is left alone.
+
+Performance: one passive scroll listener, one rAF per frame, and only figures and art near the viewport are updated (IntersectionObserver); only CSS custom properties change per frame.
+
+## Interaction layer (`assets/rds/interact.css`, `interact.js`)
+
+One deferred script (`<script src="…/assets/rds/interact.js" defer></script>`, after `sketch.js`; it loads its own stylesheet). Everything is additive and works with a thumb: 44px targets on touch, nothing that only appears on hover, reduced motion respected.
+
+- **Redraw art** `rv-reroll`: every `data-rds-art="banner"` gets a Redraw button (new random seed via `RDSArt.reroll`) and, once changed, an undo button back to the page's `data-seed`. Tiles also shift on hover (desktop) or tap, using `RDSArt.poke(art, tile)`. The art root loses `aria-hidden` (only its drawing keeps it) so the buttons stay reachable.
+- **Entry previews** `rv-tip`: links in article, essay and study bodies, infoboxes, hatnotes and See also that point to a guide entry, note or study show a card (kind, title, section if the link has a `#hash`, one-line description) from `assets/search-index.json`. Hover or keyboard focus; hidden on touch. Footnote markers and pager links are skipped.
+- **Draggable compare**: `[data-rv-compare]` gets a third segmented option, Slide, and a handle (`rv-slider`, `role="slider"`, arrow keys, Home/End). Moving a mouse over the picture follows the cursor with no click; swiping sideways on touch also starts it; vertical swipes still scroll. Mode is `data-view="slide"` with `--pos` (percent).
+- **Explorable plans** `rv-stages`: each `[data-scrolly]` figure gets a row of stage buttons built from its `.kstep` labels. Choosing one sets `data-pin` (studies.js honours it); Follow scroll releases it.
+- **Zoomable drawings** `rv-zoombtn` + `rv-lightbox`: figure drawings (viewBox at least 360 wide, not infobox or art) get a Zoom button that opens a `<dialog>` with wheel, pinch, drag, double-click and +/- zoom. The copy drops the pencil filter so it stays crisp.
+
+## Type lab (candidate directions, not live)
+
+`fonts/index.html` (generated by `scripts/build_type_lab.py`, noindex) compares six hand-drawn type directions with full hierarchies, lists every font screened with license, glyph gaps and size, and holds the writing effects. `fonts/write.js` is a standalone script: `data-rv-write="stroke|type|sweep"` with `data-speed="fast|slow"` (pen strokes from Hershey single-stroke data in `fonts/hershey.js`, built by `scripts/build_hershey.py`). It never autoplays under `prefers-reduced-motion`. The live fonts in `tokens.css` are unchanged until a direction is chosen; then move that direction's roles into `tokens.css` and `rds.css`.
+
+## Dark theme (`tokens.css`, `theme.js`, `theme.css`, `scripts/build_theme.py`; lab `lab/dark-theme/`)
+
+A second palette, "moonlit", that is a token swap: `<html data-theme="dark">` re-points the same variables, so no page needs per-page dark rules. **Use tokens, never hex, in new CSS and markup**; a hex in a style will not follow the theme.
+
+| Role | Paper | Moonlit |
+|---|---|---|
+| `--paper` / `--paper-raised` / `--paper-sunk` | `#f6f1e7` / `#fbf8f1` / `#ece5d6` | `#17120d` / `#211a13` / `#100c08` (warm, orange-tinted near-blacks) |
+| `--ink` / `--ink-muted` / `--ink-faint` | `#1f1d1a` / `#5c564c` / `#655e51` | `#f3e8d4` / `#cdbfa7` / `#ad9f88` (warm cream) |
+| `--brick` / `-deep` / `-tint` / `--on-brick` | `#9c3d24` / `#7d2f1a` / `#f0d9cc` / `#fbf8f1` | `#66c3c0` / `#8fdad6` / `#12302f` / `#0b1a1a` (moonlit turquoise) |
+| `--moss` / `-deep` / `-tint` / `--on-moss` | `#2f4a3a` / `#213529` / `#dfe6d8` / `#f6f1e7` | `#9cc3a8` / `#bbdcc5` / `#1a2a21` / `#0d1a12` |
+| `--slate`, `--rust` | `#35506b`, `#8c1c2e` | `#86aed2`, `#f08a98` |
+| `--line` / `--line-strong` | `#d9d0bd` / `#8a8170` | `#3a2e22` / `#857663` |
+
+Extra tokens the swap needs (all defined in both themes):
+- `--band`, `--on-band`, `--on-band-muted`, `--band-line`: the footer and `rds-band-ink`. They stay dark in both themes, so never use `--ink` as a band background; ink becomes cream in the dark theme.
+- `--brick-fill`, `--moss-fill`, `--slate-fill`, `--ink-field`: solid art fields (motif tiles, infobox titles). Same as the accent in light, muted deep versions in dark so cream linework reads on them.
+- `--edge`: hand-drawn frame lines and the pencil offset. Full ink in light, a softer `#a99a82` in dark.
+- `--paper-rgb`, `--sunk-rgb`: for translucent washes, `rgba(var(--paper-rgb),.9)`.
+- Art accents (`--sky`, `--ochre`, `--rose`, `--kelly`, `--peri`) are dimmed a step in dark.
+
+Contrast: every text pairing is at least 4.5 to 1 and every UI line at least 3 to 1 in both themes (the lab sheet computes them live). When you change a dark token, rerun the check in `lab/dark-theme/demo/`.
+
+**Switch.** One `rv-theme` button (hand-drawn `sun` and `moon` icons from `build_icons.py`), built by `site-shell.js`: left of Search in the header, first row of the phone More sheet, and in the study top bar. Any element with `data-rv-theme-toggle` works. `theme.js` loads in `<head>` right after the viewport meta (before first paint, so no flash), picks the saved choice (`localStorage` key `rv-theme`) or `prefers-color-scheme`, sets `data-theme`, `color-scheme` and `theme-color`, and follows the system until a choice is saved. API: `RVTheme.get()`, `.set(theme, originEl)`, `.toggle(originEl)`. Every page needs `<script src="…/assets/rds/theme.js"></script>` in the head and `<link rel="stylesheet" href="…/assets/rds/theme.css">` last; the page generators already emit both.
+
+**Transition.** The new theme grows from the button as a circle until it covers the page (View Transitions API with an animated `clip-path` on `::view-transition-new(root)`, 0.7 to 1.1 s by distance). No API: a disc of the new paper color grows, then the theme swaps and the disc fades. Reduced motion: instant.
+
+**Baked colors.** CSS `data:` URI art (rules, band edges, highlighter) cannot read variables, so `python3 scripts/build_theme.py` redraws each in dark colors between the BEGIN/END markers in `theme.css`; rerun it after changing any such URI. Older inline SVG with hex `fill`/`stroke` attributes is re-mapped by attribute selectors at the end of `theme.css`. Standalone demo pages load `theme.js` and read the same saved choice; changes sync across tabs and frames through the `storage` event.
+
+## Lab articles (`lab/`, `assets/rds/lab.css`, `lab.js`)
+
+Standing rule: every lab, demo or exploration page (pattern sheet, icon set, type lab, motif sheet, and any future one) is published as a styled article under `lab/<slug>/index.html`, listed on `lab/index.html` (Lab notes, linked from the More sheet and the footer). The demo page itself stays at its own URL and is linked from the article. Build the article from the Notes layout (`rv-ehead`, `rv-body`, `rds-toc`, `rv-sources`) and these parts, in this order: an **intro** (lead plus `rds-facts` key numbers), **process and research** (what I studied, with cited sources), **decisions** (`rds-decisions`: each choice, why, and its cost), the **live demo** embedded, then **What I could not verify** and **Sources**. Copy `lab/icon-set/index.html` to start one and add a row to `lab/index.html` and a "Keep reading" row on its siblings.
+
+- **Facts** `rds-facts`: a `<dl>` of big numbers over mono labels. **Decisions** `rds-decisions` > `rds-decision` (h3, why, `rds-decision__cost`), auto-numbered. **Swatches** `rds-swatches`. **Demo** `rds-demo`: bar with a "Live demo" tag and a link to the full page, body, caption.
+- **Inline demo**: put the controls in `rds-demo__body` (the pattern sheet article does this with `data-lab`).
+- **Framed demo**: `<iframe class="rds-demo__frame" src="../../x/index.html?embed=1" style="--demo-h:760px;--demo-h-m:640px">`. `?embed=1` makes `site-shell.js` hide the header, footer, breadcrumbs, tab bar and the page's own h1 and eyebrow (add `data-rv-embed-skip` to anything else to hide), and post its height. Add `data-fit="auto"` to the iframe to grow to that height; omit it for a long page (the type lab) so the frame scrolls on its own. Pages that are only demos should be `noindex` (see `lab/motif-sheet/demo/`).
+- Lab articles are indexed under the section "Lab notes".
+
+## Search (`assets/rds/search.js`, `search.css`)
+The search dialog is its own module, loaded on idle by `site-shell.js` (which keeps `window.RVSearch.open/search`). Classes are `rvs-*` on `.rds-search.rvs`.
+- **Open/close:** the box grows out of the button that opened it, a two-pass pencil frame draws itself (stroke-dashoffset on `pathLength=1` paths), bar, chips and footer rise in turn; close plays a 190 ms exit before `dialog.close()`. Phones get a full-screen sheet.
+- **Matching:** instant on every keystroke, no debounce. Substring scoring over title, headings, description and full text; typo tolerance (Levenshtein, 1 edit, 2 for words of 8+ letters) only when fewer than three pages match exactly. Matches are highlighted with a marker stroke that sweeps in. "Did you mean" comes from the site's own vocabulary.
+- **Rows:** icon per type and topic (from the icon sprite), titles write on, the selected row gets a hand-drawn box and a return arrow. Mouse move, arrows, PageUp/Down, Ctrl+N/P and Ctrl/Cmd+Home/End select; Enter opens, Cmd/Ctrl+Enter opens a new tab, Alt+Left/Right changes the filter, Esc clears then closes. Opening plays a pencil wipe (skipped for same-page links).
+- **Preview (wide screens):** seeded `RDSArt` card keyed to the page slug, description, headings (matching ones marked) and an Open button.
+- **States:** browse (hero doodle, try-chips, recents from `localStorage` key `rv-search-recent`, pages grouped by section), no results (drawn magnifier, suggestions), none under a filter.
+- **Motion:** everything stands still under `prefers-reduced-motion`; the frame, underline and doodles show in their finished state.
+
+## Flow: page-to-page motion (`assets/rds/flow.js`, `flow.css`, lab `lab/motion-lab/`)
+
+One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>` of every page (right after the viewport meta; it loads `flow.css` itself). It paints paper over the first frame, then plays:
+
+- **Opening** (first visit of a session, every reload): a sheet of paper tiles; the logo draws, "Redrawn Valley" writes in, the tiles shrink away from the center. 1.5 s in all (0.9 s drawing, 0.6 s lift). The sheet never takes pointer input, so the page underneath works at once; a tap anywhere skips ahead.
+- **Wipe** (clicking any same-site link): tiles grow from the click point with the destination section written on them (0.5 s), then the next page lifts them from the same point. Back/forward skip it. Tiles are a manual popover (top layer), so the search dialog is covered too. Opt a link out with `data-no-flow`.
+- **Write-on headings**: `h1`, `.rds-display` and section `h2`s are split into letters that ink in on the Wobble axes (`BNCE`, `INFM`) with a pencil squiggle drawn under (`.fl-ul`). Replaces `data-rds-split` on page titles. Section headings play when 60% visible.
+- **Micro-interactions**: pencil dab on click (`.fl-dab`), wavy link underline, spring buttons, tilting cards and rows, logo hop, rules that draw on and figure crop marks (`.fl-sk`).
+- **Off** under `prefers-reduced-motion`, in `?embed=1` frames, print, and with `?noflow`. A 3 s failsafe always removes the sheet.
+- **API**: `RVFlow.intro()`, `RVFlow.preview(a, b, x, y)`, `RVFlow.wipe(url)`, `RVFlow.write(el)`, `RVFlow.speed`. Tile colors are the art accents; tile art is the grid circle and hatched square from the motif system.
+
+## Nav wash and hero buttons
+
+- **Nav**: `rds-nav` is a hand-washed paper band: brick and moss tints over paper with a deckled hairline lower edge (`::before` and `::after` in `skin.css` Part 4). The page-wide "no shadows" rule has one more exception here: a soft `drop-shadow` under the deckled edge once the page scrolls. The active section keeps the brick hand rule and goes bold. Search is the header's main action: ink fill with the pencil offset.
+- **Hero buttons**: primary `rv-cta` draws its outline, fills brick, then its arrow draws, flies off and a new one settles in (hover repeats it). Secondary `rv-textlink` is ink text with a drawn rule and arrow. Brick appears once, on the primary. All of it is CSS only and skipped under reduced motion.
+
+
+## Sources library
+
+`/sources/` lists every source cited anywhere on the site. It is generated, never hand-kept: `python3 scripts/build_sources.py` reads every page and writes `assets/sources.json` (`scripts/regen.py` rebuilds it after every merge to `integration`; `scripts/check.py` warns when it is stale). Use `--report` to see counts and sources that are listed but never cited.
+
+- **What counts as a citation.** A link to an in-page `#id` inside `<sup>` or a `.rds-fn`, `.rv-fn`, `.rv-cite` wrapper, where the `#id` is an `<li>` in a notes list (`.rds-notes`, `.rv-sources`, or `#sources`). Pull quotes with a plain-text `[n]` inside `blockquote > cite` count as quoted uses. New article formats work without changes as long as they follow this pattern, so keep using the footnote components.
+- **Merging.** Sources merge by canonical URL (scheme, `www`, `utm_*`, fragment and trailing slash ignored). A source with no URL merges on its citation text. A `rds-kind` label or an `rv-src-note` beside a source is carried into the library (type and caveat).
+- **Types** are rule-based (`DOMAIN_RULES` in the script, or the `rds-kind` label if present). **Topics** are the topic hubs' own: a source gets every topic of the pages that cite it, read from each page's `<meta name="rv-topics">` and `assets/topics.json`. `scripts/regen.py` runs `build_sources.py`, so the data file refreshes after every merge to `integration`.
+- **Jump links.** Each use has `page/#cite=<listItemId>.<n>&src=<sourceId>`: the nth marker on that page for that list item. `assets/rds/cite-jump.js` (loaded by `site-shell.js` when a `#cite=` hash is present) scrolls there, pulses the marker, highlights the sentence with the CSS Custom Highlight API (whole-paragraph tint as the fallback) and shows `rv-cite-bar` with previous/next use, the entry and a way back. The marker rules in JS and Python must stay identical; change them together.
+- **Components.** `rv-lib-*` (stats, type bar, sticky search, filter rows), `rv-src` (source card; `--c` is its type color), `rv-use` (a page and its uses). Styles in `assets/rds/sources.css`, behavior in `assets/rds/sources.js`. Search matches title, publisher, type, topic, caveat, citing page and the sentence each use backs; state is kept in the URL (`?q=&type=&topic=&in=&caveat=1&sort=`); `/` focuses the search on this page.
+- Motion: cards rise in, the use list opens with a grid-row transition, counters count up. All of it stops under `prefers-reduced-motion`.
+## Sketchbook log (`log/`, `scripts/build_log.py`, `assets/rds/log.css`, `log.js`)
+
+A dated feed of everything new, built from git history, never edited by hand. `log/index.html` is a normal page with three generated regions (`<!--log:stats-->`, `<!--log:chips-->`, `<!--log:timeline-->`); `python3 scripts/build_log.py` rewrites them plus `log/feed.xml` (Atom, newest 40) and `assets/log.json` (entries, and a first-added and last-updated date for every page; other features can read it). `.github/workflows/log.yml` reruns it after each push to integration.
+- **Entry**: one commit (squash-merged PR). Type is study / note / guide / lab (a new page in that section), else redraw, design or site by subject and files. Pages show as New (added) or Updated (changed), titles read from the pages.
+- **Words**: PR-description trailers `Log: sentence`, `Log-Title:`, `Log-Type:`, `Log: skip` win; then `scripts/log-notes.json` (keyed by PR number); then the commit subject. Commits touching only generated files are never entries.
+- **Components**: `rv-log` timeline (sticky date column on desktop, sticky date bar on phones, dashed rail, icon dot per type, `rv-log__card` per entry, `rv-log__page` pills), type filter chips (`data-rv-topic`, kept in `?type=`), `rds-facts` stats. Under reduced motion it stands still.
+
+
+## A-Z index (`a-z/`, `scripts/build_atlas.py`, `assets/rds/atlas.css`, `atlas.js`)
+
+One alphabetical list of every term, place, source and drawing, each with links to every page (and section) that uses it. The list is **generated**, never hand-edited: `python3 scripts/build_index.py` (or `build_atlas.py` alone) rewrites the region between the `atlas:start` / `atlas:end` comments in `a-z/index.html`, and `scripts/check.py` warns when it is stale. A new article needs no edit: its title, figure captions, source list and any mention of an existing term or place are picked up on the next run. To add a term or place, add it to `scripts/data/atlas.json` (aliases, "see" cross-references, place notes) or mark it up with `data-term="..."` / `data-place="..."`.
+
+- **Components**: `rv-az__tools` (filter input `rds-guide-search`, kind chips `rds-chip`), sticky `rv-az__jump` letter strip with scroll spy, `rv-az__group` per letter, `rv-az__entry` rows (headword, kind tag, gloss, uses list; two columns from 1000px). The list is `data-rv-noindex` so search does not index every entry twice.
+- **Behavior**: kind chips and live filter share `?q=` and `?k=` in the URL; letters with no matches are hidden; "See" rows jump to their target; back-to-top button; smooth scrolling only when motion is allowed. Everything is readable without JS.
+- **Sources** merge across pages by URL; the numbered circles link to each in-text use. Drawings come from `assets/drawings.json` (the drawings gallery, `scripts/build_drawings.py`) and link to `/drawings/#id`; until that file exists, the A-Z falls back to every `<figure>` caption plus infobox sketch captions.
+- Limits: mentions are word matches, so unnamed ideas are missed and a name in another sense can be listed.
+
+## Keep reading rail and Random page (`assets/rds/rail.js`, `rail.css`)
+
+Every page ends with a "Keep reading" rail: a horizontally scrolling row of cards (seeded `card` art, type, read time, title, three-line blurb, matched topics). Loaded by `site-shell.js`; opt out with `<body data-no-rail>`. It is skipped in embed mode.
+
+- **Ranking**: pages share topics via the search-index field `k` (from `<meta name="rv-topics" content="heat, trees">`, first = primary). Primary and secondary matches score, pages from other sections get a small bonus, a per-page seeded jitter varies rails between pages, and no more than 4 of one section appear. Pages without `k` get topics derived from their title and blurb. Section front pages are never cards.
+- **Scrolling**: touch keeps native momentum with `scroll-snap-type:x mandatory`. On fine pointers there is no CSS snap (it fights a gesture); trackpads scroll natively with their own momentum, and once a gesture has been quiet for 150 ms a critically damped spring settles the rail on the nearest card. Mouse drag follows the pointer 1:1, releases with the speed you let go at and lands softly on a card. Arrows, keys, a notched Shift+wheel and clicks on the progress bar move by an eased page or card (repeat presses accumulate). The progress bar's thumb is draggable and keyboard operable (`role=slider`). Landing on a new card plays a small tick (card lifts, thumb flashes; a 6 ms buzz on phones that support it). Edge fades, passive listeners, reduced motion jumps without animation.
+- **Random page**: the Random page button, or any element with `data-rv-random`, goes to a random article, avoiding pages seen this session. `RVRelated.random()` does the same from script.
+- **Site-wide scroll tuning** (top of `rail.css`): `scroll-padding-top` for anchors under the sticky bar, `touch-action:manipulation` on controls, paint containment on art. `scrollfx.js` no longer watches rail art for parallax and debounces its DOM observer.
+
+## Topics (`assets/topics.json`, `scripts/build_topics.py`, `assets/rds/topics.css`)
+
+Topics are the subject threads that run across studies, field guide entries, notes and lab articles. They are the shared page metadata that the topic hubs, related rails, the map and the index read, so define them here and nowhere else.
+
+- **Tagging a page.** In `<head>`, after the description: `<meta name="rv-topics" content="heat, trees">`. Lowercase slugs from `assets/topics.json`, comma separated, **first is the primary topic** (use two to four tags). Optional: `<meta name="rv-place" content="Woodland Hills">` (a neighborhood or place name) and `<meta name="rv-geo" content="34.17,-118.60">` (lat,lon, only with a source). Studies, guide entries and notes should always carry `rv-topics`; `scripts/check.py` warns when one does not.
+- **Slugs.** `heat`, `trees`, `water`, `parking`, `streets`, `valley`, `making` (lab articles). A new topic is one object in `assets/topics.json` (slug, title, short, icon from the sprite, accent `moss|slate|brick|ochre|rose`, `art` = the words passed to `data-topic` so motifs pick the right palette, blurb, question). Add one only when at least three pages would use it.
+- **Index fields.** `scripts/build_index.py` copies the tags into `assets/search-index.json` as `k` (topic slugs, primary first), `pl` (place) and `g` ([lat, lon]) on each page entry. Read those, not the HTML.
+- **Hubs.** `topics/index.html` and `topics/<slug>/index.html` are generated. After tagging or adding a page run `python3 scripts/regen.py` (all generators in order: log, index, topics, index; CI runs it after each merge to `integration`, so forgetting is harmless) and commit the outputs (`check.py` warns when they are stale). Never hand-edit a hub.
+- **Hub anatomy.** Tiles banner seeded `topics/<slug>`, the lead and the question line (`rv-thead`), count pills that jump to each list (`rv-tstat`), then one section per kind: studies as `rds-card` cards (`rv-tcard`), everything else as `rds-row` rows (`rv-trow`) listing the page's other topics, then the other-topic chips (`rv-tchip`). The index page adds a coverage table (`rv-tmatrix`) so gaps are visible.
+
+
+## Study page header
+
+Study pages use the shared site header (`rds-nav`, from `site-shell.js`, held at 72px because study pages do not load `rds.js`) and, directly under it, a sticky part bar `rv-study-bar` with `id="top"`: the study name at left, then Site / Evidence / Design / Delivery / Sources, driven by `data-toc`. The old stand-alone study header, its "All studies" link and its Search link are gone (the header and breadcrumbs cover them). On phones the bar is one scrolling row that tracks the header as it hides (`--rv-sub`). The scroll-driven figure pins under both bars.
+
+**Part bar behaviour** (`studies.js`, `studies.css`): no bottom rule; the bar is paper with a 34px `::after` gradient that fades it into the page. It gains `is-compact` after 80px of scroll (less padding), `has-title` once the page title has scrolled away (the study name fades in), and one `rv-study-bar__ink` underline slides between the part links as the current part changes (on phones the row scrolls the current part into view). Colours are tokens (`--paper`, `--brick`), so it follows the dark theme; reduced motion drops the transitions.
+## Caching and fingerprinted assets (`vercel.json`, `scripts/assetver.py`)
+Shared CSS and JS are cached for a year, so every reference carries a content fingerprint.
+- Every `<link href>` and `<script src>` that points into `assets/` or `fonts/` ends in `?v=<10 hex chars>`. `python3 scripts/assetver.py` writes them; `regen.py` runs it last, so CI re-stamps after each merge, and `check.py` warns when a stamp is stale. Never type a `?v=` by hand.
+- The hash covers the file plus every asset it names (a loader such as `loops.js` pulls in `loops.css`; `site-shell.js` pulls in search, rail and the rest), so editing a child changes the parent's fingerprint.
+- A script that loads another file builds its URL from its own `src` and keeps the query string (`script.src.replace(/loops\.js/, 'loops.css')`, or `+ Q` in `site-shell.js` and `rail.js`). Do not strip the query, and do not load a shared asset by a bare path: it would be cached as immutable and could go stale.
+- `vercel.json` headers: `assets|fonts` CSS and JS are `public, max-age=31536000, immutable`; the icon sprites are one day with stale-while-revalidate; generated JSON in `assets/` is five minutes plus stale-while-revalidate (it is fetched by bare path, so it cannot be immutable); HTML keeps Vercel's default `max-age=0, must-revalidate`.
+- New generator that writes HTML? Write plain `assets/...` paths and compare with `assetver.strip()` in `--check`, as `build_topics.py` does. `regen.py` adds the stamps.
+- `ignoreCommand` in `vercel.json`: Vercel builds only `main` and `integration`, so PR branches do not use up the daily deploy limit. Verify branches locally.
+
+## Tokens (`assets/rds/tokens.css`): the one token file
+Every design value lives in `assets/rds/tokens.css` and nowhere else. A new system or feature (a page, a lab, a component, a script that injects CSS) must read these tokens; if one is missing, add it to `tokens.css` and list it here, do not write the literal in the component.
+
+**Layers**
+1. **Palette, `--pal-*`.** Raw, theme-invariant colours (`--pal-brick`, `--pal-paper`, ...). Components do not read these, except where a colour must not follow the theme (a fixed-colour illustration, print, the dark footer band). Those uses are rare and should say why.
+2. **Semantic roles, the plain names:** surfaces `--paper`, `--paper-raised`, `--paper-sunk`; text `--ink`, `--ink-muted`, `--ink-faint`, `--on-ink`; rules `--line`, `--line-strong`, `--edge`; accents `--brick*` (actions, current), `--moss*` (links, proposed), `--slate`; solid art fields `--brick-fill`, `--moss-fill`, `--slate-fill`, `--ink-field`; bands that stay dark `--band`, `--on-band`, `--on-band-muted`, `--band-line`; `--veil`. These are what the dark theme swaps (`:root[data-theme="dark"]` at the bottom of the file). Use them for everything.
+3. **Scales:**
+   - Space `--space-1..32` (4 to 128px), radius `--radius-sm/md/lg/pill`, hand-drawn corners `--rv-r-sm/md/lg`, line weight `--rv-stroke`, pencil shadows `--rv-pencil`, `--rv-pencil-lift` (aliases `--shadow-pencil*`).
+   - Type: families `--font-serif/sans/mono/hand`; size ramp `--fs-11` to `--fs-30` (the sizes the site uses; legacy `--rds-serif/sans/mono` and `--rv-hand` still resolve).
+   - Motion: durations `--dur-fast` 160ms, `--dur-quick` 200, `--dur-base` 320, `--dur-medium` 450, `--dur-slow` 720, `--dur-slower` 900, `--dur-draw` 1600, ambient loops `--dur-loop-1..4`, `--stagger`; easings `--ease-out`, `--ease-in-out`, the keyword set `--ease-std/soft-out/soft-in/soft-in-out/linear`, and the named curves `--ease-settle/glide/glide-2/spring/reveal/reveal-2`.
+   - Stacking `--z-*`, low to high: under, base, raised, raised-2..4, lifted, layer, grain, subbar, rail, study-bar, nav, jump, chrome, chrome-2, popover, tip, then the three `--z-flow-*` layers used by page transitions. Pick the nearest existing step; add one in order if the new layer truly sits between.
+   - Layout `--container`, `--measure`, `--rv-gutter` (18px under 375px), `--rv-bar`, `--rv-tab`, `--rv-safe`.
+- **Alpha colours:** `color-mix(in srgb, var(--ink) 40%, transparent)`, never `rgba()`. It follows the theme.
+- **Data-URI art** (`--rv-rule*`, `--rv-grain`, the torn edges) cannot read variables. It stays in `skin.css`/`rds.css` and `scripts/build_theme.py` writes the dark copies; see Dark theme.
+- **Breakpoints** are media queries and cannot be variables: 375, 480, 640, 800, 1000, 1120px. Reuse those.
+- **Enforced by `scripts/check_tokens.py`** (run from `check.py`): a hardcoded colour, font stack, z-index, time or cubic-bezier in `assets/**/*.css|js` outside `tokens.css` fails the check if it raises a file above `scripts/token-baseline.json` (a ratchet: the leftovers from before the token pass are counted there and may only go down; a file not in the baseline must be clean). Add `token-ok` in a comment on the line to exempt one, with the reason. After removing leftovers run `python3 scripts/check_tokens.py --update-baseline`.
+- **Leftovers on the baseline:** `flow.css`/`flow.js` easing curves and accent lists, `loops.js` easings, `theme.js` meta colours, and about 100 delays and odd-length durations in transitions (only the first time value in a `transition`/`animation` shorthand was snapped to the duration scale; delays are still literal). Take them down when you next touch those files.
+- **Pass notes:** durations were snapped to the nearest scale step (largest change 100ms, mostly under 20ms); literal colours became `--pal-*` (so light and dark render exactly as before); `rgba()` of palette colours became `color-mix()`.
+
+## Accessibility (`skin.css` > "Accessibility layer", `site-shell.js`)
+
+- **Tokens:** `--tap-min` (44px touch target), `--tap-min-fine` (24px floor for pointer devices), `--focus-w`/`--focus-gap` (focus ring), `--dur-instant` (reduced-motion duration). Add to `tokens.css`, never hardcode.
+- **No truncation:** never use `text-overflow: ellipsis`, `-webkit-line-clamp` or `white-space: nowrap` to fit text. Wrap it (`overflow-wrap: anywhere` on long cites and URLs) or change the layout. Heights that hold text are `min-height`, not `height`. Breadcrumbs, the contents pill, search results, rail blurbs, lightbox captions and the log all wrap now.
+- **Focus:** one dashed brick ring (`:where(a,button,input,summary,[tabindex]):focus-visible`); on the dark footer and ink bands it switches to `--pal-on-band-accent`. The skip link is the first tab stop and moves focus into `<main>` (tabindex -1 added on click).
+- **Motion:** a catch-all `prefers-reduced-motion: reduce` rule makes every animation, transition and view transition effectively instant. New motion needs no extra opt-out, but must not carry meaning only through movement.
+- **Touch:** coarse pointers get 44px controls; fine pointers keep the compact look with a 24px floor.
+- **Also:** `forced-colors` rings and borders, `prefers-contrast: more` firms hairlines and faint text. Rules of thumb checked with axe-core at 375px in both themes: one `<main>`, one banner, a heading order with no skipped levels, icon buttons carry `aria-label`, `role="tooltip"` is `aria-hidden` until it has text.
+- **Known leftover:** the study part bar (`nav.ktabs`) is a sideways-scrolling tab strip on narrow phones. It never widens the page, but it is the one intentional scroller left.

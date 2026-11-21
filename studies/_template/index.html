@@ -3,16 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../assets/rds/theme.js?v=82e41f1560"></script>
+<script src="../../assets/rds/flow.js?v=9739b5e536"></script>
 <meta name="robots" content="noindex">
 <title>[STUDY NAME] | Redrawn Valley</title>
 <meta name="description" content="[ONE SENTENCE: the place, the question, and the finding]">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Architects+Daughter&display=swap">
-<link rel="stylesheet" href="../../assets/rds/tokens.css">
-<link rel="stylesheet" href="../../assets/rds/rds.css">
-<link rel="stylesheet" href="../../assets/studies.css">
-<link rel="stylesheet" href="../../assets/rds/skin.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM@400..700,-100..100,0..100&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../../assets/rds/tokens.css?v=cb3bdaa5eb">
+<link rel="stylesheet" href="../../assets/rds/rds.css?v=75c5d25512">
+<link rel="stylesheet" href="../../assets/studies.css?v=3aaeec05db">
+<link rel="stylesheet" href="study.css">
+<link rel="stylesheet" href="../../assets/rds/skin.css?v=de94a15dc7">
+<link rel="stylesheet" href="../../assets/rds/theme.css?v=6e447b0843">
 </head>
 <!--
   STUDY TEMPLATE. How to use it: see DESIGN.md > Studies.
@@ -24,19 +28,19 @@
   Remove this comment and the noindex meta when you copy.
 -->
 <body class="rv-study">
-<div data-rds-root style="background:var(--paper);color:var(--ink);font:400 16px/26px var(--rds-sans);-webkit-font-smoothing:antialiased;overflow-x:clip">
+<div data-rds-root class="ts-1">
 
 <!-- Top bar. data-toc makes the part tabs mark the current part (aria-current). -->
-<header id="top" class="rv-study-bar">
-<nav data-toc aria-label="Parts">
+<header class="rds-nav" data-rds-nav data-rv-shell="nav"><a class="rds-nav__brand" href="../../index.html">Redrawn Valley</a></header>
+<header id="top" class="rv-study-bar" role="region" aria-label="Study sections">
+<nav class="ktabs" data-toc aria-label="Parts">
 <a class="rv-study-bar__brand" href="#top">[STUDY NAME]</a>
-<a class="rv-study-bar__back" href="../index.html">&larr; All studies</a>
-<a href="#part1">Site</a><a href="#part2">Evidence</a><a href="#part3">Design</a><a href="#part4">Delivery</a><a href="#sources">Sources</a><a href="#" data-rv-search-open>Search</a>
+<a href="#part1">Site</a><a href="#part2">Evidence</a><a href="#part3">Design</a><a href="#part4">Delivery</a><a href="#sources">Sources</a>
 </nav>
 </header>
 
 <main id="main">
-<div class="rds-container" style="padding-top:var(--space-4)"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
+<div class="rds-container ts-2"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
 <!-- Contents rail: one link per numbered section, in order. Update "/ 13" to the link count. Hidden under 1240px. -->
 <div class="kt"><nav data-toc aria-label="Sections"><div class="cnt"><b data-toc-count>01</b> / 06</div>
 <a href="#sec01" data-label="Site"><i></i><span>01 &nbsp;Site</span></a>
@@ -48,18 +52,19 @@
 </nav></div>
 
 <!-- Article head: title block + infobox. The infobox is the encyclopedic summary; fill every row. -->
+<div class="rds-loop-host" data-rds-loop="ridge" data-seed="study-template">
 <header class="rv-article-head">
 <div class="rv-article-head__main">
-<div class="rds-view" style="display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center">
-<span class="rds-eyebrow" style="color:var(--brick)">Case study</span>
-<span style="font:400 13px/20px var(--rds-mono);color:var(--ink-faint)">[NEIGHBORHOOD], Los Angeles</span>
+<div class="rds-view ts-3">
+<span class="rds-eyebrow ts-4">Case study</span>
+<span class="ts-5">[NEIGHBORHOOD], Los Angeles</span>
 </div>
 <!-- Headline states the finding. Wrap ONE phrase in rds-mark per page. -->
-<h1 class="rds-display-xl" style="font-size:clamp(40px,5vw,68px)">[STUDY NAME]: <span class="rds-mark">[FINDING IN A PHRASE]</span> [REST OF THE SENTENCE]</h1>
-<p class="rds-lead rds-view" style="font-size:22px;line-height:32px;transition-delay:200ms">[TWO LINES: what the place is, the question this study asks, and what it proposes.]</p>
+<h1 class="rds-display-xl ts-6">[STUDY NAME]: <span class="rds-mark">[FINDING IN A PHRASE]</span> [REST OF THE SENTENCE]</h1>
+<p class="rds-lead rds-view ts-7">[TWO LINES: what the place is, the question this study asks, and what it proposes.]</p>
 </div>
 
-<aside class="rv-infobox rds-view" aria-label="Study at a glance" style="transition-delay:300ms">
+<aside class="rv-infobox rds-view ts-8" aria-label="Study at a glance">
 <div class="rv-infobox__head"><span class="rv-infobox__kicker">Study [NN] &middot; at a glance</span><span class="rv-infobox__title">[STUDY NAME]</span></div>
 <dl class="rv-infobox__list">
 <div><dt>Location</dt><dd>[ADDRESS OR CROSS STREETS], [NEIGHBORHOOD]<sup><a href="#s1">[1]</a></sup></dd></div>
@@ -67,7 +72,7 @@
 <div><dt>Focus</dt><dd>[HEAT, SHADE, STORMWATER, SEATING: WHICHEVER APPLY]</dd></div>
 <div><dt>Methods</dt><dd><ul><li>[HOW THE SITE WAS READ]</li><li>[HOW EVIDENCE WAS FOUND]</li><li>[WHAT RULES WERE CHECKED]</li><li>[WHAT WAS DRAWN]</li></ul></dd></div>
 <div><dt>Status</dt><dd>Concept study. Not commissioned by the owner.</dd></div>
-<div><dt>By</dt><dd>Nathan [Last name]</dd></div>
+<div><dt>By</dt><dd>Nate Anderson</dd></div>
 <div><dt>Date</dt><dd>[DATE]</dd></div>
 <!-- Field guide terms: plain <span class="rv-term"> until /guide/ has the entry, then <a class="rv-term" href="../../guide/index.html#slug">. -->
 <div><dt>Field guide</dt><dd><div class="rv-infobox__tags"><span class="rv-term" data-term="[TERM-SLUG]">[Term]</span><span class="rv-term" data-term="[TERM-SLUG]">[Term]</span></div></dd></div>
@@ -75,20 +80,21 @@
 <div class="rv-infobox__foot">[N] sections &middot; 4 parts &middot; <a href="#sources">[N] sources</a></div>
 </aside>
 </header>
+</div>
 
 <!-- What is real / estimated. Required on every study. -->
-<section class="rv-sec" style="padding-block:0 var(--space-4)">
+<section class="rv-sec ts-9">
 <div class="rds-callout rds-view">
 <p class="rds-callout__title">What is real here</p>
 <p>[WHAT COMES FROM A SOURCE OR AN OBSERVATION, WITH CITATIONS]</p>
-<p class="rds-callout__title" style="margin-top:var(--space-4)">What is estimated</p>
+<p class="rds-callout__title ts-10">What is estimated</p>
 <p>[EVERY NUMBER YOU SCALED, GUESSED OR ASSUMED, AND HOW FAR OFF IT MIGHT BE]</p>
 </div>
 </section>
 
 <!-- PART 1 -->
 <div id="part1" class="rv-part"><div class="rv-part__bar"><span class="rv-part__n">Part 1 of 4</span><span class="rv-part__name">The site</span><span class="rv-part__sub">What is there</span></div></div>
-<section class="rv-sec" style="padding-top:var(--space-12)">
+<section class="rv-sec ts-11">
 <div id="sec01" class="rv-sec__head">
 <p class="rds-eyebrow rds-view">01 &nbsp; The site</p>
 <h2 class="rds-view">[HEADLINE THAT STATES A FINDING]</h2>
@@ -99,22 +105,22 @@
 <p>[PARAGRAPH. Say what you saw, then what it means.]</p>
 </div>
 <!-- Figure: drawing + mono caption. Always say what kind of drawing it is. -->
-<figure class="rds-figure rds-view" style="margin-top:var(--space-12)">
-<div class="rds-figure__art rds-figure__art--brick" style="min-height:280px;display:grid;place-items:center"><span class="rv-pending" style="background:var(--paper-raised)">[DRAWING: inline SVG, hand-drawn, in the palette]</span></div>
+<figure class="rds-figure rds-view ts-12">
+<div class="rds-figure__art rds-figure__art--brick ts-13"><span class="rv-pending ts-14">[DRAWING: inline SVG, hand-drawn, in the palette]</span></div>
 <figcaption>Fig. 1: [WHAT IT SHOWS]. Concept sketch, not a rendering.</figcaption>
 </figure>
 </section>
 
 <!-- PART 2 -->
 <div id="part2" class="rv-part"><div class="rv-part__bar"><span class="rv-part__n">Part 2 of 4</span><span class="rv-part__name">The evidence</span><span class="rv-part__sub">What has been measured elsewhere</span></div></div>
-<section class="rv-sec" style="padding-top:var(--space-12)">
+<section class="rv-sec ts-11">
 <div id="sec02" class="rv-sec__head">
 <p class="rds-eyebrow rds-view">02 &nbsp; The problem</p>
 <h2 class="rds-view">[HEADLINE]</h2>
 </div>
 <div class="rv-sec__body"><p>[PARAGRAPH WITH CITED NUMBERS<sup class="rv-cite"><a href="#s2">[2]</a></sup>. Say when you could not find a number.]</p></div>
 </section>
-<section class="rv-sec" style="padding-top:0">
+<section class="rv-sec ts-15">
 <div id="sec03" class="rv-sec__head">
 <p class="rds-eyebrow rds-view">03 &nbsp; The evidence</p>
 <h2 class="rds-view">[HEADLINE]</h2>
@@ -124,7 +130,7 @@
 
 <!-- PART 3 -->
 <div id="part3" class="rv-part"><div class="rv-part__bar"><span class="rv-part__n">Part 3 of 4</span><span class="rv-part__name">The design</span><span class="rv-part__sub">What I would change, drawn and detailed</span></div></div>
-<section class="rv-sec" style="padding-top:var(--space-12)">
+<section class="rv-sec ts-11">
 <div id="sec04" class="rv-sec__head">
 <p class="rds-eyebrow rds-view">04 &nbsp; The proposal</p>
 <h2 class="rds-view">[HEADLINE: the moves, and what they cost]</h2>
@@ -134,7 +140,7 @@
 
 <!-- PART 4 -->
 <div id="part4" class="rv-part"><div class="rv-part__bar"><span class="rv-part__n">Part 4 of 4</span><span class="rv-part__name">Delivery</span><span class="rv-part__sub">How it could happen and what is still unknown</span></div></div>
-<section class="rv-sec" style="padding-top:var(--space-12)">
+<section class="rv-sec ts-11">
 <div id="sec05" class="rv-sec__head">
 <p class="rds-eyebrow rds-view">05 &nbsp; Measuring it</p>
 <h2 class="rds-view">[N] numbers I would take before and after</h2>
@@ -143,7 +149,7 @@
 <div class="rds-row"><h3 class="rds-row__title">[MEASURE]</h3><p class="rds-row__text">[HOW, WHEN, AND WITH WHAT]</p><span class="rds-row__meta">[UNIT]</span></div>
 </div>
 </section>
-<section class="rv-sec" style="padding-top:0">
+<section class="rv-sec ts-15">
 <div id="sec06" class="rv-sec__head">
 <p class="rds-eyebrow rds-view">06 &nbsp; Limits</p>
 <h2 class="rds-view">What this study does not know</h2>
@@ -152,7 +158,7 @@
 </section>
 
 <!-- Sources: ids s1..sN match the [n] citations. Real, checked links only. Never invent a source. -->
-<section id="sources" class="rds-band-sunk" style="scroll-margin-top:72px">
+<section id="sources" class="rds-band-sunk ts-16">
 <div class="rv-sec">
 <div class="rv-sec__head"><p class="rds-eyebrow">Sources</p><h2>What I read</h2></div>
 <ol class="rv-sources">
@@ -165,10 +171,12 @@
 
 <footer class="rds-footer" data-rv-shell="footer"></footer>
 </div>
-<script src="../../assets/studies.js"></script>
-<script src="../../assets/rds/mobile.js"></script>
-<script src="../../assets/rds/motifs.js" defer></script>
-<script src="../../assets/site-shell.js"></script>
-<script src="../../assets/rds/sketch.js" defer></script>
+<script src="../../assets/studies.js?v=47f3636eac"></script>
+<script src="../../assets/rds/mobile.js?v=f223f7305c"></script>
+<script src="../../assets/rds/motifs.js?v=3622ce8871" defer></script>
+<script src="../../assets/rds/loops.js?v=3b48121c91" defer></script>
+<script src="../../assets/site-shell.js?v=cd79421834"></script>
+<script src="../../assets/rds/sketch.js?v=6025410beb" defer></script>
+<script src="../../assets/rds/interact.js?v=bea72e9298" defer></script>
 </body>
 </html>

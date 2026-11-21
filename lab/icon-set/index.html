@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../assets/rds/theme.js?v=82e41f1560"></script>
+<script src="../../assets/rds/flow.js?v=9739b5e536"></script>
+<title>Thirty-eight icons and a logo, drawn as lists of points | Lab notes | Redrawn Valley</title>
+<meta name="description" content="How the hand-drawn icon set and the ridgeline logo were made, why the first version was thrown out, and the rules that keep new icons consistent.">
+<meta name="rv-topics" content="making">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Architects+Daughter&display=swap">
+<link rel="stylesheet" href="../../assets/rds/tokens.css?v=cb3bdaa5eb">
+<link rel="stylesheet" href="../../assets/rds/rds.css?v=75c5d25512">
+<link rel="stylesheet" href="../../assets/rds/notes.css?v=647853e23f">
+<link rel="stylesheet" href="../../assets/rds/lab.css?v=b5a74aff5c">
+<link rel="stylesheet" href="../../assets/rds/skin.css?v=de94a15dc7">
+<link rel="stylesheet" href="../../assets/rds/theme.css?v=6e447b0843">
+</head>
+<body class="rds-page">
+<div class="rv-progress" data-rv-progress aria-hidden="true"><i></i></div>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav">
+<a class="rds-nav__brand" href="../../index.html">Redrawn Valley</a>
+</header>
+<main id="main">
+<div class="rds-container"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
+<aside class="rds-toc" data-rds-toc aria-label="Contents"><nav><div class="rds-toc__count"><b data-rds-toc-count>01</b> / 05</div><a href="#why"><i></i><span>What the icons are for</span></a><a href="#process"><i></i><span>How they are made</span></a><a href="#logo"><i></i><span>The mark</span></a><a href="#decisions"><i></i><span>The decisions I made</span></a><a href="#lab"><i></i><span>The live gallery</span></a></nav></aside>
+<article>
+<header class="rv-ehead"><div class="rds-container"><div class="rv-ehead__inner">
+<div class="rv-ehead__kicker"><a class="rds-link rds-link--quiet" href="../index.html">&larr; Lab notes</a><span class="rds-tag rds-tag--brick">Icons</span></div>
+<h1 class="rds-display" data-rds-reveal>Thirty-eight icons and a logo, drawn as lists of points</h1>
+<p class="rds-lead" data-rds-reveal style="--i:1">A small hand-drawn icon set and a ridgeline logo carry the navigation, the phone tab bar and every index row. This is how they are drawn, why the first version was thrown out, and the rules that keep new icons consistent.</p>
+<p class="rv-byline"><span>By <b>Nate Anderson</b></span><span>Nov. 21, 2026</span><span>5 min read</span><span>3 sources</span><span>Lab 2 of 7</span></p>
+</div></div></header>
+<div class="rds-container"><div class="rv-tiles rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="lab/icon-set" data-topic="icon-set" aria-hidden="true"></div></div>
+<div class="rv-body" data-rv-body><div class="rds-container">
+<section id="why" aria-labelledby="why-h">
+<h2 id="why-h"><span class="rv-num">01</span>What the icons are for</h2>
+<p>The site had text links and nothing else, and on a phone the bottom tab bar needs a symbol for every tab. I wanted a set that looks drawn rather than printed, small enough to ship as one file, and consistent enough that a new icon could be added by someone following the written rules.</p>
+<dl class="rds-facts rv-wide"><div><dt>icons: 7 navigation, 16 interface, 15 topic</dt><dd>38</dd></div><div><dt>drawing grid</dt><dd>24 px</dd></div><div><dt>line weight at 24px</dt><dd>1.9 px</dd></div><div><dt>strokes in the logo</dt><dd>3</dd></div></dl>
+<p>The set covers three jobs. Navigation icons sit in the header, the search button and the phone tab bar. Interface icons are arrows, chevrons, a check, a warning and similar. Topic icons start each row of the Field Guide, notes and studies indexes: heat, tree, shade, pavement, water, river, soil, sidewalk, bioswale, permeable paving, leaf, thermometer, pin, ruler and building.</p>
+</section>
+<section id="process" aria-labelledby="process-h">
+<h2 id="process-h"><span class="rv-num">02</span>How they are made</h2>
+<p>Each icon is a short list of points on a 24 by 24 grid, written by hand in <code>scripts/build_icons.py</code>. The script then roughens the points with a seeded wobble, so the output is stable from run to run, and writes the sprite, the logo, the favicon and a names file that the gallery reads. I never edit the sprite directly: I edit the point list and run the script.</p>
+<p>A stroke can be a polyline with sharp corners, a smooth curve through points, a closed shape, or a circle. Any stroke can be marked as the accent, and any can lay a pale tint under it that is printed slightly off the line, like a marker that missed the edge. Linework uses <code>currentColor</code>, the accent uses one token, and the tint uses another, so a single CSS class recolors an icon (moss for trees, slate for water) without a second drawing.</p>
+<p>The first version was more detailed. I replaced it the same day with a set of two or three strokes per icon, a bolder line and a three-stroke logo, because fine detail does not survive at the sizes used beside body text. That is my judgment from looking at the icons at 16, 24 and 32 pixels. The gallery below is the second version.</p>
+</section>
+<section id="logo" aria-labelledby="logo-h">
+<h2 id="logo-h"><span class="rv-num">03</span>The mark</h2>
+<p>The logo is two ridgelines forming a valley. The ink line is the valley as it was drawn. The brick line beneath it is the same ridge redrawn, and a small brick sun sits low in the gap. That is the site&rsquo;s whole idea in three strokes: look at a place, then redraw it. It has to read at 16 pixels because that is the favicon size, so the three-stroke limit is not decoration.</p>
+<p>In the header it sits left of the wordmark; the favicon is the same mark on a paper tile. Because both are made from the same point lists as the icons, they share the wobble.</p>
+</section>
+<section id="decisions" aria-labelledby="decisions-h">
+<h2 id="decisions-h"><span class="rv-num">04</span>The decisions I made</h2>
+<div class="rds-decisions rv-wide">
+<article class="rds-decision"><h3>Two or three strokes per icon, with one accent stroke on the meaningful part</h3><p>The accent is how an icon gets personality without a second color system: the door of the house, the leading edge of the pencil. Anything that needs more strokes is an illustration, not an icon.</p><p class="rds-decision__cost"><b>Cost</b>Some topics (bioswale, permeable paving) are abstract at this size and rely on the label next to them.</p></article>
+<article class="rds-decision"><h3>Never fill with solid ink</h3><p>Solid fills turn into blobs when the line is wobbly and break the sketch feel. Pale tints are allowed because they sit off the line and read as paper and marker.</p><p class="rds-decision__cost"><b>Cost</b>Icons look lighter than a standard UI set next to bold text.</p></article>
+<article class="rds-decision"><h3>Keep the source as point lists, not hand-edited SVG</h3><p>A point list is readable, diffable and easy to restyle; I could make the whole set bolder in one edit, which is what the second version needed.</p><p class="rds-decision__cost"><b>Cost</b>Adding an icon means editing a Python file, which is a barrier for a contributor who only knows SVG.</p></article>
+<article class="rds-decision"><h3>Linework follows the text color</h3><p>Using <code>currentColor</code> means icons work on paper, on the dark footer and in the active tab with no extra assets.</p><p class="rds-decision__cost"><b>Cost</b>A single accent color per icon; no two-accent icons.</p></article>
+<article class="rds-decision"><h3>Ship one sprite, referenced with <code>use</code></h3><p>One request, cached, and every icon can be restyled in CSS.</p><p class="rds-decision__cost"><b>Cost</b>External sprite references need HTTP, so icons do not appear if you open a page from disk.</p></article>
+</div>
+</section>
+<section id="lab" aria-labelledby="lab-h">
+<h2 id="lab-h"><span class="rv-num">05</span>The live gallery</h2>
+<p>Every icon, at its real size, grouped the way they are used. Click an icon to copy its markup. The sizes and tab-bar sections lower on the page show how they scale.</p>
+<figure class="rds-demo rv-wide" data-rds-reveal>
+<div class="rds-demo__bar"><span class="rds-tag rds-tag--brick">Live demo</span><a href="../../icons/index.html">Open it as its own page <span class="rds-arrow">&rarr;</span></a></div>
+<iframe class="rds-demo__frame" src="../../icons/index.html?embed=1" title="The Redrawn icon gallery, embedded" loading="lazy" data-fit="auto" style="--demo-h:760px;--demo-h-m:640px"></iframe>
+<figcaption>The gallery is generated by scripts/build_icons.py between its gallery markers.</figcaption>
+</figure>
+</section>
+
+<section id="limits" aria-labelledby="limits-h"><h2 id="limits-h"><span class="rv-num">06</span>What I could not verify</h2>
+<aside class="rds-callout rds-callout--plain" role="note"><div><p class="rds-callout__title">Limits of this lab</p><ul><li>I judged legibility at 16, 24 and 32 pixels by eye on one screen. I did not test the icons with people, or on low-resolution displays.</li><li>The icons are decorative and hidden from screen readers; the text beside each one carries the meaning. I have not tested that with a screen reader.</li><li>The count of 38 is read from the generated names file on the day I wrote this and will change as icons are added.</li></ul></div></aside>
+</section>
+<div class="rv-divider" aria-hidden="true"></div>
+<footer class="rv-sources" id="sources"><h2>Sources</h2>
+<ol>
+<li id="n1">Redrawn Design System, &ldquo;Icons and the logo mark.&rdquo; <a href="https://github.com/FreezingShock/Redrawn-Valley/blob/main/DESIGN.md" rel="noopener">DESIGN.md</a> in the site repository.</li>
+<li id="n2">Site repository history: &ldquo;Add hand-drawn icon set, logo mark and favicon&rdquo; and &ldquo;Simplify the icon set and logo mark,&rdquo; both Nov. 20, 2026. <a href="https://github.com/FreezingShock/Redrawn-Valley" rel="noopener">github.com/FreezingShock/Redrawn-Valley</a>.</li>
+<li id="n3">Icon drawing source with its own explanation of stroke kinds: <code>scripts/build_icons.py</code> in the same repository.</li>
+</ol>
+<p class="rv-sources__foot">All links viewed Nov. 20 to 21, 2026. Numbers are cited; my own estimates and judgments are labeled as mine.</p></footer>
+</div></div>
+</article>
+<section class="rds-section rds-band-sunk rv-after"><div class="rds-container"><div class="rds-sechead"><p class="rds-eyebrow">Keep reading</p><h2 class="rds-h1">More from the lab</h2></div>
+<div class="rds-rows">
+<a class="rds-row" href="../pattern-sheet/index.html"><div><span class="rds-tag rds-tag--brick">Patterns</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-leaf"/></svg>How every page got its own drawing</h3><p class="rds-row__text">The banners on this site are generated from a seed. How I went from a folder of reference sheets to fourteen original motifs, what I decided, and a live lab where you can reroll one.</p></div></a>
+<a class="rds-row" href="../type-lab/index.html"><div><span class="rds-tag rds-tag--brick">Type</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-notes"/></svg>Choosing a hand for the type</h3><p class="rds-row__text">Forty-six font entries screened for license, accents, size and legibility, six type directions built from them, and three ways to write text in. The research, the verdict and the live lab.</p></div></a>
+<a class="rds-row" href="../motif-sheet/index.html"><div><span class="rds-tag rds-tag--brick">Motifs</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-ruler"/></svg>Ten motifs drawn from reference sheets</h3><p class="rds-row__text">The first, hand-built set of motif SVGs that the generative pattern system grew out of: what each one is built from, how its colors are wired, and a sheet you can randomize.</p></div></a>
+<a class="rds-row" href="../sources-library/index.html"><div><span class="rds-tag rds-tag--brick">Sources</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-footnote"/></svg>The sources library: every citation, found by script</h3><p class="rds-row__text">How every numbered note on the site is read, merged and made searchable, with jump links to the exact sentence. 5 min read.</p></div></a>
+</div>
+<p class="rds-small" style="margin-top:var(--space-6)"><a class="rds-link" href="../index.html">All lab notes <span class="rds-arrow">&rarr;</span></a></p></div></section>
+</main>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
+<script src="../../assets/rds/rds.js?v=cb4c4c2a17"></script>
+<script src="../../assets/rds/notes.js?v=8358c86cc9"></script>
+<script src="../../assets/rds/lab.js?v=7c288e2476"></script>
+<script src="../../assets/rds/mobile.js?v=f223f7305c"></script>
+<script src="../../assets/rds/motifs.js?v=3622ce8871" defer></script>
+<script src="../../assets/rds/loops.js?v=3b48121c91" defer></script>
+<script src="../../assets/site-shell.js?v=cd79421834"></script>
+<script src="../../assets/rds/sketch.js?v=6025410beb" defer></script>
+<script src="../../assets/rds/interact.js?v=bea72e9298" defer></script>
+</body>
+</html>
