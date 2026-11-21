@@ -75,7 +75,7 @@
       tEl.textContent = items[cur].text;
       var first = doc.getElementById(items[0].id), ft = doc.querySelector('.rds-footer'), y = win.pageYOffset;
       var past = first && first.getBoundingClientRect().top < win.innerHeight * 0.5;
-      var atFooter = ft && ft.getBoundingClientRect().top < win.innerHeight - 40;
+      var rl = doc.querySelector('.rv-rail'), atFooter = ((rl || ft) && (rl || ft).getBoundingClientRect().top < win.innerHeight - 40); /* the pill also steps aside for the Keep reading rail */
       pill.classList.toggle('is-on', !!past && !atFooter && y > 300);
     }
     win.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });

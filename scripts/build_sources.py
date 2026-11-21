@@ -99,14 +99,9 @@ def classify(kind, host, title, internal):
     if re.search(r'\bjournal\b|\bet al\b', title.lower()): return 'Research'
     return 'Other'
 
-# Topics are derived from the pages that cite a source. <meta name="rv-topics" content="Heat, Water"> on a page overrides.
-TOPICS = {
-    'Heat': r'\bheat|temperature|hottest|albedo|cool pavement|degrees|thermal|warming',
-    'Trees and shade': r'\btrees?\b|canopy|shade|planting|willow|species',
-    'Water and soil': r'\bwater|stormwater|bioswale|runoff|soil|permeable|river|riparian|flood|drain',
-    'Streets and parking': r'parking|stall|sidewalk|street|curb|pavement|walk|blvd|boulevard|lot\b|transit',
-    'The site itself': r'\bicons?\b|typeface|\bfonts?\b|motif|pattern|palette|motion|design system|lab note',
-}
+# Topics come from the same place as the topic hubs: assets/topics.json (slug, title) and each page's
+# <meta name="rv-topics" content="heat, trees">. A source's topics are the union over the pages that cite it.
+TOPIC_TITLES = {t['slug']: t['title'] for t in json.loads((root / 'assets' / 'topics.json').read_text(encoding='utf-8'))['topics']}
 
 # ---------- page reading ----------
 def page_info(rel, tree):
@@ -120,13 +115,7 @@ def page_info(rel, tree):
     return {'t': title or h1, 'meta': [x.strip() for x in meta.split(',') if x.strip()], 'body': body}
 
 def page_topics(info):
-    if info['meta']: return [t for t in info['meta'] if t in TOPICS] or info['meta']
-    low = (info['t'] + ' ' + info['body']).lower(); score = []
-    for t, rx in TOPICS.items():
-        c = len(re.findall(rx, low))
-        if c >= 8: score.append((c, t))
-    score.sort(reverse=True)
-    return [t for _, t in score[:2]]
+    return [TOPIC_TITLES[t] for t in info['meta'] if t in TOPIC_TITLES]
 
 def is_marker(n, ids):
     """An <a href="#id"> that points at a list item, living in a footnote-style wrapper."""
@@ -297,7 +286,7 @@ def build(report=False):
                     'site': internal, 'kind': kind, 'type': classify(kind, host + urlsplit(url).path if url else '', title, bool(internal)),
                     'note': note, 'topics': topics, 'uses': sum(p['n'] for p in plist), 'pages': plist})
     out.sort(key=lambda x: (-x['uses'], x['title'].lower()))
-    data = {'types': [t for t in TYPES if any(o['type'] == t for o in out)], 'topics': [t for t in TOPICS if any(t in o['topics'] for o in out)],
+    data = {'types': [t for t in TYPES if any(o['type'] == t for o in out)], 'topics': [t for t in TOPIC_TITLES.values() if any(t in o['topics'] for o in out)],
             'pages': pages, 'sources': out}
     return json.dumps(data, ensure_ascii=False, separators=(',', ':')) + '\n', problems, data
 

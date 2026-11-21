@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../../assets/rds/flow.js"></script>
 <title>The sources library: every citation, found by script | Lab notes | Redrawn Valley</title>
+<meta name="rv-topics" content="making">
 <meta name="description" content="How the sources library reads every numbered note on the site, merges repeats, and lets you jump from a source to the exact sentence it backs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +36,7 @@
 <section id="why" aria-labelledby="why-h">
 <h2 id="why-h"><span class="rv-num">01</span>What the library is for</h2>
 <p>Evidence is the point of this site, but a reader who wants to know &ldquo;where did 121&deg;F come from, and who else used that source?&rdquo; has to open pages one by one. I wanted one place that answers three questions fast: what are all the sources, which pages lean on each one, and what exactly did I use it for.</p>
-<dl class="rds-facts rv-wide"><div><dt>sources, merged by link</dt><dd>98</dd></div><div><dt>citation markers read</dt><dd>262</dd></div><div><dt>pages that cite something</dt><dd>24</dd></div><div><dt>sources with a caveat I wrote</dt><dd>13</dd></div></dl>
+<dl class="rds-facts rv-wide"><div><dt>sources, merged by link</dt><dd>99</dd></div><div><dt>citation markers read</dt><dd>266</dd></div><div><dt>pages that cite something</dt><dd>25</dd></div><div><dt>sources with a caveat I wrote</dt><dd>14</dd></div></dl>
 <p>Those counts were read from the generated file on the day I wrote this. They will be different tomorrow, because nobody types the list. When I publish a page, the check script rebuilds it.</p>
 </section>
 <section id="process" aria-labelledby="process-h">
@@ -54,7 +55,7 @@
 <div class="rds-decisions rv-wide">
 <article class="rds-decision"><h3>Read the pages; never keep a separate list</h3><p>A hand-kept bibliography goes stale the first time I forget it. The pages are the single source of truth, and the library is a view of them. A GitHub Action regenerates the file on every pull request, and the check script warns if it is stale.</p><p class="rds-decision__cost"><b>Cost</b>A page that does not use numbered notes is invisible to the library, and two pull requests that both change the generated file can conflict.</p></article>
 <article class="rds-decision"><h3>Jump links carry an order, not a hand-placed anchor</h3><p>Many markers have no id of their own, and adding one to each would mean editing every page and every future page. The order of a marker among those for the same source is enough to find it again.</p><p class="rds-decision__cost"><b>Cost</b>If I add a citation above an existing one and do not rebuild, an old link lands one use off. The rebuild fixes it; the old address does not know.</p></article>
-<article class="rds-decision"><h3>Search the claim, not only the title</h3><p>People remember &ldquo;the 121 degree record,&rdquo; not &ldquo;Wigglesworth and Cosgrove.&rdquo; The search covers the sentence each source backs, the section and the citing page, and shows the best matching sentence under the result.</p><p class="rds-decision__cost"><b>Cost</b>The data file is about 115 KB, loaded once. That is fine for 98 sources and would need a smarter index at a few thousand.</p></article>
+<article class="rds-decision"><h3>Search the claim, not only the title</h3><p>People remember &ldquo;the 121 degree record,&rdquo; not &ldquo;Wigglesworth and Cosgrove.&rdquo; The search covers the sentence each source backs, the section and the citing page, and shows the best matching sentence under the result.</p><p class="rds-decision__cost"><b>Cost</b>The data file is about 115 KB, loaded once. That is fine for 99 sources and would need a smarter index at a few thousand.</p></article>
 <article class="rds-decision"><h3>Show caveats, and do not rate sources</h3><p>If I wrote &ldquo;I did not check its underlying data&rdquo; beside a source, the library shows it and can filter to it. It does not score quality, because I would be inventing a number.</p><p class="rds-decision__cost"><b>Cost</b>A source with no caveat is not thereby good; it only means I did not write one.</p></article>
 <article class="rds-decision"><h3>Rules for types and topics</h3><p>Rules are predictable and easy to fix in one place. Asking a model or tagging by hand would be slower and would drift.</p><p class="rds-decision__cost"><b>Cost</b>Some labels are wrong at the edges, such as a nonprofit report labeled as a report.</p></article>
 </div>

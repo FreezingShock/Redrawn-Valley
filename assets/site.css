@@ -45,3 +45,24 @@ html{scroll-behavior:smooth}
 .rv-search{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2);width:100%;max-width:440px;margin-top:var(--space-2)}
 .rv-search__row{display:flex;gap:var(--space-2)}
 .rv-search__row .rds-input{flex:1;min-width:0}
+
+/* Study panels on the home page and studies index: tinted art, alternating sides, token-only drawing colours */
+.rv-feature-stack{display:grid;gap:var(--space-8);margin-top:var(--space-8)}
+.rv-feature--moss .rv-feature__art{background:var(--moss-tint)}
+.rv-feature--slate .rv-feature__art{background:color-mix(in srgb,var(--slate) 14%,var(--paper-raised))}
+@media (min-width:860px){.rv-feature--flip{grid-template-columns:1.1fr 1fr}.rv-feature--flip .rv-feature__art{order:2}}
+.rv-more{margin:var(--space-8) 0 0;text-align:center}
+.rv-fplan{display:block;width:100%;height:auto;max-height:560px;--dl-ink:var(--pencil);--dl-moss:var(--moss);--dl-brick:var(--brick);--dl-slate:var(--slate);--dl-tree:var(--moss-tint);--dl-sand:var(--paper-raised);--dl-text:var(--pencil);--dl-glass:var(--paper-raised);--dl-cool:var(--paper-sunk)}
+.rv-fplan .dk{fill:none;stroke:var(--dl-ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.rv-fplan .dk-b{stroke-width:3.4}.rv-fplan .dk-f{stroke-width:1.4;opacity:.55}.rv-fplan .dk-d{stroke-dasharray:10 8}
+.rv-fplan .dk-m{stroke:var(--dl-moss)}.rv-fplan .dk-r{stroke:var(--dl-brick)}
+.rv-fplan .df-t{fill:var(--dl-tree);opacity:.85}.rv-fplan .df-sand{fill:var(--dl-sand);opacity:.95}.rv-fplan .df-cool{fill:var(--dl-cool);opacity:.9}
+.rv-fplan .df-awn{fill:var(--dl-brick);opacity:.7}.rv-fplan .df-glass{fill:var(--dl-glass);opacity:.8}.rv-fplan .df-dot{fill:var(--dl-moss)}
+.rv-fplan .dt{fill:var(--dl-text);font-family:var(--font-hand,var(--rds-sans));font-size:18px;letter-spacing:.03em}
+.rv-fplan .dt-m{font-size:22px}.rv-fplan .dt-s{font-size:18px}.rv-fplan .dt-xs{font-size:15px}.rv-fplan .dt-r{fill:var(--dl-brick)}
+.rv-fplan .op6{opacity:.7}
+.rv-fplan .dw{stroke-dasharray:none}
+.rds-tag--slate{color:var(--slate)}
+/* Studies list rows on the home page: the blurb is a link, so give it the site's link look instead of the browser blue */
+.rds-row__text a{color:var(--moss);font-weight:500;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(47,74,58,.4);transition:color var(--dur-fast,160ms) ease,text-decoration-color var(--dur-fast,160ms) ease}
+.rds-row__text a:hover,.rds-row__text a:focus-visible{color:var(--brick);text-decoration-color:currentColor}

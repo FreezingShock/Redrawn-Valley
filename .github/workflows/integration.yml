@@ -22,27 +22,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: python3 scripts/check.py
 
-  # Regenerates files built from the pages (search index, sitemap, sources library) and commits them to the PR branch,
-  # so a new article never has to remember to. Skipped for forks, which cannot be pushed to.
-  refresh:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - run: python3 scripts/build_index.py && python3 scripts/build_sources.py
-      - name: Commit if changed
-        run: |
-          git diff --quiet && exit 0
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "Refresh generated site data (search index, sitemap, sources library)"
-          git push
-
   automerge:
-    needs: [check, refresh]
-    if: ${{ always() && needs.check.result == 'success' && (needs.refresh.result == 'success' || needs.refresh.result == 'skipped') && !contains(github.event.pull_request.labels.*.name, 'hold') }}
+    needs: check
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'hold') }}
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
