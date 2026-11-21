@@ -17,7 +17,7 @@ import re, sys, json, hashlib, pathlib
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root
 OUT = root / 'assets' / 'sources.json'
 VOID = {'br', 'img', 'hr', 'meta', 'link', 'input', 'source', 'wbr', 'col', 'area', 'base', 'embed', 'param', 'track'}
 SKIP = {'script', 'style', 'svg', 'template', 'noscript'}

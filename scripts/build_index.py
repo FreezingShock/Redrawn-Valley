@@ -9,7 +9,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from places import place_entry, places_json
 from html.parser import HTMLParser
 
-root = pathlib.Path(__file__).resolve().parent.parent
+from common import ROOT as root, html_files
 # Production domain for sitemap.xml. Change here if the domain changes.
 SITE_URL = 'https://redrawnvalley.vercel.app'
 SECTIONS = {'': 'Home', 'a-z': 'A–Z index', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'map': 'Valley map', 'topics': 'Topics', 'log': 'Sketchbook log', 'about': 'About', 'sitemap': 'Sitemap', 'sources': 'Sources'}
@@ -51,9 +51,9 @@ class Page(HTMLParser):
 
 def build():
     pages, urls, places = [], [], []
-    for f in sorted(root.rglob('*.html')):
+    for f in html_files():
         rel = f.relative_to(root)
-        if any(p in ('.git', 'node_modules') for p in rel.parts) or rel.name == '404.html': continue
+        if rel.name == '404.html': continue
         src = f.read_text(encoding='utf-8')
         if rel.as_posix() == 'a-z/index.html': src = re.sub(r'<!-- atlas:start.*?<!-- atlas:end -->', '', src, flags=re.S)   # generated list: not indexed twice
         p = Page(); p.feed(src)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Topanga Willows drawings, generated from the study's dimensions.
 
-Run:  python3 scripts/topanga_art.py          (rewrites the marked drawings in studies/topanga-willows/index.html
+Run:  python3 scripts/art_topanga.py          (rewrites the marked drawings in studies/topanga-willows/index.html
                                                 and the generated block in studies/topanga-willows/study.css)
 
 Every cited dimension and count is an input below; the drawing is computed from them and the asserts fail if a
@@ -481,7 +481,7 @@ def build_persp(kind, uid):
 
 
 # ---------------------------------------------------------------- generated stylesheet block (tokens only, no hex)
-GEN_CSS = '''/* tp:gen start (written by scripts/topanga_art.py) */
+GEN_CSS = '''/* tp:gen start (written by scripts/art_topanga.py) */
 .ts-fig{--dl-ink:var(--pencil);--dl-moss:var(--moss);--dl-brick:var(--brick);--dl-slate:var(--slate);--dl-tree:var(--moss-tint);--dl-sand:var(--paper-sunk);--dl-text:var(--pencil);--dl-glass:var(--paper-raised);--dl-water:var(--slate);--dl-cool:var(--paper-raised)}
 .ts-fig--bp{--dl-ink:var(--draft-line);--dl-moss:var(--draft-line);--dl-brick:var(--draft-line);--dl-slate:var(--draft-line);--dl-tree:var(--draft-line);--dl-sand:var(--draft-line);--dl-text:var(--draft-line);--dl-glass:var(--draft-line);--dl-water:var(--draft-line);--dl-cool:var(--draft-line)}
 .dk{fill:none;stroke:var(--dl-ink);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
@@ -490,7 +490,7 @@ GEN_CSS = '''/* tp:gen start (written by scripts/topanga_art.py) */
 .df-t{fill:var(--dl-tree);opacity:.75}.df-sand{fill:var(--dl-sand);opacity:.9}.df-w{fill:var(--dl-water);opacity:.18}.df-cool{fill:var(--dl-cool);opacity:.55}
 .df-p{opacity:.9}.df-dot{fill:var(--dl-moss)}.df-awn{fill:var(--dl-brick);opacity:.78}.df-glass{fill:var(--dl-glass);opacity:.7}.df-sky{fill:var(--dl-glass);opacity:.0}
 .ts-fig--bp .df-t{opacity:.13}.ts-fig--bp .df-sand{opacity:.16}.ts-fig--bp .df-w{opacity:.2}.ts-fig--bp .df-cool{opacity:.12}.ts-fig--bp .df-awn{opacity:.3}.ts-fig--bp .df-glass{opacity:.12}
-.dt{fill:var(--dl-text);font-family:'Architects Daughter','Hanken Grotesk',sans-serif;font-size:11px;letter-spacing:.03em}
+.dt{fill:var(--dl-text);font-family:var(--font-hand);font-size:11px;letter-spacing:.03em}
 .dt-xs{font-size:9px}.dt-s{font-size:10px}.dt-m{font-size:12.5px}.dt-l{font-size:13px}.dt-r{fill:var(--dl-brick)}.dt-g{fill:var(--dl-moss)}
 .op3{opacity:.3}.op4{opacity:.4}.op45{opacity:.45}.op5{opacity:.5}.op6{opacity:.6}.op8{opacity:.8}
 /* tp:gen end */
