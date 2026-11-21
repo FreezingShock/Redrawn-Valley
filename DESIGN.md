@@ -134,6 +134,9 @@ Components (prefix `rv-`, tokens only):
 - **Sections** `rv-part` > `rv-part__bar` (Part N of 4) and `rv-sec` > `rv-sec__head` (eyebrow, h2 headline, summary) + `rv-sec__body` (64ch). Citations `rv-cite`; source list `rv-sources` with `<li id="sN">`; page bar `rv-study-bar`.
 - Legacy study-script hooks (keep as is): `rds-view` (reveal), `rds-split`/`rds-w` (headline words), `rds-draw` with `.s`/`.f`, `kt` rail, `kstep`/`data-scrolly`, `data-toc`.
 
+- **Study 02 drawings are generated from public parcel data**: `python3 scripts/fallbrook_art.py` redraws the parcel plan, the staged frontage plan and the section from `scripts/data/fallbrook_parcels.py` (City of Los Angeles parcel outlines) and the design numbers at the top of the script, with asserts. Study-specific styles live in `studies/<slug>/study.css` (`fb-` prefix); drawing classes (`dk`, `df-*`, `dt`) are the same as study 01.
+- **Study 03 pieces** (`studies/ventura-topanga-corner`, drawings from `scripts/ventura_corner_art.py`): staged layers `.stg-fN` (appear at stage N) and `.stg-uN` (shown until stage N), driven by `data-st` on `[data-scrolly]`; distance bars `vt-bars` (rows on a mile axis with a quarter-mile rule); `vt-ledger` (two-number table); `vt-loop` (two panels animated on a 12 s loop, static under reduced motion); `vt-rows` (study rows with a fixed meta column). Plan drawings are generated from dimensions in feet.
+
 **Adding a study**
 1. Copy `studies/_template/index.html` to `studies/<slug>/index.html` (same depth, so paths stay valid). Delete the noindex meta and the instruction comment.
 2. Replace every `[BRACKETED CAPS]` placeholder; fill every infobox row. Keep the real/estimated callout, Measuring, Limits and Sources. Headlines state findings; every number is cited; no invented sources.
@@ -241,6 +244,17 @@ Load `<script src="…/assets/rds/loops.js" defer>` (it pulls in `loops.css` its
 - **Rules**: tokens only; 2 to 4 flat colours; no text except the decorative scale bar; keep the host's own text legible at 375 and 1280px; do not put a loop on pages that already have a moving figure at the same spot. Use `data-loop-still` to force the still.
 - **API**: `RDSLoops.mount(host, kind, seed)`, `RDSLoops.pause()`, `RDSLoops.play()`, `RDSLoops.kinds`. The `scripts/check.py` and search index are unaffected.
 
+## Margin sketches (`assets/rds/margins.js`, `margins.css`)
+
+Big original pencil drawings that fill empty page margins. Loaded automatically by `loops.js`, so every page with a `<main>` gets them; opt out with `<main data-margins-none>`. Not mounted inside iframes (lab demos).
+
+- **Kinds**: `plan` (lot, building, stalls, tree canopies, dashed flow line, scale bar, north arrow), `section` (ground hatch, tree, swale, scale figure), `contour`, `compass` (draws a brick arc), `tools` (set square and sliding scale ruler), `protractor` (a measured angle), `tiles` (2 x 3 flat tiles whose colours slowly swap). Seeded by the page slug; kinds and sides alternate down the page.
+- **Desktop (1000px and up)**: fragments sit in the side gutters, 420 to 620px wide, bleeding off the window edge, and fade out before the text column (mask), so type is never crossed. Narrow gutters (under 150px) draw fainter.
+- **Phones**: one big fragment every ~1.7 screen heights at 20% opacity, behind the text, bleeding off a side.
+- **Motion**: lines draw on when a fragment first scrolls in; then it drifts a few pixels, canopies pulse, flow lines run, the ruler slides, the compass swings, tile colours swap. Only while on screen. Reduced motion, Save-Data, 2g and print show the finished still; the Pause background button (`rv-loops-paused`) stops it.
+- **Layering**: the layer is `z-index:-1` inside `<main>` (which becomes an isolated stacking context). `.rds-band-sunk` turns 62% opaque inside `main` so the art shows through. Skips areas covered by a hero loop.
+- **API**: `RDSMargins.relayout()`, `RDSMargins.kinds`. Add a kind as `K.name = function (d, r, c)` using `d.line`, `d.fill`, `d.hatch`, `d.grid`.
+
 ## Known issues
 
 - The Topanga study's text and layout styles are now in `study.css` using tokens, so token changes reach them. Its SVG drawings still carry inline `style` attributes and hex colours (they are redrawn separately).
@@ -292,3 +306,14 @@ The search dialog is its own module, loaded on idle by `site-shell.js` (which ke
 - **Preview (wide screens):** seeded `RDSArt` card keyed to the page slug, description, headings (matching ones marked) and an Open button.
 - **States:** browse (hero doodle, try-chips, recents from `localStorage` key `rv-search-recent`, pages grouped by section), no results (drawn magnifier, suggestions), none under a filter.
 - **Motion:** everything stands still under `prefers-reduced-motion`; the frame, underline and doodles show in their finished state.
+
+## Flow: page-to-page motion (`assets/rds/flow.js`, `flow.css`, lab `lab/motion-lab/`)
+
+One synchronous `<script src="…/assets/rds/flow.js"></script>` in the `<head>` of every page (right after the viewport meta; it loads `flow.css` itself). It paints paper over the first frame, then plays:
+
+- **Opening** (first visit of a session, every reload): a sheet of paper tiles; the logo draws, "Redrawn Valley" writes in, the tiles shrink away from the center. About 1.5 s then a 0.8 s lift. Tap to skip.
+- **Wipe** (clicking any same-site link): tiles grow from the click point with the destination section written on them (0.5 s), then the next page lifts them from the same point. Back/forward skip it. Tiles are a manual popover (top layer), so the search dialog is covered too. Opt a link out with `data-no-flow`.
+- **Write-on headings**: `h1`, `.rds-display` and section `h2`s are split into letters that ink in on the Wobble axes (`BNCE`, `INFM`) with a pencil squiggle drawn under (`.fl-ul`). Replaces `data-rds-split` on page titles. Section headings play when 60% visible.
+- **Micro-interactions**: pencil dab on click (`.fl-dab`), wavy link underline, spring buttons, tilting cards and rows, logo hop, rules that draw on and figure crop marks (`.fl-sk`).
+- **Off** under `prefers-reduced-motion`, in `?embed=1` frames, print, and with `?noflow`. A 5 s failsafe always removes the sheet.
+- **API**: `RVFlow.intro()`, `RVFlow.preview(a, b, x, y)`, `RVFlow.wipe(url)`, `RVFlow.write(el)`, `RVFlow.speed`. Tile colors are the art accents; tile art is the grid circle and hatched square from the motif system.
