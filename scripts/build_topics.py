@@ -6,6 +6,7 @@ Inputs: assets/topics.json (topic definitions) and the <meta name="rv-topics"> t
 scripts/build_index.py. Add a page, tag it, run this script (and build_index.py), commit the result.
 See DESIGN.md > Topics."""
 import sys, json, html, pathlib, importlib.util
+import sys as _sys, pathlib as _pl; _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent)); import assetver as _av
 
 root = pathlib.Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location('build_index', root / 'scripts' / 'build_index.py')
@@ -207,7 +208,7 @@ if __name__ == '__main__':
     for name, body in out.items():
         path = root / name
         if '--check' in sys.argv:
-            if not path.exists() or path.read_text(encoding='utf-8') != body: stale.append(name)
+            if not path.exists() or _av.strip(path.read_text(encoding='utf-8')) != _av.strip(body): stale.append(name)
         else:
             path.parent.mkdir(parents=True, exist_ok=True); path.write_text(body, encoding='utf-8'); print(f'wrote {name}')
     if stale: print('stale: ' + ', '.join(stale) + ' (run python3 scripts/build_topics.py)'); sys.exit(1)

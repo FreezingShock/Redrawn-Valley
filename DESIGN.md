@@ -376,3 +376,12 @@ Topics are the subject threads that run across studies, field guide entries, not
 ## Study page header
 
 Study pages use the shared site header (`rds-nav`, from `site-shell.js`, held at 72px because study pages do not load `rds.js`) and, directly under it, a sticky part bar `rv-study-bar` with `id="top"`: the study name at left, then Site / Evidence / Design / Delivery / Sources, driven by `data-toc`. The old stand-alone study header, its "All studies" link and its Search link are gone (the header and breadcrumbs cover them). On phones the bar is one scrolling row that tracks the header as it hides (`--rv-sub`). The scroll-driven figure pins under both bars.
+
+## Caching and fingerprinted assets (`vercel.json`, `scripts/assetver.py`)
+Shared CSS and JS are cached for a year, so every reference carries a content fingerprint.
+- Every `<link href>` and `<script src>` that points into `assets/` or `fonts/` ends in `?v=<10 hex chars>`. `python3 scripts/assetver.py` writes them; `regen.py` runs it last, so CI re-stamps after each merge, and `check.py` warns when a stamp is stale. Never type a `?v=` by hand.
+- The hash covers the file plus every asset it names (a loader such as `loops.js` pulls in `loops.css`; `site-shell.js` pulls in search, rail and the rest), so editing a child changes the parent's fingerprint.
+- A script that loads another file builds its URL from its own `src` and keeps the query string (`script.src.replace(/loops\.js/, 'loops.css')`, or `+ Q` in `site-shell.js` and `rail.js`). Do not strip the query, and do not load a shared asset by a bare path: it would be cached as immutable and could go stale.
+- `vercel.json` headers: `assets|fonts` CSS and JS are `public, max-age=31536000, immutable`; the icon sprites are one day with stale-while-revalidate; generated JSON in `assets/` is five minutes plus stale-while-revalidate (it is fetched by bare path, so it cannot be immutable); HTML keeps Vercel's default `max-age=0, must-revalidate`.
+- New generator that writes HTML? Write plain `assets/...` paths and compare with `assetver.strip()` in `--check`, as `build_topics.py` does. `regen.py` adds the stamps.
+- `ignoreCommand` in `vercel.json`: Vercel builds only `main` and `integration`, so PR branches do not use up the daily deploy limit. Verify branches locally.

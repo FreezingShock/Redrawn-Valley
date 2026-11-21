@@ -14,7 +14,7 @@
     var cssP = new Promise(function (res) {
       if (doc.querySelector('link[data-rvs-css]')) return res();
       var l = doc.createElement('link'); l.rel = 'stylesheet'; l.setAttribute('data-rvs-css', '');
-      l.href = new URL('assets/rds/search.css', siteRoot).href;
+      l.href = new URL('assets/rds/search.css', siteRoot).href + (ctx.q || '');
       l.onload = l.onerror = function () { res(); }; setTimeout(res, 1200);
       doc.head.appendChild(l);
     });
@@ -377,7 +377,7 @@
     var motifsP = null;
     function needArt() {
       if (window.RDSArt) return Promise.resolve();
-      if (!motifsP) motifsP = new Promise(function (res) { var s = doc.createElement('script'); s.src = new URL('assets/rds/motifs.js', siteRoot).href; s.onload = s.onerror = function () { res(); }; doc.head.appendChild(s); });
+      if (!motifsP) motifsP = new Promise(function (res) { var s = doc.createElement('script'); s.src = new URL('assets/rds/motifs.js', siteRoot).href + (ctx.q || ''); s.onload = s.onerror = function () { res(); }; doc.head.appendChild(s); });
       return motifsP;
     }
     function renderPreview(r, quiet) {

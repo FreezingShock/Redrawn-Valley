@@ -31,7 +31,7 @@
   cs.textContent = 'html.fl-cover::before{content:"";position:fixed;inset:0;z-index:2147483000;background:#f6f1e7;pointer-events:none}' +
     '@media print{html.fl-cover::before{display:none}}';
   (doc.head || root).appendChild(cs);
-  var css = doc.createElement('link'); css.rel = 'stylesheet'; css.href = BASE + 'flow.css';
+  var css = doc.createElement('link'); css.rel = 'stylesheet'; css.href = BASE + 'flow.css' + ((me && me.src && me.src.match(/\?.*$/)) || [''])[0];
   (doc.head || root).appendChild(css);
 
   /* ---------- what to play ---------- */
