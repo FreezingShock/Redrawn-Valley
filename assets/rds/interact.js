@@ -194,7 +194,7 @@
       var on = fig.getAttribute('data-view') === 'slide';
       slide.setAttribute('aria-pressed', on ? 'true' : 'false');
       if (on) all('[data-rv-view]', fig).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
-      if (on && name) name.textContent = 'compared, drag the line';
+      if (on && name) name.textContent = 'compared, move across the picture';
     }).observe(fig, { attributes: true, attributeFilter: ['data-view'] });
     slide.addEventListener('click', function () { enter(50); });
     var drag = null;
@@ -205,6 +205,8 @@
       if (sliding) { stage.setPointerCapture(e.pointerId); set(fromEvent(e)); fig.classList.add('is-dragging'); }
     });
     stage.addEventListener('pointermove', function (e) {
+      /* a mouse needs no click: moving over the picture wipes between today and proposed */
+      if (e.pointerType === 'mouse' && (!drag || e.pointerId !== drag.id || drag.live)) { enter(fromEvent(e)); return; }
       if (!drag || e.pointerId !== drag.id) return;
       if (!drag.live) {
         /* a sideways swipe on the picture starts the slide, a vertical one is still a scroll */
