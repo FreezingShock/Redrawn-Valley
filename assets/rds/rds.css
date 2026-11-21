@@ -370,3 +370,9 @@ a.rds-row:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .fx-on .fx-rise{opacity:0;translate:0 18px;transition:opacity var(--dur-slow) var(--ease-std),translate var(--dur-slow) var(--ease-out)}
 .fx-on .fx-rise.is-in{opacity:1;translate:none}
 @media print{.fx-on .fx-rise{opacity:1;translate:none}.fx-progress{display:none}}
+
+/* Study pages (main.rds-cv) on phones: skip style, layout and paint for off-screen sections until they are near the viewport; the
+   first section always renders. Measured on a throttled phone it halves blocking time; on desktop and on the home page it only added
+   layout shift or a later LCP, so it is scoped to phones and studies. --cv-block is a placeholder height, "auto" makes the browser
+   remember the real one after the first draw. Find-in-page, anchors and Tab still reach hidden sections. See DESIGN.md > Loading. */
+@media (max-width:799px){.rds-cv section ~ section{content-visibility:auto;contain-intrinsic-size:auto var(--cv-block)}}
