@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../../assets/rds/theme.js?v=117e2bf1fc"></script>
+<script src="../../assets/rds/flow.js?v=87d2838354"></script>
+<title>A moonlit dark theme, and the circle that switches it on | Lab notes | Redrawn Valley</title>
+<meta name="description" content="How the dark theme was made as a token swap: orange-black paper, cream ink, brick turned moonlit turquoise, contrast checked to WCAG AA, and the circle reveal that switches it on.">
+<meta name="rv-topics" content="making">
+<link rel="preload" href="../../assets/fonts/shantell-sans.d8e1c0ce.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/figtree.233cd99b.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/fonts/fonts.5cd73cf4.css">
+<link rel="stylesheet" href="../../assets/rds/tokens.css?v=a6a62c3096">
+<link rel="stylesheet" href="../../assets/rds/rds.css?v=ccae8ac7ad">
+<link rel="stylesheet" href="../../assets/rds/notes.css?v=5d2b3b97a0">
+<link rel="stylesheet" href="../../assets/rds/lab.css?v=052f6fc0d2">
+<link rel="stylesheet" href="../../assets/rds/skin.css?v=9ec64dbc81">
+<link rel="stylesheet" href="../../assets/rds/theme.css?v=a4d3d7a494">
+<link rel="stylesheet" href="../../assets/rds/cozy.css?v=b635d03e72">
+</head>
+<body class="rds-page">
+<div class="rv-progress" data-rv-progress aria-hidden="true"><i></i></div>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav">
+<a class="rds-nav__brand" href="../../index.html">Redrawn Valley</a>
+</header>
+<main id="main">
+<div class="rds-container"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
+<aside class="rds-toc" data-rds-toc aria-label="Contents"><nav><div class="rds-toc__count"><b data-rds-toc-count>01</b> / 06</div><a href="#why"><i></i><span>Why a dark theme</span></a><a href="#palette"><i></i><span>The palette</span></a><a href="#switch"><i></i><span>The switch and the circle</span></a><a href="#decisions"><i></i><span>The decisions I made</span></a><a href="#lab"><i></i><span>The palette sheet</span></a><a href="#limits"><i></i><span>What I could not verify</span></a></nav></aside>
+<article>
+<header class="rv-ehead"><div class="rds-container"><div class="rv-ehead__inner">
+<div class="rv-ehead__kicker"><a class="rds-link rds-link--quiet" href="../index.html">&larr; Lab notes</a><span class="rds-tag rds-tag--brick">Theme</span></div>
+<h1 class="rds-display" data-rds-reveal>A moonlit dark theme, and the circle that switches it on</h1>
+<p class="rds-lead" data-rds-reveal style="--i:1">The site now has a second palette: warm orange-black paper, cream ink, and the brick accent turned into the blue-green of a lit window at night. It is a token swap, so every page, drawing and margin follows it. This is how I chose the colors, checked them, and made the switch feel like drawing a new sheet over the old one.</p>
+<p class="rv-byline"><span>By <b>Nate Anderson</b></span><span>Nov. 21, 2026</span><span>6 min read</span><span>4 sources</span><span>Lab 7 of 7</span></p>
+</div></div></header>
+<div class="rds-container"><div class="rv-tiles rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="lab/dark-theme" data-topic="theme dark" aria-hidden="true"></div></div>
+<div class="rv-body" data-rv-body><div class="rds-container">
+<section id="why" aria-labelledby="why-h">
+<h2 id="why-h"><span class="rv-num">01</span>Why a dark theme</h2>
+<p>I read this site in a lot of places: a desk lamp, a bus, a bed. Bright cream paper is right for a printed site study and harsh for the last of those. The footer was already a dark band, and it was the part of the page I liked most, so the brief became: make the whole site feel like that band, warm and a little cozy, not cold grey.</p>
+<p>The rule I set was that a dark theme must be a change of tokens, not a second stylesheet. Every page already takes its color from variables, so a new set of values should re-color everything at once, including pages other people are editing right now.</p>
+<dl class="rds-facts rv-wide"><div><dt>theme toggles on a page, in the header</dt><dd>1</dd></div><div><dt>pairings checked against WCAG AA</dt><dd>30</dd></div><div><dt>pages that load the theme script</dt><dd>46</dd></div><div><dt>flashes of the wrong theme on load</dt><dd>0</dd></div></dl>
+</section>
+<section id="palette" aria-labelledby="palette-h">
+<h2 id="palette-h"><span class="rv-num">02</span>The palette</h2>
+<p>Paper goes from cream <code>#f6f1e7</code> to <code>#17120d</code>, a near-black with a clear orange cast, so it reads as a lamp-lit room and not as a screen. The raised surface for cards is a step lighter (<code>#211a13</code>) and the sunk band a step darker (<code>#100c08</code>), the same order as in the light theme. Ink flips to a warm cream, <code>#f3e8d4</code>, which keeps the page from glaring.</p>
+<ul class="rds-swatches rv-wide">
+<li><span style="background:#17120d"></span><b>Paper</b>#17120d</li>
+<li><span style="background:#211a13"></span><b>Raised</b>#211a13</li>
+<li><span style="background:#100c08"></span><b>Sunk</b>#100c08</li>
+<li><span style="background:#f3e8d4"></span><b>Ink</b>#f3e8d4</li>
+<li><span style="background:#66c3c0"></span><b>Brick, moonlit</b>#66c3c0</li>
+<li><span style="background:#9cc3a8"></span><b>Moss, moonlit</b>#9cc3a8</li>
+<li><span style="background:#86aed2"></span><b>Slate, moonlit</b>#86aed2</li>
+<li><span style="background:#0b0806"></span><b>Footer band</b>#0b0806</li>
+</ul>
+<p>Brick, the one color that means &ldquo;do something here,&rdquo; became <code>#66c3c0</code>, a pale turquoise: what a terracotta wall might look like with only moonlight on it. Moss and slate moved the same way, lighter and a touch cooler, because accents used as text have to rise off a dark page instead of sinking into it.</p>
+<p>Solid art fields are a separate set of tokens. A big block of pale turquoise would glare and would not carry the cream linework drawn on it, so the motif tiles use deeper fills (<code>--brick-fill</code>, <code>--moss-fill</code>, <code>--slate-fill</code>) that are identical to the accents in the light theme and muted in the dark one. The footer got its own <code>--band</code> tokens for the same reason: in the dark theme ink becomes cream, and a footer filled with ink would have turned bright.</p>
+<p>All 30 pairings I check meet WCAG AA when computed with the standard relative-luminance formula: 4.5 to 1 for text and 3 to 1 for large text and interface lines<sup class="rv-fn"><a href="#n1">1</a></sup>. The lowest text pairing is faint caption text on a raised card at 6.6 to 1; the lowest interface line is the input border on a raised card at 3.9 to 1. The table is computed live in the palette sheet below.</p>
+</section>
+<section id="switch" aria-labelledby="switch-h">
+<h2 id="switch-h"><span class="rv-num">03</span>The switch and the circle</h2>
+<p>There is one button, a hand-drawn sun that turns into a hand-drawn moon, to the left of Search. It is two new icons in the same point-list source as the rest of the set, so they wobble like the others. The phone More sheet has a copy as its first row, with a small drawn switch, and the study pages, which have their own top bar, get it beside their Search link.</p>
+<p>The theme comes from the saved choice if there is one, and otherwise from the system setting. A tiny script in the <code>&lt;head&gt;</code> sets it before the page paints, which is why there is no flash of light on a dark page. The choice is saved in the browser and shared across tabs and embedded demos.</p>
+<p>When you press the button, the new theme grows out of it as a circle and keeps growing until it covers the page. It uses the View Transitions API<sup class="rv-fn"><a href="#n2">2</a></sup>: the browser takes a picture of the old page, the theme changes underneath, and a growing circular clip-path reveals the new one. The radius is the distance to the farthest corner, so the circle always finishes by covering everything, and the duration scales with that distance between 0.7 and 1.1 seconds. Browsers without the API get a disc of the new paper color that grows the same way and then fades to reveal the page. With reduced motion on, the theme swaps instantly.</p>
+<p>The art that cannot read a variable is handled by one generated block: CSS data-URI drawings (the hand-drawn rules, wavy band edges and highlighter) are redrawn in dark colors by <code>scripts/build_theme.py</code>, and baked SVG attributes in older drawings are re-mapped to tokens by attribute selectors, which beat presentation attributes.</p>
+</section>
+<section id="decisions" aria-labelledby="decisions-h">
+<h2 id="decisions-h"><span class="rv-num">04</span>The decisions I made</h2>
+<div class="rds-decisions rv-wide">
+<article class="rds-decision"><h3>Swap tokens, not stylesheets</h3><p>Pages being edited by other threads keep working, and a new component gets a dark theme for free if it uses tokens.</p><p class="rds-decision__cost"><b>Cost</b>Anything with a hard-coded color needs a one-time cleanup; I converted what I found and left the rest to the attribute remapping.</p></article>
+<article class="rds-decision"><h3>Warm near-black, not neutral or blue-black</h3><p>The footer band the site started with is warm, and a warm black keeps the paper feeling of the light theme.</p><p class="rds-decision__cost"><b>Cost</b>Warm darks are a little less crisp than neutral ones, so I kept text contrast well above the minimum.</p></article>
+<article class="rds-decision"><h3>Brick becomes moonlit turquoise, everywhere</h3><p>The accent keeps its job (actions and the current page) and changes only its color, so nothing else needed to change.</p><p class="rds-decision__cost"><b>Cost</b>Drawings that show a red awning now show a turquoise one, and a few sentences in the studies still say red. I left the text alone and flagged it.</p></article>
+<article class="rds-decision"><h3>The footer stays the darkest thing on the page</h3><p>It is the reference I started from, so it has its own band tokens and does not follow ink.</p><p class="rds-decision__cost"><b>Cost</b>Two more token families to maintain.</p></article>
+<article class="rds-decision"><h3>A circle from the button, not a fade</h3><p>It ties the change to the thing you pressed and it can be smooth on a long page, because only a picture of the page is animated.</p><p class="rds-decision__cost"><b>Cost</b>Needs a fallback and a reduced-motion path. I did not build the hand-drawn panel wipe, which was the alternative.</p></article>
+</div>
+</section>
+<section id="lab" aria-labelledby="lab-h">
+<h2 id="lab-h"><span class="rv-num">05</span>The palette sheet</h2>
+<p>Both palettes drawn side by side, whatever theme you are in, with every contrast ratio computed from the hex values as you load it. The button flips the site theme with the circle reveal so you can watch it.</p>
+<figure class="rds-demo rv-wide" data-rds-reveal>
+<div class="rds-demo__bar"><span class="rds-tag rds-tag--brick">Live demo</span><a href="demo/index.html">Open it as its own page <span class="rds-arrow">&rarr;</span></a></div>
+<iframe class="rds-demo__frame" src="demo/index.html?embed=1" title="The paper and moonlit palettes with computed contrast ratios, embedded" loading="lazy" data-fit="auto" style="--demo-h:900px;--demo-h-m:1100px"></iframe>
+<figcaption>Contrast is computed in the page with the WCAG 2.x relative-luminance formula, not typed in.</figcaption>
+</figure>
+</section>
+<section id="limits" aria-labelledby="limits-h"><h2 id="limits-h"><span class="rv-num">06</span>What I could not verify</h2>
+<aside class="rds-callout rds-callout--plain" role="note"><div><p class="rds-callout__title">Limits of this lab</p><ul><li>Contrast ratios are computed from flat colors. Text over the hand-drawn art, grain and translucent washes was checked by eye on a laptop and a phone, not measured.</li><li>I tested the circle reveal in Chromium only. The fallback for browsers without the View Transitions API was written to the same timing but not run in Firefox or Safari.</li><li>I have not tried the theme with a screen reader or with people. The switch is a real button with a pressed state and a changing label.</li><li>The theme needs JavaScript. Without it the site stays light.</li></ul></div></aside>
+</section>
+<div class="rv-divider" aria-hidden="true"></div>
+<footer class="rv-sources" id="sources"><h2>Sources</h2>
+<ol>
+<li id="n1">W3C, Web Content Accessibility Guidelines 2.1, success criteria 1.4.3 Contrast (Minimum) and 1.4.11 Non-text Contrast. <a href="https://www.w3.org/TR/WCAG21/" rel="noopener">w3.org/TR/WCAG21</a>. I used the thresholds from memory of the spec and did not re-open it while writing.</li>
+<li id="n2">MDN Web Docs, &ldquo;View Transition API&rdquo;, for <code>document.startViewTransition()</code> and the <code>::view-transition-new</code> pseudo-element. <a href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API" rel="noopener">developer.mozilla.org/en-US/docs/Web/API/View_Transition_API</a>.</li>
+<li id="n3">MDN Web Docs, <code>prefers-color-scheme</code> and <code>color-scheme</code>, for following the system setting. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme" rel="noopener">developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme</a>.</li>
+<li id="n4">Redrawn Design System, &ldquo;Dark theme.&rdquo; <a href="https://github.com/FreezingShock/Redrawn-Valley/blob/main/DESIGN.md" rel="noopener">DESIGN.md</a> in the site repository, with the tokens in <code>assets/rds/tokens.css</code>.</li>
+</ol>
+<p class="rv-sources__foot">Only the MDN View Transition page was re-opened on Nov. 21, 2026. The other links are cited, not re-checked. My own judgments are labeled as mine.</p></footer>
+</div></div>
+</article>
+<section class="rds-section rds-band-sunk rv-after"><div class="rds-container"><div class="rds-sechead"><p class="rds-eyebrow">Keep reading</p><h2 class="rds-h1">More from the lab</h2></div>
+<div class="rds-rows">
+<a class="rds-row" href="../pattern-sheet/index.html"><div><span class="rds-tag rds-tag--brick">Patterns</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-leaf"/></svg>How every page got its own drawing</h3><p class="rds-row__text">The motifs and the palette rule that the dark theme re-colors.</p></div></a>
+<a class="rds-row" href="../icon-set/index.html"><div><span class="rds-tag rds-tag--brick">Icons</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-pin"/></svg>Thirty-eight icons and a logo, drawn as lists of points</h3><p class="rds-row__text">Where the sun and the moon came from.</p></div></a>
+</div>
+<p class="rds-small" style="margin-top:var(--space-6)"><a class="rds-link" href="../index.html">All lab notes <span class="rds-arrow">&rarr;</span></a></p></div></section>
+</main>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
+<script src="../../assets/rds/rds.js?v=cb4c4c2a17"></script>
+<script src="../../assets/rds/notes.js?v=f4de62ac6b"></script>
+<script src="../../assets/rds/lab.js?v=866b5d48ef"></script>
+<script src="../../assets/rds/mobile.js?v=6e4771835c"></script>
+<script src="../../assets/rds/motifs.js?v=7fd74ce172" defer></script>
+<script src="../../assets/rds/loops.js?v=3cb420f193" defer></script>
+<script src="../../assets/site-shell.js?v=4c5d2bb2e9"></script>
+<script src="../../assets/rds/sketch.js?v=6025410beb" defer></script>
+<script src="../../assets/rds/interact.js?v=fab36b781d" defer></script>
+</body>
+</html>

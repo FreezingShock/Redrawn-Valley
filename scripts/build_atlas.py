@@ -17,6 +17,7 @@ A new article needs nothing: its title, figures, sources and any mention of an e
 next time this runs. To add a term or place, add it to scripts/data/atlas.json or mark it up with data-term / data-place."""
 import re, sys, json, html, pathlib
 from html.parser import HTMLParser
+import sys as _sys, pathlib as _pl; _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent)); import assetver as _av
 
 root = pathlib.Path(__file__).resolve().parent.parent
 PAGE = root / 'a-z' / 'index.html'
@@ -406,7 +407,7 @@ if __name__ == '__main__':
     for name, body in out.items():
         path = root / name
         if '--check' in sys.argv:
-            if path.read_text(encoding='utf-8') != body: stale.append(name)
+            if _av.strip(path.read_text(encoding='utf-8')) != _av.strip(body): stale.append(name)
         else:
             path.write_text(body, encoding='utf-8'); print(f'wrote {name}: ' + ', '.join(f'{v} {k}s' for k, v in counts.items()))
     if stale: print('stale: ' + ', '.join(stale) + ' (run python3 scripts/build_atlas.py)'); sys.exit(1)

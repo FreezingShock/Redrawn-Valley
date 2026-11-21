@@ -17,6 +17,7 @@ Commits that touch only generated files (the log, the search index, the sitemap)
 the log does not add entries about itself. Needs full history: in CI use `fetch-depth: 0`.
 Never invents anything: with no notes, an entry is just the subject, the date and the pages it touched."""
 import re, sys, json, html, subprocess, pathlib, datetime
+import sys as _sys, pathlib as _pl; _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent)); import assetver as _av
 
 root = pathlib.Path(__file__).resolve().parent.parent
 SITE_URL = 'https://redrawnvalley.vercel.app'
@@ -153,7 +154,7 @@ def render_item(e, rel='../'):
     return (f'<li class="rv-log__item" id="{e["id"]}" data-rv-row="{e["type"]}" data-rds-reveal>'
             f'<span class="rv-log__dot" aria-hidden="true"><svg class="rds-icon"><use href="{rel}assets/rds/icons/icons.svg#i-{icon}"/></svg></span>'
             f'<div class="rv-log__card"><p class="rv-log__meta">{"".join(meta)}</p>'
-            f'<h4 class="rv-log__title">{esc(e["title"])}</h4>{summary}{pages}</div></li>')
+            f'<h3 class="rv-log__title">{esc(e["title"])}</h3>{summary}{pages}</div></li>')
 
 def render_timeline(entries):
     days = {}
@@ -162,8 +163,8 @@ def render_timeline(entries):
     for d, items in days.items():
         wd = datetime.date.fromisoformat(d).strftime('%A')
         n = len(items)
-        out.append(f'<section class="rv-log__day" data-rv-day aria-labelledby="day-{d}"><h3 class="rv-log__date" id="day-{d}">'
-                   f'<time datetime="{d}">{human(d)}</time><span>{wd}, <b data-rv-day-count>{n}</b> {"entries" if n != 1 else "entry"}</span></h3>'
+        out.append(f'<section class="rv-log__day" data-rv-day aria-labelledby="day-{d}"><h2 class="rv-log__date" id="day-{d}">'
+                   f'<time datetime="{d}">{human(d)}</time><span>{wd}, <b data-rv-day-count>{n}</b> {"entries" if n != 1 else "entry"}</span></h2>'
                    f'<ol class="rv-log__list">{"".join(render_item(e) for e in items)}</ol></section>')
     return '\n'.join(out)
 
@@ -225,7 +226,7 @@ if __name__ == '__main__':
     for name, body in out.items():
         path = root / name
         if '--check' in sys.argv:
-            if not path.exists() or path.read_text(encoding='utf-8') != body: stale.append(name)
+            if not path.exists() or _av.strip(path.read_text(encoding='utf-8')) != _av.strip(body): stale.append(name)
         else:
             path.write_text(body, encoding='utf-8'); print(f'wrote {name} ({len(body):,} bytes)')
     if stale: print('stale: ' + ', '.join(stale) + ' (run python3 scripts/build_log.py)'); sys.exit(1)

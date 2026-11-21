@@ -5,8 +5,16 @@
   <link rel="self" type="application/atom+xml" href="https://redrawnvalley.vercel.app/log/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/"/>
   <id>https://redrawnvalley.vercel.app/log/</id>
-  <updated>2026-11-21T08:27:54+00:00</updated>
+  <updated>2026-11-21T08:38:18+00:00</updated>
   <author><name>Nate Anderson</name></author>
+  <entry>
+    <title>Self-host the type: Latin subsets, hashed immutable files, preload display and body only</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-db65f60</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-db65f60"/>
+    <updated>2026-11-21T08:38:18+00:00</updated>
+    <category term="site" label="Site"/>
+    <content type="html">&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/a-z/&quot;&gt;A–Z index&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/&quot;&gt;Field guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
   <entry>
     <title>Three-voice type: Shantell display only, Figtree body/UI, Caveat annotations, DM Mono numerals; labels to sentence-case sans</title>
     <id>tag:redrawnvalley.vercel.app,2026-11-21:c-462b76c</id>
@@ -331,14 +339,5 @@
     <category term="redraw" label="Redraw"/>
     <summary>Replaced inline SVG styles and hex colours with token classes. Geometry and labels did not change.</summary>
     <content type="html">&lt;p&gt;Replaced inline SVG styles and hex colours with token classes. Geometry and labels did not change.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Four new motifs</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-23</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-23"/>
-    <updated>2026-11-20T14:41:09-08:00</updated>
-    <category term="redraw" label="Redraw"/>
-    <summary>Added the pill diagram, section, ledger and crosshatch motifs.</summary>
-    <content type="html">&lt;p&gt;Added the pill diagram, section, ledger and crosshatch motifs.&lt;/p&gt;</content>
   </entry>
 </feed>

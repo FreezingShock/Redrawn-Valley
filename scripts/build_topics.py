@@ -8,6 +8,7 @@ See DESIGN.md > Topics."""
 import sys, json, html, pathlib, importlib.util
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from build_fonts import block_for as fonts_head  # self-hosted font links, one source of truth
+import sys as _sys, pathlib as _pl; _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent)); import assetver as _av
 
 root = pathlib.Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location('build_index', root / 'scripts' / 'build_index.py')
@@ -43,6 +44,7 @@ def head(depth, title, desc, extra_css='', slug=''):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="{up}assets/rds/theme.js"></script>
 <script src="{up}assets/rds/flow.js"></script>
 <title>{e(title)} | Redrawn Valley</title>
 <meta name="description" content="{e(desc)}">
@@ -51,6 +53,8 @@ def head(depth, title, desc, extra_css='', slug=''):
 <link rel="stylesheet" href="{up}assets/rds/rds.css">
 <link rel="stylesheet" href="{up}assets/rds/topics.css">
 <link rel="stylesheet" href="{up}assets/rds/skin.css">
+<link rel="stylesheet" href="{up}assets/rds/theme.css">
+<link rel="stylesheet" href="{up}assets/rds/cozy.css">
 </head>
 <body class="rds-page">
 <header class="rds-nav" data-rds-nav data-rv-shell="nav">
@@ -136,10 +140,10 @@ def hub(t, items):
 <p class="rv-thead__q" data-rds-reveal style="--i:2"><span>The question I keep asking</span>{e(t['question'])}</p>
 </div>
 {banner('topics/' + t['slug'], t['art'])}
-<div class="rv-tstats" role="list" aria-label="What is in this topic">'''
+<div class="rv-tstats" role="group" aria-label="What is in this topic">'''
     for key, one, many, _ in KINDS:
         if c[key]:
-            o += f'<a class="rv-tstat" role="listitem" href="#{key}"><b>{c[key]}</b><span>{one if c[key] == 1 else many}</span></a>'
+            o += f'<a class="rv-tstat" href="#{key}"><b>{c[key]}</b><span>{one if c[key] == 1 else many}</span></a>'
     o += '</div></div></section>\n'
     sec = 0
     for key, one, many, _ in KINDS:
@@ -155,8 +159,8 @@ def hub(t, items):
         o += '</div></section>\n'
     band = ' rds-band-sunk' if sec % 2 == 0 else ''
     o += f'<section class="rds-section{band}"><div class="rds-container">\n<div class="rds-sechead"><p class="rds-eyebrow">Keep going</p><h2 class="rds-display">Other topics</h2><p class="rds-lead">Most pages belong to more than one topic. These are the other ways in.</p></div>\n'
-    o += '<div class="rv-tchips" role="list">' + ''.join(
-        f'<a class="rv-tchip rv-tchip--{x["accent"]}" role="listitem" href="../{x["slug"]}/index.html">{icon(x["icon"], up, "rds-icon rds-icon--sm")}<span>{e(x["title"])}</span></a>' for x in others) + '</div>\n'
+    o += '<div class="rv-tchips">' + ''.join(
+        f'<a class="rv-tchip rv-tchip--{x["accent"]}" href="../{x["slug"]}/index.html">{icon(x["icon"], up, "rds-icon rds-icon--sm")}<span>{e(x["title"])}</span></a>' for x in others) + '</div>\n'
     if places:
         o += '<p class="rds-small rv-tplaces"><b>Places in this topic</b> ' + ' · '.join(e(x) for x in places) + '. <a class="rds-link" href="../index.html">All topics</a></p>\n'
     else:
@@ -207,7 +211,7 @@ if __name__ == '__main__':
     for name, body in out.items():
         path = root / name
         if '--check' in sys.argv:
-            if not path.exists() or path.read_text(encoding='utf-8') != body: stale.append(name)
+            if not path.exists() or _av.strip(path.read_text(encoding='utf-8')) != _av.strip(body): stale.append(name)
         else:
             path.parent.mkdir(parents=True, exist_ok=True); path.write_text(body, encoding='utf-8'); print(f'wrote {name}')
     if stale: print('stale: ' + ', '.join(stale) + ' (run python3 scripts/build_topics.py)'); sys.exit(1)

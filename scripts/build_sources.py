@@ -228,7 +228,7 @@ def entry_fields(li, page_url):
             p = (root / pathlib.Path(page_url)).joinpath(h).resolve() if False else None
             internal = h
     cite = clean(next((c.txt() for c in li.iter() if c.tag == 'cite'), '')) or full
-    cite = clean(re.sub(r'\s*(Abstract:\s*)?(https?://\S+|(www\.)?[a-z0-9.-]+\.(com|org|gov|edu|net)/\S+)\s*$', '', cite)).rstrip(' :,')
+    cite = clean(re.sub(r'\s*(Abstract:\s*)?(https?://\S+|(www\.)?[a-z0-9.-]+\.(com|org|gov|edu|net)(/\S*)?)\s*$', '', cite)).rstrip(' :,')
     return {'full': full, 'cite': cite, 'url': ext, 'internal': internal, 'kind': kind, 'note': note}
 
 def resolve_internal(page_url, href):
