@@ -110,6 +110,22 @@ textarea.rds-input{height:auto;min-height:96px;padding:var(--space-3) 14px;line-
 .rds-callout__title{font:600 var(--fs-15)/22px var(--rds-sans);margin:0 0 2px}
 .rds-callout p{margin:0;font-size:var(--fs-15);line-height:24px}
 
+/* Key points: the "In short" box at the top of a long page. 3 to 5 numbered findings, each one bold lead + one sentence, citations kept. */
+.rds-keypoints{margin:var(--space-8) 0;padding:var(--space-6);border:var(--rv-stroke) solid var(--edge);border-radius:var(--rv-r-md);background:var(--paper-raised);box-shadow:var(--shadow-pencil);color:var(--ink)}
+.rds-keypoints__title{display:flex;align-items:baseline;gap:var(--space-3);margin:0 0 var(--space-3);font:600 var(--fs-15)/22px var(--rds-sans);color:var(--brick)}
+.rds-keypoints__title small{font:400 var(--fs-13)/18px var(--rds-mono);color:var(--ink-faint)}
+.rds-keypoints__list{list-style:none;margin:0;padding:0;counter-reset:kp}
+.rds-keypoints__list>li{counter-increment:kp;display:grid;grid-template-columns:var(--space-8) minmax(0,1fr);gap:var(--space-2);padding:var(--space-3) 0;border-top:1px solid var(--line);font:400 var(--fs-16)/25px var(--rds-sans);color:var(--ink)}
+.rds-keypoints__list>li:first-child{border-top:0}
+.rds-keypoints__list>li::before{content:counter(kp,decimal-leading-zero);font:500 var(--fs-13)/25px var(--rds-mono);color:var(--brick)}
+.rds-keypoints__list b{font-weight:600}
+.rds-keypoints__list sup{font:400 var(--fs-11)/0 var(--rds-mono);margin-left:2px}
+.rds-keypoints__list a{color:var(--moss-deep)}
+.rds-keypoints__foot{margin:var(--space-3) 0 0;padding-top:var(--space-3);border-top:1px dashed var(--line-strong);font:400 var(--fs-14)/22px var(--rds-sans);color:var(--ink-muted)}
+.rds-keypoints__foot a{color:var(--moss-deep)}
+@media (max-width:640px){.rds-keypoints{padding:var(--space-4);margin:var(--space-6) 0}.rds-keypoints__list>li{grid-template-columns:var(--space-6) minmax(0,1fr);font-size:var(--fs-16);line-height:24px}}
+@media print{.rds-keypoints{box-shadow:none}}
+
 /* Accordion */
 .rds-acc{border-top:1px solid var(--line)}
 .rds-acc:last-of-type{border-bottom:1px solid var(--line)}

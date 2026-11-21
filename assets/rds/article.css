@@ -139,3 +139,5 @@
 /* Index rows: fixed meta column so titles, summaries and topics align down the list */
 @media (min-width:641px){[data-rds-guide] .rds-row{grid-template-columns:minmax(0,2fr) minmax(0,3fr) 12rem}[data-rds-guide] .rds-row__meta{text-align:right}}
 main[data-rds-article] .rds-crumbs{padding-bottom:var(--space-6)}
+
+.rds-article__body .rds-keypoints{display:flow-root;margin:0 0 var(--space-6)}

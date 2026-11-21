@@ -235,3 +235,5 @@ span.rv-term{color:var(--ink-muted)}
 .rv-study-bar nav>a[aria-current="true"]:not(.rv-study-bar__brand){color:var(--brick)}
 .rv-study-bar__ink{position:absolute;left:0;bottom:0;height:3px;width:0;border-radius:2px;background:var(--brick);opacity:0;pointer-events:none;transition:transform var(--dur-medium) var(--ease-out),width .45s var(--ease-out),opacity .2s var(--ease-std)}
 @media (prefers-reduced-motion:reduce){.rv-study-bar nav,.rv-study-bar__brand,.rv-study-bar__ink{transition:none}.rv-study-bar__brand{transform:none}}
+
+.rv-study .rds-keypoints{max-width:56rem;margin:0 auto var(--space-12)}
