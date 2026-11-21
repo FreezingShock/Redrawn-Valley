@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../assets/rds/flow.js"></script>
+<title>Sources library | Redrawn Valley</title>
+<meta name="description" content="Every source cited anywhere on Redrawn Valley, in one searchable list: what each one is, every page that cites it, the sentence it backs, and a link that jumps to the exact spot.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM@400..700,-100..100,0..100&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/rds/tokens.css">
+<link rel="stylesheet" href="../assets/rds/rds.css">
+<link rel="stylesheet" href="../assets/rds/notes.css">
+<link rel="stylesheet" href="../assets/rds/sources.css">
+<link rel="stylesheet" href="../assets/rds/skin.css">
+</head>
+<body class="rds-page">
+<header class="rds-nav" data-rds-nav data-rv-shell="nav"></header>
+<main id="main">
+<div class="rds-container"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
+<section class="rv-nhead rv-lib-head" data-rds-loop="tiles" data-seed="sources"><div class="rds-container">
+<div class="rds-sechead" style="margin-bottom:var(--space-8)"><p class="rds-eyebrow" data-rds-reveal="fade">Sources library</p><h1 class="rds-display-xl" data-rds-split>Every source, and where I used it</h1><p class="rds-lead" data-rds-reveal style="--i:1">This list is built from the pages themselves, so it can&rsquo;t fall behind. Search a source, a topic, or even a sentence from an article. Each source shows every page that cites it and the claim it backs, with a link that jumps to the exact spot and highlights it.</p></div>
+<div class="rv-lib-stats" data-lib-stats aria-live="polite"><div><b data-n="sources">&nbsp;</b><span>sources</span></div><div><b data-n="uses">&nbsp;</b><span>citations</span></div><div><b data-n="pages">&nbsp;</b><span>pages</span></div><div><b data-n="caveats">&nbsp;</b><span>with a caveat</span></div></div>
+<div class="rv-lib-mix" data-lib-mix aria-label="Sources by type; select a segment to filter"></div>
+</div></section>
+
+<section class="rds-section rv-lib" id="library"><div class="rds-container">
+<div class="rv-lib-bar" data-lib-bar>
+  <form class="rv-lib-search" role="search" data-lib-form>
+    <svg class="rds-icon" width="20" height="20" aria-hidden="true"><use href="../assets/rds/icons/icons.svg#i-search"/></svg>
+    <label class="rds-sr" for="lib-q" style="position:absolute;left:-9999px">Search sources</label>
+    <input id="lib-q" type="search" inputmode="search" autocomplete="off" spellcheck="false" placeholder="Search sources, topics, claims…" data-lib-q>
+    <kbd aria-hidden="true">/</kbd>
+    <button type="button" class="rv-lib-clear" data-lib-clearq aria-label="Clear search" hidden>&times;</button>
+  </form>
+  <p class="rv-lib-count" data-lib-count role="status" aria-live="polite"></p>
+</div>
+  <div class="rv-lib-filters" role="group" aria-label="Filters">
+    <div class="rv-lib-row" data-lib-types aria-label="Type"></div>
+    <div class="rv-lib-row" data-lib-topics aria-label="Topic"></div>
+    <div class="rv-lib-row" data-lib-where aria-label="Cited in"></div>
+    <div class="rv-lib-tools">
+      <label class="rv-lib-check"><input type="checkbox" data-lib-caveat><span>Only sources with a caveat</span></label>
+      <label class="rv-lib-sort">Sort <select data-lib-sort><option value="cited">Most cited</option><option value="pages">Most pages</option><option value="az">A to Z</option><option value="type">By type</option></select></label>
+    </div>
+  </div>
+<div class="rv-lib-list" data-lib-list><p class="rv-lib-loading">Loading the library…</p></div>
+<noscript><p class="rds-callout rds-callout--plain">The library needs JavaScript to search. The raw list is in <a href="../assets/sources.json">sources.json</a>.</p></noscript>
+<div class="rv-lib-empty" data-lib-empty hidden>
+  <svg viewBox="0 0 120 90" width="120" height="90" aria-hidden="true"><path class="e1" d="M18 70c14 6 28 8 44 5s30-9 40-17" /><rect class="e2" x="30" y="18" width="54" height="42" rx="3" transform="rotate(-4 57 39)"/><path class="e3" d="M40 32h30M40 42h22M40 52h28" /><circle class="e4" cx="88" cy="56" r="14"/><path class="e4" d="M98 66l12 12" /></svg>
+  <h3>No source matches that</h3><p data-lib-why></p><button type="button" class="rv-chip" data-lib-reset>Clear search and filters</button>
+</div>
+</div></section>
+
+<section class="rds-section rds-band-sunk"><div class="rds-container"><div class="rds-sechead"><p class="rds-eyebrow">How this stays current</p><h2 class="rds-display">Nothing here is typed by hand</h2><p class="rds-lead">When I publish a page with numbered notes, the check script reads them and rebuilds this list. There is nothing to remember to update.</p></div>
+<div class="rv-method"><div><h3>Reads the notes</h3><p><code>scripts/build_sources.py</code> finds every numbered note and every marker that points at it, in guides, notes, studies and lab write-ups.</p></div><div><h3>Merges by link</h3><p>The same article cited on three pages becomes one source with three places of use. Tracking tags and trailing slashes are ignored.</p></div><div><h3>Keeps the sentence</h3><p>Each use stores the sentence the marker closes and its section, so the library can show how a source is used without opening the page.</p></div><div><h3>Marks the exact spot</h3><p>A jump link carries the marker&rsquo;s order on the page. The page scrolls there and highlights the sentence. Open a source from here to see it.</p></div></div>
+<p class="rds-small" style="margin-top:var(--space-8)">Limits: types and topics are assigned by rules (the publisher&rsquo;s web address and the words on the citing page), so a few labels will be off. A caveat is whatever I wrote next to the source, such as &ldquo;seen only as a search excerpt.&rdquo; I do not rate sources here.</p></div></section>
+</main>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
+<script src="../assets/rds/rds.js"></script>
+<script src="../assets/rds/notes.js"></script>
+<script src="../assets/rds/mobile.js"></script>
+<script src="../assets/rds/motifs.js" defer></script>
+<script src="../assets/rds/loops.js" defer></script>
+<script src="../assets/site-shell.js"></script>
+<script src="../assets/rds/sources.js" defer></script>
+<script src="../assets/rds/sketch.js" defer></script>
+<script src="../assets/rds/interact.js" defer></script>
+</body>
+</html>
