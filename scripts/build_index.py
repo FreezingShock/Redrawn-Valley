@@ -10,7 +10,7 @@ from html.parser import HTMLParser
 root = pathlib.Path(__file__).resolve().parent.parent
 # Production domain for sitemap.xml. Change here if the domain changes.
 SITE_URL = 'https://redrawnvalley.vercel.app'
-SECTIONS = {'': 'Home', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'about': 'About'}
+SECTIONS = {'': 'Home', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'about': 'About'}
 SKIP_TAGS = {'script', 'style', 'svg', 'noscript', 'nav', 'footer', 'template'}
 TEXT_CAP = 6000
 

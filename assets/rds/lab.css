@@ -1,0 +1,33 @@
+/* Lab articles: components for the published write-up of a lab, demo or exploration (see DESIGN.md > Lab articles).
+   Load after notes.css. Tokens only. */
+.rds-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:var(--space-4);margin:var(--space-8) 0;padding:var(--space-4) 0;border-block:1px solid var(--line-strong);width:min(60rem,100%)}
+.rds-facts div{display:grid;gap:2px}
+.rds-facts dt{order:2;font:400 13px/20px var(--rds-mono);color:var(--ink-faint)}
+.rds-facts dd{order:1;margin:0;font:400 clamp(28px,4vw,38px)/1.1 var(--rds-serif);color:var(--ink)}
+.rds-decisions{display:grid;gap:var(--space-4);margin:var(--space-8) 0;counter-reset:dec;width:min(60rem,100%)}
+.rds-decision{counter-increment:dec;position:relative;padding:var(--space-4) var(--space-4) var(--space-4) var(--space-12);background:var(--paper-raised);border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-md,8px)}
+.rds-decision::before{content:counter(dec,decimal-leading-zero);position:absolute;left:var(--space-4);top:var(--space-4);font:500 13px/24px var(--rds-mono);color:var(--brick)}
+.rds-decision h3{font:500 20px/28px var(--rds-serif);margin:0 0 var(--space-2)}
+.rds-decision p{margin:0 0 var(--space-2);font-size:16px;line-height:26px;max-width:none}
+.rds-decision__cost{color:var(--ink-muted);font-size:15px!important;line-height:24px!important}
+.rds-decision__cost b{font:600 12px/16px var(--rds-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-right:var(--space-2)}
+.rds-demo{margin:var(--space-12) 0;width:min(60rem,100%);background:var(--paper-raised);border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-lg,16px);overflow:hidden}
+.rds-demo__bar{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-4);align-items:center;justify-content:space-between;padding:var(--space-3) var(--space-4);background:var(--paper-sunk);border-bottom:1px solid var(--line-strong)}
+.rds-demo__bar a{font:600 14px/20px var(--rds-sans);color:var(--moss)}
+.rds-demo__frame{display:block;width:100%;height:var(--demo-h,720px);border:0;background:var(--paper)}
+.rds-demo__body{padding:var(--space-6) var(--space-4)}
+.rds-demo>figcaption{padding:var(--space-3) var(--space-4);border-top:1px solid var(--line);font:400 13px/20px var(--rds-mono);color:var(--ink-faint)}
+.rds-labgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--space-6) var(--space-4);margin-top:var(--space-6)}
+.rds-labgrid h4{font:500 17px/24px var(--rds-serif);margin:var(--space-2) 0 0}
+.rds-labgrid p{margin:0;font-size:14px;line-height:22px;color:var(--ink-muted)}
+.rds-swatches{list-style:none;margin:var(--space-6) 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:var(--space-3);width:min(60rem,100%)}
+.rds-swatches li{display:grid;gap:2px;font:400 13px/18px var(--rds-mono);color:var(--ink-faint)}
+.rds-swatches span{display:block;height:48px;border:var(--rv-stroke,1.5px) solid var(--ink);border-radius:var(--rv-r-sm,4px);margin-bottom:var(--space-1)}
+.rds-swatches b{font:600 13px/18px var(--rds-sans);color:var(--ink)}
+.rds-checklist{margin:var(--space-6) 0;padding-left:var(--space-6);display:grid;gap:var(--space-2)}
+.rds-lab-lab{display:grid;gap:var(--space-4);margin-bottom:var(--space-6)}
+.rds-lab-lab__row{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:end}
+.rds-lab-lab label{display:flex;flex-direction:column;gap:6px;font:600 13px/16px var(--rds-sans)}
+.rds-lab-lab select,.rds-lab-lab input{height:44px;padding:0 14px;border:1px solid var(--line-strong);border-radius:var(--rv-r-md,8px);background:var(--paper);color:var(--ink);font:400 16px/1 var(--rds-sans)}
+.rds-lab-lab input{min-width:min(260px,100%)}
+@media (max-width:640px){.rds-decision{padding-left:var(--space-4);padding-top:var(--space-12)}.rds-demo__frame{height:var(--demo-h-m,var(--demo-h,640px))}}

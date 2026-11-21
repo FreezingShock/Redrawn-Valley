@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How every page got its own drawing | Lab notes | Redrawn Valley</title>
+<meta name="description" content="The banners on this site are generated from a seed. How I went from a folder of reference sheets to fourteen original motifs, what I decided, and a live lab where you can reroll one.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Architects+Daughter&display=swap">
+<link rel="stylesheet" href="../../assets/rds/tokens.css">
+<link rel="stylesheet" href="../../assets/rds/rds.css">
+<link rel="stylesheet" href="../../assets/rds/notes.css">
+<link rel="stylesheet" href="../../assets/rds/lab.css">
+<link rel="stylesheet" href="../../assets/rds/skin.css">
+</head>
+<body class="rds-page">
+<div class="rv-progress" data-rv-progress aria-hidden="true"><i></i></div>
+<header class="rds-nav" data-rds-nav data-rv-shell="nav">
+<a class="rds-nav__brand" href="../../index.html">Redrawn Valley</a>
+</header>
+<main id="main">
+<div class="rds-container"><nav class="rds-crumbs" data-rv-crumbs aria-label="Breadcrumb"></nav></div>
+<aside class="rds-toc" data-rds-toc aria-label="Contents"><nav><div class="rds-toc__count"><b data-rds-toc-count>01</b> / 04</div><a href="#why"><i></i><span>Why generate the art at all</span></a><a href="#research"><i></i><span>What I studied</span></a><a href="#decisions"><i></i><span>The decisions I made</span></a><a href="#lab"><i></i><span>The live lab</span></a></nav></aside>
+<article>
+<header class="rv-ehead"><div class="rds-container"><div class="rv-ehead__inner">
+<div class="rv-ehead__kicker"><a class="rds-link rds-link--quiet" href="../index.html">&larr; Lab notes</a><span class="rds-tag rds-tag--brick">Patterns</span></div>
+<h1 class="rds-display" data-rds-reveal>How every page got its own drawing</h1>
+<p class="rds-lead" data-rds-reveal style="--i:1">Every page and note on this site carries a banner drawn from a seed. This is how I got from a folder of reference sheets to fourteen original motifs, what I decided along the way, and a live lab where you can reroll one.</p>
+<p class="rv-byline"><span>By <b>Nathan</b></span><span>Nov. 21, 2026</span><span>6 min read</span><span>4 sources</span><span>Lab 1 of 4</span></p>
+</div></div></header>
+<div class="rds-container"><div class="rv-tiles rds-art" data-rds-art="banner" data-art-mobile="card" data-seed="lab/pattern-sheet" data-topic="pattern-sheet" aria-hidden="true"></div></div>
+<div class="rv-body" data-rv-body><div class="rds-container">
+<section id="why" aria-labelledby="why-h">
+<h2 id="why-h"><span class="rv-num">01</span>Why generate the art at all</h2>
+<p>The site started as words and a few diagrams. A study or a note with no picture at the top looks unfinished, but I had three rules in the way: no stock imagery, nothing glossy, and no copying another site&rsquo;s art. Drawing a banner by hand for every page would also not scale, because every new note would need one.</p>
+<p>So the banners are generated from a seed. The page slug is the seed, which means the same page always gets the same drawing, and a different page gets a different one. That is the whole idea. Everything else in this article is about making the generated drawings look like they came from a sketchbook and not from a random-shape toy.</p>
+<dl class="rds-facts rv-wide"><div><dt>motifs on the pattern sheet</dt><dd>14</dd></div><div><dt>colors: 6 interface, 5 art-only</dt><dd>11</dd></div><div><dt>layouts: banner, strip, card, square</dt><dd>4</dd></div><div><dt>between one tile shifting</dt><dd>5 to 10 s</dd></div></dl>
+</section>
+<section id="research" aria-labelledby="research-h">
+<h2 id="research-h"><span class="rv-num">02</span>What I studied</h2>
+<p>I kept a reference library in the project files, outside the repo, and built contact sheets from it so I could compare many drawings at once. It has two parts. The first is screenshots of public pages from Anthropic&rsquo;s site, taken on Nov. 20, 2026, for private study.<sup class="rv-fn"><a href="#n1" aria-label="Source 1">1</a></sup> The second is public-domain drawings from the Historic American Buildings Survey and its sister programs, made for the National Park Service and held by the Library of Congress. I downloaded them from Wikimedia Commons, where each file is marked public domain, and the library&rsquo;s own notes record that I checked that through the Commons API on Nov. 20.<sup class="rv-fn"><a href="#n3" aria-label="Source 3">3</a></sup></p>
+<p>Looking across the sheets, a few habits repeated. The &ldquo;Building effective agents&rdquo; hero is a three-tile collage: ink arcs on sage, a drafting compass on green grid paper, a weather-style contour map.<sup class="rv-fn"><a href="#n1" aria-label="Source 1">1</a></sup> Anthropic&rsquo;s designers describe the intent as soft beige, hand-drawn illustration and &ldquo;the mark of the maker.&rdquo;<sup class="rv-fn"><a href="#n2" aria-label="Source 2">2</a></sup> The survey sheets contribute a different vocabulary: contour rings, tree canopies drawn as circles with a center dot, scale bars, north arrows, double-ruled borders.<sup class="rv-fn"><a href="#n3" aria-label="Source 3">3</a></sup></p>
+<p>From the contact sheets I wrote down a recipe: two to four flat colors per image plus ink and paper; each tile is one thing; a fine grid sits on a shape and never on the field; drafting tools appear as objects; and ink line weight stays constant inside one drawing. I did not trace anything. The reference pixels stay in the library, and the repo only holds motifs I drew in code.</p>
+</section>
+<section id="decisions" aria-labelledby="decisions-h">
+<h2 id="decisions-h"><span class="rv-num">03</span>The decisions I made</h2>
+<div class="rds-decisions rv-wide">
+<article class="rds-decision"><h3>Draw everything in code, from the recipe, not from the pictures</h3><p>The Anthropic art is copyrighted and the survey sheets are public domain but sheet-specific. Drawing each motif in code from the recipe keeps the site original and keeps the files small (one 35 KB script, not a folder of images). It also means every color is a CSS variable, so the art follows the design tokens.</p><p class="rds-decision__cost"><b>Cost</b>More work up front, and no motif is as rich as a real engraved sheet.</p></article>
+<article class="rds-decision"><h3>Seed the randomness with the page slug</h3><p>The same slug always draws the same banner, so a page does not change its look between visits and a bad composition can be fixed by changing one string. Pages without a topic draw from the full set.</p><p class="rds-decision__cost"><b>Cost</b>I cannot hand-tune a single composition; I can only reroll the seed.</p></article>
+<article class="rds-decision"><h3>Two palettes, with a firm rule between them</h3><p>Brick, moss and slate keep their interface jobs: action, link and water. Five extra colors (sky, ochre, rose, kelly and periwinkle), toned from the references, are for decoration only. They never carry text or meaning.</p><p class="rds-decision__cost"><b>Cost</b>The art accents are not contrast-checked as text colors, so the rule is the safeguard.</p></article>
+<article class="rds-decision"><h3>Keep the line weight constant and the grid on the shape</h3><p>This is the most visible habit in the references. It also keeps the generated art from turning into noise when a tile is small.</p><p class="rds-decision__cost"><b>Cost</b>Some compositions look plainer than a freehand drawing would.</p></article>
+<article class="rds-decision"><h3>Move slowly and rarely</h3><p>One tile shifts every five to ten seconds: a color crossfade, a disc turning into a rounded square, a needle swinging. It runs only while the art is at least 10% on screen and the tab is visible, and under reduced motion it stays still.</p><p class="rds-decision__cost"><b>Cost</b>The motion is easy to miss, which is the point, but it means a screenshot never shows it.</p></article>
+<article class="rds-decision"><h3>Bias the art by topic</h3><p>A <code>data-topic</code> leans the palette and motifs toward the subject: shade and trees toward moss and canopy plans, water toward slate and contours, heat toward brick and halftone, soil toward ochre.</p><p class="rds-decision__cost"><b>Cost</b>The mapping is my judgment and is not tested on readers.</p></article>
+</div>
+</section>
+<section id="lab" aria-labelledby="lab-h">
+<h2 id="lab-h"><span class="rv-num">04</span>The live lab</h2>
+<p>This is the same renderer the site uses, with the controls exposed. Type any seed, pick a topic and a layout, press Reroll for a random seed, and watch a tile change its color, shape or icon every few seconds. Pause drift freezes it.</p>
+<figure class="rds-demo rv-wide" data-rds-reveal>
+<div class="rds-demo__bar"><span class="rds-tag rds-tag--brick">Live demo</span><a href="../../patterns/index.html">Open the full pattern sheet <span class="rds-arrow">&rarr;</span></a></div>
+<div class="rds-demo__body"><form class="rds-lab-lab" data-lab onsubmit="return false">
+<div class="rds-lab-lab__row">
+<label>Seed<input type="text" value="my-first-study" data-seed autocomplete="off" spellcheck="false"></label>
+<label>Topic<select data-topic><option value="">Any</option><option value="shade trees">Shade and trees</option><option value="water river rain">Water and rain</option><option value="heat pavement">Heat and pavement</option><option value="soil roots">Soil</option></select></label>
+<label>Layout<select data-kind><option value="banner">Banner</option><option value="card">Card</option><option value="square">Square</option><option value="strip">Strip</option></select></label>
+<button class="rds-btn rds-btn--ink" type="button" data-reroll>Reroll</button>
+<button class="rds-btn rds-btn--ghost" type="button" data-pause aria-pressed="false">Pause drift</button>
+</div>
+<p class="rds-small" style="margin:0;color:var(--ink-muted)" data-status aria-live="polite"></p>
+</form>
+<div style="height:var(--space-6)"></div>
+<div class="rv-tiles rds-art" data-lab-art data-rds-art="banner" data-seed="my-first-study" aria-hidden="true"></div>
+<div class="rds-labgrid"><div><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="gridDisc" data-seed="lab-gridDisc" aria-hidden="true"></div><h4>Grid-filled disc</h4><p>Drift: morphs into a rounded square.</p></div><div><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="overlap" data-seed="lab-overlap" aria-hidden="true"></div><h4>Overlapping circles</h4><p>Drift: the outer two spread apart.</p></div><div><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="protractor" data-seed="lab-protractor" aria-hidden="true"></div><h4>Protractor</h4><p>Drift: the needle swings.</p></div><div><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="contours" data-seed="lab-contours" aria-hidden="true"></div><h4>Contours</h4><p>Nested rings, every fifth heavier.</p></div><div><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="plan" data-seed="lab-plan" aria-hidden="true"></div><h4>Plan symbols</h4><p>Canopies, flow line, scale bar, north arrow.</p></div><div><div class="rds-art rds-art--card rv-tiles" data-rds-art="card" data-motif="halftone" data-seed="lab-halftone" aria-hidden="true"></div><h4>Halftone</h4><p>Dots shrink to one side.</p></div></div></div>
+<figcaption>Rendered by assets/rds/motifs.js. Same seed, same drawing.</figcaption>
+</figure>
+<h3 class="rds-h3">The palette</h3>
+<p>Six interface colors and five art-only accents. Hex values are the ones in the design tokens and in the motif code.</p>
+<ul class="rds-swatches rv-wide"><li><span style="background:var(--paper)"></span><b>paper</b>#f6f1e7</li><li><span style="background:var(--paper-sunk)"></span><b>paper-sunk</b>#ece5d6</li><li><span style="background:var(--ink)"></span><b>ink</b>#1f1d1a</li><li><span style="background:var(--brick)"></span><b>brick</b>#9c3d24</li><li><span style="background:var(--moss)"></span><b>moss</b>#2f4a3a</li><li><span style="background:var(--slate)"></span><b>slate</b>#35506b</li><li><span style="background:#7ba3c0"></span><b>sky</b>#7ba3c0</li><li><span style="background:#be9661"></span><b>ochre</b>#be9661</li><li><span style="background:#b17c83"></span><b>rose</b>#b17c83</li><li><span style="background:#4f9b60"></span><b>kelly</b>#4f9b60</li><li><span style="background:#7c849f"></span><b>peri</b>#7c849f</li></ul>
+</section>
+
+<section id="limits" aria-labelledby="limits-h"><h2 id="limits-h"><span class="rv-num">05</span>What I could not verify</h2>
+<aside class="rds-callout rds-callout--plain" role="note"><div><p class="rds-callout__title">Limits of this lab</p><ul><li>I judged every composition by eye at 375px and 1280px. I did not test the drift on a low-end phone or measure its battery cost; it pauses when off screen and under reduced motion, but that is a design choice, not a measurement.</li><li>The topic-to-palette mapping is my taste. No reader has been asked whether a heat banner &ldquo;feels&rdquo; like heat.</li><li>I describe the reference art from what I saw on the pages. I could not read the artists&rsquo; intent beyond what the Kinfolk piece says.</li></ul></div></aside>
+</section>
+<div class="rv-divider" aria-hidden="true"></div>
+<footer class="rv-sources" id="sources"><h2>Sources</h2>
+<ol>
+<li id="n1">Anthropic. &ldquo;Building effective agents.&rdquo; <a href="https://www.anthropic.com/research/building-effective-agents" rel="noopener">https://www.anthropic.com/research/building-effective-agents</a>. I saw the page and took screenshots for private study; none of its art is in this site.</li>
+<li id="n2">Kinfolk. &ldquo;The Artisans of AI,&rdquo; Issue 56. <a href="https://www.kinfolk.com/stories/the-artisans-of-ai/" rel="noopener">https://www.kinfolk.com/stories/the-artisans-of-ai/</a>. Source of the designers&rsquo; stated intent.</li>
+<li id="n3">Historic American Buildings Survey, Library of Congress, via Wikimedia Commons: e.g. Barnsdall Park sheet 1 of 5, <a href="https://commons.wikimedia.org/wiki/File:Barnsdall_Park,_4800_Hollywood_Boulevard,_Los_Angeles,_Los_Angeles_County,_CA_HABS_CAL,19-LOSAN,55-_(sheet_1_of_5).png" rel="noopener">file page</a>, and Storer House sheet 2 of 7, <a href="https://commons.wikimedia.org/wiki/File:Storer_House,_8161_Hollywood_Boulevard,_Los_Angeles,_Los_Angeles_County,_CA_HABS_CAL,19-LOSAN,70-_(sheet_2_of_7).png" rel="noopener">file page</a>. The loc.gov site showed a bot check, so I used the Commons mirrors.</li>
+<li id="n4">Redrawn Design System, &ldquo;Motifs&rdquo; section. <a href="https://github.com/FreezingShock/Redrawn-Valley/blob/main/DESIGN.md" rel="noopener">DESIGN.md</a> in the site repository.</li>
+</ol>
+<p class="rv-sources__foot">All links viewed Nov. 20 to 21, 2026. Numbers are cited; my own estimates and judgments are labeled as mine.</p></footer>
+</div></div>
+</article>
+<section class="rds-section rds-band-sunk rv-after"><div class="rds-container"><div class="rds-sechead"><p class="rds-eyebrow">Keep reading</p><h2 class="rds-h1">More from the lab</h2></div>
+<div class="rds-rows">
+<a class="rds-row" href="../icon-set/index.html"><div><span class="rds-tag rds-tag--brick">Icons</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-pin"/></svg>Thirty-eight icons and a logo, drawn as lists of points</h3><p class="rds-row__text">How the hand-drawn icon set and the ridgeline logo were made, why the first version was thrown out, and the rules that keep new icons consistent.</p></div></a>
+<a class="rds-row" href="../type-lab/index.html"><div><span class="rds-tag rds-tag--brick">Type</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-notes"/></svg>Choosing a hand for the type</h3><p class="rds-row__text">Forty-six font entries screened for license, accents, size and legibility, six type directions built from them, and three ways to write text in. The research, the verdict and the live lab.</p></div></a>
+<a class="rds-row" href="../motif-sheet/index.html"><div><span class="rds-tag rds-tag--brick">Motifs</span><h3 class="rds-row__title"><svg class="rds-icon rds-row__icon" aria-hidden="true"><use href="../../assets/rds/icons/icons.svg#i-ruler"/></svg>Ten motifs drawn from reference sheets</h3><p class="rds-row__text">The first, hand-built set of motif SVGs that the generative pattern system grew out of: what each one is built from, how its colors are wired, and a sheet you can randomize.</p></div></a>
+</div>
+<p class="rds-small" style="margin-top:var(--space-6)"><a class="rds-link" href="../index.html">All lab notes <span class="rds-arrow">&rarr;</span></a></p></div></section>
+</main>
+<footer class="rds-footer" data-rv-shell="footer"></footer>
+<script src="../../assets/rds/rds.js"></script>
+<script src="../../assets/rds/notes.js"></script>
+<script src="../../assets/rds/lab.js"></script>
+<script src="../../assets/rds/mobile.js"></script>
+<script src="../../assets/rds/motifs.js" defer></script>
+<script src="../../assets/rds/loops.js" defer></script>
+<script src="../../assets/rds/patterns.js" defer></script>
+<script src="../../assets/site-shell.js"></script>
+<script src="../../assets/rds/sketch.js" defer></script>
+<script src="../../assets/rds/interact.js" defer></script>
+</body>
+</html>
