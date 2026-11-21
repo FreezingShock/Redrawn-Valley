@@ -1,0 +1,42 @@
+{
+  "kinds": {"guide/los-angeles-river/": "place", "guide/san-fernando-valley/": "place"},
+  "terms": [
+    {"term": "Right-of-way", "aliases": ["right of way"]},
+    {"term": "Stormwater", "aliases": []},
+    {"term": "Runoff", "aliases": []},
+    {"term": "Planting strip", "aliases": []},
+    {"term": "Tree well", "aliases": []},
+    {"term": "Street tree", "aliases": []},
+    {"term": "Sidewalk", "aliases": []},
+    {"term": "Parcel", "aliases": []},
+    {"term": "Mean radiant temperature", "aliases": ["mean radiant"]},
+    {"term": "Heat wave", "aliases": []},
+    {"term": "Parking lot", "aliases": []},
+    {"term": "Surface temperature", "aliases": []},
+    {"term": "Air temperature", "aliases": []},
+    {"term": "Willits settlement", "aliases": ["Willits"]},
+    {"term": "Asphalt", "aliases": []}
+  ],
+  "see": [
+    {"from": "Heat island", "to": "Urban heat island"},
+    {"from": "Canopy", "to": "Tree canopy"},
+    {"from": "Impervious", "to": "Impervious surface"},
+    {"from": "Pervious paving", "to": "Permeable paving"}
+  ],
+  "places": [
+    {"name": "Woodland Hills", "note": "Neighborhood in the San Fernando Valley, City of Los Angeles"},
+    {"name": "West Hills", "note": "Neighborhood in the San Fernando Valley, City of Los Angeles"},
+    {"name": "Sun Valley", "note": "Neighborhood in the San Fernando Valley, City of Los Angeles"},
+    {"name": "Pacoima", "note": "Neighborhood in the San Fernando Valley, City of Los Angeles"},
+    {"name": "Canoga Park", "note": "Neighborhood in the San Fernando Valley, City of Los Angeles"},
+    {"name": "Shadow Hills", "note": "Neighborhood in the San Fernando Valley, City of Los Angeles"},
+    {"name": "Burbank", "note": "City in the San Fernando Valley"},
+    {"name": "Elmer Avenue", "aliases": ["Elmer Ave"], "note": "Sun Valley street retrofitted with bioswales"},
+    {"name": "Ventura Boulevard", "aliases": ["Ventura Blvd"]},
+    {"name": "Canyon Boulevard", "aliases": ["Canyon Blvd"]},
+    {"name": "Victory Boulevard", "aliases": ["Victory Blvd"]},
+    {"name": "Vanowen Street", "aliases": ["Vanowen St"]},
+    {"name": "Fallbrook Avenue", "aliases": ["Fallbrook Ave"]},
+    {"name": "Pierce College", "note": "Los Angeles Pierce College, Woodland Hills"}
+  ]
+}

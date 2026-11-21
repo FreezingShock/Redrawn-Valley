@@ -241,22 +241,22 @@
   .rv-sources a,.rv-note-read a{overflow-wrap:anywhere}
 
   /* study part-tab bar: ONE 48px row. Back arrow, then Site / Evidence / Design / Delivery / Sources scroll sideways. */
-  .rv-study header#top{position:sticky;top:0;z-index:20}
+  .rv-study{--rv-sub:var(--rv-bar)}
+  .rv-study:has(.rds-nav.is-hidden){--rv-sub:0px}
+  .rv-study header#top{position:sticky;top:var(--rv-sub);z-index:19}
   .rv-study header#top nav.ktabs{flex-wrap:nowrap;gap:0;min-height:48px;padding-block:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;width:100%;margin:0;padding-inline:var(--rv-gutter);scroll-padding-inline:var(--rv-gutter)}
   .rv-study header#top nav.ktabs::-webkit-scrollbar{display:none}
   .rv-study header#top nav.ktabs>a{flex:none;display:inline-flex;align-items:center;min-height:48px;padding:0 var(--space-3);margin:0;position:relative;white-space:nowrap}
-  /* brand becomes the first, quiet item; back link keeps its arrow */
+  /* the study name moves to the page title; only the five parts scroll */
   .rv-study header#top nav.ktabs>a:first-child{display:none}
-  .rv-study header#top nav.ktabs>a:nth-child(2){padding-left:0;padding-right:var(--space-4);font-size:15px;color:var(--ink)}
-  .rv-study header#top nav.ktabs>a:nth-child(n+3)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:3px;background:var(--brick);transform:scaleX(0);transition:transform var(--dur-base) var(--ease-out)}
+  .rv-study header#top nav.ktabs>a:nth-child(n+2)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:3px;background:var(--brick);transform:scaleX(0);transition:transform var(--dur-base) var(--ease-out)}
   .rv-study header#top nav.ktabs>a[aria-current=true]{color:var(--brick)}
   .rv-study header#top nav.ktabs>a[aria-current=true]::after{transform:none}
-  .rv-study header#top nav.ktabs>a:last-child{display:none} /* the in-bar Search link: the tab bar already has Search */
   .ktabs a,.ktabs a:hover,.ktabs a[aria-current="true"]{background-size:0 0}
 
   /* scroll-driven figure: pinned just under the tab bar, steps flow beneath it */
   .rv-study [data-scrolly]{gap:var(--space-4);display:block}
-  .rv-study [data-scrolly]>figure{position:sticky;top:48px;z-index:5;margin:0 calc(-1*var(--rv-gutter));padding:var(--space-2) var(--rv-gutter) var(--space-2);background:var(--paper);border-bottom:1px solid var(--line)}
+  .rv-study [data-scrolly]>figure{position:sticky;top:calc(var(--rv-sub) + 48px);z-index:5;margin:0 calc(-1*var(--rv-gutter));padding:var(--space-2) var(--rv-gutter) var(--space-2);background:var(--paper);border-bottom:1px solid var(--line)}
   .rv-study [data-scrolly]>figure figcaption{margin-top:var(--space-2);font-size:12px;line-height:18px}
   .rv-study [data-scrolly] .kstep{min-height:0;padding-block:var(--space-6) var(--space-12)}
   .rv-study [data-scrolly] .kstep h3{font-size:24px}
@@ -591,7 +591,7 @@ svg text[style*="Architects Daughter"]{font-family:var(--rv-hand)!important}
 
 /* ---------- hero buttons: drawn in on load ---------- */
 /* Primary: the outline is pencilled in, the brick fills, then the arrow draws and flies off and a new one settles in. Secondary: ink text with a drawn rule. Brick appears once, on the primary. */
-.rv-ctas{align-items:center;gap:var(--space-5)}
+.rv-ctas{align-items:center;column-gap:var(--space-8);row-gap:var(--space-3)}
 .rv-cta{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:var(--space-3);height:52px;padding:0 var(--space-6) 0 var(--space-6);color:var(--on-ink);font:700 18px/1 var(--rv-hand);letter-spacing:.01em;text-decoration:none;-webkit-tap-highlight-color:transparent}
 .rv-cta__frame{position:absolute;inset:0;z-index:-1;width:100%;height:100%;overflow:visible}
 .rv-cta__shadow{fill:var(--ink);opacity:0;animation:rv-cta-in .3s ease 1.15s forwards}
@@ -614,10 +614,10 @@ svg text[style*="Architects Daughter"]{font-family:var(--rv-hand)!important}
   45%{transform:translate(52px,-14px) rotate(-14deg);opacity:0}
   46%{transform:translate(-30px,0);opacity:0}
   100%{transform:none;opacity:1}}
-.rv-textlink{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) 2px var(--space-3);color:var(--ink);font:400 18px/24px var(--rv-hand);text-decoration:none;opacity:0;animation:rv-cta-in .4s ease 1.3s forwards}
+.rv-textlink{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);height:52px;padding:0 2px;color:var(--ink);font:400 18px/24px var(--rv-hand);text-decoration:none;opacity:0;animation:rv-cta-in .4s ease 1.3s forwards}
 .rv-textlink__down{flex:none;width:12px;height:16px;color:var(--ink-muted)}
 .rv-textlink__down path{stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .35s ease-out 1.7s forwards}
-.rv-textlink__rule{position:absolute;left:0;right:0;bottom:0;width:100%;height:8px;overflow:visible}
+.rv-textlink__rule{position:absolute;left:0;right:0;bottom:11px;width:100%;height:8px;overflow:visible}
 .rv-textlink__rule path{fill:none;stroke:var(--ink-muted);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:rv-draw .6s ease-out 1.5s forwards;transition:stroke var(--dur-fast) ease}
 .rv-textlink:hover .rv-textlink__rule path,.rv-textlink:focus-visible .rv-textlink__rule path{stroke:var(--ink);stroke-width:2}
 .rv-textlink:hover .rv-textlink__down{transform:translateY(3px)}
