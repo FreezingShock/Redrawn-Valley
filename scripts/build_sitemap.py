@@ -57,6 +57,7 @@ def build():
 <link rel="stylesheet" href="{up}assets/rds/notes.css">
 <link rel="stylesheet" href="{up}assets/rds/skin.css">
 <link rel="stylesheet" href="{up}assets/rds/theme.css">
+<link rel="stylesheet" href="{up}assets/rds/cozy.css">
 </head>
 <body class="rds-page">
 <header class="rds-nav" data-rds-nav data-rv-shell="nav">

@@ -139,14 +139,23 @@
   --rv-pencil: 2px 3px 0 0 var(--edge);
   --rv-pencil-lift: 3px 5px 0 0 var(--edge);
   --shadow-pencil: var(--rv-pencil); --shadow-pencil-lift: var(--rv-pencil-lift);
-  /* cozy layer (assets/rds/cozy-moments.css): paper lift, pencil progress line, lamp glow, copy stamp */
-  --lift: -2px; --lift-x: -1px; --press: 1px; --tilt: -.5deg;
-  --progress-h: 6px; --progress-tip: 14px;
-  --dur-lamp: 1500ms; --dur-stamp: 1700ms; --dur-pop: 360ms;
-  --glow: color-mix(in srgb,var(--pal-ochre) 46%,transparent);
-  --glow-core: color-mix(in srgb,var(--pal-on-band-accent) 34%,transparent);
-  --dusk-wash: color-mix(in srgb,var(--pal-ochre) 9%,transparent);
-  --lamp-size: 70vmax;
+
+  /* ---------- 4. cozy paper (assets/rds/cozy.css): washes, soft warm shadows, torn edge, tape, lamp glow ----------
+     The top bar is the model: a hand-washed paper band (two soft tints), a torn lower edge drawn with a hairline, a warm soft shadow. */
+  --wash-a: color-mix(in srgb,var(--pal-brick-tint) 55%,transparent);   /* warm tint, upper left */
+  --wash-b: color-mix(in srgb,var(--pal-sage) 50%,transparent);         /* cool tint, upper right */
+  --paper-wash: radial-gradient(60% 140% at 8% 0,var(--wash-a),transparent 70%),radial-gradient(50% 140% at 96% 0,var(--wash-b),transparent 70%);
+  --warm-shadow: color-mix(in srgb,var(--pal-ink) 22%,transparent);     /* shadow colour: ink thinned so it reads as brown, not grey */
+  --edge-soft: color-mix(in srgb,var(--edge) 55%,transparent);          /* frame line one step lighter than --edge */
+  --shadow-paper: 0 1px 0 var(--edge-soft),0 2px 3px -1px var(--warm-shadow),0 12px 20px -12px var(--warm-shadow);
+  --shadow-paper-lift: 0 1px 0 var(--edge-soft),0 4px 6px -2px var(--warm-shadow),0 18px 28px -12px var(--warm-shadow);
+  --glow-lamp: 0 0 0 0 transparent;                                     /* lamp glow: none in the light theme, warm halo in the dark one */
+  --tape: color-mix(in srgb,var(--pal-ochre) 38%,var(--pal-paper-raised));
+  --deckle-h: 28px; --deckle-w: 600px;
+  /* torn edge shape: a mask, so the colour comes from background (any panel or band colour, both themes). Filled below the curve; flip it for a bottom edge. */
+  --deckle: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%2228%22 viewBox=%220 0 600 28%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 28V14C30 8 52 17 90 12S150 5 190 13 250 20 300 12 360 4 410 12 470 19 520 11 570 7 600 13V28Z%22 fill=%22%23000%22/%3E%3C/svg%3E");
+  /* the same curve as a hairline, to draw the torn edge's pencil line */
+  --deckle-line: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%2228%22 viewBox=%220 0 600 28%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M0 14C30 8 52 17 90 12S150 5 190 13 250 20 300 12 360 4 410 12 470 19 520 11 570 7 600 13%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.3%22 stroke-linecap=%22round%22/%3E%3C/svg%3E");
 }
 @media (max-width:374px){ :root{ --rv-gutter: 18px; } }
 
@@ -194,4 +203,10 @@
   --band-line: rgba(243,232,212,.16);
   --veil: rgba(5,3,2,.66);
   --edge: #a99a82;
+  /* moonlit cozy: turquoise and moss washes, deeper brown shadows, a lamp-lit halo on panels */
+  --wash-a: rgba(102,195,192,.10);
+  --wash-b: rgba(156,195,168,.07);
+  --warm-shadow: rgba(0,0,0,.5);
+  --glow-lamp: 0 0 34px -6px rgba(102,195,192,.16);
+  --tape: color-mix(in srgb,var(--ochre) 55%,var(--paper-raised));
 }
