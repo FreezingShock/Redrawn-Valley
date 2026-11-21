@@ -40,7 +40,7 @@
     { label: 'Notes', url: 'notes/', kind: 'notes', icon: 'notes', blurb: 'Short essays with the evidence shown.', max: 5, all: 'All notes' },
     { label: 'About', url: 'index.html#about' }
   ];
-  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', topics: 'Topics', about: 'About' };
+  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', topics: 'Topics', log: 'Sketchbook log', about: 'About' };
   var sitePath = new URL(siteRoot).pathname;
   var rel = decodeURIComponent(location.pathname.slice(sitePath.length)).replace(/index\.html$/, '');
   var section = rel.split('/')[0];
@@ -132,6 +132,7 @@
       ['Topics', 'topics/', 'tree', 'Heat, trees, water and more, across every page'],
       ['Method', 'index.html#method', 'ruler', 'How a study is made'],
       ['About', 'index.html#about', 'info', 'Who draws this, and why'],
+      ['Sketchbook log', 'log/', 'contents', 'Everything new, by date'],
       ['A–Z index', 'a-z/', 'contents', 'Every term, place, source and drawing'],
       ['Lab notes', 'lab/', 'thermometer', 'How the patterns, icons and type were made'],
       ['Pattern sheet', 'patterns/', 'leaf', 'Every motif and the palette'],
@@ -164,7 +165,7 @@
   function footer(el) {
     function li(label, u) { return '<li><a href="' + esc(href(u)) + '">' + esc(label) + '</a></li>'; }
     function col(title, attr, items) { return '<nav class="rds-footer__col" aria-label="' + esc(title) + '"><h4>' + esc(title) + '</h4><ul' + (attr ? ' data-rv-footer-' + attr : '') + '>' + items + '</ul></nav>'; }
-    var explore = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['Lab notes', 'lab/'], ['Topics', 'topics/'], ['A–Z index', 'a-z/'], ['About', 'index.html#about']].map(function (n) { return li(n[0], n[1]); }).join('') +
+    var explore = [['Home', ''], ['Field guide', 'guide/'], ['Studies', 'studies/'], ['Notes', 'notes/'], ['Lab notes', 'lab/'], ['Topics', 'topics/'], ['A–Z index', 'a-z/'], ['Sketchbook log', 'log/'], ['About', 'index.html#about']].map(function (n) { return li(n[0], n[1]); }).join('') +
       '<li><a href="#" data-rv-search-open>Search the site</a></li>';
     el.innerHTML = '<div class="rds-footer__grid">' +
       '<div class="rds-footer__about"><p class="rds-footer__brand">' + logoMark(30) + 'Redrawn Valley</p>' +
