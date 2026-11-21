@@ -244,14 +244,12 @@
   .rv-study{--rv-sub:var(--rv-bar)}
   .rv-study:has(.rds-nav.is-hidden){--rv-sub:0px}
   .rv-study header#top{position:sticky;top:var(--rv-sub);z-index:19}
-  .rv-study header#top nav.ktabs{flex-wrap:nowrap;gap:0;min-height:48px;padding-block:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;width:100%;margin:0;padding-inline:var(--rv-gutter);scroll-padding-inline:var(--rv-gutter)}
+  .rv-study header#top nav.ktabs{flex-wrap:nowrap;gap:0;min-height:48px;padding-block:6px 2px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;width:100%;margin:0;padding-inline:var(--rv-gutter);scroll-padding-inline:var(--rv-gutter)}
   .rv-study header#top nav.ktabs::-webkit-scrollbar{display:none}
   .rv-study header#top nav.ktabs>a{flex:none;display:inline-flex;align-items:center;min-height:48px;padding:0 var(--space-3);margin:0;position:relative;white-space:nowrap}
   /* the study name moves to the page title; only the five parts scroll */
   .rv-study header#top nav.ktabs>a:first-child{display:none}
-  .rv-study header#top nav.ktabs>a:nth-child(n+2)::after{content:"";position:absolute;left:var(--space-3);right:var(--space-3);bottom:0;height:3px;background:var(--brick);transform:scaleX(0);transition:transform var(--dur-base) var(--ease-out)}
   .rv-study header#top nav.ktabs>a[aria-current=true]{color:var(--brick)}
-  .rv-study header#top nav.ktabs>a[aria-current=true]::after{transform:none}
   .ktabs a,.ktabs a:hover,.ktabs a[aria-current="true"]{background-size:0 0}
 
   /* scroll-driven figure: pinned just under the tab bar, steps flow beneath it */

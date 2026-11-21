@@ -130,8 +130,8 @@ span.rv-term{color:var(--ink-muted)}
 .rv-sources li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--line);scroll-margin-top:96px}
 .rv-sources li>b{font:400 13px/22px var(--rds-mono);color:var(--ink-faint)}
 .rv-sources a{overflow-wrap:anywhere}
-.rv-study-bar{position:sticky;top:72px;z-index:19;background:var(--paper);border-bottom:1px solid var(--line);transition:top var(--dur-base,.25s) ease}
-.rv-study-bar nav{width:min(1120px,100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;gap:4px 28px;min-height:44px;padding-block:0}
+.rv-study-bar{position:sticky;top:72px;z-index:19;background:var(--paper);transition:top var(--dur-base,.25s) ease}
+.rv-study-bar nav{width:min(1120px,100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;gap:4px 28px;min-height:44px;padding-block:18px 8px;position:relative;transition:padding var(--dur-base,.25s) var(--ease-out,ease)}
 .rv-study-bar__brand{margin-right:auto;font:500 19px/1 var(--rds-serif);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
 .rv-study-bar__back{color:var(--ink-muted);text-decoration:none;font-size:14px;margin-right:auto;padding:8px 0}
 .rv-study-bar nav>a:not(.rv-study-bar__brand):not(.rv-study-bar__back){color:var(--ink);text-decoration:none;font-size:15px;font-weight:500;padding:8px 0}
@@ -222,3 +222,16 @@ span.rv-term{color:var(--ink-muted)}
 /* study pages do not load rds.js, so the shared header never shrinks: hold it at its full 72px so the part bar can stick right under it */
 .rv-study .rds-nav,.rv-study .rds-nav.is-scrolled{height:72px}
 @media (max-width:640px){.rv-study .rds-nav,.rv-study .rds-nav.is-scrolled{height:var(--rv-bar)}}
+
+/* ---------- part bar: melts into the page, no rule ---------- */
+.rv-study-bar{border-bottom:0}
+.rv-study-bar::after{content:"";position:absolute;left:0;right:0;top:100%;height:34px;pointer-events:none;background:linear-gradient(180deg,var(--paper),transparent)}
+.rv-study-bar.is-compact nav{padding-block:10px 4px}
+/* the study name arrives only once the page title has scrolled away */
+.rv-study-bar__brand{background:none!important;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity var(--dur-base,.25s) ease,transform var(--dur-base,.25s) var(--ease-out,ease);text-decoration:none!important}
+.rv-study-bar.has-title .rv-study-bar__brand{opacity:1;transform:none;pointer-events:auto}
+/* one underline slides between the parts instead of each link drawing its own */
+.rv-study-bar nav>a:not(.rv-study-bar__brand){background:none!important;position:relative}
+.rv-study-bar nav>a[aria-current="true"]:not(.rv-study-bar__brand){color:var(--brick)}
+.rv-study-bar__ink{position:absolute;left:0;bottom:0;height:3px;width:0;border-radius:2px;background:var(--brick);opacity:0;pointer-events:none;transition:transform .45s cubic-bezier(.16,1,.3,1),width .45s cubic-bezier(.16,1,.3,1),opacity .2s ease}
+@media (prefers-reduced-motion:reduce){.rv-study-bar nav,.rv-study-bar__brand,.rv-study-bar__ink{transition:none}.rv-study-bar__brand{transform:none}}
