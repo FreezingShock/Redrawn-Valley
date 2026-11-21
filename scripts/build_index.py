@@ -5,12 +5,13 @@ Run: python3 scripts/build_index.py          (writes assets/search-index.json, s
 Every page with a <title> is indexed except 404.html and anything marked <meta name="robots" content="noindex">.
 CI regenerates the index on integration, so a page PR does not need to commit it."""
 import re, sys, json, pathlib, datetime
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from html.parser import HTMLParser
 
 root = pathlib.Path(__file__).resolve().parent.parent
 # Production domain for sitemap.xml. Change here if the domain changes.
 SITE_URL = 'https://redrawnvalley.vercel.app'
-SECTIONS = {'': 'Home', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'topics': 'Topics', 'about': 'About'}
+SECTIONS = {'': 'Home', 'a-z': 'A–Z index', 'guide': 'Field guide', 'studies': 'Studies', 'notes': 'Notes', 'lab': 'Lab notes', 'topics': 'Topics', 'about': 'About'}
 SKIP_TAGS = {'script', 'style', 'svg', 'noscript', 'nav', 'footer', 'template'}
 TEXT_CAP = 6000
 
@@ -52,7 +53,9 @@ def build():
     for f in sorted(root.rglob('*.html')):
         rel = f.relative_to(root)
         if any(p in ('.git', 'node_modules') for p in rel.parts) or rel.name == '404.html': continue
-        p = Page(); p.feed(f.read_text(encoding='utf-8'))
+        src = f.read_text(encoding='utf-8')
+        if rel.as_posix() == 'a-z/index.html': src = re.sub(r'<!-- atlas:start.*?<!-- atlas:end -->', '', src, flags=re.S)   # generated list: not indexed twice
+        p = Page(); p.feed(src)
         if p.noindex or not p.title.strip(): continue
         url = '' if rel.as_posix() == 'index.html' else (rel.parent.as_posix() + '/' if rel.name == 'index.html' else rel.as_posix())
         sec = url.split('/')[0] if '/' in url else ('' if url == '' else url.rsplit('.', 1)[0])
@@ -79,8 +82,11 @@ def build():
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u, _ in urls: sm.append(f'  <url><loc>{SITE_URL}/{u}</loc></url>')
     sm.append('</urlset>')
-    return {'assets/search-index.json': index, 'sitemap.xml': '\n'.join(sm) + '\n',
-            'robots.txt': f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n'}
+    out = {'assets/search-index.json': index, 'sitemap.xml': '\n'.join(sm) + '\n',
+           'robots.txt': f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n'}
+    import build_atlas                                   # the A-Z index is generated from the same pages
+    out.update(build_atlas.build()[0])
+    return out
 
 if __name__ == '__main__':
     out = build(); stale = []
