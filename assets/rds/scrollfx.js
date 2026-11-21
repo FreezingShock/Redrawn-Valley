@@ -59,6 +59,11 @@
     });
   }, { rootMargin: '300px 0px 300px 0px' });
   all('svg.ts-fig, svg.rds-draw').forEach(function (s) { figIO.observe(s); });
+  /* a figure whose shapes arrive late (assets/rds/art.js): read its paths now, if it was already in view and found empty */
+  doc.addEventListener('rv:art', function (e) {
+    var s = e.target, st = seen.get(s); if (!st) return;
+    st.n = prep(s); if (st.n && st.on && figs.indexOf(s) < 0) figs.push(s); update();
+  });
   function drawFigs() {
     figs.forEach(function (s) {
       var r = s.getBoundingClientRect(); if (!r.height) return;
