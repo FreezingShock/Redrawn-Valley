@@ -96,10 +96,6 @@
 .rv-nmeta{font:400 var(--fs-13)/20px var(--rds-mono);color:var(--ink-faint)}
 @media (min-width:860px){.rv-nfeature{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
 .rv-filter{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-8)}
-.rv-chip{font:600 var(--fs-12)/16px var(--rds-sans);letter-spacing:.08em;text-transform:uppercase;padding:10px 14px;min-height:40px;border-radius:var(--radius-pill);border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;transition:background-color var(--dur-fast) var(--ease-std),color var(--dur-fast) var(--ease-std)}
-.rv-chip:hover{background:var(--paper-sunk)}
-.rv-chip[aria-pressed=true]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
-.rv-chip:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .rv-nrows .rds-row__meta{display:flex;flex-direction:column;gap:2px;text-align:right}
 .rv-nrows .rds-row__text{max-width:44ch}
 .rv-nrows .rds-tag{margin-bottom:var(--space-1)}
