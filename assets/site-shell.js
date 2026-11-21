@@ -171,7 +171,7 @@
       col('Notes', 'notes', li('All notes', 'notes/')) +
       col('Lab notes', 'lab', li('All lab notes', 'lab/')) +
       '</div><div class="rds-footer__base"><p class="rds-footer__fine">Concept studies by a student. Not affiliated with any property owner. Built with the Redrawn Design System.</p>' +
-      '<p class="rds-footer__meta"><span class="rds-footer__stamp" data-rv-footer-updated hidden></span><a class="rds-footer__top" href="#top" data-rv-top>Back to top ' + icon('arrow-up', '', 16) + '</a></p></div>';
+      '<p class="rds-footer__meta"><a class="rds-footer__contact" href="mailto:nateanderson36b@gmail.com">Email</a><a class="rds-footer__contact" href="https://github.com/FreezingShock" rel="me noopener">GitHub</a><span class="rds-footer__stamp" data-rv-footer-updated hidden></span><a class="rds-footer__top" href="#top" data-rv-top>Back to top ' + icon('arrow-up', '', 16) + '</a></p></div>';
     var top = el.querySelector('[data-rv-top]');
     top.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
     loadIndex().then(function (d) {

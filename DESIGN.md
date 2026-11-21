@@ -71,7 +71,7 @@ Headlines are sentences that state the finding ("Soil, not trees, is the hard pa
 - **Quote** `rds-quote`; **Callout** `rds-callout` (+ `--moss`, `--plain`, `__title`) for "What is real / What is estimated" notes.
 - **Accordion** `rds-acc` using `<details>`; **Field/Input** `rds-field`, `rds-input` (44px, `--error` state uses rust).
 - **Contents rail** `rds-toc` + `data-rds-toc`: left-edge ticks, current one thick brick with its label, expands on hover, hidden under 1240px.
-- **Footer** `rds-footer` (ink band; built by `site-shell.js`: brand and about-the-author line, then Explore, Studies, Field guide, Notes and Lab notes columns filled from the search index, then the disclaimer, a "Last updated" stamp (`updated` in `search-index.json`, which `build_index.py` moves only when indexed content changes) and a back-to-top link. Long titles clamp to two lines; no contact links until Nate supplies them).
+- **Footer** `rds-footer` (ink band; built by `site-shell.js`: brand and about-the-author line, then Explore, Studies, Field guide, Notes and Lab notes columns filled from the search index, then the disclaimer, a "Last updated" stamp (`updated` in `search-index.json`, which `build_index.py` moves only when indexed content changes) and a back-to-top link. Long titles clamp to two lines; Email and GitHub links sit in the base line).
 - **Site-only (`site.css`, `rv-` prefix)**: `rv-compare` + `rv-seg` (Today/Proposed segmented toggle), `rv-feature` (featured study card), `rv-facts` (3 big serif numbers), `rv-steps`/`rv-step` (numbered method, first number brick), `rv-note`, `rv-about`, `rv-planned` (dimmed placeholder rows).
 
 ## Shared shell, breadcrumbs and search (`assets/site-shell.js`)
@@ -259,7 +259,7 @@ Big original pencil drawings that fill empty page margins. Loaded automatically 
 
 - The Topanga study's text and layout styles are now in `study.css` using tokens, so token changes reach them. Its SVG drawings still carry inline `style` attributes and hex colours (they are redrawn separately).
 - Infobox field-guide terms link to `guide/<slug>/index.html` when an entry exists; terms without one (e.g. right-of-way) stay plain `rv-term` spans.
-- Home and study still contain placeholders: `[Last name]`, `[YOUR EMAIL]`, `[YOUR GITHUB]`, `[DATE]`, `[NEXT SITE ...]`.
+- Home and study still contain placeholders: `[Last name]`, `[DATE]`, `[NEXT SITE ...]`.
 
 ## Scroll effects
 

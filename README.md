@@ -63,7 +63,7 @@ New pages get the header, footer, breadcrumbs and search by including three plac
 
 ## To fill in
 
-Search the project for square brackets: `[Last name]`, `[YOUR EMAIL]`, `[YOUR GITHUB]`, `[DATE]`, `[NEXT SITE ...]`.
+Search the project for square brackets: `[Last name]`, `[DATE]`, `[NEXT SITE ...]`.
 
 ## Next
 
