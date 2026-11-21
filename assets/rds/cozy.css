@@ -1,0 +1,61 @@
+/* Redrawn Design System: cozy layer. Small warm moments, loaded by cozy.js (which site-shell.js loads on every page).
+   Every value is a token (tokens.css > "cozy layer"). Nothing here carries meaning through motion alone, and the
+   prefers-reduced-motion catch-all in skin.css makes every transition instant; the rules that would end invisible say so below.
+   Documented in DESIGN.md > Cozy layer. */
+
+/* ---------- selection: a highlighter pass, not the browser blue ---------- */
+::selection{background:var(--brick-tint);color:var(--ink)}
+
+/* ---------- focus: the ring settles in from a little further out (shape and colour stay in skin.css) ---------- */
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{animation:cz-ring var(--dur-quick) var(--ease-out)}
+@keyframes cz-ring{from{outline-offset:calc(var(--focus-gap) + var(--space-2));outline-color:transparent}}
+
+/* ---------- links outside running text: a wavy pencil underline settles under them ---------- */
+:is(.rds-crumbs a,.rds-contents a,.rv-az__jump a,.rds-footer a){text-decoration:underline wavy transparent;text-decoration-thickness:1px;text-underline-offset:1px;transition:text-decoration-color var(--dur-fast) var(--ease-std),text-underline-offset var(--dur-base) var(--ease-out)}
+:is(.rds-crumbs a,.rds-contents a,.rv-az__jump a):is(:hover,:focus-visible){text-decoration-color:var(--brick);text-underline-offset:var(--space-1)}
+.rds-footer a:is(:hover,:focus-visible){text-decoration-color:var(--on-band-accent);text-underline-offset:var(--space-1)}
+
+/* ---------- bordered controls: a sheet of paper lifts on hover and is pressed flat ---------- */
+:is(.rv-lookup,.rvs-chip,.rv-lib-seg,.rv-reroll button,.rv-stages__btn,.rv-src__link){transition:translate var(--dur-fast) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background-color var(--dur-fast) var(--ease-std),border-color var(--dur-fast) var(--ease-std),color var(--dur-fast) var(--ease-std)}
+@media (hover:hover){:is(.rv-lookup,.rvs-chip,.rv-lib-seg,.rv-reroll button,.rv-stages__btn,.rv-src__link):hover{translate:var(--lift-x) var(--lift);box-shadow:var(--shadow-pencil)}}
+:is(.rv-lookup,.rvs-chip,.rv-lib-seg,.rv-reroll button,.rv-stages__btn,.rv-src__link):active{translate:var(--press) calc(var(--press)*2);box-shadow:none}
+
+/* ---------- filter chips pop when they switch on (cozy.js adds .cz-ready after load so pressed chips do not pop on arrival) ---------- */
+.cz-ready :is(.rds-chip,.rv-chip,.rv-seg button,.rv-lib-seg,.rvs-chip)[aria-pressed="true"]{animation:cz-pop var(--dur-pop) var(--ease-spring)}
+@keyframes cz-pop{40%{scale:1.08;rotate:var(--tilt)}}
+
+/* ---------- copy feedback: a small paper tag with a pencil check, stamped above the button ---------- */
+.cz-tag{position:fixed;z-index:var(--z-tip);display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-1) var(--space-3);border:var(--rv-stroke) solid var(--edge);border-radius:var(--rv-r-md);background:var(--paper-raised);color:var(--ink);box-shadow:var(--shadow-pencil);font:500 var(--fs-14)/20px var(--rv-hand);pointer-events:none;rotate:-1.5deg;animation:cz-stamp var(--dur-stamp) var(--ease-out) both}
+.cz-tag svg{flex:none;width:16px;height:16px}
+.cz-tag path{fill:none;stroke:var(--moss);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:cz-check var(--dur-base) var(--ease-out) var(--dur-fast) forwards}
+@keyframes cz-stamp{0%{opacity:0;translate:0 var(--space-2);scale:.9}14%{opacity:1;translate:0 0;scale:1.05}24%{scale:1}80%{opacity:1}100%{opacity:0;translate:0 calc(var(--space-1)*-1)}}
+@keyframes cz-check{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.cz-tag{animation:none;opacity:1}.cz-tag path{animation:none;stroke-dashoffset:0}}
+
+/* ---------- empty, 404 and loading ---------- */
+.rds-empty.is-on::before{animation:cz-shrug var(--dur-slow) var(--ease-spring) both}
+@keyframes cz-shrug{from{opacity:0;rotate:-8deg;scale:.85}60%{rotate:4deg;scale:1.04}}
+.rv-404__art .rds-note{animation:cz-bob var(--dur-loop-1) var(--ease-soft-in-out) infinite}
+.rv-404__art .rds-note+.rds-note{animation-delay:calc(var(--dur-loop-1)/-2)}
+@keyframes cz-bob{50%{translate:0 calc(var(--space-1)*-1.5)}}
+/* three pencil dabs for "still loading" (search while its index loads; reuse anywhere: <span class="cz-dots" aria-hidden="true"><i></i><i></i><i></i></span>) */
+.cz-dots{display:inline-flex;gap:var(--space-1);margin-left:var(--space-2);vertical-align:middle}
+.cz-dots i{width:var(--space-1);height:var(--space-1);border-radius:var(--radius-pill);background:currentColor;opacity:.4;animation:cz-dot var(--dur-slower) var(--ease-in-out) infinite}
+.cz-dots i:nth-child(2){animation-delay:calc(var(--stagger)*2)}
+.cz-dots i:nth-child(3){animation-delay:calc(var(--stagger)*4)}
+@keyframes cz-dot{30%{translate:0 calc(var(--space-1)*-1);opacity:1}60%{translate:0 0}}
+
+/* ---------- time of day (cozy.js sets <html data-tod="dawn|day|dusk|night">; ?tod=night previews it) ---------- */
+.cz-wash{position:fixed;inset:0;z-index:var(--z-grain);pointer-events:none;background:radial-gradient(120% 70% at 100% 0,var(--dusk-wash),transparent 70%);mix-blend-mode:multiply}
+:root[data-theme="dark"] .cz-wash{display:none}
+/* late and still in the light theme: the switch nods now and then, like a hand reaching for the lamp */
+:root[data-tod="night"]:not([data-theme="dark"]) .rv-theme__ico{animation:cz-nod var(--dur-loop-1) var(--ease-in-out) infinite}
+@keyframes cz-nod{0%,86%,100%{rotate:0deg}90%{rotate:-16deg}95%{rotate:10deg}}
+
+/* ---------- the lamp clicks on: a warm glow blooms from the switch when the dark theme arrives ---------- */
+.cz-lamp{position:fixed;inset:0;z-index:var(--z-tip);pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle var(--lamp-size) at var(--x) var(--y),var(--glow-core),var(--glow) 22%,transparent 70%);animation:cz-lamp var(--dur-lamp) var(--ease-std) both}
+@keyframes cz-lamp{0%{opacity:0}10%{opacity:.95}18%{opacity:.3}28%{opacity:1}100%{opacity:0}}
+.rv-theme.cz-click .rv-theme__ico{animation:cz-click var(--dur-base) var(--ease-spring)}
+@keyframes cz-click{30%{scale:.8}}
+@media (prefers-reduced-motion:reduce){.cz-lamp{display:none}}
+@media print{.cz-wash,.cz-lamp,.cz-tag{display:none}}

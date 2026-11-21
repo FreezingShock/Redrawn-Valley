@@ -273,7 +273,7 @@ Big original pencil drawings that fill empty page margins. Loaded automatically 
 
 `assets/rds/scrollfx.js` (loaded by `site-shell.js`, styles in the last block of `rds.css`) makes pages progress as you scroll. It adds `<html class="fx-on">` only when `prefers-reduced-motion` is not set, and every rule is scoped to `.fx-on`, so with reduced motion (or no JS) nothing moves and every figure shows in its final state. Turning the setting on while a page is open switches the effects off live.
 
-- **Progress line**: a 3px brick bar under the nav fills with the page (`.fx-progress`); skipped on notes, which have their own (`data-rv-progress`).
+- **Progress line**: a hand-drawn pencil line along the top edge fills with the page (`.fx-progress`), with a small pencil tip riding its end; notes use the same line for their own reading progress (`data-rv-progress`, `.rv-progress`). Both are styled once in `rds.css`; the scripts only set `--p` (0 to 1) on the wrapper.
 - **Figures draw themselves**: pencil paths (`.dw`, `pathLength=1`) in `svg.ts-fig` and `svg.rds-draw` draw in, staggered by order, as the figure crosses the lower part of the screen (scrubbed by scroll, so scrolling back un-draws). Fills and labels fade in over the last half. The generated Topanga drawings tag their lines; older hand-drawn figures are tagged at runtime (stroke-only paths, no dashes, capped).
 - **Plans build layer by layer**: staged figures (`.lyr .l1` to `.l6`) draw each layer and grow its trees (`.tg`) when its step arrives; `studies.js` toggles `.is-on`. Layer progress is a registered custom property (`--ld`) so it animates in CSS.
 - **Dimension lines extend**: on the blueprint sheets the dimension strings are ordinary `.dw` paths and draw with the sheet.
@@ -282,6 +282,21 @@ Big original pencil drawings that fill empty page margins. Loaded automatically 
 - **Rise**: headings, quotes and figures below the fold settle in (`.fx-rise`). Anything already on screen, inside a scrolly figure, or using `data-rds-*` reveals is left alone.
 
 Performance: one passive scroll listener, one rAF per frame, and only figures and art near the viewport are updated (IntersectionObserver); only CSS custom properties change per frame.
+
+## Cozy layer (`assets/rds/cozy.css`, `cozy.js`)
+
+Small warm moments, loaded on every page by `site-shell.js` (`cozy.js` loads `cozy.css` itself). Tokens live in `tokens.css` under "cozy layer" (`--lift`, `--press`, `--progress-h`, `--dur-lamp`, `--dur-stamp`, `--glow`, `--dusk-wash`). Keep each moment subtle; none carries meaning through motion alone, and the `prefers-reduced-motion` catch-all (see Accessibility) makes them instant.
+
+- **Pencil progress line**: see Scroll effects.
+- **Paper lift and press**: bordered controls without their own motion (`.rv-lookup`, `.rvs-chip`, `.rv-lib-seg`, `.rv-reroll button`, `.rv-stages__btn`, `.rv-src__link`) rise a pixel or two with a pencil shadow on hover and press flat. They use the `translate` property so they never fight a component's own `transform`. Add a new bordered control to that selector list rather than writing a new hover.
+- **Pencil underline**: breadcrumb, contents, A-Z jump and footer links get a wavy underline that settles in on hover and focus (prose links already have theirs in `flow.css`).
+- **Chip pop**: filter chips and segmented buttons pop when they become `aria-pressed="true"` (not on page arrival; `cozy.js` adds `html.cz-ready` after load).
+- **Focus settle**: the dashed focus ring (shape and colour in `skin.css`) now settles in from a little further out. Wrapped in `:where()` so it never overrides a component's own animation.
+- **Copy stamp**: `window.RVCozy.tag(button, 'Copied')` drops a paper tag with a pencil-drawn check above the button. It is `aria-hidden`; the page keeps its own live region. Used by the feed address (`log.js`) and source links (`sources.js`). Call it only after the copy succeeded.
+- **Empty, 404 and loading**: the empty-state doodle shrugs in when it appears (`.rds-empty.is-on`), the 404 notes drift, and `.cz-dots` (three pencil dabs) marks "still loading"; the search dialog uses it while its index loads.
+- **Time of day**: `cozy.js` sets `<html data-tod="dawn|day|dusk|night">` from the visitor's clock (`?tod=night` previews one). At dusk, in the light theme, a faint warm multiply wash (`.cz-wash`) sits over the page; at night, in the light theme, the sun/moon switch nods now and then.
+- **The lamp**: when the dark theme arrives because the switch was pressed, a warm glow blooms from the switch and flickers on (`.cz-lamp`), after the circle reveal in `theme.js` ends (the page is only snapshots while `html.rv-theming` is set). Not shown for system or cross-tab changes, and not shown under reduced motion.
+- **Selection**: text selection is the brick tint, not the browser blue.
 
 ## Interaction layer (`assets/rds/interact.css`, `interact.js`)
 
