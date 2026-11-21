@@ -31,6 +31,8 @@ assets/rds/rds.css               Redrawn Design System components (and the icon 
 assets/rds/motifs.js              seeded generative art (banners, strips, cards); see DESIGN.md > Motifs
 assets/rds/patterns.js           controls for the pattern sheet
 lab/index.html                    Lab notes index; lab/<slug>/index.html are the articles (assets/rds/lab.css, lab.js)
+map/index.html                    Valley map: every page pinned where it happens (assets/rds/map.js, map-geo.js, map.css)
+assets/places.json                 generated pin list (scripts/places.py via build_index.py)
 patterns/index.html              pattern sheet: every motif, palette, seed lab
 assets/rds/skin.css              responsive layer + sketchbook layer; loaded last on every page
 assets/rds/notes.css, notes.js    styles and script for the Notes section

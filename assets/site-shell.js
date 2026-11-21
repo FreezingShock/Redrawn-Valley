@@ -50,6 +50,7 @@
     { label: 'A\u2013Z index', url: 'a-z/', icon: 'contents', note: 'Every term, place, source and drawing' },
     { label: 'Sources', url: 'sources/', icon: 'footnote', note: 'Every citation, and where it is used' },
     { label: 'Sketchbook log', url: 'log/', icon: 'contents', note: 'Everything new, by date' },
+    { label: 'Valley map', url: 'map/', icon: 'pin', note: 'Every page, pinned where it happens' },
     { label: 'Drawings', url: 'drawings/', icon: 'ruler', note: 'Every figure on one filterable, zoomable sheet' }
   ];
   var ABOUT = [
@@ -65,7 +66,7 @@
     { label: 'Explore', id: 'explore', icon: 'search', blurb: 'Find things by topic, term, source or date.', items: EXPLORE, sections: ['topics', 'a-z', 'sources', 'log', 'map', 'drawings'] },
     { label: 'About', url: 'about/' }
   ];
-  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', topics: 'Topics', log: 'Sketchbook log', drawings: 'Drawings', about: 'About', sitemap: 'Sitemap', sources: 'Sources', 'a-z': 'A\u2013Z index' };
+  var LABELS = { guide: 'Field guide', studies: 'Studies', notes: 'Notes', lab: 'Lab notes', map: 'Valley map', topics: 'Topics', log: 'Sketchbook log', drawings: 'Drawings', about: 'About', sitemap: 'Sitemap', sources: 'Sources', 'a-z': 'A\u2013Z index' };
   var sitePath = new URL(siteRoot).pathname;
   var rel = decodeURIComponent(location.pathname.slice(sitePath.length)).replace(/index\.html$/, '');
   var section = rel.split('/')[0];

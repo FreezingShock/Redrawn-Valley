@@ -5,40 +5,77 @@
   <link rel="self" type="application/atom+xml" href="https://redrawnvalley.vercel.app/log/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/"/>
   <id>https://redrawnvalley.vercel.app/log/</id>
-  <updated>2026-11-21T08:22:36+00:00</updated>
+  <updated>2026-11-21T08:31:15+00:00</updated>
   <author><name>Nate Anderson</name></author>
   <entry>
-    <title>Drawings gallery: /drawings/ with filters, zoom and stage stepper; figure manifest; lab note; docs</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-064344f</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-064344f"/>
-    <updated>2026-11-21T08:22:36+00:00</updated>
+    <title>Valley map: pannable hand-drawn map of the Valley with pins from page metadata, lab article, nav links, docs</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-b18dec4</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-b18dec4"/>
+    <updated>2026-11-21T08:31:15+00:00</updated>
+    <category term="site" label="Site"/>
+    <content type="html">&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/&quot;&gt;Lab notes&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Valley map: engine, page, places generator, lab article (WIP)</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-ba742a2</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-ba742a2"/>
+    <updated>2026-11-21T08:22:14+00:00</updated>
     <category term="lab" label="Lab note"/>
-    <summary>How one script and one page collect every labeled figure from the studies and notes into a filterable, zoomable sheet, without a list anyone has to keep up to date.</summary>
-    <content type="html">&lt;p&gt;How one script and one page collect every labeled figure from the studies and notes into a filterable, zoomable sheet, without a list anyone has to keep up to date.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/drawings-gallery/&quot;&gt;How the drawings gallery finds every figure&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/a-z/&quot;&gt;A–Z index&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/&quot;&gt;Lab notes&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+    <content type="html">&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/valley-map/&quot;&gt;Drawing the Valley as a map you can pan&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/map/&quot;&gt;Valley map&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/san-fernando-valley/&quot;&gt;San Fernando Valley&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/shade-equity/&quot;&gt;Shade equity&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
   <entry>
-    <title>Gallery page, styles, script</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-8fe7632</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-8fe7632"/>
-    <updated>2026-11-21T08:18:05+00:00</updated>
+    <title>Add moonlit dark theme: token swap, sun/moon switch, circle reveal, lab article</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-66</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-66"/>
+    <updated>2026-11-21T00:30:54-08:00</updated>
+    <category term="lab" label="Lab note"/>
+    <summary>How the dark theme was made as a token swap: orange-black paper, cream ink, brick turned moonlit turquoise, contrast checked to WCAG AA, and the circle reveal that switches it on.</summary>
+    <content type="html">&lt;p&gt;How the dark theme was made as a token swap: orange-black paper, cream ink, brick turned moonlit turquoise, contrast checked to WCAG AA, and the circle reveal that switches it on.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/dark-theme/&quot;&gt;A moonlit dark theme, and the circle that switches it on&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/a-z/&quot;&gt;A–Z index&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/bioswale/&quot;&gt;Bioswale&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/cool-pavement/&quot;&gt;Cool pavement&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/impervious-surface/&quot;&gt;Impervious surface&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/&quot;&gt;Field guide&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/los-angeles-river/&quot;&gt;Los Angeles River&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/permeable-paving/&quot;&gt;Permeable paving&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/guide/riparian-corridor/&quot;&gt;Riparian corridor&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Vercel: build only main and integration; skip preview builds for other branches</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-65</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-65"/>
+    <updated>2026-11-21T00:29:10-08:00</updated>
     <category term="site" label="Site"/>
-    <content type="html">&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/drawings/&quot;&gt;Drawings&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
   <entry>
-    <title>Wip</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-3f464bf</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-3f464bf"/>
-    <updated>2026-11-21T08:16:26+00:00</updated>
+    <title>Study pages: shared site header with a sticky part bar</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-64</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-64"/>
+    <updated>2026-11-21T00:29:06-08:00</updated>
     <category term="site" label="Site"/>
-    <summary>Every plan, section, sketch and chart from the studies and notes, on one sheet. Filter by study, type or topic, zoom in, and jump back to the page each drawing comes from.</summary>
-    <content type="html">&lt;p&gt;Every plan, section, sketch and chart from the studies and notes, on one sheet. Filter by study, type or topic, zoom in, and jump back to the page each drawing comes from.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/drawings/&quot;&gt;Drawings&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+    <content type="html">&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/fallbrook-edge/&quot;&gt;Fallbrook Edge&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/ventura-topanga-corner/&quot;&gt;Ventura and Topanga Corner&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
   <entry>
-    <title>Add drawings manifest builder</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-21:c-de835d7</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#c-de835d7"/>
-    <updated>2026-11-21T08:13:46+00:00</updated>
+    <title>Rework Keep reading rail panning</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-62</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-62"/>
+    <updated>2026-11-21T00:26:51-08:00</updated>
+    <category term="design" label="Design system"/>
+  </entry>
+  <entry>
+    <title>Add the Sources library: generated citation index, searchable page with jump-to-claim links, lab article</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-61</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-61"/>
+    <updated>2026-11-21T00:26:42-08:00</updated>
+    <category term="lab" label="Lab note"/>
+    <content type="html">&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/sources-library/&quot;&gt;The sources library: every citation, found by script&lt;/a&gt;&lt;/li&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/sources/&quot;&gt;Sources library&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/a-z/&quot;&gt;A–Z index&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/icon-set/&quot;&gt;Thirty-eight icons and a logo, drawn as lists of points&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/&quot;&gt;Lab notes&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/motif-sheet/&quot;&gt;Ten motifs drawn from reference sheets&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/motion-lab/&quot;&gt;How the site moves: opening, wipes and handwriting&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/pattern-sheet/&quot;&gt;How every page got its own drawing&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/lab/type-lab/&quot;&gt;Choosing a hand for the type&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>A-Z drawings read from assets/drawings.json and link to /drawings/#id when it exists</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-59</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-59"/>
+    <updated>2026-11-21T00:24:19-08:00</updated>
     <category term="redraw" label="Redraw"/>
+  </entry>
+  <entry>
+    <title>Give Study 02 and 03 their own themed feature panels on the home page and studies index</title>
+    <id>tag:redrawnvalley.vercel.app,2026-11-21:pr-57</id>
+    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-57"/>
+    <updated>2026-11-21T00:22:38-08:00</updated>
+    <category term="site" label="Site"/>
+    <content type="html">&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/&quot;&gt;Redrawn Valley&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/&quot;&gt;Studies&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
   <entry>
     <title>Study rail: slim paper strip, tick scale, aligned counter</title>
@@ -302,50 +339,5 @@
     <category term="redraw" label="Redraw"/>
     <summary>The plan and perspective drawings now come from a generator driven by the cited dimensions.</summary>
     <content type="html">&lt;p&gt;The plan and perspective drawings now come from a generator driven by the cited dimensions.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Topanga drawings use design tokens</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-24</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-24"/>
-    <updated>2026-11-20T14:42:50-08:00</updated>
-    <category term="redraw" label="Redraw"/>
-    <summary>Replaced inline SVG styles and hex colours with token classes. Geometry and labels did not change.</summary>
-    <content type="html">&lt;p&gt;Replaced inline SVG styles and hex colours with token classes. Geometry and labels did not change.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Four new motifs</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-23</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-23"/>
-    <updated>2026-11-20T14:41:09-08:00</updated>
-    <category term="redraw" label="Redraw"/>
-    <summary>Added the pill diagram, section, ledger and crosshatch motifs.</summary>
-    <content type="html">&lt;p&gt;Added the pill diagram, section, ledger and crosshatch motifs.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Mobile pass</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-22</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-22"/>
-    <updated>2026-11-20T14:39:44-08:00</updated>
-    <category term="site" label="Site"/>
-    <summary>A taller footer strip, footer clearance above the tab bar, row icon alignment, a figure swipe hint and tweaks to the 404 and pattern sheet.</summary>
-    <content type="html">&lt;p&gt;A taller footer strip, footer clearance above the tab bar, row icon alignment, a figure swipe hint and tweaks to the 404 and pattern sheet.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Study styles cleaned up</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-21</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-21"/>
-    <updated>2026-11-20T14:36:28-08:00</updated>
-    <category term="site" label="Site"/>
-    <summary>Moved inline study styles into one stylesheet and removed every !important.</summary>
-    <content type="html">&lt;p&gt;Moved inline study styles into one stylesheet and removed every !important.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Pattern sheet and art cards</title>
-    <id>tag:redrawnvalley.vercel.app,2026-11-20:pr-19</id>
-    <link rel="alternate" type="text/html" href="https://redrawnvalley.vercel.app/log/#pr-19"/>
-    <updated>2026-11-20T14:32:07-08:00</updated>
-    <category term="redraw" label="Redraw"/>
-    <summary>Added the pattern sheet page and art cards on the home page, fixed contrast on faint text and kept the pencil filter off generated art.</summary>
-    <content type="html">&lt;p&gt;Added the pattern sheet page and art cards on the home page, fixed contrast on faint text and kept the pencil filter off generated art.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;New: &lt;a href=&quot;https://redrawnvalley.vercel.app/patterns/&quot;&gt;Pattern sheet&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/&quot;&gt;Redrawn Valley&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Updated: &lt;a href=&quot;https://redrawnvalley.vercel.app/studies/topanga-willows/&quot;&gt;Topanga Willows&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</content>
   </entry>
 </feed>
